@@ -31,21 +31,21 @@ func _on_unload() -> void: Game.Optimization.set_max_fps(60)
 func _ready() -> void:
 	super()
 	
+	await get_tree().process_frame
+	
 	garbage_placeholder = Sprite2D.new()
 	garbage_placeholder.material = ShaderMaterial.new()
 	garbage_placeholder.texture = preload(\"res://game_icon.png\")
 	
-	if !FileAccess.file_exists(\"user://\" + CACHED_SHADER_FILE_PATH):
-		print(\"CREATING SHADER CACHE FILE\")
-		var f = FileAccess.open(\"user://\" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
-		f.store_string(FileAccess.open(\"res://\" + CACHED_SHADER_FILE_PATH, FileAccess.READ).get_as_text())
-		f.close()
-		
-	if !FileAccess.file_exists(\"user://\" + CACHED_SCENES_FILE_PATH):
-		print(\"CREATING SCENE CACHE FILE\")
-		var f = FileAccess.open(\"user://\" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
-		f.store_string(FileAccess.open(\"res://\" + CACHED_SCENES_FILE_PATH, FileAccess.READ).get_as_text())
-		f.close()
+	print(\"CREATING SHADER CACHE FILE\")
+	var shader_file = FileAccess.open(\"user://\" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
+	shader_file.store_string(FileAccess.open(\"res://\" + CACHED_SHADER_FILE_PATH, FileAccess.READ).get_as_text())
+	shader_file.close()
+	
+	print(\"CREATING SCENE CACHE FILE\")
+	var scenes_file = FileAccess.open(\"user://\" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
+	scenes_file.store_string(FileAccess.open(\"res://\" + CACHED_SCENES_FILE_PATH, FileAccess.READ).get_as_text())
+	scenes_file.close()
 	
 	if OS.is_debug_build():
 		gather_all_shaders()
@@ -86,34 +86,18 @@ func gather_all_scenes() -> void:
 	res_cached_scenes_file = FileAccess.open(\"res://\" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
 		
 	for i in DirAccess.get_directories_at(SCENES_PATH):
-		if i != \"_ignore\":
-			for j in DirAccess.get_files_at(SCENES_PATH + i): 
-				if (j.ends_with(\"level.tscn\")): 
-					scenes.append(SCENES_PATH + i + \"/\" + j)
-					user_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
-					res_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
+		if i != \"__ignore\":
+			for j in DirAccess.get_directories_at(SCENES_PATH + i): 
+				for s in DirAccess.get_files_at(SCENES_PATH + i + \"/\" + j):
+					var scene_path = SCENES_PATH + i + \"/\" + j + \"/\" + s
+					if \"level.tscn\" in s:
+						scenes.append(scene_path)
+						user_cached_scenes_file.store_line(JSON.stringify(scene_path))
+						res_cached_scenes_file.store_line(JSON.stringify(scene_path))
 
 	user_cached_scenes_file.close()
 	res_cached_scenes_file.close()
 
-func gather_scene_descendants(_scene: PackedScene) -> void:
-	var instantiated_scene
-	
-	if _scene.can_instantiate() and ResourceLoader.exists(_scene.resource_path):
-		instantiated_scene = _scene.instantiate()
-	else:
-		instantiated_scene = null
-		
-	for i in instantiated_scene.get_children(true):
-		print(i)
-		
-		if (
-			(i is Node2D or i is Control or i is GPUParticles2D or i is CPUParticles2D)): 
-				i.reparent(self)
-				i.free()
-				print(\"true\")
-		else:
-			print(\"false\")
 
 func handle_shader_precompile() -> void:
 	user_cached_shader_file = FileAccess.open(\"user://\" + CACHED_SHADER_FILE_PATH, FileAccess.READ)
@@ -137,9 +121,7 @@ func handle_scenes_precompile() -> void:
 	
 	while !(curr_scenes_line.is_empty()):
 		json_content = JSON.parse_string(curr_scenes_line)
-		
 		if load(json_content): 
-			gather_scene_descendants(load(json_content))
 			print(json_content)
 		
 		curr_scenes_line = user_cached_scenes_file.get_line()
@@ -165,7 +147,6 @@ color = Color(0, 0, 0, 1)
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
-frame = 2
 script = ExtResource("3_d62i2")
 autoplay = true
 loop = true

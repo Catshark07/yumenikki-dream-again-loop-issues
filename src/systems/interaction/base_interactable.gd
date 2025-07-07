@@ -24,9 +24,6 @@ extends AreaRegion
 @export_group("Misc.")
 signal interacted
 
-func _init() -> void:
-	super()
-	debug_colour = Color(0.9 ,0, 0.7, 0.3)
 func _ready() -> void:	
 	super() 
 	

@@ -60,12 +60,11 @@ func _setup() -> void:
 		append_item(GameManager.EventManager.get_event_param("PLAYER_EFFECT_FOUND")[0]))
 		
 	# --- 
-	print(inventory_toggle)
 	deequip_prompt.pressed.connect(func():
 		(Player.Instance.get_pl() as Player_YN).deequip_effect()
 		inventory_toggle._on_press()
 		)	
-	inventory_toggle.toggled.connect(func(_toggled: bool): 
+	inventory_toggle.button.toggled.connect(func(_toggled: bool): 
 		if _toggled: inventory_opened.emit()
 		else: inventory_closed.emit()
 		)
@@ -92,15 +91,12 @@ func append_item(_item: PLEffect) -> void:
 	
 	var button = GUIPanelButton.new()
 	button.unique_data = _item
-	button.min_size.y = 20
-	button.set_text(_item.get_eff_name())
+	button.text_display.text = (_item.get_eff_name())
+	button.icon_display.texture = (_item.icon)
 	
-	button.set_icon(_item.icon)
 	button.name = (_item.get_eff_name())
-	
 	button.hover_exited.connect(func(): hovered_button = null)
-	button.hover_entered.connect(func(): hovered_button = button)
-	
+	button.hover_entered.connect(func(): hovered_button = button)	
 	button.pressed.connect(func():
 		if button.unique_data: (Player.Instance.get_pl() as Player_YN).equip(button.unique_data)
 		inventory_toggle.untoggle())

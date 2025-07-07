@@ -45,19 +45,28 @@ func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoade
 	
 	return scene_load_status
 func setup() -> void: 
-	
-	if !initial_scene_setup_complete and scene_node != null: 
-		if GameManager.instance == null: scene_node.reparent(Global)
-		else: scene_node.reparent(GameManager.pausable_parent)
+	if !initial_scene_setup_complete: 
+		if scene_node != null:
+			if GameManager.instance == null: scene_node.reparent(Global)
+			else: scene_node.reparent(GameManager.pausable_parent)
+			
+			scene_node_packed = load(scene_node.scene_file_path)
+			scene_node.on_load()
 		
-		scene_node_packed = load(scene_node.scene_file_path)
-		scene_node.on_load()
-		initial_scene_setup_complete = true
+		if additive_scene_node != null:
+			if GameManager.instance == null: additive_scene_node.reparent(Global)
+			else: additive_scene_node.reparent(GameManager.pausable_parent)
+			
+			additive_scene_node_packed = load(additive_scene_node.scene_file_path)
+			additive_scene_node.on_load()
+	
+	initial_scene_setup_complete = true
 		
 
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
 func unload_current_scene() -> bool:
-	if scene_node: 	return unload_scene(scene_node)
+	if scene_node: 	
+		return await unload_scene(scene_node)
 	return false
 func unload_scene(scene: SceneNode) -> bool:
 		scene.queue_free()

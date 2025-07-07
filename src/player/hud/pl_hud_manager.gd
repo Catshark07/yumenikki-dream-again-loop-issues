@@ -25,7 +25,7 @@ func _ready() -> void:
 	events_setup()
 	inv._setup()
 	
-	inv_toggle.toggled.connect(
+	inv_toggle.button.toggled.connect(
 		func(_toggled: bool): 
 			if _toggled: GameManager.change_to_state("special_invert_scene")
 			else: GameManager.change_to_state(GameManager.game_fsm._get_prev_state_name())

@@ -16,6 +16,11 @@ func _setup() -> void:
 	if texture_renderer == null:
 		texture_renderer = await GlobalUtils.add_child_node(self, SpriteSheetFormatter.new(), "texture_renderer")
 		texture_renderer.progress = unhover_cell if GlobalUtils.is_within_exclusive(unhover_cell, 0, 3) else 0
+		
+	if !Engine.is_editor_hint():
+		pressed.connect(_on_press)
+		hover_entered.connect(_on_hover)
+		hover_exited.connect(_on_unhover)
 
 func _on_hover() -> void: 
 	AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)

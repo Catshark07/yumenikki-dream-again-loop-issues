@@ -12,7 +12,6 @@ extends SceneNode
 @export var unload_transition: ShaderMaterial = ShaderMaterial.new()
 
 func _ready() -> void: 
-	
 	if Engine.is_editor_hint():
 		if GlobalUtils.get_child_node_or_null(self, "scene_unload_seq") != null:
 			GlobalUtils.get_child_node_or_null(self, "scene_unload_seq").queue_free()
@@ -39,6 +38,7 @@ func _ready() -> void:
 		ScreenTransition.set_fade_in_shader(unload_transition)
 		
 		save_invoker.do_on_notify("SCENE_CHANGE_REQUEST", save_scene)
+		Game.scene_manager.scene_node = self
 
 func _on_load() -> void: 
 	load_scene()

@@ -25,6 +25,7 @@ var sentients_to_be_looped := {
 const screen_size := Vector2i(480, 270)
 @export var tile_size: Vector2i = Vector2i(16, 16)
 @export var expansion: Vector2i
+@export var edge_corners_mirror: Parallax2D
 
 @export_group("READ-ONLY")
 @export var boundary_size: Vector2i:
@@ -159,6 +160,8 @@ func _draw() -> void:
 		
 func resize(new_size: Vector2) -> void:
 	# --------------------------- size
+	edge_corners_mirror.repeat_size = boundary_size
+	
 	(up_bound.shape as RectangleShape2D).size.x = new_size.x
 	(down_bound.shape as RectangleShape2D).size.x = new_size.x
 	

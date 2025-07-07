@@ -1,10 +1,9 @@
-class_name PlayMusic
 extends Event
 
-@export var music: AudioStreamOggVorbi
-@export var volume: float = 0
-@export var pitch: float = 1
+@export var stream: AudioStream
+@export_range(0, 1, .1) var vol: float = 1
+@export_range(0.1 , 2, .01) var pitch: float = 1
 
 func _execute() -> void:
-	Music.play_sound(music)
+	Music.play_sound(stream)
 	finished.emit()

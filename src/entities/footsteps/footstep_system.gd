@@ -74,7 +74,6 @@ func _setup(_sentient: SentientBase) -> void:
 	area.monitoring 	= true
 	area.input_pickable = false
 	
-	await Game.main_tree.process_frame
 	area.body_shape_exited.connect(_on_body_shape_exited)
 	area.body_shape_entered.connect(_on_body_shape_entered)
 	
@@ -92,7 +91,6 @@ func initate_footstep() -> void:
 		play_footstep_sound(sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP)
 	else:
 		play_footstep_sound(sound_to_be_played)
-
 func spawn_footstep_fx() -> void: 
 	if Game.Optimization.footstep_instances < Game.Optimization.FOOTSTEP_MAX_INSTANCES:
 		var footstep_fx := FootstepDust.new(curr_anim)
@@ -112,23 +110,16 @@ func _on_body_shape_entered(
 	local_shape_index: int) -> void:
 		
 		if body is FootstepTileMap:
+			if body in multiple_floors.arr: return
 			multiple_floors.append(body)
 			
-			var tile_coords: Vector2i
-			var cell_tile_data: TileData
-			var atlas_coords: Vector2i
-			
 			for floors: TileMapLayer in multiple_floors.arr:
-				tile_coords = floors.get_coords_for_body_rid(body_rid)
-				atlas_coords = floors.get_cell_atlas_coords( tile_coords)
-				cell_tile_data = floors.get_cell_tile_data(tile_coords)
-
-				if cell_tile_data and cell_tile_data.z_index > greatest_index: 
-					greatest_index = floors.get_cell_tile_data(floors.get_coords_for_body_rid(body_rid)).z_index
+				if floors.z_index > greatest_index: 
+					greatest_index = floors.z_index
 					floor_priority = floors
+					curr_material = floor_priority.ground_material
 					break
-	
-			
+					
 				if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
 				else: sentient.shadow_renderer.visible = true	
 				
@@ -137,7 +128,7 @@ func _on_body_shape_exited(
 	body: Node2D, 
 	body_shape_index: int, 
 	local_shape_index: int) -> void:
-		if body is TileMapLayer:
+		if body is FootstepTileMap:
 			
 			if !area.overlaps_body(body):
 				multiple_floors.remove_at(multiple_floors.find(body)) 

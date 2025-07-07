@@ -1,7 +1,7 @@
 class_name PlaySound
 extends Event
 
-@export var sound: AudioStreamWAV = null
+@export var sound: AudioStream = null
 @export var volume: float = 1
 @export var pitch: float = 1
 

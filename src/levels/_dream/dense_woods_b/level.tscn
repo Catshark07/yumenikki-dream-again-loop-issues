@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://dhb4h12jpspjg"]
+[gd_scene load_steps=23 format=4 uid="uid://dhb4h12jpspjg"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_wjh5h"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_6hpsn"]
@@ -16,8 +16,17 @@
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="11_c3ibc"]
 [ext_resource type="PackedScene" uid="uid://umbl6vr4s630" path="res://src/entities/sentients/red_jellyfish/red_jellyfish.tscn" id="12_bsddk"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="13_c7s3o"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="17_bsddk"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pemjj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c7s3o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_chrsa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_846ky"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2asu"]
+size = Vector2(16, 16)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e4mse"]
 shader = ExtResource("8_5st6v")
@@ -26,6 +35,12 @@ shader_parameter/transparency = 0.0
 
 [node name="dense_woods_b" type="Node"]
 script = ExtResource("1_wjh5h")
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("17_bsddk"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("17_bsddk"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+
+load_transition = SubResource("ShaderMaterial_c7s3o")
+unload_transition = SubResource("ShaderMaterial_chrsa")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="AMB" type="Node" parent="."]
@@ -73,7 +88,8 @@ y_sort_enabled = true
 position = Vector2(344, 26)
 script = ExtResource("8_iii1a")
 area = true
-shape = SubResource("RectangleShape2D_pemjj")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_846ky"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
@@ -86,23 +102,34 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 script = ExtResource("10_wuq7m")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
+[node name="rect" type="CollisionShape2D" parent="dense_woods_b/interactable"]
+shape = SubResource("RectangleShape2D_846ky")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
 [node name="Madotsuki" parent="dense_woods_b" instance=ExtResource("2_i7lt2")]
 position = Vector2(384, 28)
 
 [node name="red_jellyfish" parent="dense_woods_b" instance=ExtResource("12_bsddk")]
 position = Vector2(1392, 280)
 
-[node name="travel_to_scene" type="Node" parent="dense_woods_b/red_jellyfish/Interactable/on_interact" index="2" node_paths=PackedStringArray("spawn_point")]
+[node name="Interactable" parent="dense_woods_b/red_jellyfish" index="10"]
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_t2asu"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
+
+[node name="travel_to_scene" type="Node" parent="dense_woods_b/red_jellyfish/Interactable/on_interact" index="2"]
 script = ExtResource("10_wuq7m")
-spawn_point = NodePath("../../from_teleportation_maze")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="from_teleportation_maze" type="Node2D" parent="dense_woods_b/red_jellyfish/Interactable" index="3" node_paths=PackedStringArray("parent_instead_of_self")]
+[node name="from_teleportation_maze" type="Node2D" parent="dense_woods_b/red_jellyfish/Interactable" index="1" node_paths=PackedStringArray("parent_instead_of_self")]
 script = ExtResource("13_c7s3o")
+scene_path = "uid://dnuf6dan0x8o"
 parent_instead_of_self = NodePath("../..")
 as_sibling = true
-scene_path = "uid://dnuf6dan0x8o"
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="rect" type="CollisionShape2D" parent="dense_woods_b/red_jellyfish/Interactable" index="2"]
+shape = SubResource("RectangleShape2D_t2asu")
+debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="grass" type="TileMapLayer" parent="dense_woods_b"]
 z_index = -2
@@ -147,6 +174,12 @@ tile_set = ExtResource("11_c3ibc")
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAZAP7/AAAJAAkAAAAbAAAAAAALAAkAAAAeAP3/AAALAAkAAAARAAUAAAAJAAkAAAAhAAQAAAAJAAkAAAAWAAoAAAAJAAkAAABDAAIAAAALAAkAAABCAAEAAAAJAAkAAAA/AAUAAAALAAkAAABVAA0AAAALAAkAAABXAA4AAAAJAAkAAABYAA8AAAAJAAkAAABUABIAAAAJAAkAAAA+ABQAAAAJAAkAAAA/ABMAAAAJAAkAAAA=")
 tile_set = ExtResource("3_y3ks0")
+
+[node name="scene_load_sequence" type="Node" parent="."]
+script = ExtResource("17_bsddk")
+
+[node name="scene_unload_sequence" type="Node" parent="."]
+script = ExtResource("17_bsddk")
 
 [editable path="camera"]
 [editable path="dense_woods_b/red_jellyfish"]

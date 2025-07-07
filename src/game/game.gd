@@ -1,3 +1,4 @@
+
 extends Node
 
 # ---- data ----
@@ -11,17 +12,18 @@ var main_window: Window
 var main_viewport: Viewport
 var main_tree: SceneTree
 
-# ---- viewport
 var viewport_width: int
 var viewport_length: int
-var is_paused: bool
 
+var is_paused: bool
 # ---- time
 var true_time_scale: float:
 	set(true_ts): 
 		true_time_scale = true_ts
 		true_time_scale_changed.emit(true_ts)
 var true_delta: float
+
+var time_elapsed: float
 
 signal time_scale_changed(_new: float)
 signal true_time_scale_changed(_new: float)
@@ -36,43 +38,45 @@ var true_sfx_volume: float = 0
 # The main game holds a child node that acts as the scene currently active.
 # Upon scene change, remove the current child and queue load for the requested one.
 
-func singleton_setup() -> void:
-	scene_manager = SceneManager.new()
+func singleton_setup() -> void: scene_manager = SceneManager.new()
 
-func _ready() -> void:	
-	if Engine.is_editor_hint(): return
-	
-	if Optimization.override_godot_default_settings:
-		Optimization.setup_overridden_project_settings()
-	
-	singleton_setup()
-	viewport_setup()
-	
+func _ready() -> void:
+	time_elapsed = 0
+		
 	root = get_tree().root
 	main_window = get_tree().root.get_window()
 	main_viewport = get_tree().root.get_viewport()
 	main_tree = get_tree()
 	
-	true_time_scale = Engine.time_scale
-
-	render_server_setup()
-	window_setup()
-	
+	Optimization._setup()
 	Config.instantiate_config()
 	Config.load_settings_data()
+	
+	true_time_scale = Engine.time_scale
+	
+	singleton_setup()
+	render_server_setup()
+	viewport_setup()
+	window_setup()
+	instantiate_game_manager()
+	
 	await main_tree.process_frame
 	
-	instantiate_game_manager()
-	game_manager.setup()
-	
 	scene_manager.setup()
+	game_manager.setup()
 	GlobalPanoramaManager.setup()
 func _process(delta: float) -> void: 
 	Game.scene_manager.handle_background_loading_upon_request(Game.scene_manager.scene_node_packed)
 	GlobalPanoramaManager.update(delta)
 	true_delta = get_real_delta()
 	true_time_scale = get_real_timescale()
-
+	
+func get_play_time() -> Dictionary:
+	return {
+		"hours" 	: floori(fmod(time_elapsed / 3600, 24)),
+		"minutes" 	: floori(fmod(time_elapsed, 3600) / 60),
+		"seconds" 	: floori(fmod(fmod(time_elapsed, 3600), 60))
+	}
 # ---- rendering server control ----
 func render_server_setup() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
@@ -88,16 +92,27 @@ func instantiate_game_manager() -> void:
 func viewport_setup() -> void:
 	viewport_width = get_viewport_width()
 	viewport_length = get_viewport_height()
+	
+	main_window.focus_exited.connect(func(): 
+		main_tree.paused = true
+		Music.stream_paused = true
+		Ambience.stream_paused = true)
+	main_window.focus_entered.connect(func(): 
+		main_tree.paused = false
+		Music.stream_paused = false
+		Ambience.stream_paused = false)
+	
 func window_setup() -> void:
 	Engine.max_fps = 60
 	ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_repeat", CanvasItem.TEXTURE_REPEAT_MIRROR)
 
 	main_window.size = Vector2(480, 270) * 3
-	main_window.position = DisplayServer.window_get_size() / 6
+	main_window.position = DisplayServer.screen_get_size(DisplayServer.get_primary_screen()) / 2 - main_window.size / 2 
 	
 	main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 
 # ---- display / window control ---- 
+func change_window_res() -> void: pass
 func change_window_mode(new_mode: Window.Mode) -> void: main_window.mode = new_mode
 func set_window_borderless(_brd: bool = true) -> void: main_window.borderless = _brd
 
@@ -132,39 +147,50 @@ class Save:
 	static var data := {
 	"game" : {
 		"version" : "00",
-		"read_warning" : false},
+		"read_warning" : false,
+		"time_played" : 00,
+		},
 	"player" : {},
 	"scene" : {}}
 		
-	const SAVE_PATH := "user://save.json"
+	static var curr_data: Dictionary
 	const SAVE_DIR := "user://save/"
 	
 	static func _setup() -> void:
 		if DirAccess.dir_exists_absolute("user://save"): pass
 		else: DirAccess.make_dir_absolute("user://save")
 	
-	static func save_data() -> Error:
+	static func save_data(_number: int = 0) -> Dictionary:
+		DirAccess.make_dir_absolute(SAVE_DIR)
 		
-		var save_file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-		var save_data := Dictionary(data)
+		if curr_data.is_empty(): curr_data = Dictionary(data)
+		var save_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.WRITE)
+		var curr_data := Dictionary(data)
 		
-		save_data["game"]["version"] = ProjectSettings.get_setting("application/config/version")
-		save_data["player"] = Player.Data.get_data()
-		save_data["scene"] = NodeSaveService.get_data()
+		curr_data["game"]["version"] = ProjectSettings.get_setting("application/config/version")
+		curr_data["game"]["time_played"] = {
+			"hours" 	: Game.get_play_time()["hours"],
+			"minutes" 	: Game.get_play_time()["minutes"], 
+			"seconds" 	: Game.get_play_time()["seconds"]
+			}
+			
+		curr_data["player"] = Player.Data.get_data()
+		curr_data["scene"] = NodeSaveService.get_data()
 		
 		print(save_file.get_path())
-		save_file.store_string(JSON.stringify(save_data))
+		save_file.store_string(JSON.stringify(curr_data, "\t"))
 		save_file.close()
 		save_file = null
 		
 		GameManager.EventManager.invoke_event("GAME_FILE_SAVE")
-		
-		return OK
-	static func load_data() -> Error:
-		if FileAccess.file_exists(SAVE_PATH): 
-			var load_file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+		return curr_data
+	static func load_data(_number: int = 0) -> Error:
+		if FileAccess.file_exists(str(SAVE_DIR, "save_%s.json" % [_number])): 
+			var load_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.READ)
 			var content = JSON.parse_string(load_file.get_as_text())
-			data = content
+			curr_data = content
+			
+			print(load_file.get_path())
 			
 			load_file.close()
 			load_file = null
@@ -174,6 +200,16 @@ class Save:
 			
 		else: return ERR_CANT_OPEN
 		return OK
+
+	static func get_curr_data() -> Dictionary:
+		if curr_data.is_empty(): return data
+		return curr_data
+		
+	static func get_data_as_json(_json_file_name: String) -> JSON:
+		var json_file_path := str(SAVE_DIR, "%s.json" % [_json_file_name])
+		if json_file_path.is_empty() or json_file_path == ".json": return
+		
+		return ResourceLoader.load(json_file_path)
 
 	static func clear_data() -> Error:
 		data["player"] = {}
@@ -241,6 +277,7 @@ class Config:
 		return _default
 class Application: 
 	extends GameSubClass
+	
 	static func quit(): 
 		Optimization.set_max_fps(30)
 		Music.fade_out()
@@ -248,7 +285,6 @@ class Application:
 		await Game.Save.save_data()
 		await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
 		Game.main_tree.quit.call_deferred()
-	
 	static func pause(): 
 		Game.main_tree.paused = true
 		Game.is_paused = true
@@ -283,22 +319,27 @@ class Audio:
 			AudioServer.get_bus_effect(AudioServer.get_bus_index(_bus_name), _fx_indx)):
 			AudioServer.set_bus_effect_enabled(AudioServer.get_bus_index(_bus_name), _fx_indx, _active)
 class Optimization:
+	extends GameSubClass
 	
-	static var override_godot_default_settings: bool = false
+	static func _setup() -> void: 
+		setup_overridden_project_settings()
+	
+	static var override_godot_default_settings: bool = true
 	static var footstep_instances: int = 0
 	
 	const FOOTSTEP_MAX_INSTANCES: int = 16
 	const PARTICLES_MAX_INSTANCES: int = 128
 
 	static func setup_overridden_project_settings() -> void:
-		RenderingServer.viewport_set_default_canvas_item_texture_repeat(
-			Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
-		RenderingServer.viewport_set_default_canvas_item_texture_filter(
-			Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)	
+		if override_godot_default_settings:
+			RenderingServer.viewport_set_default_canvas_item_texture_repeat(
+				Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
+			RenderingServer.viewport_set_default_canvas_item_texture_filter(
+				Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)	
 			
-		Game.main_window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-		Game.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_ENABLED
-		Game.main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+			Game.main_window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+			Game.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_ENABLED
+			Game.main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	static func set_max_fps(_max_fps: int) -> void:
 		Engine.max_fps = _max_fps
 class Directory:

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bs8r676rfchai" path="res://src/player/madotsuki/display/neon/dansen.png" id="5_k5aq2"]
 [ext_resource type="Texture2D" uid="uid://dvmf5dneeyi23" path="res://src/player/madotsuki/display/default/sit.png" id="6_6o6td"]
 [ext_resource type="AudioStream" uid="uid://cwbsiscenoxfx" path="res://src/audio/se/se_cloth_foley_2.wav" id="7_dxry4"]
-[ext_resource type="Texture2D" uid="uid://b7wes4n6knano" path="res://src/player/madotsuki/display/hand/teleport.png" id="8_5w8d5"]
+[ext_resource type="Texture2D" uid="uid://b7wes4n6knano" path="res://src/player/madotsuki/display/medamaude/teleport.png" id="8_5w8d5"]
 [ext_resource type="AudioStream" uid="uid://1u5rrr0cx8ad" path="res://src/audio/se/pinch.WAV" id="8_qgfnh"]
 [ext_resource type="Texture2D" uid="uid://dt0b3unu3sv16" path="res://src/player/madotsuki/display/default/dansen.png" id="9_ly3ai"]
 

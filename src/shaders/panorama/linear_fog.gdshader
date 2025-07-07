@@ -11,7 +11,7 @@ uniform float color_overlay_intensity = 1;
 void fragment()
 {
 	vec2 scroll_dir = -vec2(dirX, dirY) * (TIME * scroll_speed);
-	vec4 noise_panorama = (texture(noise, UV + scroll_dir / 1.07) * 6.2);
+	vec4 noise_panorama = (texture(noise, UV + scroll_dir / 1.07) * 5.85);
 	vec4 wave_texture = (texture(TEXTURE, UV + scroll_dir / 2.1) * 1.1);
 
 	COLOR = vec4

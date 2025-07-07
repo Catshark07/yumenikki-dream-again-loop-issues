@@ -16,11 +16,12 @@ func add_custom_types() -> void:
 		preload("res://src/images/editor/game_scene.png")
 		)
 	add_custom_type(
-		"CameraRegion", 
-		"Area2D", 
-		preload("res://src/systems/camera/cam_region.gd"), 
-		preload("res://src/images/editor/cam_region.png")
-		)	
+		"AdditiveGameScene", 
+		"Node2D", 
+		preload("res://src/systems/scenes/game/game_additive_scene.gd"), 
+		preload("res://src/images/editor/game_scene_additive.png")
+		)
+
 	add_custom_type(
 		"SentientBase", 
 		"CharacterBody2D", 
@@ -47,7 +48,7 @@ func add_custom_types() -> void:
 		)
 func remove_custom_types() -> void:
 	remove_custom_type("GameScene")
-	remove_custom_type("CameraRegion")
+	remove_custom_type("AdditiveGameScene")
 	remove_custom_type("SentientBase")
 	remove_custom_type("TeleportationDoor")
 	remove_custom_type("Event")

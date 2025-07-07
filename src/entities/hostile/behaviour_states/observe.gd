@@ -68,7 +68,5 @@ func physics_update(_delta: float) -> void:
 	if !(sentient as NavSentient).nav_agent.is_target_reachable():
 		update_hesitance_observe_point()
 
-
-	print(sentient.nav_agent.is_target_reachable())
 func update_hesitance_observe_point() -> void: 
 	sentient.nav_agent.target_position = target.global_position

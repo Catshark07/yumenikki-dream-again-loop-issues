@@ -26,7 +26,6 @@ func _draw() -> void:
 			target_door.target_door = self if target_door.parallel else target_door.target_door	
 			
 func _process(delta: float) -> void:
-	super(delta)
 	if Engine.is_editor_hint(): 
 		queue_redraw()
 		if target_door == self: target_door = null

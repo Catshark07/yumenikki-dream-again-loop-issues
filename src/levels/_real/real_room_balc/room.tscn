@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=4 uid="uid://tu7ksu6xj8wy"]
+[gd_scene load_steps=18 format=4 uid="uid://tu7ksu6xj8wy"]
 
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="5_sm2si"]
 [ext_resource type="Texture2D" uid="uid://c1pvd0yrxsrpw" path="res://src/levels/_real/real_room_balc/bed.png" id="6_it7wh"]
+[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tilemaps/_footstep_material.tres" id="7_2ie1r"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="8_hxisi"]
+[ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="8_k8x4h"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="9_jh20n"]
 [ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/player/region.gd" id="10_jh20n"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/camera/sequence_region.gd" id="11_2ie1r"]
@@ -13,17 +15,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_65hc6"]
 size = Vector2(20, 34)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxisi"]
+size = Vector2(16, 16)
+
 [sub_resource type="Gradient" id="Gradient_1hvly"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_44228"]
 gradient = SubResource("Gradient_1hvly")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xogjh"]
-size = Vector2(480, 270)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jh20n"]
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ie1r"]
-size = Vector2(208, 160)
+size = Vector2(16, 16)
 
 [node name="room" type="Node2D"]
 y_sort_enabled = true
@@ -52,6 +57,12 @@ shape = SubResource("RectangleShape2D_65hc6")
 
 [node name="locked_door" parent="." instance=ExtResource("12_clhw3")]
 position = Vector2(200, 64)
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_hxisi"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
+
+[node name="rect" type="CollisionShape2D" parent="locked_door"]
+shape = SubResource("RectangleShape2D_hxisi")
+debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="wall" type="TileMapLayer" parent="."]
 position = Vector2(32, -48)
@@ -60,9 +71,24 @@ tile_set = ExtResource("13_ky1cf")
 
 [node name="collision" type="TileMapLayer" parent="."]
 z_index = 1
-tile_map_data = PackedByteArray("AAAJAAwAAQABAAEAAAAKAAwAAQABAAEAAAALAAwAAQABAAEAAAAMAAwAAQABAAEAAAANAAwAAQABAAEAAAAOAAwAAQABAAEAAAARAAwAAQABAAEAAAASAAwAAQABAAEAAAATAAwAAQABAAEAAAAUAAwAAQABAAEAAAAVAAwAAQABAAEAAAAOAA0AAQABAAEAAAAOAA4AAQABAAEAAAAPAA4AAQABAAEAAAAQAA4AAQABAAEAAAARAA4AAQABAAEAAAARAA0AAQABAAEAAAAIAAwAAQABAAEAAAAIAAsAAQABAAEAAAAIAAoAAQABAAEAAAAIAAkAAQABAAEAAAAIAAgAAQABAAEAAAAIAAcAAQABAAEAAAAIAAYAAQABAAEAAAAIAAUAAQABAAEAAAAIAAQAAQABAAEAAAAIAAMAAQABAAEAAAAJAAMAAQABAAEAAAAKAAMAAQABAAEAAAAKAAIAAQABAAEAAAALAAIAAQABAAEAAAAMAAIAAQABAAEAAAANAAIAAQABAAEAAAAOAAIAAQABAAEAAAAPAAIAAQABAAEAAAAQAAIAAQABAAEAAAARAAIAAQABAAEAAAASAAIAAQABAAEAAAATAAIAAQABAAEAAAAUAAIAAQABAAEAAAAUAAMAAQABAAEAAAAVAAMAAQABAAEAAAAWAAMAAQABAAEAAAAWAAQAAQABAAEAAAAWAAUAAQABAAEAAAAWAAYAAQABAAEAAAAWAAcAAQABAAEAAAAWAAgAAQABAAEAAAAWAAkAAQABAAEAAAAWAAoAAQABAAEAAAAWAAsAAQABAAEAAAAWAAwAAQABAAEAAAA=")
+tile_map_data = PackedByteArray("AAAJAAwAAQAAAAEAAAAKAAwAAQAAAAEAAAALAAwAAQAAAAEAAAAMAAwAAQAAAAEAAAANAAwAAQAAAAEAAAAOAAwAAQAAAAEAAAARAAwAAQAAAAEAAAASAAwAAQAAAAEAAAATAAwAAQAAAAEAAAAUAAwAAQAAAAEAAAAVAAwAAQAAAAEAAAAOAA0AAQAAAAEAAAAOAA4AAQAAAAEAAAAPAA4AAQAAAAEAAAAQAA4AAQAAAAEAAAARAA4AAQAAAAEAAAARAA0AAQAAAAEAAAAIAAwAAQAAAAEAAAAIAAsAAQAAAAEAAAAIAAoAAQAAAAEAAAAIAAkAAQAAAAEAAAAIAAgAAQAAAAEAAAAIAAcAAQAAAAEAAAAIAAYAAQAAAAEAAAAIAAUAAQAAAAEAAAAIAAQAAQAAAAEAAAAIAAMAAQAAAAEAAAAJAAMAAQAAAAEAAAAKAAMAAQAAAAEAAAAKAAIAAQAAAAEAAAALAAIAAQAAAAEAAAAMAAIAAQAAAAEAAAANAAIAAQAAAAEAAAAOAAIAAQAAAAEAAAAPAAIAAQAAAAEAAAAQAAIAAQAAAAEAAAARAAIAAQAAAAEAAAASAAIAAQAAAAEAAAATAAIAAQAAAAEAAAAUAAIAAQAAAAEAAAAUAAMAAQAAAAEAAAAVAAMAAQAAAAEAAAAWAAMAAQAAAAEAAAAWAAQAAQAAAAEAAAAWAAUAAQAAAAEAAAAWAAYAAQAAAAEAAAAWAAcAAQAAAAEAAAAWAAgAAQAAAAEAAAAWAAkAAQAAAAEAAAAWAAoAAQAAAAEAAAAWAAsAAQAAAAEAAAAWAAwAAQAAAAEAAAA=")
 tile_set = ExtResource("8_hxisi")
 script = ExtResource("9_jh20n")
+
+[node name="material_cloth" type="TileMapLayer" parent="."]
+z_index = 1
+tile_map_data = PackedByteArray("AAAOAAsAAAAAAAIAAAAPAAsAAAAAAAIAAAAQAAsAAAAAAAIAAAARAAsAAAAAAAIAAAARAAoAAAAAAAEAAAASAAoAAAACAAIAAAASAAkAAAACAAIAAAARAAkAAAAAAAEAAAAQAAkAAAAAAAEAAAAPAAkAAAAAAAEAAAAOAAkAAAAAAAEAAAAOAAgAAAAAAAIAACAPAAgAAAAAAAIAACAQAAgAAAAAAAIAACARAAgAAAAAAAIAACAQAAoAAAAAAAEAAAAPAAoAAAAAAAEAAAAOAAoAAAAAAAEAAAASAAsAAAABAAEAAAASAAgAAAABAAEAACANAAkAAAACAAIAABANAAoAAAACAAIAABANAAgAAAABAAEAADANAAsAAAABAAEAABAMAAcAAAAAAAEAAAANAAYAAAAAAAEAAAASAAcAAAAAAAEAAAARAAYAAAAAAAEAAAAUAAsAAAAAAAEAAAAMAAoAAAAAAAEAAAALAAkAAAAAAAEAAAA=")
+tile_set = ExtResource("7_2ie1r")
+script = ExtResource("8_k8x4h")
+ground_material = 8
+metadata/_custom_type_script = "uid://pksfkcvcsgx7"
+
+[node name="material_wood" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAJAAYAAAAAAAEAAAAKAAYAAAAAAAEAAAALAAYAAAAAAAEAAAALAAUAAAAAAAEAAAAMAAUAAAAAAAEAAAANAAUAAAAAAAEAAAAOAAUAAAAAAAEAAAAPAAUAAAAAAAEAAAAQAAUAAAAAAAEAAAARAAUAAAAAAAEAAAASAAUAAAAAAAEAAAATAAUAAAAAAAEAAAATAAYAAAAAAAEAAAAUAAYAAAAAAAEAAAAVAAYAAAAAAAEAAAAVAAcAAAAAAAEAAAAVAAgAAAAAAAEAAAAVAAkAAAAAAAEAAAAVAAoAAAAAAAEAAAAVAAsAAAAAAAEAAAAUAAsAAAAAAAEAAAATAAsAAAAAAAEAAAASAAsAAAAAAAEAAAARAAsAAAAAAAEAAAARAAoAAAAAAAEAAAAQAAoAAAAAAAEAAAAPAAoAAAAAAAEAAAAOAAoAAAAAAAEAAAAOAAsAAAAAAAEAAAANAAsAAAAAAAEAAAAMAAsAAAAAAAEAAAAPAAsAAAAAAAEAAAAQAAsAAAAAAAEAAAAPAAwAAAAAAAEAAAAQAAwAAAAAAAEAAAALAAsAAAAAAAEAAAAKAAsAAAAAAAEAAAAJAAsAAAAAAAEAAAAJAAoAAAAAAAEAAAAJAAkAAAAAAAEAAAAJAAgAAAAAAAEAAAAJAAcAAAAAAAEAAAAKAAcAAAAAAAEAAAAKAAgAAAAAAAEAAAAKAAkAAAAAAAEAAAAKAAoAAAAAAAEAAAALAAoAAAAAAAEAAAAMAAoAAAAAAAEAAAAMAAkAAAAAAAEAAAAMAAgAAAAAAAEAAAAPAAgAAAAAAAEAAAAPAAcAAAAAAAEAAAAPAAYAAAAAAAEAAAAOAAYAAAAAAAEAAAANAAYAAAAAAAEAAAAMAAYAAAAAAAEAAAAMAAcAAAAAAAEAAAALAAcAAAAAAAEAAAALAAgAAAAAAAEAAAALAAkAAAAAAAEAAAANAAcAAAAAAAEAAAANAAgAAAAAAAEAAAANAAkAAAAAAAEAAAANAAoAAAAAAAEAAAAOAAkAAAAAAAEAAAAOAAgAAAAAAAEAAAAOAAcAAAAAAAEAAAAPAAkAAAAAAAEAAAAQAAkAAAAAAAEAAAAQAAgAAAAAAAEAAAAQAAcAAAAAAAEAAAAQAAYAAAAAAAEAAAARAAYAAAAAAAEAAAARAAcAAAAAAAEAAAARAAgAAAAAAAEAAAARAAkAAAAAAAEAAAASAAkAAAAAAAEAAAASAAgAAAAAAAEAAAASAAcAAAAAAAEAAAASAAYAAAAAAAEAAAATAAcAAAAAAAEAAAATAAgAAAAAAAEAAAATAAkAAAAAAAEAAAATAAoAAAAAAAEAAAASAAoAAAAAAAEAAAAUAAoAAAAAAAEAAAAUAAkAAAAAAAEAAAAUAAgAAAAAAAEAAAAUAAcAAAAAAAEAAAA=")
+tile_set = ExtResource("7_2ie1r")
+script = ExtResource("8_k8x4h")
+ground_material = 2
+metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
 [node name="floor" type="TileMapLayer" parent="."]
 y_sort_enabled = true
@@ -87,20 +113,27 @@ scale = Vector2(0.5, 2)
 texture = SubResource("GradientTexture2D_44228")
 
 [node name="room_deadzone" type="Area2D" parent="."]
-process_mode = 3
 position = Vector2(16, 0)
 script = ExtResource("15_gud25")
-size = Vector2i(480, 270)
-shape = SubResource("RectangleShape2D_xogjh")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_jh20n"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="rect" type="CollisionShape2D" parent="room_deadzone"]
+shape = SubResource("RectangleShape2D_jh20n")
+debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="room_region" type="Area2D" parent="."]
 position = Vector2(144, 56)
 script = ExtResource("10_jh20n")
-size = Vector2i(208, 160)
-shape = SubResource("RectangleShape2D_2ie1r")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_2ie1r"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="sequence" type="Node" parent="room_region"]
 script = ExtResource("11_2ie1r")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
+
+[node name="rect" type="CollisionShape2D" parent="room_region"]
+shape = SubResource("RectangleShape2D_2ie1r")
+debug_color = Color(0.2, 0, 0.7, 0.2)

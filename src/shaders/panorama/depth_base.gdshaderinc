@@ -1,6 +1,7 @@
 global uniform vec2 uv_offset;
 uniform vec2 uv_offset_initial;
 
+group_uniforms depth;
 uniform float offset_strength;
 uniform float offset_strength_x_influence = 1;
 uniform float offset_strength_y_influence = 1;

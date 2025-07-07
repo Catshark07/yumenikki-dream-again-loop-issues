@@ -8,9 +8,8 @@ func _ready() -> void:
 	scheme = Keybind.new()
 	
 	for i in (scheme.bind): 
-		InputMap.add_action(i)
-		for k in scheme.bind[i]["key"]: 
-			InputMap.action_add_event(i, k)
+		if !InputMap.has_action(i): InputMap.add_action(i)
+		for k in scheme.bind[i]: InputMap.action_add_event(i, k)
 		
 func _process(_delta: float) -> void: 
 	vector_input = Vector2(
@@ -34,23 +33,31 @@ class Keybind:
 	extends Object
 	
 	var bind: Dictionary = {
-		"esc_menu" 			: { "key" : [ InputAction.new(KEY_ESCAPE) ], "command" : []},
-		"hud_toggle" 		: { "key" : [ InputAction.new(KEY_TAB) ], "command" : []},
+		"esc_menu" 			: [ InputAction.new(KEY_ESCAPE) ],
+		"hud_toggle" 		: [ InputAction.new(KEY_TAB) ],
 		
-		"sprint" 			: { "key" : [ InputAction.new(KEY_SHIFT) ], "command" : []},
-		"sneak" 			: { "key" : [ InputAction.new(KEY_CTRL) ], "command" : []},
+		"sprint" 			: [ InputAction.new(KEY_SHIFT) ],
+		"sneak" 			: [ InputAction.new(KEY_CTRL) ],
 		
-		"move_up" 			: { "key" : [ InputAction.new(KEY_UP), InputAction.new(KEY_W) ], "command" : []},
-		"move_down" 		: { "key" : [ InputAction.new(KEY_DOWN), InputAction.new(KEY_S) ], "command" : []},
-		"move_right" 		: { "key" : [ InputAction.new(KEY_RIGHT), InputAction.new(KEY_D) ], "command" : []},
-		"move_left" 		: { "key" : [ InputAction.new(KEY_LEFT), InputAction.new(KEY_A) ], "command" : []},
+		"move_up" 			: [ InputAction.new(KEY_UP), InputAction.new(KEY_W) ],
+		"move_down" 		: [ InputAction.new(KEY_DOWN), InputAction.new(KEY_S) ],
+		"move_right" 		: [ InputAction.new(KEY_RIGHT), InputAction.new(KEY_D) ],
+		"move_left" 		: [ InputAction.new(KEY_LEFT), InputAction.new(KEY_A) ],
 		
-		"pinch" 			: { "key" : [InputAction.new(KEY_Q)], "command" : []},
-		"interact" 			: { "key" : [InputAction.new(KEY_E)], "command" : []},
-		"emote" 			: { "key" : [InputAction.new(KEY_G)], "command" : []},
-		"primary_action"	: { "key" : [InputAction.new(KEY_Z)], "command" : []},
-		"secondary_action" 	: { "key" : [InputAction.new(KEY_X)], "command" : []},
+		"ui_up" 			: [ InputAction.new(KEY_UP), InputAction.new(KEY_W) ],
+		"ui_down" 			: [ InputAction.new(KEY_DOWN), InputAction.new(KEY_S) ],
+		"ui_right" 			: [ InputAction.new(KEY_RIGHT), InputAction.new(KEY_D) ],
+		"ui_left" 			: [ InputAction.new(KEY_LEFT), InputAction.new(KEY_A) ],
 		
-		"inventory" 		: { "key" : [InputAction.new(KEY_ALT)], "command" : []},
-		"favourite_effect" 	: { "key" : [InputAction.new(KEY_F)], "command" : []},
+		"ui_accept" 		: [ InputAction.new(KEY_Z)],
+		"ui_cancel" 		: [ InputAction.new(KEY_X)],
+		
+		"pinch" 			: [InputAction.new(KEY_Q)],
+		"interact" 			: [InputAction.new(KEY_E)],
+		"emote" 			: [InputAction.new(KEY_G)],
+		"primary_action"	: [InputAction.new(KEY_Z)],
+		"secondary_action" 	: [InputAction.new(KEY_X)],
+		
+		"inventory" 		: [InputAction.new(KEY_ALT)],
+		"favourite_effect" 	: [InputAction.new(KEY_F)],
 		}

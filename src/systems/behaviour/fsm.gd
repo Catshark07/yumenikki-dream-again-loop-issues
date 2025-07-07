@@ -25,6 +25,7 @@ func _setup() -> void:
 	curr_state = initial_state
 	if curr_state != null: curr_state.enter_state()
 func _change_to_state(_new: StringName) -> void:
+	_new = _new.to_lower()
 	if _new != "" and _has_state(_new):
 		var newstate: State = state_dict.get(_new.to_lower())
 		if curr_state != newstate and newstate.transitionable:
@@ -34,6 +35,8 @@ func _change_to_state(_new: StringName) -> void:
 			curr_state.exit_state()
 			curr_state = newstate
 			curr_state.enter_state()
+	else:
+		print("cant find state")
 			
 # --- state checks + getter --- 
 func _has_state(state_name: StringName) -> bool:

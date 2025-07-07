@@ -61,7 +61,7 @@ class Data:
 			"innocent_killed" : 0,
 			"hostile_killed" : 0,
 			},
-		"effects" : null,
+		"effects" : [],
 		}
 		
 	static func update_effects_data(_effects_data: Array[PLEffect]) -> void: 

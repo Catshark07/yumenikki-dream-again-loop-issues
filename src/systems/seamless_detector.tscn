@@ -3,19 +3,20 @@
 [ext_resource type="Script" uid="uid://bs2b8lb5xbqm3" path="res://src/systems/utils/seamless_detector.gd" id="1_ytyvq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3xc3k"]
-size = Vector2(1920, 16)
+size = Vector2(2800, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x4sw1"]
-size = Vector2(1920, 16)
+size = Vector2(2800, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pjes7"]
-size = Vector2(16, 1376)
+size = Vector2(16, 1056)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tonw3"]
-size = Vector2(16, 1376)
+size = Vector2(16, 1056)
 
-[node name="seamless_detector" type="Node2D"]
+[node name="seamless_detector" type="Node2D" node_paths=PackedStringArray("edge_corners_mirror")]
 script = ExtResource("1_ytyvq")
+edge_corners_mirror = NodePath("edge_corners_mirror")
 boundary_size = Vector2i(480, 256)
 min_bound_size_multiplier = Vector2i(30, 16)
 min_boundary_size = Vector2i(480, 256)
@@ -75,3 +76,6 @@ collision_mask = 2147483652
 
 [node name="left_coll" type="StaticBody2D" parent="."]
 collision_mask = 2147483652
+
+[node name="edge_corners_mirror" type="Parallax2D" parent="."]
+repeat_size = Vector2(1000, 1000)

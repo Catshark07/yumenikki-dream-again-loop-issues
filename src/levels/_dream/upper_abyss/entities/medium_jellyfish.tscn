@@ -52,31 +52,37 @@ shader_parameter/y_scale_amplitude = 2.0
 shader_parameter/y_scale_speed = 1.0
 
 [node name="medium_jellyfish" type="Node2D"]
-position = Vector2(60, 38)
 
 [node name="heart" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_ihmva")
+position = Vector2(0, -25)
 texture = ExtResource("3_fhxg7")
 
 [node name="skin" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_jag63")
+position = Vector2(0, -25)
 texture = ExtResource("1_jenvo")
 
 [node name="head" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_uq6pt")
+position = Vector2(0, -25)
 texture = ExtResource("2_rqqkm")
 
 [node name="inner_tentacles" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_t6x6i")
+position = Vector2(0, -25)
 texture = ExtResource("5_gixb6")
 
 [node name="side_tentacles" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_qec0a")
+position = Vector2(0, -25)
 texture = ExtResource("6_rrswg")
 
 [node name="outer_tentacles" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
 texture = ExtResource("7_3pfxf")
 
 [node name="core" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fqie6")
+position = Vector2(0, -25)
 texture = ExtResource("4_jcq6m")

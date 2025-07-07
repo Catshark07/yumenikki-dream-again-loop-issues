@@ -5,19 +5,23 @@ extends Control
 
 @export_group("Flags")
 
-@export var active: bool = true:
-	set(_a): 
-		active = _a
-		if Engine.is_editor_hint(): set_active(active)
-
 @export_group("Unique Data")
-@export var unique_data: Resource
-
+@export var unique_data: Resource = null:
+	set(_data):
+		if _data == null: return
+		unique_data = _data
+		unique_data_changed.emit(_data)
+		
 # ---- signals ----
 signal pressed
 signal toggled(_truth)
 signal hover_entered
 signal hover_exited
+
+signal disabled
+signal enabled
+
+signal unique_data_changed(_new_data: Resource)
 
 @export_storage var button: BaseButton # pretty much needed.
 var is_toggled: bool = false
@@ -27,21 +31,19 @@ var is_toggled: bool = false
 func _ready() -> void:
 	_setup()
 	self.mouse_filter = Control.MOUSE_FILTER_PASS	
-	set_active(active)
+	if !Engine.is_editor_hint():
+		button.pressed.connect(pressed.emit)
+		button.mouse_entered.connect(hover_entered.emit)
+		button.mouse_exited.connect(hover_exited.emit)
+		
 	
 func _setup() -> void:
 	button = GlobalUtils.get_child_node_or_null(self, "button")
 	if button == null: 
-		button = await GlobalUtils.add_child_node(self, Button.new(), "button")
+		button = await GlobalUtils.add_child_node(self, BaseButton.new(), "button")
 		button.size = self.size
 		button.focus_mode = Control.FOCUS_NONE
-		
-		button.pressed.connect(func(): pressed.emit())
-		button.mouse_entered.connect(_on_hover)
-		button.mouse_exited.connect(_on_unhover)
-		button.button_down.connect(_on_press)
 		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		
 		button.set_anchors_preset(PRESET_FULL_RECT)
 
 # ---- required components / button functionality ----
@@ -55,7 +57,10 @@ func _on_toggle() -> void: pass
 func _on_untoggle() -> void: pass
 
 func set_active(_active: bool) -> void:
-	if button != null: button.disabled = !_active
+	if button != null: 
+		button.disabled = !_active
+		if _active: enabled.emit()
+		else: 		disabled.emit()
 func set_button_toggle_mode(_toggle: bool) -> void:
 	if button: button.toggle_mode = _toggle
 

@@ -7,7 +7,6 @@ var sound_player: AudioStreamPlayer
 var footstep_manager: Node
 
 @onready var DEFAULT_EFFECT: PLEffect = load("res://src/player/madotsuki/effects/_none/_default.tres")
-
 @onready var behaviour: PLBehaviour = load("res://src/player/madotsuki/effects/_none/_behaviour.tres")
 
 # ----> trait components
@@ -18,7 +17,7 @@ var marker_look_at: Strategist
 
 var mental_status: SBComponent
 
-var sprite_sheet: SerializableDict = preload("res://src/player/madotsuki/sprite_sheets/no_effect.tres")
+var sprite_sheet: SerializableDict = preload("res://src/player/madotsuki/display/no_effect.tres")
 var action: PLAction 
 
 func _ready() -> void: 

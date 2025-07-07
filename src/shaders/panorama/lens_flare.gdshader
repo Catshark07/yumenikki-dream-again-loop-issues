@@ -21,7 +21,7 @@ float random () {
 }
 
 
-void vertex() 
+void vertex()
 {
 	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 }
