@@ -6,7 +6,7 @@
 [ext_resource type="TileSet" uid="uid://8ycy6oceth0s" path="res://src/levels/__ignore/tilemaps/sky_garden.tres" id="3_ciu6d"]
 [ext_resource type="Shader" uid="uid://5k0375eqfw0q" path="res://src/shaders/masks/sub.gdshader" id="3_cr6ct"]
 [ext_resource type="TileSet" uid="uid://cydwtbt1yg005" path="res://src/levels/__ignore/tilemaps/docks.tres" id="4_cr6ct"]
-[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="6_bs7p0"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="6_bs7p0"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="7_0sq1r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y2f8v"]

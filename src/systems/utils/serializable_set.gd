@@ -11,6 +11,7 @@ func pick_random() -> Variant:
 	return arr[i]
 
 func size() -> int:
+	s = 0
 	for i in range(arr.size()): 
 		if arr[i]: s += 1
 	return s

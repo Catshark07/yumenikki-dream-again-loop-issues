@@ -1,9 +1,9 @@
 shader_type canvas_item;
 //render_mode world_vertex_coords;
 
-#include "res://src/shaders/panorama/general_base.gdshaderinc"
-#include "res://src/shaders/panorama/depth_base.gdshaderinc"
-#include "res://src/shaders/panorama/linear_base.gdshaderinc"
+#include "res://src/shaders/_include/general_base.gdshaderinc"
+#include "res://src/shaders/_include/depth_base.gdshaderinc"
+#include "res://src/shaders/_include/linear_base.gdshaderinc"
 
 uniform sampler2D screen_texture : hint_screen_texture;
 

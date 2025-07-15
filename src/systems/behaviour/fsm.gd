@@ -1,10 +1,12 @@
 class_name FSM 
 extends Node
 
+var context: Node
+
 signal state_changed(_new_state)
 signal setup
-
 var is_setup: bool = false
+
 var state_dict: Dictionary
 var curr_state: State
 @export var initial_state: State
@@ -12,7 +14,8 @@ var curr_state: State
 func _init(init_state: State = null) -> void: initial_state = init_state
 
 # --- initial ---
-func _setup() -> void:
+func _setup(_owner: Node) -> void:
+	context = _owner
 	if is_setup: return
 	
 	is_setup = true
@@ -49,7 +52,9 @@ func _get_state(state_name: StringName) -> State:
 	if _has_state(state_name.to_lower()): return state_dict[state_name.to_lower()] 
 	return
 func _get_curr_state() -> State: return curr_state
-func _get_curr_state_name() -> String: return state_dict.find_key(curr_state)
+func _get_curr_state_name() -> String: 
+	if _get_curr_state() == null: return str("%s:: no state bound" % self)
+	return state_dict.find_key(curr_state)
 
 # --- dependent update / process --- 
 func _update(_delta: float,) -> void: 

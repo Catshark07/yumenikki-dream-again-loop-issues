@@ -112,7 +112,7 @@ var player_stats_changed: EventListener
 func _ready() -> void:
 	pass
 func enter_state(s = null) -> void: 
-	container.update_stats_display(GameManager.EventManager.get_event_param(\"PLAYER_EQUIP\")[0])
+	container.update_stats_display(EventManager.get_event_param(\"PLAYER_EQUIP\")[0])
 	
 	section.visible = true
 	mado.position.x += 10
@@ -352,8 +352,11 @@ offset_right = 184.0
 offset_bottom = 120.0
 mouse_filter = 1
 script = ExtResource("17_2m1ok")
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("20_l1wax"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":2,"vframes":1,"frame":1,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(48, 48),"frame_h_count":2,"frame_v_count":1,"progress":1,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("20_l1wax"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":2,"vframes":1,"frame":1,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(48, 48),"frame_h_count":2,"frame_v_count":1,"progress":1,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":true)
 
+unhover_cell = 1
+hover_cell = 1
+press_cell = 1
 button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
 
 metadata/_custom_type_script = "uid://bqp8xu5yrv1tn"
@@ -465,12 +468,14 @@ texture = ExtResource("12_tlelv")
 position = Vector2(-29, -15)
 texture = ExtResource("20_ub6k2")
 hframes = 3
+frame = 1
 script = ExtResource("21_cgott")
 autoplay = true
 loop = true
 fps = 9.0
 frame_dimensions = Vector2i(32, 22)
 frame_h_count = 3
+progress = 2
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="eye_r" type="Sprite2D" parent="display/white_petal_stats/mado"]
@@ -478,13 +483,14 @@ position = Vector2(29, -15)
 texture = ExtResource("20_ub6k2")
 flip_h = true
 hframes = 3
-frame = 2
+frame = 1
 script = ExtResource("21_cgott")
 autoplay = true
 loop = true
 fps = 8.0
 frame_dimensions = Vector2i(32, 22)
 frame_h_count = 3
+progress = 1
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="stats" type="Sprite2D" parent="display/white_petal_stats"]
@@ -509,7 +515,7 @@ custom_minimum_size = Vector2(27, 14)
 layout_mode = 2
 mouse_filter = 1
 script = ExtResource("17_2m1ok")
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("27_cgott"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("27_cgott"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":true,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
 
 hover_cell = 1
 press_cell = 2
@@ -604,7 +610,7 @@ custom_minimum_size = Vector2(27, 14)
 layout_mode = 2
 mouse_filter = 1
 script = ExtResource("17_2m1ok")
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("17_qtnvx"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("17_qtnvx"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":true,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
 
 hover_cell = 1
 press_cell = 2

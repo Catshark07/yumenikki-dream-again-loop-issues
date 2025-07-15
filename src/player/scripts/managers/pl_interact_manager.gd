@@ -13,7 +13,9 @@ const COOL_DOWN = 1.5
 var interaction_cooldown: float = COOL_DOWN
 var cooldown: bool = false
 var curr_interactable: Interactable
+
 var prompt_icon: Sprite2D
+var prompt_tween: Tween
 
 var closest_interactable_threshold: float = 100
 var interactables: Array[Interactable] 
@@ -30,12 +32,12 @@ func _ready() -> void:
 	field.area_exited.connect(interactable_exited)
 	
 	interactable_found.connect(func(interactable):
-		AudioService.play_sound(load("res://src/audio/se/se_interaction_prompt.wav"), 0.8, 0.8)
-		prompt_icon.global_position = interactable.global_position
-		prompt_icon.visible = true
+		AudioService.play_sound(load("res://src/audio/se/se_interaction_prompt.wav"), 0.3, 0.8)
+		prompt_icon.global_position = interactable.global_position - Vector2(0, 18)
+		show_prompt(true)
 		)
 	interactable_lost.connect(func():
-		prompt_icon.visible = false
+		show_prompt(false)
 		)
 	
 func _update(delta: float) -> void:
@@ -58,7 +60,6 @@ func _update(delta: float) -> void:
 
 func _input_pass(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact"): handle_interaction()
-
 	
 func handle_field() -> void: 
 
@@ -102,5 +103,33 @@ func interactable_exited(_inact: Area2D) -> void:
 
 func show_prompt(_show: bool) -> void: 
 	match _show:
-		true: pass
-		false: pass
+		true: prompt_show_animation()
+		false: prompt_hide_animation()
+
+func prompt_show_animation() -> void: 
+	prompt_icon.visible = true
+	
+	if prompt_tween != null: prompt_tween.kill()
+	prompt_tween = prompt_icon.create_tween()
+	
+	prompt_icon.scale = Vector2(.2, 2)
+	prompt_icon.self_modulate.a = 0
+	
+	prompt_tween.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	prompt_tween.set_parallel()
+	
+	prompt_tween.tween_property(prompt_icon, "self_modulate:a", 1, .5)
+	prompt_tween.tween_property(prompt_icon, "scale", Vector2.ONE, .5)
+	
+func prompt_hide_animation() -> void:
+	if prompt_tween != null: prompt_tween.kill()
+	prompt_tween = prompt_icon.create_tween()
+	
+	prompt_tween.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	prompt_tween.set_parallel()
+
+	prompt_tween.tween_property(prompt_icon, "self_modulate:a", 0, .5)
+	prompt_tween.tween_property(prompt_icon, "scale", Vector2(2, .2), .5)
+	
+	await prompt_tween.finished
+	prompt_icon.visible = false

@@ -7,16 +7,16 @@ var flash_tween: Tween
 func _ready() -> void:
 	on_player_effect = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP", "PLAYER_EFFECT_FOUND"], false, self)
 	
-	on_player_effect.do_on_notify("PLAYER_EFFECT_FOUND", flash_player_sprite)
-	on_player_effect.do_on_notify("PLAYER_EQUIP", func():
-		if (GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0] == load("res://src/player/madotsuki/effects/_none/_default.tres")
-			or GameManager.EventManager.get_event_param("PLAYER_EQUIP_SKIP_ANIM")[0] == true): return
+	on_player_effect.do_on_notify(["PLAYER_EFFECT_FOUND"], flash_player_sprite)
+	on_player_effect.do_on_notify(["PLAYER_EQUIP"], func():
+		if (EventManager.get_event_param("PLAYER_EQUIP")[0] == load("res://src/player/madotsuki/effects/_none/_default.tres")
+			or EventManager.get_event_param("PLAYER_EQUIP_SKIP_ANIM")[0] == true): return
 		flash_player_sprite()
 
 		self.global_position = Player.Instance.get_pl().global_position
 		animation_player.play("effect_equip"))
-	on_player_effect.do_on_notify("PLAYER_DEEQUIP", func(): 
-		if (GameManager.EventManager.get_event_param("PLAYER_DEEQUIP")[0] == load("res://src/player/madotsuki/effects/_none/_default.tres")): 
+	on_player_effect.do_on_notify(["PLAYER_DEEQUIP"], func(): 
+		if (EventManager.get_event_param("PLAYER_DEEQUIP")[0] == load("res://src/player/madotsuki/effects/_none/_default.tres")): 
 			return
 			
 		flash_player_sprite()

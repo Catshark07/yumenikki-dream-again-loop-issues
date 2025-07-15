@@ -6,5 +6,10 @@ extends Event
 @export var dur: float = 1
 
 func _execute() -> void:
-	if CameraHolder.instance: CameraHolder.instance.shake(magnitude, speed, dur)
-	finished.emit()
+	CameraHolder.instance.shake(magnitude, speed, dur)
+	super()
+
+func _validate() -> bool: 
+	if CameraHolder.instance == null:
+		printerr() 
+		return false

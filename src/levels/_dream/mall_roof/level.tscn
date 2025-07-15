@@ -14,7 +14,7 @@
 [ext_resource type="Shader" uid="uid://dosa7qbgxuqjd" path="res://src/shaders/screen_overlay/vignette_rgb_abberation.gdshader" id="8_v1ba0"]
 [ext_resource type="Texture2D" uid="uid://bk5ljpkc5uwt2" path="res://src/levels/_dream/mall_roof/kitty.png" id="12_3rima"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="13_v1ba0"]
-[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="15_7v2m1"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="15_7v2m1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_toq1w"]
 shader = ExtResource("5_6f305")

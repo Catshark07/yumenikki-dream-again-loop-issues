@@ -63,5 +63,5 @@ func _process(_delta: float) -> void:
 		get_viewport().get_audio_listener_2d().global_position - 
 		self.global_position).length()
 	
-	pitch_distance_multiplier = clampf(Game.get_viewport_dimens().length() / distance_from_audio_listener, 0.1, 1)
+	pitch_distance_multiplier = clampf(Game.Application.get_viewport_dimens().length() / distance_from_audio_listener, 0.1, 1)
 	pitch_scale *= pitch_distance_multiplier

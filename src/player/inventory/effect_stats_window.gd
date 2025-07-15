@@ -20,8 +20,8 @@ var player_stats_changed: EventListener
 func _ready() -> void:
 	player_stats_changed = EventListener.new(["PLAYER_EQUIP"], false, self)
 	player_stats_changed.do_on_notify(
-		"PLAYER_EQUIP", 
-		func(): update_stats_display(GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0]))
+		["PLAYER_EQUIP"], 
+		func(): update_stats_display(EventManager.get_event_param("PLAYER_EQUIP")[0]))
 
 func update_stats_display(_effect: PLEffect) -> void:
 		handle_stats_display_value(walk_speed, "WALK SPEED: %.2f m/s" % (_effect.stats.walk_multi * SentientBase.BASE_SPEED / 16))

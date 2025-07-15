@@ -40,6 +40,8 @@ var noise_multi: float = 1
 #endregion
 
 func _ready() -> void:
+	add_to_group("sentients")
+	
 	sprite_renderer = get_node_or_null("sprite_renderer")
 	shadow_renderer = get_node_or_null("shadow_renderer")
 	
@@ -53,26 +55,34 @@ func _ready() -> void:
 	dependency_components()
 	dependency_setup()
 	
+func _exit() -> void: 
+	self.velocity = Vector2.ZERO
+	components.set_bypass(true)
+func _enter() -> void: 
+	self.velocity = Vector2.ZERO
+	components.set_bypass(false)
+	
 func dependency_components() -> void: pass 	
 func dependency_setup() -> void: pass 
 
 # ---- base processes ----
-func _physics_process(_delta: float) -> void:
+func _physics_update(_delta: float) -> void:
 	components._physics_update(_delta)
 	speed = self.velocity.length()
 	abs_velocity = abs(self.velocity)
-	
-func _process(_delta: float) -> void:
+func _update(_delta: float) -> void:
 	(self as SentientBase).move_and_slide()
-	super(_delta) # --- sentient entity override.
+	is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO	
 	
 	_handle_heading(direction)
 	components._update(_delta)
 
 #region ---- velocity and acceleration handling ----
 func handle_velocity(_dir: Vector2, _mult: float = 1) -> void:
-	desired_vel = ((_dir.normalized() * initial_speed) * _mult) + external_velocity
-	self.velocity = desired_vel
+	if _dir.length() > 0: 
+		desired_vel = ((_dir.normalized() * initial_speed) * _mult)
+		self.velocity = desired_vel
+	else: self.velocity = Vector2.ZERO
 	
 #endregion
 #region ---- direction ----
@@ -93,5 +103,3 @@ func look_at_dir(_dir: Vector2) -> void:
 
 func handle_noise() -> void:
 	noise = (self.speed / self.MAX_SPEED) * noise_multi
-func get_noise() -> float: 
-	return noise

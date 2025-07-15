@@ -7,7 +7,6 @@ var state_fsm_dict: Dictionary
 var curr_state_fsm: Node
 @export var initial_state_fsm: Node
 
-
 # --- fsm behaviour
 func _setup() -> void:
 	for state_or_fsm in self.get_children():
@@ -26,7 +25,6 @@ func _setup() -> void:
 		
 	curr_state_fsm.enter_state()
 			
-
 
 func _init(_init_state_or_fsm: SentientFSM = null) -> void: 
 	super()

@@ -20,61 +20,54 @@ var mental_status: SBComponent
 var sprite_sheet: SerializableDict = preload("res://src/player/madotsuki/display/no_effect.tres")
 var action: PLAction 
 
-func _ready() -> void: 
-	super()
 
 
 func dependency_components() -> void:	
 	audio_listener = $audio_listener
 	sound_player = $sound_player
 	marker_look_at = $look_at
-
 	
 func dependency_setup() -> void:
 	if Instance.equipment_pending == null:
 		equip.call_deferred(DEFAULT_EFFECT)
 		
-	marker_look_at._setup()			# --- fsm; not player dependency but required
-	stamina_fsm._setup() 	# --- fsm; not player dependency but required
-	input_fsm._setup(self) 	# --- fsm; not player dependency but required
+	marker_look_at._setup()		# --- fsm; not player dependency but required
+	stamina_fsm._setup(self) 		# --- fsm; not player dependency but required
+	input_fsm._setup(self) 		# --- fsm; not player dependency but required
 	fsm._setup(self)			# --- fsm; not player dependency but required
 	
 	if components.get_component_by_name("health"):
 		components.get_component_by_name("health").took_damage.connect( 
 			func(_dmg: float):
-				GameManager.EventManager.invoke_event("PLAYER_HURT", [_dmg]))
+				EventManager.invoke_event("PLAYER_HURT", [_dmg]))
 
-# ---- direction handling ----
-func get_marker_direction() -> Vector2: return marker_look_at.position
+func get_marker_direction() -> Vector2: 
+	return marker_look_at.position
 func set_marker_direction_mode(_new_mode: Strategy) -> void: 
 	assert(_new_mode is Strategy)
 	marker_look_at._change_strat(_new_mode)
+
 #region PROCESS and INPUT
-# ---- process / input ----
-func _process(_delta: float) -> void:	
+func _update(_delta: float) -> void:	
 	super(_delta)
 	handle_noise()
 	input_fsm._update(_delta)
 	if fsm: fsm._update(_delta)
-func _physics_process(_delta: float) -> void:
+func _physics_update(_delta: float) -> void:
 	super(_delta)
 	stamina_fsm._physics_update(_delta)
 	if behaviour: behaviour._physics_update(self, _delta)
 	if fsm: fsm._physics_update(_delta)
-func _unhandled_input(event: InputEvent) -> void:
+func _input_pass(event: InputEvent) -> void:
 	dependency_input(event)
-			
-	if event is InputEventKey && Global.input:
-		if fsm: fsm._input_pass(event)
+	if fsm: fsm._input_pass(event)
 	
 func dependency_input(event: InputEvent) -> void:
-	if event is InputEventKey && Global.input:
-		if components != null: 
-			components._input_pass(event)
+	if components != null: 
+		components._input_pass(event)
 #endregion
 
 #region EMOTES, UNIQUE, BEHAVIOUR
-# ---- unique ----
 func perform_action(_action: PLAction) -> void: 
 	components.get_component_by_name("action_manager").perform_action(_action, self)
 func cancel_action(_action: PLAction = action) -> void: 
@@ -82,10 +75,8 @@ func cancel_action(_action: PLAction = action) -> void:
 
 func equip(_effect: PLEffect, _skip_anim: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").equip(_effect, self, _skip_anim)
-	Player.Instance.equipment_pending = _effect
 func deequip_effect(_skip_anim: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").deequip(self, _skip_anim)
-	set_sprite_sheet(load(DEFAULT_EFFECT.sprite_override))
 
 func set_behaviour(_beh: PLBehaviour) -> void:
 	behaviour = _beh

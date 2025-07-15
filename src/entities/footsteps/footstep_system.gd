@@ -100,8 +100,8 @@ func spawn_footstep_fx() -> void:
 func play_footstep_sound(_footstep_se: AudioStream) -> void: 
 	footstep_se_player.play_sound(
 		_footstep_se, 
-		clampf((log(sentient.get_noise() + 1)), 0.5, 1.75), 
-		clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))	
+		clampf((log(sentient.noise + 1)), 0.5, 1.75), 
+		clampf(randf_range(0.75, sentient.noise), 0.75, 1.2))	
 
 func _on_body_shape_entered(
 	body_rid: RID, 
@@ -110,18 +110,11 @@ func _on_body_shape_entered(
 	local_shape_index: int) -> void:
 		
 		if body is FootstepTileMap:
-			if body in multiple_floors.arr: return
 			multiple_floors.append(body)
-			
-			for floors: TileMapLayer in multiple_floors.arr:
-				if floors.z_index > greatest_index: 
-					greatest_index = floors.z_index
-					floor_priority = floors
-					curr_material = floor_priority.ground_material
-					break
-					
-				if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
-				else: sentient.shadow_renderer.visible = true	
+								
+		scan_ground_material()				
+				
+		sentient.shadow_renderer.visible = !transparent_surfaces[curr_material]
 				
 func _on_body_shape_exited(
 	body_rid: RID, 
@@ -137,9 +130,16 @@ func _on_body_shape_exited(
 				if  multiple_floors.is_empty():
 					curr_material = default_footstep
 					floor_priority = null
-					greatest_index = -50
 					sentient.shadow_renderer.visible = false
 					sound_to_be_played = null
+					
+func scan_ground_material() -> void:
+	for floors: FootstepTileMap in multiple_floors.arr:
+		if floors.z_index > greatest_index: 
+			greatest_index = floors.z_index
+			floor_priority = floors
+			curr_material = floor_priority.ground_material
+			break
 		
 class FootstepDust:
 	extends SpriteSheetFormatterAnimated

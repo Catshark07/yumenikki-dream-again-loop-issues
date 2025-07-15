@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://dnjvpl85u4jl8"]
+[gd_scene load_steps=18 format=4 uid="uid://dnjvpl85u4jl8"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_s2gkw"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_3yepy"]
@@ -11,7 +11,12 @@
 [ext_resource type="TileSet" uid="uid://by00rslt3yu5s" path="res://src/levels/__ignore/tilemaps/numbers.tres" id="8_1q3ts"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_idt0i"]
 [ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="11_vxiyi"]
-[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="12_vxiyi"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="12_vxiyi"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="13_u3o2y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ubshi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dgdtf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1q3ts"]
 shader = ExtResource("2_3yepy")
@@ -24,11 +29,17 @@ shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u3o2y"]
-size = Vector2(2590, 1520)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2l745"]
+size = Vector2(2624, 1528)
 
 [node name="numbers_world" type="Node"]
 script = ExtResource("1_s2gkw")
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":null)
+
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":null)
+
+load_transition = SubResource("ShaderMaterial_ubshi")
+unload_transition = SubResource("ShaderMaterial_dgdtf")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
@@ -60,23 +71,29 @@ y_sort_enabled = true
 
 [node name="to_docks" parent="entrance_section" instance=ExtResource("10_idt0i")]
 position = Vector2(-312, -496)
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/systems/components/independent/spawn_point.gd"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":null)
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.9, 0, 0.7, 0.3),"script":null)
 
 
 [node name="to_nexus" parent="entrance_section" instance=ExtResource("10_idt0i")]
 position = Vector2(184, 32)
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/systems/components/independent/spawn_point.gd"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":null)
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.9, 0, 0.7, 0.3),"script":null)
 
 
-[node name="renderer" parent="entrance_section/to_nexus" index="4"]
+[node name="scene_traversal" parent="entrance_section/to_nexus/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://dl25joalnmaxt"
+
+[node name="renderer" parent="entrance_section/to_nexus" index="2"]
 texture = ExtResource("11_vxiyi")
 hframes = 1
 frame_h_count = 1
 
 [node name="to_flys" parent="entrance_section" instance=ExtResource("10_idt0i")]
 position = Vector2(-1048, 576)
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/systems/components/independent/spawn_point.gd"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":null)
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.9, 0, 0.7, 0.3),"script":null)
 
+
+[node name="scene_traversal" parent="entrance_section/to_flys/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://clyak4figgq17"
 
 [node name="walls" type="TileMapLayer" parent="entrance_section"]
 y_sort_enabled = true
@@ -94,10 +111,25 @@ position = Vector2(176, 64)
 [node name="CamDeadzone" type="Area2D" parent="entrance_section"]
 process_mode = 3
 position = Vector2(-1416, -536)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("12_vxiyi")
-size = Vector2i(2590, 1520)
-shape = SubResource("RectangleShape2D_u3o2y")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(1304, 756),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_2l745"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="rect" type="CollisionShape2D" parent="entrance_section/CamDeadzone"]
+position = Vector2(1304, 756)
+shape = SubResource("RectangleShape2D_2l745")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="scene_load_sequence" type="Node" parent="."]
+script = ExtResource("13_u3o2y")
+skip_warning = null
+
+[node name="scene_unload_sequence" type="Node" parent="."]
+script = ExtResource("13_u3o2y")
+skip_warning = null
 
 [editable path="camera"]
 [editable path="entrance_section/to_docks"]

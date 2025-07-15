@@ -1,9 +1,9 @@
 shader_type canvas_item;
 render_mode blend_add;
 
-#include "general_base.gdshaderinc"
-#include "depth_base.gdshaderinc"
-#include "radial_base.gdshaderinc"
+#include "res://src/shaders/_include/general_base.gdshaderinc"
+#include "res://src/shaders/_include/depth_base.gdshaderinc"
+#include "res://src/shaders/_include/radial_base.gdshaderinc"
 
 uniform bool rotation = true;
 

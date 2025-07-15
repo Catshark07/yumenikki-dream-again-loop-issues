@@ -4,5 +4,5 @@ extends Event
 
 func _execute() -> void:
 	if effect == null: return
-	GameManager.EventManager.invoke_event("PLAYER_EFFECT_FOUND", [effect])
+	EventManager.invoke_event("PLAYER_EFFECT_FOUND", [effect])
 	super()

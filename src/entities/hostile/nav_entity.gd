@@ -9,19 +9,18 @@ var sound_player: SoundPlayer
 
 func _ready() -> void:
 	super()
-	add_to_group("sentients")
 
 func dependency_setup() -> void: 
 	stance_fsm._setup(self)
 	behaviour_fsm._setup(self)
 	sound_player = get_node("sound_player")
 	
-func _process(delta: float) -> void:
+func _update(delta: float) -> void:
 	super(delta)
 	stance_fsm._update(delta)
 	behaviour_fsm._update(delta)
 
-func _physics_process(delta: float) -> void:
+func _physics_update(delta: float) -> void:
 	super(delta)
 	stance_fsm._physics_update(delta)
 	behaviour_fsm._physics_update(delta)

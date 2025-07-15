@@ -1,17 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://bku0eqinjwowa"]
+[gd_scene load_steps=16 format=3 uid="uid://bku0eqinjwowa"]
 
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="1_2hf7w"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_cv7t1"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="2_45h0u"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="2_lea3f"]
+[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/event/game/invoke_game_event.gd" id="3_e2ltu"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="4_who8r"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="5_67jxd"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="5_76or2"]
+[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/event/game/wait_seconds.gd" id="6_orvon"]
+[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="7_4eec8"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="7_tckbb"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="8_bxvt1"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_76or2"]
-size = Vector2(0, 0)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_45h0u"]
 blend_mode = 2
@@ -19,17 +19,29 @@ blend_mode = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
 size = Vector2(16, 8)
 
-[node name="door_interactable" type="Area2D"]
-script = ExtResource("1_cv7t1")
-on_interact = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_lea3f"),"deferred":false,"wait_til_finished":true)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4eec8"]
+size = Vector2(16, 16)
 
-shape = SubResource("RectangleShape2D_76or2")
+[node name="door_interactable" type="Area2D"]
+process_mode = 3
+collision_layer = 1073741824
+collision_mask = 1073741824
+script = ExtResource("1_cv7t1")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_4eec8"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.9, 0, 0.7, 0.3),"script":null)
+
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="on_interact" type="Node" parent="."]
 process_mode = 4
 script = ExtResource("2_lea3f")
+remove_invalid_events = false
+halt_sequence = true
+
+[node name="request_cutscene" type="Node" parent="on_interact"]
+script = ExtResource("3_e2ltu")
+event_id = "CUTSCENE_START_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="play_sound" type="Node" parent="on_interact"]
 script = ExtResource("4_who8r")
@@ -37,9 +49,20 @@ sound = ExtResource("5_67jxd")
 pitch = 0.8
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="on_interact"]
-script = ExtResource("5_76or2")
+[node name="wait" type="Node" parent="on_interact"]
+script = ExtResource("6_orvon")
+seconds = 0.5
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("scene_traversal")]
+script = ExtResource("5_76or2")
+scene_traversal = NodePath("scene_traversal")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="scene_traversal" type="Node" parent="on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("7_4eec8")
+spawn_point = NodePath("../../../spawn_point")
+metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
 [node name="spawn_point" type="Node2D" parent="." node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 12)
@@ -66,3 +89,7 @@ position = Vector2(0, 12)
 
 [node name="shape" type="CollisionShape2D" parent="coll"]
 shape = SubResource("RectangleShape2D_cv7t1")
+
+[node name="rect" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4eec8")
+debug_color = Color(0.9, 0, 0.7, 0.3)

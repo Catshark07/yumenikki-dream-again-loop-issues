@@ -20,13 +20,6 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4gftm"]
 shader = ExtResource("4_qaqf1")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.2
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7dcvm"]
 size = Vector2(16, 16)

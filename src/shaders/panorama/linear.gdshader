@@ -1,7 +1,5 @@
 shader_type canvas_item;
-#include "res://src/shaders/panorama/linear_base.gdshaderinc"
-
-
+#include "res://src/shaders/_include/linear_base.gdshaderinc"
 
 void vertex()
 {

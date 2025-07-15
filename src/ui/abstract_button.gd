@@ -35,7 +35,7 @@ func _ready() -> void:
 		button.pressed.connect(pressed.emit)
 		button.mouse_entered.connect(hover_entered.emit)
 		button.mouse_exited.connect(hover_exited.emit)
-		
+		button.toggled.connect(toggle)
 	
 func _setup() -> void:
 	button = GlobalUtils.get_child_node_or_null(self, "button")
@@ -64,13 +64,15 @@ func set_active(_active: bool) -> void:
 func set_button_toggle_mode(_toggle: bool) -> void:
 	if button: button.toggle_mode = _toggle
 
-func untoggle() -> void:
-	button.button_pressed = false
-	_on_unhover()
-	_on_untoggle()
-	toggled.emit(false)
-func toggle() -> void:
-	button.button_pressed = true
-	_on_hover()
-	_on_toggle()
-	toggled.emit(true)
+func toggle(is_toggled: bool) -> void:
+	match is_toggled:
+		true:
+			button.button_pressed = true
+			_on_hover()
+			_on_toggle()
+			toggled.emit(true)
+		false:
+			button.button_pressed = false
+			_on_unhover()
+			_on_untoggle()
+			toggled.emit(false)

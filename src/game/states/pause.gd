@@ -3,8 +3,6 @@ extends State
 @export var pause_menu: Control
 @export var pause_bgm: BGM
 
-func _ready() -> void:
-	pause_bgm.autoplay = false
 
 func enter_state() -> void: 
 	GameManager.set_ui_visibility(false)

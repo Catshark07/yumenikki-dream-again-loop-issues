@@ -2,7 +2,7 @@
 shader_type canvas_item;
 render_mode blend_add;
 
-#include "res://src/shaders/panorama/depth_base.gdshaderinc"
+#include "res://src/shaders/_include/depth_base.gdshaderinc"
 
 uniform float opacity : hint_range(0.0, 1.0, 0.1) = 1;
 uniform sampler2D noise : repeat_enable;

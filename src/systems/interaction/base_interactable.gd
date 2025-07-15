@@ -23,6 +23,7 @@ extends AreaRegion
 
 @export_group("Misc.")
 signal interacted
+signal interact_successful
 
 func _ready() -> void:	
 	super() 

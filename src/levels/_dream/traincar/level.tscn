@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_nb6pg"]
 [ext_resource type="Texture2D" uid="uid://c0vs6pssjg5oy" path="res://src/images/panorama/train_car_forest.png" id="2_y16ts"]
 [ext_resource type="Texture2D" uid="uid://c0gtkensruf83" path="res://src/levels/_dream/traincar/train.png" id="3_yrj65"]
-[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="4_20b70"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_20b70"]
 [ext_resource type="Texture2D" uid="uid://cfolkwqp7govn" path="res://src/levels/_dream/traincar/inside_car.png" id="5_y16ts"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5wlcx"]

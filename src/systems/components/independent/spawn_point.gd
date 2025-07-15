@@ -13,14 +13,13 @@ extends Node2D
 	
 
 func _ready() -> void:		
-	set_process(true)
-	if !Engine.is_editor_hint():
-		self.add_to_group("spawn_points")
-		set_process(false)
+	set_process(false)
+	
+	if Engine.is_editor_hint(): queue_redraw()
+	if !Engine.is_editor_hint(): self.add_to_group("spawn_points")
 		
 func _draw() -> void:
+	if Engine.is_editor_hint():
 		draw_texture(
 			spawn_texture, 
 			-spawn_texture.get_size() / 2 - Vector2(0, 8), Color(modulate, 0.8))
-func _process(delta: float) -> void:
-	if Engine.is_editor_hint(): queue_redraw()

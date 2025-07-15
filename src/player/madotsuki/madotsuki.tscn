@@ -1,8 +1,9 @@
-[gd_scene load_steps=43 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=44 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://32q36bskoln0" path="res://src/systems/behaviour/strategist.gd" id="2_c8hmm"]
 [ext_resource type="Script" uid="uid://cpc216jqo5itw" path="res://src/player/scripts/directional_poi/input.gd" id="3_kx4hk"]
+[ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_xe7mj"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
 [ext_resource type="Script" uid="uid://dtqoa37rhrqdu" path="res://src/player/scripts/components/pl_mental_status.gd" id="6_mbimu"]
@@ -95,15 +96,7 @@ collision_layer = 5
 script = ExtResource("1_wub1p")
 stamina_fsm = NodePath("stance_fsm/stamina_fsm")
 input_fsm = NodePath("input_fsm")
-access_menu = null
 fsm = NodePath("stance_fsm")
-walk_multiplier = null
-sneak_multiplier = null
-sprint_multiplier = null
-exhaust_multiplier = null
-stamina_drain = null
-stamina_regen = null
-initial_speed = null
 
 [node name="look_at" type="Marker2D" parent="."]
 script = ExtResource("2_c8hmm")
@@ -111,6 +104,12 @@ initial_strat = SubResource("Resource_gmp5c")
 
 [node name="sb_components" type="Node2D" parent="."]
 script = ExtResource("7_ps2wd")
+
+[node name="health" type="Node2D" parent="sb_components"]
+script = ExtResource("5_2gyta")
+
+[node name="blood_particles" type="CPUParticles2D" parent="sb_components/health"]
+emitting = false
 
 [node name="mental_status" type="Node" parent="sb_components"]
 script = ExtResource("6_mbimu")
@@ -158,9 +157,10 @@ position = Vector2(0, 13.5)
 shape = SubResource("RectangleShape2D_4moul")
 debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
 
-[node name="interaction_manager" type="Node2D" parent="sb_components"]
+[node name="interaction_manager" type="Node2D" parent="sb_components" node_paths=PackedStringArray("field")]
 process_mode = 1
 script = ExtResource("11_bof2k")
+field = NodePath("field")
 
 [node name="field" type="Area2D" parent="sb_components/interaction_manager"]
 rotation = 1.5708
@@ -177,7 +177,6 @@ top_level = true
 z_index = 5
 position = Vector2(0, -24)
 texture = ExtResource("17_cin7d")
-offset = Vector2(0, -16)
 
 [node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("18_rujao")
@@ -282,11 +281,6 @@ shape = SubResource("RectangleShape2D_ylvyo")
 disable_mode = 1
 collision_layer = 1073741824
 collision_mask = 1073741824
-
-[node name="nav_avoidance" type="NavigationObstacle2D" parent="."]
-radius = 25.0
-affect_navigation_mesh = true
-avoidance_layers = 8
 
 [node name="sound_player" type="AudioStreamPlayer" parent="."]
 bus = &"Effects"

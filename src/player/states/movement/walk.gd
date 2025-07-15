@@ -10,7 +10,7 @@ func enter_state() -> void:
 	
 func update(_delta: float, ) -> void:
 	sentient.look_at_dir(sentient.get_marker_direction())
-	if sentient.velocity == Vector2.ZERO: sentient.force_change_state("idle")
+	if roundf(sentient.abs_velocity.length()) <= 0: sentient.force_change_state("idle")
 	
 func physics_update(_delta: float, ) -> void:
 	sentient.get_behaviour()._walk(sentient, sentient.input)

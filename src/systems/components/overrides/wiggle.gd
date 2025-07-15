@@ -18,8 +18,8 @@ var got_origin_pos: bool = false
 var pos_init_x: float
 var pos_init_y: float
 
-@export var wig_x_strn: float = 1
-@export var wig_y_strn: float = 1
+@export var wig_x_strn: float = 3.25
+@export var wig_y_strn: float = 3.25
 @export var wig_pos_speed: float = 1
 
 @export_group("Flags")

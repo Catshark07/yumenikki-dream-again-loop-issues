@@ -1,19 +1,12 @@
 
 extends Node
 
-# ---- data ----
 
-# inner and static class singletons
 var scene_manager: SceneManager
 
 # ---- windows
 var root: Window
-var main_window: Window
-var main_viewport: Viewport
 var main_tree: SceneTree
-
-var viewport_width: int
-var viewport_length: int
 
 var is_paused: bool
 # ---- time
@@ -38,39 +31,56 @@ var true_sfx_volume: float = 0
 # The main game holds a child node that acts as the scene currently active.
 # Upon scene change, remove the current child and queue load for the requested one.
 
-func singleton_setup() -> void: scene_manager = SceneManager.new()
+func singleton_setup() -> void: 
+	scene_manager = SceneManager.new()
+	
+	if GameManager.instance == null:
+		game_manager = preload("res://src/main/game.tscn").instantiate()
+		game_manager.name = "game_manager"
+		self.add_child(game_manager)
+	else:
+		game_manager.reparent(self)
 
 func _ready() -> void:
+	true_time_scale = Engine.time_scale
+	
+	set_process(false)
+	set_physics_process(false)
+	set_process_input(false)
 	time_elapsed = 0
 		
 	root = get_tree().root
-	main_window = get_tree().root.get_window()
-	main_viewport = get_tree().root.get_viewport()
 	main_tree = get_tree()
 	
+	Application._setup()
+	Audio._setup()
+	Config._setup()
+	Directory._setup()
 	Optimization._setup()
-	Config.instantiate_config()
-	Config.load_settings_data()
-	
-	true_time_scale = Engine.time_scale
+	Save._setup() 
 	
 	singleton_setup()
-	render_server_setup()
-	viewport_setup()
-	window_setup()
-	instantiate_game_manager()
 	
 	await main_tree.process_frame
 	
-	scene_manager.setup()
 	game_manager.setup()
+	scene_manager.setup()
 	GlobalPanoramaManager.setup()
+	
+	set_process(true)
+	set_physics_process(true)
+	set_process_input(true)
+	
 func _process(delta: float) -> void: 
-	Game.scene_manager.handle_background_loading_upon_request(Game.scene_manager.scene_node_packed)
 	GlobalPanoramaManager.update(delta)
 	true_delta = get_real_delta()
 	true_time_scale = get_real_timescale()
-	
+	game_manager.update(delta)
+func _physics_process(delta: float) -> void:
+	game_manager.physics_update(delta)
+func _input(event: InputEvent) -> void:
+	game_manager.input_pass(event)	
+
 func get_play_time() -> Dictionary:
 	return {
 		"hours" 	: floori(fmod(time_elapsed / 3600, 24)),
@@ -78,48 +88,6 @@ func get_play_time() -> Dictionary:
 		"seconds" 	: floori(fmod(fmod(time_elapsed, 3600), 60))
 	}
 # ---- rendering server control ----
-func render_server_setup() -> void:
-	RenderingServer.set_default_clear_color(Color.BLACK)
-func instantiate_game_manager() -> void: 
-	if GameManager.instance == null:
-		game_manager = preload("res://src/main/template.tscn").instantiate()
-		game_manager.name = "game_manager"
-		self.add_child(game_manager)
-	else:
-		game_manager.reparent(self)
-# ---- display / window setup ---- 
-
-func viewport_setup() -> void:
-	viewport_width = get_viewport_width()
-	viewport_length = get_viewport_height()
-	
-	main_window.focus_exited.connect(func(): 
-		main_tree.paused = true
-		Music.stream_paused = true
-		Ambience.stream_paused = true)
-	main_window.focus_entered.connect(func(): 
-		main_tree.paused = false
-		Music.stream_paused = false
-		Ambience.stream_paused = false)
-	
-func window_setup() -> void:
-	Engine.max_fps = 60
-	ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_repeat", CanvasItem.TEXTURE_REPEAT_MIRROR)
-
-	main_window.size = Vector2(480, 270) * 3
-	main_window.position = DisplayServer.screen_get_size(DisplayServer.get_primary_screen()) / 2 - main_window.size / 2 
-	
-	main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-
-# ---- display / window control ---- 
-func change_window_res() -> void: pass
-func change_window_mode(new_mode: Window.Mode) -> void: main_window.mode = new_mode
-func set_window_borderless(_brd: bool = true) -> void: main_window.borderless = _brd
-
-func get_viewport_width() -> int: return ProjectSettings.get("display/window/size/viewport_width")
-func get_viewport_height() -> int: return ProjectSettings.get("display/window/size/viewport_height")
-
-func get_viewport_dimens() -> Vector2: return Vector2(viewport_width, viewport_length)
 
 func lerp_timescale(_new: float):
 	var t_tween := self.create_tween() 
@@ -135,12 +103,6 @@ func get_real_delta() -> float:
 func get_real_timescale() -> float:
 	return true_time_scale
 func get_timescale() -> float: return Engine.time_scale
-
-# ---- node manipulation ----
-func get_group_arr(_name: String) -> Array: 
-	if main_tree.has_group(_name):
-		return main_tree.get_nodes_in_group(_name)
-	return []
 	
 class Save:
 	extends GameSubClass
@@ -182,7 +144,7 @@ class Save:
 		save_file.close()
 		save_file = null
 		
-		GameManager.EventManager.invoke_event("GAME_FILE_SAVE")
+		EventManager.invoke_event("GAME_FILE_SAVE")
 		return curr_data
 	static func load_data(_number: int = 0) -> Error:
 		if FileAccess.file_exists(str(SAVE_DIR, "save_%s.json" % [_number])): 
@@ -224,6 +186,11 @@ class Save:
 		if !_key in data: return
 		return data[_key]
 class Config: 
+	extends GameSubClass
+	static func _setup() -> void:
+		instantiate_config()
+		load_settings_data()
+	
 	static var config_data := ConfigFile.new()
 	
 	static func instantiate_config() -> void:
@@ -243,14 +210,14 @@ class Config:
 		config_data.save("user://settings.cfg")
 	
 	static func save_settings_data() -> void: 
-		GameManager.EventManager.invoke_event("GAME_CONFIG_SAVE")
+		EventManager.invoke_event("GAME_CONFIG_SAVE")
 		
 		config_data.set_value("audio", "music", db_to_linear(Audio.get_bus_volume("Music")))
 		config_data.set_value("audio", "ambience", db_to_linear(Audio.get_bus_volume("Ambience")))
 		config_data.set_value("audio", "se", db_to_linear(Audio.get_bus_volume("Effects")))
 		
-		config_data.set_value("graphics", "borderless", Game.main_window.borderless)
-		config_data.set_value("graphics", "fullscreen", Game.main_window.mode == Window.MODE_FULLSCREEN)
+		config_data.set_value("graphics", "borderless", Game.Application.main_window.borderless)
+		config_data.set_value("graphics", "fullscreen", Game.Application.main_window.mode == Window.MODE_FULLSCREEN)
 		config_data.set_value("graphics", "motion_reduce", CameraHolder.motion_reduction)
 		config_data.set_value("graphics", "bloom", GameManager.bloom)
 		
@@ -263,8 +230,8 @@ class Config:
 		Audio.adjust_bus_volume("Ambience", config_data.get_value("audio", "ambience"))
 		Audio.adjust_bus_volume("Effects", config_data.get_value("audio", "se"))
 		
-		Game.main_window.borderless = config_data.get_value("graphics", "borderless")
-		Game.main_window.mode = Window.MODE_FULLSCREEN if config_data.get_value("graphics", "fullscreen") else Window.MODE_WINDOWED
+		Game.Application.main_window.borderless = config_data.get_value("graphics", "borderless")
+		Game.Application.main_window.mode = Window.MODE_FULLSCREEN if config_data.get_value("graphics", "fullscreen") else Window.MODE_WINDOWED
 		CameraHolder.motion_reduction = config_data.get_value("graphics", "motion_reduce")
 		GameManager.bloom = config_data.get_value("graphics", "bloom")
 		
@@ -277,9 +244,23 @@ class Config:
 		return _default
 class Application: 
 	extends GameSubClass
+	static func _setup() -> void:
+		main_window = Game.main_tree.root.get_window()
+		main_viewport = Game.main_tree.root.get_viewport()
+		window_setup()
+		viewport_setup()
+		render_server_setup()
+		
+	static var viewport_width: int
+	static var viewport_length: int
+	static var main_window: Window
+	static var main_viewport: Viewport
+	
 	
 	static func quit(): 
 		Optimization.set_max_fps(30)
+		if Game.game_manager != null:
+			Game.game_manager.process_mode = Node.PROCESS_MODE_DISABLED
 		Music.fade_out()
 		Ambience.fade_out()
 		await Game.Save.save_data()
@@ -291,7 +272,41 @@ class Application:
 	static func resume(): 
 		Game.main_tree.paused = false
 		Game.is_paused = false
+	
+	static func get_viewport_width() -> int: return ProjectSettings.get("display/window/size/viewport_width")
+	static func get_viewport_height() -> int: return ProjectSettings.get("display/window/size/viewport_height")		
+	static func get_viewport_dimens() -> Vector2: return Vector2(viewport_width, viewport_length)
+	static func viewport_setup() -> void:
+		
+		viewport_width = get_viewport_width()
+		viewport_length = get_viewport_height()
+	
+		main_window.focus_exited.connect(func(): 
+			Game.main_tree.paused = true
+			Music.stream_paused = true
+			Ambience.stream_paused = true)
+		main_window.focus_entered.connect(func(): 
+			Game.main_tree.paused = false
+			Music.stream_paused = false
+			Ambience.stream_paused = false)
+	
+	static func window_setup() -> void:
+		Engine.max_fps = 60
+		ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_repeat", CanvasItem.TEXTURE_REPEAT_MIRROR)
+
+		main_window.size = Vector2(480, 270) * 3
+		main_window.position = DisplayServer.screen_get_size(DisplayServer.get_primary_screen()) / 2 - main_window.size / 2 
+		
+		main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	static func change_window_res() -> void: pass
+	static func change_window_mode(new_mode: Window.Mode) -> void: main_window.mode = new_mode
+	static func set_window_borderless(_brd: bool = true) -> void: main_window.borderless = _brd
+	
+	static func render_server_setup() -> void:
+		RenderingServer.set_default_clear_color(Color.BLACK)
+	
 class Audio: 
+	extends GameSubClass
 	static func adjust_bus_volume(_bus_name: String, _vol: float) -> void:
 		if (AudioServer.get_bus_index(_bus_name)) >= 0:
 			AudioServer.set_bus_volume_db(AudioServer.get_bus_index(_bus_name), linear_to_db(_vol))
@@ -333,16 +348,17 @@ class Optimization:
 	static func setup_overridden_project_settings() -> void:
 		if override_godot_default_settings:
 			RenderingServer.viewport_set_default_canvas_item_texture_repeat(
-				Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
+				Game.Application.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
 			RenderingServer.viewport_set_default_canvas_item_texture_filter(
-				Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)	
+				Game.Application.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)	
 			
-			Game.main_window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-			Game.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_ENABLED
-			Game.main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+			Game.Application.main_window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+			Game.Application.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_ENABLED
+			Game.Application.main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	static func set_max_fps(_max_fps: int) -> void:
 		Engine.max_fps = _max_fps
 class Directory:
+	extends GameSubClass
 	static func is_path_in_dir(_path: String, _dir: String) -> bool:
 		var dir_content = DirAccess.get_directories_at(_dir)
 		print(dir_content)

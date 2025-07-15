@@ -1,11 +1,10 @@
 shader_type canvas_item;
 
-uniform vec4 colour: source_color = vec4(0,0,0,1);
-uniform float transparency: hint_range(0.0, 1.0, 0.1) = 1;
-uniform float progress: hint_range(0.0, 1.0, 0.1) = 0;
+#include "res://src/shaders/_include/general_base.gdshaderinc"
+#include "res://src/shaders/_include/transition_base.gdshaderinc"
 
 void fragment()
 {
 	COLOR.rgb = colour.rgb;
-	COLOR.a = (transparency * progress);
+	COLOR.a = (progress);
 }

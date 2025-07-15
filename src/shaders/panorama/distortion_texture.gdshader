@@ -1,8 +1,8 @@
 shader_type canvas_item;
 
-#include "res://src/shaders/panorama/general_base.gdshaderinc"
-#include "res://src/shaders/panorama/linear_base.gdshaderinc"
-#include "depth_base.gdshaderinc"
+#include "res://src/shaders/_include/general_base.gdshaderinc"
+#include "res://src/shaders/_include/linear_base.gdshaderinc"
+#include "res://src/shaders/_include/depth_base.gdshaderinc"
 
 uniform bool texture_scroll = false;
 
@@ -18,7 +18,7 @@ void vertex()
 
 void fragment()
 {
-	
+
 	vec2 uv = UV;
 	vec2 scroll_dir = -vec2(dirX, dirY) * (scroll_speed / 2.);
 

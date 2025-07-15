@@ -12,8 +12,6 @@ const MENU_SCENES := [
 	"res://src/levels/_neutral/menu/menu.tscn"
 ]
 
-var scene_changed_listener: EventListener
-
 # ---- ----
 static var bloom: bool = false
 
@@ -23,11 +21,12 @@ static var instance
 # ---- process parents ----
 static var pausable_parent: CanvasLayer
 static var always_parent: CanvasLayer
+static var ui_parent: CanvasLayer
 
 # ---- UI ----
 static var player_hud: PLHUD
 static var options: IngameSettings
-static var ui_parent: CanvasLayer
+static var state_handler: Component
 
 # ---- cinematic ----
 static var cinematic_ui: CanvasLayer
@@ -37,33 +36,25 @@ static var cb_tween: Tween
 # ---- components
 static var game_fsm: StrategistFSM
 
-
-# ---- internal setup ----
-func _ready() -> void:
-	instance = self
-	Game.game_manager = self
+func setup() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-func _input(event: InputEvent) -> void:
-	if game_fsm: game_fsm._input_pass(event)
-func setup() -> void:
-	await Game.main_tree.process_frame
+	if instance != null: instance.queue_free()
+	instance = self
 	
-	scene_changed_listener = EventListener.new(["SCENE_CHANGE_SUCCESS"], false, self)
 	player_hud = PLHUD.instance
 	
 	global_screen_effect 	= get_node("global_screen_effect")
 	pausable_parent 		= get_node("pausable")
 	always_parent 			= get_node("always")
 	game_fsm 				= get_node("fsm")
-	
+	state_handler 			= get_node("state_handler")
+
 	ui_parent 				= get_node("always/ui")
 	options 				= get_node("always/pause")
 	cinematic_ui 			= get_node("always/cinematic")
 	cinematic_bars 			= get_node("always/cinematic/cinematic_bars")
 
-	game_fsm._setup()
-	
 	pausable_parent.process_mode = Node.PROCESS_MODE_PAUSABLE
 	always_parent.process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -71,6 +62,11 @@ func setup() -> void:
 	cinematic_bars.size.y = 360
 	
 	global_screen_effect.environment.glow_enabled = bloom
+	state_handler._setup()
+	
+func update(delta: float) -> void: state_handler._update(delta)
+func physics_update(delta: float) -> void: state_handler._physics_update(delta)
+func input_pass(event: InputEvent) -> void: state_handler._input_pass(event)
 	
 # ---- game functionality ----
 static func pause_options(_pause: bool = true) -> void:
@@ -111,7 +107,9 @@ static func show_options(_visible: bool) -> void:
 	options.visible = _visible
 
 # ---- state based stuff ----
-static func change_to_state(new_state: String) -> void: game_fsm._change_to_state(new_state)
+static func change_to_state(new_state: String) -> void:
+	print("GAME_FSM: %s" % game_fsm._get_curr_state_name()) 
+	game_fsm._change_to_state(new_state)
 static func is_in_state(state: String) -> bool: return game_fsm._is_in_state(state)
 static func request_transition(_fade_type: ScreenTransition.fade_type) -> void:
 	await Game.main_tree.physics_frame
@@ -124,104 +122,3 @@ static func request_transition(_fade_type: ScreenTransition.fade_type) -> void:
 
 # the only downside however, is no matter what callable is subscribed to what event
 # the event will invoke and call all callables with no exceptions and conditions.
-class EventManager:
-	static func add_listener(_listener: EventListener, _id: String) -> void:
-		create_event(_id)
-		GameManager.EventManager.event_ids[_id]["subscribers"].append(_listener)
-	static func remove_listener(_listener: EventListener, _id: String) -> void:
-		create_event(_id)
-		if  GameManager.EventManager.event_ids[_id]["subscribers"].find(_listener) != -1:
-			GameManager.EventManager.event_ids[_id]["subscribers"].remove_at(
-				GameManager.EventManager.event_ids[_id]["subscribers"].find(_listener)
-				)
-	static func create_event(_id: String) -> void:
-		if !GameManager.EventManager.event_ids.has(_id):
-			GameManager.EventManager.event_ids[_id] = {"subscribers" : [], "params" : []}
-			return	
-		
-		if !GameManager.EventManager.event_ids[_id].has("subscribers"):
-			GameManager.EventManager.event_ids[_id]["subscribers"] = []
-		
-		if !GameManager.EventManager.event_ids[_id].has("params"):
-			GameManager.EventManager.event_ids[_id]["params"] = []
-			
-	static func invoke_event(_id: String, _params := []) -> void: 
-		create_event(_id)
-		GameManager.EventManager.event_ids[_id]["params"] = _params
-
-		for i in range((GameManager.EventManager.event_ids[_id]["subscribers"] as Array[EventListener]).size()):
-			if GameManager.EventManager.event_ids[_id]["subscribers"][i].is_valid_listener: 
-				GameManager.EventManager.event_ids[_id]["subscribers"][i].on_notify.call_deferred(_id)
-			else: 
-				remove_listener(GameManager.EventManager.event_ids[_id]["subscribers"][i], _id)
-	static func get_event_param(_id: String) -> Array[Variant]:
-		create_event(_id)
-		if (GameManager.EventManager.event_ids[_id]["params"] as Array).is_empty(): return [null]
-		return GameManager.EventManager.event_ids[_id]["params"]
-
-	static var event_ids := {
-		# ---- game events -----
-		"GAME_MENU" : {},
-		"GAME_PAUSE" : {},
-		"GAME_CUTSCENE" : {},
-		"GAME_ACTIVE" : {},
-		"GAME_FILE_SAVE" : {},
-		"GAME_CONFIG_SAVE" : {},
-		
-		# ---- reality states -----
-		"REALITY_REAL" : {},
-		"REALITY_DREAM" : {},
-		"REALITY_NEITHER" : {},
-		
-		# ---- cutscenes -----
-		"CUTSCENE_START" : {},
-		"CUTSCENE_END" : {},
-		"CUTSCENE_TEMP-START" : {},
-		"CUTSCENE_TEMP-END" : {},
-		
-		# ---- player ----
-		"PLAYER_UPDATED" : {},
-		
-		"PLAYER_MOVE" : {},
-		"PLAYER_ACTION" : {},
-		"PLAYER_EMOTE" : {},
-		"PLAYER_INTERACT" : {},
-		"PLAYER_HURT" : {},
-		"PLAYER_STAMINA_CHANGE" : {},
-		"PLAYER_WAKE-UP" : {},
-		
-		"PLAYER_EQUIP" : {},
-		"PLAYER_DEEQUIP" : {},
-
-		"PLAYER_EFFECT_FOUND" : {},
-		"PLAYER_EFFECT_DISCARD" : {},
-			
-		"PLAYER_DOOR_TELEPORTATION" : {},
-			
-		"PLAYER_DOOR_USED" : {},
-		"PLAYER_SANITY_CHANGE" : {},
-		"PLAYER_ADRENALINE_CHANGE" : {},	
-		
-
-		# ---- chase events -----
-		"PRECHASE_ACTIVE" : {},
-		"PRECHASE_FINISH" : {},
-		"CHASE_ACTIVE" : {},
-		"CHASE_FINISH" : {},
-
-		# ---- scene change invokes -----
-		"SCENE_LOADED" : {},
-		"SCENE_UNLOADED" : {},
-		"SCENE_CHANGE_REQUEST" : {},
-		"SCENE_CHANGE_SUCCESS" : {},
-		"SCENE_CHANGE_FAIL" : {},
-		
-		# ---- player special events ;; invert cutscene -----
-		"SPECIAL_INVERT_CUTSCENE_BEGIN" : {},
-		"SPECIAL_INVERT_CUTSCENE_END" : {},
-		
-		## WORLD.
-		"WORLD_LOOP" : {},
-		"WORLD_TIME_DAY" : {},
-		"WORLD_TIME_NIGHT" : {},
-	}

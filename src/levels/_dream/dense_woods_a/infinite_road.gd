@@ -12,5 +12,5 @@ func _ready() -> void:
 
 	pl_warped_left.connect(func():
 		if loop_record[bound_side.LEFT] >= 5: GameManager.change_scene_to(load(scene_path)) )
-	world_loop_listener.do_on_notify("WORLD_LOOP", func(): 
+	world_loop_listener.do_on_notify(["WORLD_LOOP"], func(): 
 		if loop_record[bound_side.LEFT] > 5: hidden_thing.visible = true)

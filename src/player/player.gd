@@ -20,7 +20,7 @@ var input := Vector2(0, 0)
 var stamina: float = MAX_STAMINA:
 	set(_stam):
 		stamina = _stam
-		GameManager.EventManager.invoke_event("PLAYER_STAMINA_CHANGE", [_stam])
+		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", [_stam])
 
 var is_exhausted: bool = false
 var can_run: bool = CAN_RUN
@@ -49,10 +49,8 @@ var sneak_noise_mult: float =SNEAK_NOISE_MULTI
 # ---- initial ----
 func _enter_tree() -> void: 
 	Instance._pl = self
-	GameManager.EventManager.invoke_event("PLAYER_UPDATED")
-	
-func _process(delta: float) -> void:
-	super(delta)
+	EventManager.invoke_event("PLAYER_UPDATED")
+func _input_pass(event: InputEvent) -> void: pass
 
 class Data:
 	static var data: Dictionary = {		
@@ -85,14 +83,14 @@ class Instance:
 
 	static func setup() -> void: 	
 		door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
-		door_listener.do_on_notify("PLAYER_DOOR_USED", func(): door_went_flag = true)
-		door_listener.do_on_notify("SCENE_CHANGE_SUCCESS", func(): 
+		door_listener.do_on_notify(["PLAYER_DOOR_USED"], func(): door_went_flag = true)
+		door_listener.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): 
 			
-			for points: SpawnPoint in Game.get_group_arr("spawn_points"):
+			for points: SpawnPoint in GlobalUtils.get_group_arr("spawn_points"):
 				if (
 					load(points.scene_path) == Game.scene_manager.prev_scene_ps and 
 					door_went_flag and
-					GameManager.EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
+					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
 						
 						teleport_player(points.global_position, points.spawn_dir, true)
 						if points.parent_instead_of_self != null:
@@ -109,7 +107,7 @@ class Instance:
 		equipment_auto_apply = EventListener.new(["SCENE_CHANGE_SUCCESS"], true)
 		
 		equipment_auto_apply.do_on_notify(
-			"SCENE_CHANGE_SUCCESS",
+			["SCENE_CHANGE_SUCCESS"],
 			func(): 
 				if get_pl():
 					(get_pl() as Player_YN).equip(equipment_pending, true)

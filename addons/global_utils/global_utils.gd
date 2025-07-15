@@ -69,6 +69,17 @@ static func disconnect_from_signal(
 			push_warning("GLOBAL UTIL: Callable not connected to signal!")
 			return
 		_signal.disconnect(_conectee)
+static func is_connected_to_signal(_callee: Callable, _signal: Signal) -> bool:
+	return _signal.is_connected(_callee)
+
+static func get_group_arr(_name: String) -> Array: 
+	var tree: SceneTree
+	if Engine.is_editor_hint(): tree = EditorInterface.get_edited_scene_root().get_tree()
+	else: tree = Game.get_tree()
+	
+	if tree.has_group(_name):
+		return tree.get_nodes_in_group(_name)
+	return []
 
 class Predicate:
 	static func evaluate(_expression: bool) -> bool: return _expression

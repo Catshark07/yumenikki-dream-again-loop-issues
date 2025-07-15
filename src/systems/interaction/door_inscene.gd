@@ -5,25 +5,21 @@ extends Interactable
 
 @export_storage var spawn_point: SpawnPoint
 @export var target_door: TeleportationDoor
-@export var parallel: bool
-
+@export var parallel: bool = false
 
 func _setup() -> void:
 	super()
 	spawn_point = GlobalUtils.get_child_node_or_null(self, "spawn_point")
 	if spawn_point == null:
 		spawn_point = await GlobalUtils.add_child_node(self, SpawnPoint.new(), "spawn_point")
-		
+		spawn_point.parent_instead_of_self = self.get_parent()
+	if Engine.is_editor_hint(): set_process(true)		
 
 func _draw() -> void:
 	if Engine.is_editor_hint():
-		var mado_sprite = preload("res://src/player/madotsuki/display/default/_RESET.png")
-		var arrow_sprite = preload("res://src/images/arrow_direction.png")
-		
 		if target_door != null:
 			draw_line(Vector2.ZERO, target_door.global_position - self.global_position, Color.RED)
-			target_door.parallel = parallel
-			target_door.target_door = self if target_door.parallel else target_door.target_door	
+			target_door.target_door = self if target_door.parallel else null
 			
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): 
@@ -33,7 +29,8 @@ func _process(delta: float) -> void:
 func _interact() -> void:
 	if target_door != null and target_door.spawn_point:
 		
-		GameManager.EventManager.invoke_event("PLAYER_DOOR_TELEPORTATION")
+		EventManager.invoke_event("PLAYER_DOOR_TELEPORTATION")
+		EventManager.invoke_event("CUTSCENE_START_REQUEST")
 		Game.scene_manager.get_curr_scene().on_unload_request()
 		await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
 		
@@ -43,4 +40,5 @@ func _interact() -> void:
 		
 		Game.scene_manager.get_curr_scene().on_load_request()
 		GameManager.request_transition(ScreenTransition.fade_type.FADE_OUT)
+		EventManager.invoke_event("CUTSCENE_END_REQUEST")
 	

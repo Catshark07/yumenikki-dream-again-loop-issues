@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/silas_passing_tones_lowq.ogg-387887c8780c0608
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

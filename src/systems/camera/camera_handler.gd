@@ -21,13 +21,12 @@ var curr_follow_strat: CameraFollowStrategy = default
 var marker: Marker2D
 var cam_receiver: ComponentReceiver
 var instance_receiver: ComponentReceiver
-static var shake_comp: CamShake
+
+var shake_comp: CamShake
 
 # ---- cam properties
 @export_group("Camera Properties")
 
-@export var bounds_min: Vector2 = Vector2(-100000, -100000)
-@export var bounds_max: Vector2 = Vector2(100000, 100000)
 @export var offset: Vector2 = Vector2(0, 0)
 @export_range(0.8, 1.2) var zoom: float = 1
 
@@ -48,7 +47,6 @@ static var motion_reduction: bool = false:
 				CameraHolder.instance.set_follow_strategy(CameraHolder.instance.prev_follow_strat)
 				CameraHolder.instance.cam_receiver.bypass = false
 				CameraHolder.instance.instance_receiver.bypass = false
-				
 
 var offset_tween: Tween
 var zoom_tween: Tween
@@ -83,14 +81,10 @@ func _ready() -> void:
 	set_zoom(zoom)
 	set_offset(offset)
 	set_target(target)
-	switching_to_target = false
 	
 	if !Engine.is_editor_hint():
 		cam.editor_draw_screen = true
 		cam.editor_draw_limits = true
-		
-		bounds_min = Vector2(cam.limit_left, cam.limit_top)
-		bounds_max = Vector2(cam.limit_right, cam.limit_bottom)
 		
 		if !target: target = self ## ensures that its going to be static at least.
 		await Game.main_tree.process_frame
@@ -105,9 +99,6 @@ func _process(delta: float) -> void:
 	set_zoom(zoom)
 	set_offset(offset)
 	if shake_comp: shake_comp._handle(delta)
-	self.position = self.position.clamp(bounds_min, bounds_max)
-	
-
 
 func _physics_process(_delta: float) -> void:
 	old_pos = new_pos
@@ -143,8 +134,8 @@ func set_offset(_offset: Vector2) -> void:
 	offset = _offset
 	marker.position = _offset
 func set_target(_target: Node, _instant: bool = false) -> void:
-	switching_time_elapsed = 0
 	switching_to_target = true
+	
 	
 	if _target:
 		target = _target

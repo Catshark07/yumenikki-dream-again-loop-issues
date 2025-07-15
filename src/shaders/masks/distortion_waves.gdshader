@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-#include "res://src/shaders/panorama/depth_base.gdshaderinc"
+#include "res://src/shaders/_include/depth_base.gdshaderinc"
 
 uniform float transparency : hint_range(0, 1.0, 0.1) = 0;
 uniform float dirX : hint_range(-1.0, 1.0, 0.1);

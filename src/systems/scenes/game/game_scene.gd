@@ -37,7 +37,8 @@ func _ready() -> void:
 		ScreenTransition.set_fade_out_shader(load_transition)
 		ScreenTransition.set_fade_in_shader(unload_transition)
 		
-		save_invoker.do_on_notify("SCENE_CHANGE_REQUEST", save_scene)
+		save_invoker.do_on_notify(["SCENE_CHANGE_REQUEST"], save_scene)
+		
 		Game.scene_manager.scene_node = self
 
 func _on_load() -> void: 
@@ -48,6 +49,9 @@ func _on_load() -> void:
 func _on_unload() -> void:
 	super()
 	for _r in rules: _r.unapply_on_scene_unload()
+
+func _on_unload_request() -> void: process_mode = Node.PROCESS_MODE_DISABLED
+func _on_load_request() -> void: process_mode = Node.PROCESS_MODE_INHERIT
 
 # ---- saving. 
 func save_scene() -> void: NodeSaveService.save_scene_data(self)

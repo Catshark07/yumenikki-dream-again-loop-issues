@@ -14,7 +14,7 @@ var scene_data_template := {
 }
 
 func save_scene_data(_scene: SceneNode) -> void: 
-	var node_saves = Game.get_group_arr("node_save") as Array[NodeData]
+	var node_saves = GlobalUtils.get_group_arr("node_save") as Array[NodeData]
 	var stringified_scene_name: String = _scene.name as String
 	
 	data["scene"][stringified_scene_name] = scene_data_template["scene_name"]
@@ -23,7 +23,7 @@ func save_scene_data(_scene: SceneNode) -> void:
 	for node in node_saves: 
 		if node != null: data["scene"][stringified_scene_name]["data"] = node.save_data()			
 func load_scene_data(_scene: SceneNode) -> void:
-	var node_saves = Game.get_group_arr("node_save") as Array[NodeData]
+	var node_saves = GlobalUtils.get_group_arr("node_save") as Array[NodeData]
 	var stringified_scene_name: String = _scene.name as String
 	
 	if data["scene"].has(stringified_scene_name):

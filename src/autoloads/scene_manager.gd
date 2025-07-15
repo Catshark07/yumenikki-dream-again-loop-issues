@@ -26,11 +26,14 @@ var instantiated_scene: SceneNode = null
 var result: ResourceLoader.ThreadLoadStatus
 
 func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoader.ThreadLoadStatus:
-	if !load_requested or bg_load_finished: return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
-	if scene == scene_node_packed or !ResourceLoader.exists(scene.resource_path): return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
+	if scene == null: 
+		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
+	if !load_requested or bg_load_finished: 
+		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
+	if scene == scene_node_packed or !ResourceLoader.exists(scene.resource_path): 
+		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
 	
 	scene_load_status = ResourceLoader.load_threaded_get_status(scene.resource_path, load_progress)
-	print("LOADING PROGRESS: ", load_progress)
 	
 	if scene_load_err_check == OK:
 		match scene_load_status:
@@ -70,7 +73,7 @@ func unload_current_scene() -> bool:
 	return false
 func unload_scene(scene: SceneNode) -> bool:
 		scene.queue_free()
-		GameManager.EventManager.invoke_event("SCENE_UNLOADED")
+		EventManager.invoke_event("SCENE_UNLOADED")
 		print_rich("[b]SceneManager // Unloading : Scene Unloaded![/b]")
 			
 		return true 
@@ -93,7 +96,7 @@ func load_scene(scene: PackedScene, root_node: Node, backup_root_node: Node = nu
 			if root_node != null: root_node.add_child(instantiated_scene)
 			else: backup_root_node.add_child(instantiated_scene)
 			
-			GameManager.EventManager.invoke_event("SCENE_LOADED")
+			EventManager.invoke_event("SCENE_LOADED")
 			scene_node.on_load()
 					
 		load_requested = false
@@ -125,7 +128,7 @@ func change_scene_to
 				prev_scene_ps = scene_node_packed
 				scene_change_pending = true
 
-				GameManager.EventManager.invoke_event("SCENE_CHANGE_REQUEST")
+				EventManager.invoke_event("SCENE_CHANGE_REQUEST")
 				scene_node.on_unload_request()
 				await ScreenTransition.request_transition(ScreenTransition.fade_type.FADE_IN)
 				scene_node.on_unload()
@@ -134,13 +137,13 @@ func change_scene_to
 				if ResourceLoader.exists(scene.resource_path):
 					await load_scene(scene, root_node, backup_root_node)
 					print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
-					GameManager.EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
+					EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
 
 				await ScreenTransition.request_transition(ScreenTransition.fade_type.FADE_OUT)
 				scene_change_pending = false
 				
 		else: 
-			GameManager.EventManager.invoke_event("SCENE_CHANGE_FAIL")
+			EventManager.invoke_event("SCENE_CHANGE_FAIL")
 			print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 
 # ---------- 									---------- #

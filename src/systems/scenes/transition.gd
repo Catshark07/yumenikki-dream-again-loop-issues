@@ -7,6 +7,8 @@ var default_shader: ShaderMaterial
 var transition_instance: ColorRect
 
 var fade_tween: Tween
+var fade_progress: float = 0:
+	set = set_fade_progress
 
 enum fade_type {FADE_IN, FADE_OUT}
 
@@ -26,53 +28,74 @@ func _ready() -> void:
 	fade_out_shader = default_shader
 	# im so confused
 	
-	transition_instance.size = Vector2(Game.main_viewport.size)
+	transition_instance.size = Vector2(Game.Application.get_viewport_dimens())
 	
 	request_transition(fade_type.FADE_OUT)
 
-func fade_in(speed: int = 1, _shader: ShaderMaterial = fade_in_shader) -> void: 
-	if fade_tween != null: fade_tween.kill()
-	fade_tween = transition_instance.create_tween()
-	
-	if _shader == null: transition_instance.material = default_shader
-	else: transition_instance.material = _shader
-	
-	fade_tween.tween_method(
-		func(p: float):
-			transition_instance.material.set_shader_parameter("progress", p),
-			0 as float, 
-			1 as float, 
-			1 * speed)
+func fade_in(
+	_speed: float = 1,
+	_shader: ShaderMaterial = fade_in_shader,
+	_start_progress: float = 0,
+	_end_progress: float = 1,
+	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
+	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
+		 
+		if fade_tween != null: fade_tween.kill()
+		fade_tween = transition_instance.create_tween()
 		
-	await fade_tween.finished
-	reset_fade_shaders()
-func fade_out(speed: int = 1, _shader: ShaderMaterial = fade_out_shader) -> void: 
-	if fade_tween != null: fade_tween.kill()
-	fade_tween = transition_instance.create_tween()
-	
-	if _shader == null: transition_instance.material = default_shader
-	else: transition_instance.material = _shader
-	transition_instance.material.set_shader_parameter("progress", 1)
-	
-	fade_tween.tween_method(
-	func(p: float):
-		transition_instance.material.set_shader_parameter("progress", p),
-		1 as float, 
-		0 as float, 
-		1 * speed)
+		if _shader == null: transition_instance.material = default_shader
+		else: transition_instance.material = _shader
 		
-	await fade_tween.finished
-
+		transition_instance.material.set_shader_parameter("progress", 0)
+		
+		fade_tween.tween_method(
+			set_fade_progress,
+			_start_progress, 
+			_end_progress, 
+			(1 / _speed) if _speed > 0 else 1).set_trans(_transition).set_ease(_ease)
+			
+		await fade_tween.finished
+		reset_fade_shaders()
+func fade_out(
+	_speed: float = 1, 
+	_shader: ShaderMaterial = fade_out_shader,
+	_start_progress: float = 1,
+	_end_progress: float = 0,
+	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
+	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
+		
+		if fade_tween != null: fade_tween.kill()
+		fade_tween = transition_instance.create_tween()
+		
+		if _shader == null: transition_instance.material = default_shader
+		else: transition_instance.material = _shader
+		transition_instance.material.set_shader_parameter("progress", 1)
+		
+		fade_tween.tween_method(
+			set_fade_progress,
+			_start_progress, 
+			_end_progress, 
+			(1 / _speed) if _speed > 0 else 1).set_trans(_transition).set_ease(_ease)
+			
+		await fade_tween.finished
+func set_fade_progress(_progress):
+	fade_progress = _progress
+	transition_instance.material.set_shader_parameter("progress", fade_progress)
+	
 func request_transition(
 	_fade_type: fade_type, 
 	_colour: Color = Color.BLACK,
 	_speed: float = 1,
-	_custom_shader: ShaderMaterial = null) -> void:
-	transition_instance.color = _colour
+	_custom_shader: ShaderMaterial = null,
+	_a_progress: float = 0,
+	_b_progress: float = 1,
+	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
+	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
 		
+	transition_instance.color = _colour
 	match _fade_type:
-		fade_type.FADE_IN: await fade_in(_speed, _custom_shader)
-		fade_type.FADE_OUT: await fade_out(_speed, _custom_shader)
+		fade_type.FADE_IN: await fade_in(_speed, _custom_shader, _a_progress, _b_progress, _transition, _ease)
+		fade_type.FADE_OUT: await fade_out(_speed, _custom_shader, _b_progress, _a_progress, _transition, _ease)
 
 func set_fade_out_shader(_shader: ShaderMaterial) -> void: 
 	if _shader.shader == null: 

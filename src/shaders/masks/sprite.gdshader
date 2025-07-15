@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-#include "res://src/shaders/panorama/linear_base.gdshaderinc"
-#include "res://src/shaders/panorama/general_base.gdshaderinc"
+#include "res://src/shaders/_include/linear_base.gdshaderinc"
+#include "res://src/shaders/_include/general_base.gdshaderinc"
 
 
 uniform sampler2D world_texture : source_color, repeat_enable;

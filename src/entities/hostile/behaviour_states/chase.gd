@@ -6,7 +6,7 @@ var target: SentientBase
 
 func enter_state() -> void:
 	if aggression_component.emits_chase_sequence:
-		GameManager.EventManager.invoke_event("CHASE_ACTIVE")
+		EventManager.invoke_event("CHASE_ACTIVE")
 		
 	(sentient as NavSentient).nav_agent.set_navigation_layer_value(2, false)
 	(sentient as NavSentient).nav_agent.set_navigation_layer_value(3, true)
@@ -17,7 +17,7 @@ func enter_state() -> void:
 
 func exit_state() -> void:
 	if aggression_component.emits_chase_sequence:
-		GameManager.EventManager.invoke_event("CHASE_FINISH")
+		EventManager.invoke_event("CHASE_FINISH")
 
 func physics_update(_delta: float) -> void: 
 	if (sentient as NavSentient).nav_agent.is_target_reachable():

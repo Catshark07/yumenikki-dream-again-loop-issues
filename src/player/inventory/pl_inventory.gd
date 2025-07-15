@@ -2,8 +2,7 @@ class_name PLInventory
 extends FSM
 
 var player_equip_listener: EventListener
-var effect_collect: EventListener
-var scene_change_listener: EventListener
+var special_invert_sequence_end: EventListener
 
 @export var display: Control
 
@@ -27,55 +26,52 @@ static var favourite_effect: PLEffect
 
 signal inventory_data_changed(_new_data: PLInventoryData)
 signal inventory_data_updated(_appended_effect: PLEffect)
-signal inventory_opened
-signal inventory_closed
 
 var data: PLInventoryData = DEFAULT_DATA
 const DEFAULT_DATA: PLInventoryData = preload("res://src/player/inventory/data/empty.tres")
 
 
-func _setup() -> void:
+func _setup(_owner: Node) -> void:
 	white_petal.visible = false
 	pink_petal.visible = false
 	
-	super()
+	super(_owner)
 	
 	# --- listeners..
-	scene_change_listener = EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
-	player_equip_listener = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
-	effect_collect = EventListener.new(["PLAYER_EFFECT_FOUND"], false, self)
+	special_invert_sequence_end = EventListener.new(
+		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], 
+		false, self)
+	special_invert_sequence_end.do_on_notify(
+		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], 
+		EventManager.invoke_event.bind("SPECIAL_INVERT_END_REQUEST"))
 	
-	scene_change_listener.do_on_notify("SCENE_CHANGE_REQUEST", func(): inventory_closed.emit())
-	player_equip_listener.do_on_notify("PLAYER_DEEQUIP", func(): 
+	player_equip_listener = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
+	player_equip_listener.do_on_notify(["PLAYER_DEEQUIP"], func(): 
 		deequip_prompt.set_active(false)
 		effect_indicator.progress = 1
 		)
-	player_equip_listener.do_on_notify("PLAYER_EQUIP", func(): 
-		if GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.get_pl().DEFAULT_EFFECT: 
+	player_equip_listener.do_on_notify(["PLAYER_EQUIP"], func(): 
+		if EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.get_pl().DEFAULT_EFFECT: 
 			return
 		deequip_prompt.set_active(true)
 		effect_indicator.progress = 0
 		)
-	effect_collect.do_on_notify("PLAYER_EFFECT_FOUND", func(): 
-		append_item(GameManager.EventManager.get_event_param("PLAYER_EFFECT_FOUND")[0]))
-		
-	# --- 
-	deequip_prompt.pressed.connect(func():
-		(Player.Instance.get_pl() as Player_YN).deequip_effect()
-		inventory_toggle._on_press()
-		)	
-	inventory_toggle.button.toggled.connect(func(_toggled: bool): 
-		if _toggled: inventory_opened.emit()
-		else: inventory_closed.emit()
-		)
+	
+	GlobalUtils.connect_to_signal(
+		func():(Player.Instance.get_pl() as Player_YN).deequip_effect(), deequip_prompt.pressed)
 
-	white_petal_button.pressed.connect(func(): _change_to_state("white_petal"))
-	pink_petal_button.pressed.connect(func(): _change_to_state("pink_petal"))
-	
-	inventory_opened.connect(func(): GameManager.EventManager.invoke_event("SPECIAL_INVERT_CUTSCENE_BEGIN"))
-	inventory_closed.connect(func(): GameManager.EventManager.invoke_event("SPECIAL_INVERT_CUTSCENE_END"))
-	
+	GlobalUtils.connect_to_signal(func(): _change_to_state("white_petal"), white_petal_button.pressed)
+	GlobalUtils.connect_to_signal(func(): _change_to_state("pink_petal"), pink_petal_button.pressed)
+
 	instantiate_buttons(data)
+	
+	GlobalUtils.connect_to_signal(
+		func(_toggle: bool): 
+			if _toggle: EventManager.invoke_event("SPECIAL_INVERT_START_REQUEST")
+			else:		EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST"), 
+			inventory_toggle.toggled
+	)
+	
 
 func instantiate_buttons(_inv_data: PLInventoryData) -> void:
 	if _inv_data == null: return
@@ -98,8 +94,7 @@ func append_item(_item: PLEffect) -> void:
 	button.hover_exited.connect(func(): hovered_button = null)
 	button.hover_entered.connect(func(): hovered_button = button)	
 	button.pressed.connect(func():
-		if button.unique_data: (Player.Instance.get_pl() as Player_YN).equip(button.unique_data)
-		inventory_toggle.untoggle())
+		if button.unique_data: (Player.Instance.get_pl() as Player_YN).equip(button.unique_data))
 	
 	item_container.add_child(button)
 	inventory_data_updated.emit(_item)

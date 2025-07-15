@@ -9,3 +9,10 @@ func _execute() -> void:
 	if !wait_til_finished: super()
 	await AudioService.play_sound(sound, volume, pitch)
 	if wait_til_finished: super()
+
+func _validate() -> bool:
+	if skip_warning: return true
+	elif sound == null: 
+		printerr("EVENT - PLAYSOUND :: Sound is null!")
+		return false
+	return true

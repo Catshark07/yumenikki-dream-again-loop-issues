@@ -38,27 +38,13 @@ func _handle_heading(_dir: Vector2 = direction) -> compass_headings:
 class SentientEntity:
 	extends Entity
 	
-	var noise: float = 0
-	
-	var external_velocity: Vector2:
-		get: return Vector2(floor(external_velocity.x), floor(external_velocity.y))
-	var external_decelleration_thresh := Vector2.ZERO
-	
-	# ---- acelleration / friction
-	var acceleration: float = 0
-	var friction: float = 300
-	
-	# ---- push and move flags
-	var push_strength := 1.0
-	var is_moving: bool
+	var noise			: float = 0
+	var push_strength	: float = 1.0
+	var is_moving: bool = false
 	
 	func _init() -> void:
 		assert(is_instance_of(self, PhysicsBody2D), "Error: ObjectEntity must be a derivative of PhysicsBody2D!")
 		assert(is_instance_of(self, SentientBase), "Error: SentientEntity must be a derivative of SentientBase!")
-	func _process(delta: float) -> void:
-		handle_decelleration()
-		is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO	
-	
 		# --- apply forces on rigid bodies.
 		#for i in range((self as SentientBase).get_slide_collision_count()):
 			#var c = (self as SentientBase).get_slide_collision(i)
@@ -66,7 +52,3 @@ class SentientEntity:
 			#if c.get_collider() is RigidBody2D: 
 				#c.get_collider().apply_central_impulse(
 					#-c.get_normal() * (push_strength / (c.get_collider().mass * 1.25)))
-	
-	func handle_ext_acceleration() -> void: pass 
-	func handle_decelleration() -> void:
-		external_velocity = external_velocity.move_toward(Vector2.ZERO, get_process_delta_time() * friction)

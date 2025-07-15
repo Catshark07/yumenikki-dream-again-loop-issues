@@ -47,10 +47,10 @@ func _unapply(_pl: Player) -> void:
 	(_pl as Player_YN).components.get_component_by_name("action_manager").set_emote(null)
 	
 	if stats: stats._unapply(_pl)
-	if behaviour: behaviour._exit(_pl)
+	if behaviour: 
+		behaviour._exit(_pl)
+		behaviour._unapply(_pl)
 	
-	(_pl as Player_YN).revert_def_behaviour()
-
 func _use(_pl: Player) -> void: 
 	use_times += 1
 	(_pl as Player_YN).perform_action(primary_action)
