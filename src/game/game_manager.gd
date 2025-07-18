@@ -62,6 +62,8 @@ func setup() -> void:
 	cinematic_bars.size.y = 360
 	
 	global_screen_effect.environment.glow_enabled = bloom
+	await Game.scene_manager.setup_complete
+	print("eh")
 	state_handler._setup()
 	
 func update(delta: float) -> void: state_handler._update(delta)
@@ -79,8 +81,7 @@ static func pause(_pause: bool = true) -> void:
 # ---- secondary scene handling (instead of using scenemanager directly) ----
 static func change_scene_to(_new: PackedScene) -> void: 
 	if _new == null: return
-	if instance: Game.scene_manager.change_scene_to(_new, pausable_parent)
-	else: Game.scene_manager.change_scene_to(_new, Global)
+	Game.scene_manager.change_scene_to(_new, pausable_parent, Game)
 					
 # ---- UI stuff ---- 
 static func set_ui_visibility(_visible: bool) -> void:

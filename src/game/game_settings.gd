@@ -36,9 +36,9 @@ func setup() -> void:
 	sfx_slider.value_changed.connect(func(_val: float):
 		Game.Audio.adjust_bus_volume("Effects", clamp(_val, 0, 1)))
 
-	borderless.toggled.connect(func(_truth: bool): Game.set_window_borderless(_truth))
+	borderless.toggled.connect(func(_truth: bool): Game.Application.set_window_borderless(_truth))
 	full_screen.toggled.connect(func(_truth: bool): 
-		Game.change_window_mode(Window.MODE_FULLSCREEN) if _truth else Game.change_window_mode(Window.MODE_WINDOWED))
+		Game.Application.change_window_mode(Window.MODE_FULLSCREEN) if _truth else Game.Application.change_window_mode(Window.MODE_WINDOWED))
 	cam_reduction.toggled.connect(func(_truth: bool): 
 		CameraHolder.motion_reduction = _truth)
 	bloom.toggled.connect(func(_truth: bool): 

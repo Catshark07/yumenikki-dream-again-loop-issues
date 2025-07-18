@@ -20,7 +20,7 @@ func exit_state() -> void: exited.emit()
 func physics_update(_delta: float) -> void: pass
 func update(_delta: float) -> void: pass
 
-func input(event: InputEvent) -> void: pass
+func input(_event: InputEvent) -> void: pass
 
 # ----
 

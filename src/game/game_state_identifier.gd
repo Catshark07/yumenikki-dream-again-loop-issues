@@ -32,6 +32,7 @@ func _setup() -> void:
 	game_state_fsm._setup(self)
 	
 	var initial_scene = Game.scene_manager.scene_node_packed
+	print(initial_scene)
 	if initial_scene == null: return
 	if initial_scene.resource_path in non_playable_scenes: game_state_fsm._change_to_state("pregame")
 	else: game_state_fsm._change_to_state("active")

@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://djgci6ukkjsr5"]
 
-[ext_resource type="Texture2D" uid="uid://ck5b5ege266ph" path="res://src/levels/dream/sane/light_void/sprites/glass-pillars-l_tile.png" id="1_r1tjm"]
+[ext_resource type="Texture2D" uid="uid://ck5b5ege266ph" path="res://src/levels/_dream/light_void/sprites/glass_pillars.png" id="1_r1tjm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bwnmh"]
 texture = ExtResource("1_r1tjm")

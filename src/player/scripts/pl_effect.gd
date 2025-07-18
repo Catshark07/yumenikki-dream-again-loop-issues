@@ -16,8 +16,8 @@ var use_times: int = 0
 @export var secondary_action: PLAction = null
 
 @export_group("Display")
-@export_file("*.tres") var sprite_override: String = preload("res://src/player/madotsuki/display/no_effect.tres").resource_path
-@export_file("*.tres") var emote: String = preload("res://src/player/madotsuki/emotes/sit_down.tres").resource_path
+@export_file("*.tres") var sprite_override: String = ("res://src/player/madotsuki/display/no_effect.tres")
+@export_file("*.tres") var emote: String = ("res://src/player/madotsuki/emotes/sit_down.tres")
 
 @export_file("*.tscn") var player_component_prefab: String
 var player_component: Node

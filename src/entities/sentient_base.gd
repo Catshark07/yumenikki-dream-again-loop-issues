@@ -67,11 +67,13 @@ func dependency_setup() -> void: pass
 
 # ---- base processes ----
 func _physics_update(_delta: float) -> void:
-	components._physics_update(_delta)
-	speed = self.velocity.length()
-	abs_velocity = abs(self.velocity)
-func _update(_delta: float) -> void:
 	(self as SentientBase).move_and_slide()
+	
+	components._physics_update(_delta)
+	abs_velocity = abs(self.velocity)
+	speed = abs_velocity.length()
+	
+func _update(_delta: float) -> void:
 	is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO	
 	
 	_handle_heading(direction)

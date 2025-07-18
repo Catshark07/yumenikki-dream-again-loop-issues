@@ -21,9 +21,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h0ytl"]
 shader = ExtResource("2_omfi6")
-shader_parameter/colour = Color(1, 1, 1, 1)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 1.0
 shader_parameter/progress = 0.0
+shader_parameter/colour = Color(1, 1, 1, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_m05o0"]
 
@@ -80,9 +81,9 @@ shader_parameter/backGroundDirY = 3.25988e-09
 
 [node name="pink_sea" type="Node"]
 script = ExtResource("1_rrp46")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("7_8uxx6"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("7_8uxx6"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("7_8uxx6"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("7_8uxx6"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
 load_transition = SubResource("ShaderMaterial_h0ytl")
 unload_transition = SubResource("ShaderMaterial_h0ytl")
@@ -101,7 +102,6 @@ script = ExtResource("7_8uxx6")
 
 [node name="on_balloon_teleport" type="Node" parent="." node_paths=PackedStringArray("sequence")]
 script = ExtResource("5_acy13")
-event_id = "PLAYER_DOOR_TELEPORTATION"
 sequence = NodePath("sequence")
 metadata/_custom_type_script = "uid://br3wayftgqqpo"
 
@@ -180,6 +180,7 @@ tile_map_data = PackedByteArray("AAD9/wIAAAACAAUAAAD9/wMAAAACAAYAAAD8/wMAAAABAAY
 tile_set = ExtResource("2_bli2w")
 
 [node name="balloons" type="TileMapLayer" parent="sea_section/y_order"]
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAA7AEAAAAABAAoAAABPACgAAAABABAAAABJACoAAAABAAwAAABLACUAAAABAAoAAABTADkAAAABABAAAABYAC4AAAAIAA4AAAB7AAwAAAAIAA4AAACAABcAAAAIAAwAAAB1ABQAAAABAA4AAACCACwAAAABAA4AAABjACgAAAAIAAwAAABkACIAAAABAAwAAABkAC4AAAAIABAAAAAqAIAAAAAIABAAAACBADAAAAAIAAoAAADy/y0AAAAIAAoAAAA=")
 tile_set = ExtResource("2_bli2w")
 

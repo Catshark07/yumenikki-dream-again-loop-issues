@@ -389,8 +389,6 @@ script = ExtResource("4_dpjd1")
 script = ExtResource("3_ci86m")
 game_state_fsm = NodePath("../fsm")
 play_mode_fsm = NodePath("../fsm/ACTIVE")
-non_playable_scenes = null
-active = null
 
 [node name="fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_jdkml")
@@ -399,14 +397,14 @@ initial_state = NodePath("PREGAME")
 [node name="PREGAME" type="Node" parent="fsm"]
 script = ExtResource("6_tboue")
 
-[node name="ACTIVE" type="Node" parent="fsm" node_paths=PackedStringArray("active_exclusive_cr", "initial_state_fsm")]
+[node name="ACTIVE" type="Node" parent="fsm" node_paths=PackedStringArray("initial_state_fsm")]
 script = ExtResource("7_8fuah")
-active_exclusive_cr = NodePath("active_state_components")
 initial_state_fsm = NodePath("PLAY")
 
-[node name="PLAY" type="Node" parent="fsm/ACTIVE" node_paths=PackedStringArray("dream_manager")]
+[node name="PLAY" type="Node" parent="fsm/ACTIVE" node_paths=PackedStringArray("dream_manager", "player_global_components")]
 script = ExtResource("9_yapge")
 dream_manager = NodePath("dream_fsm")
+player_global_components = NodePath("player_global_components")
 
 [node name="dream_fsm" type="Node" parent="fsm/ACTIVE/PLAY" node_paths=PackedStringArray("initial_state")]
 script = ExtResource("10_nupip")
@@ -420,6 +418,74 @@ script = ExtResource("12_qks74")
 
 [node name="REAL" type="Node" parent="fsm/ACTIVE/PLAY/dream_fsm"]
 script = ExtResource("13_ka54v")
+
+[node name="player_global_components" type="CanvasLayer" parent="fsm/ACTIVE/PLAY"]
+layer = 10
+follow_viewport_enabled = true
+script = ExtResource("18_sjocp")
+bypass = true
+independent = true
+
+[node name="screen_overlay" type="CanvasLayer" parent="fsm/ACTIVE/PLAY/player_global_components"]
+layer = 10
+script = ExtResource("19_j0kuk")
+
+[node name="fx" type="ColorRect" parent="fsm/ACTIVE/PLAY/player_global_components/screen_overlay"]
+material = SubResource("ShaderMaterial_73454")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/PLAY/player_global_components/screen_overlay"]
+volume_db = -80.0
+bus = &"Effects"
+script = ExtResource("21_cy466")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="effect_equip_anim" type="Node2D" parent="fsm/ACTIVE/PLAY/player_global_components" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("22_qof35")
+animation_player = NodePath("player")
+
+[node name="player" type="AnimationPlayer" parent="fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
+libraries = {
+&"": SubResource("AnimationLibrary_lm638")
+}
+
+[node name="pink_1" type="Sprite2D" parent="fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("25_hma5v")
+
+[node name="pink_2" type="Sprite2D" parent="fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+rotation = -0.785398
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("25_hma5v")
+
+[node name="white_1" type="Sprite2D" parent="fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("26_0wivy")
+
+[node name="white_2" type="Sprite2D" parent="fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+rotation = 0.528835
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("26_0wivy")
+
+[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
+bus = &"Effects"
+script = ExtResource("21_cy466")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="time_manager" type="Node" parent="fsm/ACTIVE/PLAY/player_global_components"]
+script = ExtResource("27_x664t")
+
+[node name="chase_manager" type="Node" parent="fsm/ACTIVE/PLAY/player_global_components"]
+script = ExtResource("28_y0xa8")
 
 [node name="CUTSCENE" type="Node" parent="fsm/ACTIVE" node_paths=PackedStringArray("dream_fsm", "cinematic_ui", "cinematic_bars")]
 script = ExtResource("14_eb0fa")
@@ -438,74 +504,6 @@ stream = ExtResource("17_dpipp")
 pitch = 0.8
 autoplay = false
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
-
-[node name="active_state_components" type="CanvasLayer" parent="fsm/ACTIVE"]
-layer = 10
-follow_viewport_enabled = true
-script = ExtResource("18_sjocp")
-bypass = true
-independent = true
-
-[node name="screen_overlay" type="CanvasLayer" parent="fsm/ACTIVE/active_state_components"]
-layer = 10
-script = ExtResource("19_j0kuk")
-
-[node name="fx" type="ColorRect" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
-material = SubResource("ShaderMaterial_73454")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
-volume_db = -80.0
-bus = &"Effects"
-script = ExtResource("21_cy466")
-metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
-
-[node name="effect_equip_anim" type="Node2D" parent="fsm/ACTIVE/active_state_components" node_paths=PackedStringArray("animation_player")]
-script = ExtResource("22_qof35")
-animation_player = NodePath("player")
-
-[node name="player" type="AnimationPlayer" parent="fsm/ACTIVE/active_state_components/effect_equip_anim"]
-libraries = {
-&"": SubResource("AnimationLibrary_lm638")
-}
-
-[node name="pink_1" type="Sprite2D" parent="fsm/ACTIVE/active_state_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("25_hma5v")
-
-[node name="pink_2" type="Sprite2D" parent="fsm/ACTIVE/active_state_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-rotation = -0.785398
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("25_hma5v")
-
-[node name="white_1" type="Sprite2D" parent="fsm/ACTIVE/active_state_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("26_0wivy")
-
-[node name="white_2" type="Sprite2D" parent="fsm/ACTIVE/active_state_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-rotation = 0.528835
-scale = Vector2(1.1, 1.1)
-texture = ExtResource("26_0wivy")
-
-[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/effect_equip_anim"]
-bus = &"Effects"
-script = ExtResource("21_cy466")
-metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
-
-[node name="time_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
-script = ExtResource("27_x664t")
-
-[node name="chase_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
-script = ExtResource("28_y0xa8")
 
 [node name="PAUSE" type="Node" parent="fsm" node_paths=PackedStringArray("pause_menu", "pause_bgm")]
 script = ExtResource("29_scyrd")
@@ -544,31 +542,28 @@ layer = 30
 [node name="hud" parent="always/ui" instance=ExtResource("33_a0tkc")]
 
 [node name="deequip" parent="always/ui/hud/inventory_ui/inventory/display/pink_petal_effects" index="4"]
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/inv_effect_indicator.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":2,"vframes":1,"frame":1,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(48, 48),"frame_h_count":2,"frame_v_count":1,"progress":1,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/inv_effect_indicator.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":2,"vframes":1,"frame":1,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(48, 48),"frame_h_count":2,"frame_v_count":1,"progress":1,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":true)
 
 button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
 
-
-[node name="eye_l" parent="always/ui/hud/inventory_ui/inventory/display/white_petal_stats/mado" index="0"]
-frame = 2
 
 [node name="eye_r" parent="always/ui/hud/inventory_ui/inventory/display/white_petal_stats/mado" index="1"]
 frame = 0
 
 [node name="pink" parent="always/ui/hud/inventory_ui/inventory/select/separator" index="0"]
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_pink_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_pink_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":true,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
 
 button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
 
 
 [node name="white" parent="always/ui/hud/inventory_ui/inventory/select/separator" index="1"]
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_white_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_white_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":true,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
 
 button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
 
 
 [node name="toggle" parent="always/ui/hud/inventory_ui" index="2"]
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/inv_toggle.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":3,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(32, 32),"frame_h_count":3,"frame_v_count":1,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/inv_toggle.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":3,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(32, 32),"frame_h_count":3,"frame_v_count":1,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":true)
 
 button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":true,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
 

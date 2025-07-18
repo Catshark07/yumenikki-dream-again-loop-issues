@@ -73,10 +73,10 @@ metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="renderer" type="Sprite2D" parent="."]
 texture = ExtResource("1_2hf7w")
-hframes = 3
+hframes = 7
 script = ExtResource("8_bxvt1")
 frame_dimensions = Vector2i(17, 30)
-frame_h_count = 3
+frame_h_count = 7
 
 [node name="shadow_renderer" type="Sprite2D" parent="renderer"]
 show_behind_parent = true

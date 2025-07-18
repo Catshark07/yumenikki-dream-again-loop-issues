@@ -6,7 +6,7 @@ var registered_vector: Vector2
 
 func _physics_update(_delta: float, _context: Variant = null) -> void: 
 	actual_mouse_pos = Vector2(
-			Global.get_mouse_position() / (Vector2(Game.viewport_width, Game.viewport_length)) * 2
+			Game.get_mouse_position() / (Game.Application.get_viewport_dimens()) * 2
 			).normalized()
 			
 	registered_vector = actual_mouse_pos.round()

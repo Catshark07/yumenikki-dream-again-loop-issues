@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ck5b5ege266ph"
-path="res://.godot/imported/glass-pillars-l_tile.png-6ae9077f05c47e7d6a23067a4ccb280c.ctex"
+uid="uid://ddv8ptuvylhcp"
+path="res://.godot/imported/eye-large_1.png-649151c9645cfb1a18b7697c95daab0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/_dream/light_void/sprites/glass-pillars-l_tile.png"
-dest_files=["res://.godot/imported/glass-pillars-l_tile.png-6ae9077f05c47e7d6a23067a4ccb280c.ctex"]
+source_file="res://src/levels/_dream/colorful_irises/sprites/eye-large_1.png"
+dest_files=["res://.godot/imported/eye-large_1.png-649151c9645cfb1a18b7697c95daab0f.ctex"]
 
 [params]
 

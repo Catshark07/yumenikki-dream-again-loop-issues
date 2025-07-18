@@ -92,9 +92,12 @@ class Instance:
 					door_went_flag and
 					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
 						
+						print(points.scene_path, Game.scene_manager.prev_scene_ps)
+						print(points.connection_id)
+						
 						teleport_player(points.global_position, points.spawn_dir, true)
 						if points.parent_instead_of_self != null:
-							if points.as_sibling: _pl.reparent(points.spawn_point.parent_instead_of_self.get_parent())
+							if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
 							else: _pl.reparent(points.parent_instead_of_self)
 
 						else:
@@ -102,7 +105,7 @@ class Instance:
 							else: _pl.reparent(points)
 						
 						door_went_flag = false
-			)
+						break)
 
 		equipment_auto_apply = EventListener.new(["SCENE_CHANGE_SUCCESS"], true)
 		

@@ -5,7 +5,7 @@ extends Component
 func _physics_update(_delta: float) -> void:
 	if rot_curve:
 		receiver.affector.marker.global_rotation_degrees = (
-			lerpf(receiver.affector.marker.global_rotation_degrees, rot_strength * rot_curve.sample(receiver.affector.get_velocity().x), _delta * Global.TWEEN_SCALE))
+			lerpf(receiver.affector.marker.global_rotation_degrees, rot_strength * rot_curve.sample(receiver.affector.get_velocity().x), _delta * 3.75))
 	else:
 		receiver.affector.marker.global_rotation_degrees = 0
 

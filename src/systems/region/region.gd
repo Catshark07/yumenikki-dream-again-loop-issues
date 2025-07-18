@@ -42,8 +42,7 @@ func _ready() -> void:
 	
 	_setup()
 
-func _setup() -> void:
-	pass
+func _setup() -> void: pass
 func _handle_player_enter() -> void: pass
 func _handle_player_exit() -> void: pass
 

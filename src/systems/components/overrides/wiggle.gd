@@ -72,9 +72,9 @@ func _physics_update(_delta: float) -> void:
 		if !ignore_rotation:
 			receiver.affector.rotation_degrees = lerp(receiver.affector.rotation_degrees, sin(timeelapsed * wig_rot_speed) * wig_rot_strn, _delta)
 
-func set_active(active: bool = true) -> void: 
-	if active == false: 
+func set_active(_active: bool = true) -> void: 
+	if _active == false: 
 		timeelapsed = 0
 		receiver.affector.position = get_origin_pos()
 		receiver.affector.rotation_degrees = get_origin_rot()
-	super(active)
+	super(_active)

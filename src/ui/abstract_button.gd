@@ -64,8 +64,8 @@ func set_active(_active: bool) -> void:
 func set_button_toggle_mode(_toggle: bool) -> void:
 	if button: button.toggle_mode = _toggle
 
-func toggle(is_toggled: bool) -> void:
-	match is_toggled:
+func toggle(_is_toggled: bool) -> void:
+	match _is_toggled:
 		true:
 			button.button_pressed = true
 			_on_hover()

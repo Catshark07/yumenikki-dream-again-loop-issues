@@ -33,6 +33,7 @@ func _execute() -> void:
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4xce7"]
+size = Vector2(16, 16)
 
 [node name="red_jellyfish" instance=ExtResource("1_4xce7")]
 
@@ -92,20 +93,22 @@ animation_path = "pirori/walk"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="Interactable" type="Area2D" parent="." index="10"]
+process_mode = 3
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("9_58hj0")
-size = Vector2i(0, 0)
-shape = SubResource("RectangleShape2D_4xce7")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_4xce7"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="on_interact" type="Node" parent="Interactable" index="2"]
+[node name="on_interact" type="Node" parent="Interactable" index="0"]
 script = ExtResource("10_dsey1")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_animation" type="Node" parent="Interactable/on_interact" index="0" node_paths=PackedStringArray("animator")]
 script = ExtResource("10_btpse")
 animator = NodePath("../../../sb_components/animation_manager/animation_player")
-animation_path = "red_jellyfish/flap"
 wait_til_finished = false
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
@@ -113,3 +116,7 @@ metadata/_custom_type_script = "uid://vk574kc3l7av"
 script = ExtResource("11_bibj7")
 sound = ExtResource("12_1tlec")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
+
+[node name="rect" type="CollisionShape2D" parent="Interactable" index="1"]
+shape = SubResource("RectangleShape2D_4xce7")
+debug_color = Color(0.2, 0, 0.7, 0.2)

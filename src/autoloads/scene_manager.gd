@@ -1,10 +1,9 @@
 class_name SceneManager extends Object
 
+signal setup_complete
+
 var scene_node: SceneNode
-var scene_node_packed: PackedScene:
-	get: 
-		if scene_node != null: return load(scene_node.scene_file_path)
-		else: return null
+var scene_node_packed: PackedScene
 var prev_scene_ps: PackedScene
 
 var additive_scene_node: SceneNode
@@ -27,10 +26,13 @@ var result: ResourceLoader.ThreadLoadStatus
 
 func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoader.ThreadLoadStatus:
 	if scene == null: 
-		ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
+		print("case one")
+		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
 	if !load_requested or bg_load_finished: 
+		print("case two")
 		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
 	if scene == scene_node_packed or !ResourceLoader.exists(scene.resource_path): 
+		print("case tree")
 		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
 	
 	scene_load_status = ResourceLoader.load_threaded_get_status(scene.resource_path, load_progress)
@@ -50,22 +52,24 @@ func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoade
 func setup() -> void: 
 	if !initial_scene_setup_complete: 
 		if scene_node != null:
-			if GameManager.instance == null: scene_node.reparent(Global)
+			if GameManager.instance == null: scene_node.reparent(Game)
 			else: scene_node.reparent(GameManager.pausable_parent)
 			
 			scene_node_packed = load(scene_node.scene_file_path)
+			await scene_node.on_load_request()
 			scene_node.on_load()
 		
 		if additive_scene_node != null:
-			if GameManager.instance == null: additive_scene_node.reparent(Global)
+			if GameManager.instance == null: additive_scene_node.reparent(Game)
 			else: additive_scene_node.reparent(GameManager.pausable_parent)
 			
 			additive_scene_node_packed = load(additive_scene_node.scene_file_path)
+			await additive_scene_node.on_load_request()
 			additive_scene_node.on_load()
 	
 	initial_scene_setup_complete = true
-		
-
+	setup_complete.emit()
+	
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
 func unload_current_scene() -> bool:
 	if scene_node: 	
@@ -88,15 +92,16 @@ func load_scene(scene: PackedScene, root_node: Node, backup_root_node: Node = nu
 		bg_load_finished = false
 		
 		result = await handle_background_loading_upon_request(scene)
+		scene_node_packed = scene
 		
 		if result == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
 			instantiated_scene = scene.instantiate()
-			scene_node = instantiated_scene
 			
 			if root_node != null: root_node.add_child(instantiated_scene)
 			else: backup_root_node.add_child(instantiated_scene)
 			
 			EventManager.invoke_event("SCENE_LOADED")
+			await scene_node.on_load_request()
 			scene_node.on_load()
 					
 		load_requested = false
@@ -117,29 +122,28 @@ func get_prev_packed_scene() -> PackedScene: return prev_scene_ps
 func get_curr_additive_packed_scene() -> PackedScene: return null
 func get_prev_additive_packed_scene() -> PackedScene: return null
 
-func change_scene_to
-(
+func change_scene_to(
 	scene: PackedScene, 
 	root_node: Node, 
-	backup_root_node: Node = null	
-) -> void:
+	backup_root_node: Node = null) -> void:
+		
 		if scene_node and scene and scene != scene_node_packed:
 			if !scene_change_pending:
 				prev_scene_ps = scene_node_packed
 				scene_change_pending = true
 
 				EventManager.invoke_event("SCENE_CHANGE_REQUEST")
-				scene_node.on_unload_request()
-				await ScreenTransition.request_transition(ScreenTransition.fade_type.FADE_IN)
+				await scene_node.on_unload_request()
 				scene_node.on_unload()
-				await unload_current_scene()
+				unload_current_scene()
+				
+				await Game.main_tree.create_timer(.5).timeout
 				
 				if ResourceLoader.exists(scene.resource_path):
 					await load_scene(scene, root_node, backup_root_node)
 					print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
 					EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
 
-				await ScreenTransition.request_transition(ScreenTransition.fade_type.FADE_OUT)
 				scene_change_pending = false
 				
 		else: 

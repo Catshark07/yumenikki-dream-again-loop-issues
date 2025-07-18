@@ -13,3 +13,4 @@ func _validate() -> bool:
 	if CameraHolder.instance == null:
 		printerr() 
 		return false
+	return true

@@ -28,6 +28,7 @@ func _ready() -> void:
 		if !receiver.bypass_lifted.is_connected(_on_bypass_lifted): 
 			receiver.bypass_lifted.connect(_on_bypass_lifted)
 				
+	_setup()
 
 # ---- component functions ----
 func set_active(_active: bool = true) -> void:

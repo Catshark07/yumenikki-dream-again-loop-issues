@@ -21,9 +21,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ea6g4"]
 shader = ExtResource("2_olcxh")
-shader_parameter/colour = Color(1, 1, 1, 1)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 1.0
 shader_parameter/progress = 0.0
+shader_parameter/colour = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3hyyy"]
 shader = ExtResource("5_kues0")
@@ -165,40 +166,40 @@ size = Vector2(16, 16)
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hnkdb"]
-size = Vector2(16, 16)
+size = Vector2(480, 304)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ar8v0"]
-size = Vector2(16, 16)
+size = Vector2(480, 270)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_46rc7"]
-size = Vector2(16, 16)
+size = Vector2(480, 270)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w6drv"]
-size = Vector2(16, 16)
+size = Vector2(480, 270)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8hqcn"]
-size = Vector2(16, 16)
+size = Vector2(480, 270)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2r3g"]
-size = Vector2(16, 16)
+size = Vector2(480, 270)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ir202"]
-size = Vector2(16, 16)
+size = Vector2(480, 272)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s5t5a"]
-size = Vector2(16, 16)
+size = Vector2(480, 272)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_883rm"]
-size = Vector2(16, 16)
+size = Vector2(480, 270)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yk26o"]
-size = Vector2(16, 16)
+size = Vector2(480, 270)
 
 [node name="teleportation_maze" type="Node"]
 script = ExtResource("1_egqpp")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("18_nphv8"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("18_nphv8"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("18_nphv8"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("18_nphv8"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
 load_transition = SubResource("ShaderMaterial_ea6g4")
 unload_transition = SubResource("ShaderMaterial_ea6g4")
@@ -282,7 +283,6 @@ metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 [node name="seq" type="Node" parent="y_order"]
 process_mode = 4
 script = ExtResource("10_5fm2a")
-event_id = "PLAYER_DOOR_TELEPORTATION"
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_sound" type="Node" parent="y_order/seq"]
@@ -321,9 +321,12 @@ position = Vector2(112, 256)
 [node name="a" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_a_1" type="Area2D" parent="y_order/teleports/a" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(216, 288)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, -4),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_a_2")
 parallel = true
@@ -338,12 +341,16 @@ shape = SubResource("RectangleShape2D_r0uqt")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/a/teleport_a_1"]
+position = Vector2(-20, -4)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_a_2" type="Area2D" parent="y_order/teleports/a" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(488, 336)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, -12),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_a_1")
 parallel = true
@@ -358,14 +365,18 @@ shape = SubResource("RectangleShape2D_jkef5")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/a/teleport_a_2"]
+position = Vector2(20, -12)
 script = ExtResource("10_57bbv")
 
 [node name="b" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_b_1" type="Area2D" parent="y_order/teleports/b" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(136, 208)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(16, 12),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_b_2")
 parallel = true
@@ -380,12 +391,16 @@ shape = SubResource("RectangleShape2D_0ax7p")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/b/teleport_b_1"]
+position = Vector2(16, 12)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_b_2" type="Area2D" parent="y_order/teleports/b" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(760, 16)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_b_1")
 parallel = true
@@ -400,14 +415,18 @@ shape = SubResource("RectangleShape2D_soayb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/b/teleport_b_2"]
+position = Vector2(20, 0)
 script = ExtResource("10_57bbv")
 
 [node name="c" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_c_1" type="Area2D" parent="y_order/teleports/c" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(56, 256)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(8, 20),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_c_2")
 parallel = true
@@ -422,12 +441,16 @@ shape = SubResource("RectangleShape2D_4muk1")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/c/teleport_c_1"]
+position = Vector2(8, 20)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_c_2" type="Area2D" parent="y_order/teleports/c" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(264, 608)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, -8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_c_1")
 parallel = true
@@ -442,14 +465,18 @@ shape = SubResource("RectangleShape2D_ylkth")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/c/teleport_c_2"]
+position = Vector2(20, -8)
 script = ExtResource("10_57bbv")
 
 [node name="d" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_d_1" type="Area2D" parent="y_order/teleports/d" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(776, 288)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_d_2")
 parallel = true
@@ -464,12 +491,16 @@ shape = SubResource("RectangleShape2D_ublct")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/d/teleport_d_1"]
+position = Vector2(-20, 0)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_d_2" type="Area2D" parent="y_order/teleports/d" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1192, 336)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, -8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_d_1")
 parallel = true
@@ -484,14 +515,18 @@ shape = SubResource("RectangleShape2D_elvlk")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/d/teleport_d_2"]
+position = Vector2(20, -8)
 script = ExtResource("10_57bbv")
 
 [node name="e" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_e_1" type="Area2D" parent="y_order/teleports/e" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(904, 32)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, -8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_e_2")
 parallel = true
@@ -506,12 +541,16 @@ shape = SubResource("RectangleShape2D_kl34o")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/e/teleport_e_1"]
+position = Vector2(-20, -8)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_e_2" type="Area2D" parent="y_order/teleports/e" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1352, 48)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, -12),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_e_1")
 parallel = true
@@ -526,14 +565,18 @@ shape = SubResource("RectangleShape2D_dae8x")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/e/teleport_e_2"]
+position = Vector2(20, -12)
 script = ExtResource("10_57bbv")
 
 [node name="f" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_f_1" type="Area2D" parent="y_order/teleports/f" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1480, -16)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, 4),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_f_2")
 parallel = true
@@ -548,12 +591,16 @@ shape = SubResource("RectangleShape2D_t8ub5")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/f/teleport_f_1"]
+position = Vector2(-20, 4)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_f_2" type="Area2D" parent="y_order/teleports/f" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1112, 608)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, 4),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_f_1")
 parallel = true
@@ -568,14 +615,18 @@ shape = SubResource("RectangleShape2D_lg1eb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/f/teleport_f_2"]
+position = Vector2(-20, 4)
 script = ExtResource("10_57bbv")
 
 [node name="h" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_h_1" type="Area2D" parent="y_order/teleports/h" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1032, 640)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, -8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_h_2")
 parallel = true
@@ -590,12 +641,16 @@ shape = SubResource("RectangleShape2D_50t7f")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/h/teleport_h_1"]
+position = Vector2(20, -8)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_h_2" type="Area2D" parent="y_order/teleports/h" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(824, 608)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_h_1")
 parallel = true
@@ -610,14 +665,18 @@ shape = SubResource("RectangleShape2D_cnoyt")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/h/teleport_h_2"]
+position = Vector2(20, 0)
 script = ExtResource("10_57bbv")
 
 [node name="i" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_i_1" type="Area2D" parent="y_order/teleports/i" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(936, 560)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, 8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_i_2")
 parallel = true
@@ -632,12 +691,16 @@ shape = SubResource("RectangleShape2D_u1cj2")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/i/teleport_i_1"]
+position = Vector2(-20, 8)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_i_2" type="Area2D" parent="y_order/teleports/i" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(520, 880)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, 8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_i_1")
 parallel = true
@@ -652,14 +715,18 @@ shape = SubResource("RectangleShape2D_57bbv")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/i/teleport_i_2"]
+position = Vector2(-20, 8)
 script = ExtResource("10_57bbv")
 
 [node name="j" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_j_1" type="Area2D" parent="y_order/teleports/j" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(472, 896)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, -4),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_j_2")
 parallel = true
@@ -674,12 +741,16 @@ shape = SubResource("RectangleShape2D_e2bw6")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/j/teleport_j_1"]
+position = Vector2(20, -4)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_j_2" type="Area2D" parent="y_order/teleports/j" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(376, 560)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, 4),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_j_1")
 parallel = true
@@ -694,14 +765,18 @@ shape = SubResource("RectangleShape2D_cvb2o")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/j/teleport_j_2"]
+position = Vector2(-20, 4)
 script = ExtResource("10_57bbv")
 
 [node name="k" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_k_1" type="Area2D" parent="y_order/teleports/k" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(904, 672)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, -16),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_k_2")
 parallel = true
@@ -716,12 +791,16 @@ shape = SubResource("RectangleShape2D_cuxig")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/k/teleport_k_1"]
+position = Vector2(-20, -16)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_k_2" type="Area2D" parent="y_order/teleports/k" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(-152, 920)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(20, 8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_k_1")
 parallel = true
@@ -736,14 +815,18 @@ shape = SubResource("RectangleShape2D_id76l")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/k/teleport_k_2"]
+position = Vector2(20, 8)
 script = ExtResource("10_57bbv")
 
 [node name="l" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_l_1" type="Area2D" parent="y_order/teleports/l" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(8, 992)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-20, -8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_l_2")
 parallel = true
@@ -758,12 +841,16 @@ shape = SubResource("RectangleShape2D_74lcv")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/l/teleport_l_1"]
+position = Vector2(-20, -8)
 script = ExtResource("10_57bbv")
 
 [node name="teleport_l_2" type="Area2D" parent="y_order/teleports/l" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(440, 1160)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("13_bsaik")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(16, 16),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_57bbv"),"scene_path":"","connection_id":"default","parent_instead_of_self":null,"as_sibling":false,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
 
 target_door = NodePath("../teleport_l_1")
 parallel = true
@@ -778,6 +865,7 @@ shape = SubResource("RectangleShape2D_au0no")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="y_order/teleports/l/teleport_l_2"]
+position = Vector2(16, 16)
 script = ExtResource("10_57bbv")
 
 [node name="dead_zones" type="Node2D" parent="y_order"]
@@ -785,6 +873,8 @@ script = ExtResource("10_57bbv")
 [node name="deadzone_A" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(136, 304)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_hnkdb"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -797,6 +887,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_B" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(840, 48)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_ar8v0"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -809,6 +901,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_C" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(1432, 24)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_46rc7"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -821,6 +915,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_D" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(624, 344)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_w6drv"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -833,6 +929,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_E" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(1176, 336)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_8hqcn"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -845,6 +943,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_F" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(968, 640)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_l2r3g"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -857,6 +957,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_G" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(432, 632)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_ir202"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -869,6 +971,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_H" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(432, 912)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_s5t5a"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -881,6 +985,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_I" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(-80, 960)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_883rm"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -893,6 +999,8 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="deadzone_J" type="Area2D" parent="y_order/dead_zones"]
 process_mode = 3
 position = Vector2(464, 1224)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("33_rwpra")
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_yk26o"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 

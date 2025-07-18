@@ -10,7 +10,7 @@ func _exit_tree() -> void:
 
 func add_custom_types() -> void:
 	add_custom_type(
-		"GameScene", 
+		"GameScene2D", 
 		"Node2D", 
 		preload("res://src/systems/scenes/game/game_scene.gd"), 
 		preload("res://src/images/editor/game_scene.png")
@@ -47,8 +47,8 @@ func add_custom_types() -> void:
 		preload("res://src/images/editor/sequence_flag.png")
 		)
 func remove_custom_types() -> void:
-	remove_custom_type("GameScene")
-	remove_custom_type("AdditiveGameScene")
+	remove_custom_type("GameScene2D")
+	remove_custom_type("AdditiveGameScene2D")
 	remove_custom_type("SentientBase")
 	remove_custom_type("TeleportationDoor")
 	remove_custom_type("Event")

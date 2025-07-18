@@ -1,6 +1,6 @@
 @tool
 
-class_name GameAdditiveScene
+class_name AdditiveGameScene
 extends AdditiveScene
 
 @export_storage var scene_load_sequence: Sequence

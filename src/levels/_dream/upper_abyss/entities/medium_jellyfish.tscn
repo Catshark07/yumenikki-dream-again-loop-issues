@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c1crevnw4c26l"]
+[gd_scene load_steps=16 format=3 uid="uid://c1crevnw4c26l"]
 
 [ext_resource type="Texture2D" uid="uid://sebowvddo33p" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/skin.png" id="1_jenvo"]
 [ext_resource type="Shader" uid="uid://ce1sqbdswmmmt" path="res://src/shaders/masks/scale_wiggle.gdshader" id="1_ydha6"]
@@ -30,17 +30,24 @@ shader_parameter/x_scale_speed = 1.0
 shader_parameter/y_scale_amplitude = 2.0
 shader_parameter/y_scale_speed = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t6x6i"]
-shader = ExtResource("1_ydha6")
-shader_parameter/x_scale_amplitude = 1.945
-shader_parameter/x_scale_speed = 0.77
-shader_parameter/y_scale_amplitude = 2.0
-shader_parameter/y_scale_speed = 1.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qec0a"]
 shader = ExtResource("1_ydha6")
 shader_parameter/x_scale_amplitude = 1.08
 shader_parameter/x_scale_speed = 0.91
+shader_parameter/y_scale_amplitude = 2.0
+shader_parameter/y_scale_speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7l2w1"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.0
+shader_parameter/x_scale_speed = 1.0
+shader_parameter/y_scale_amplitude = 1.0
+shader_parameter/y_scale_speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t6x6i"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.945
+shader_parameter/x_scale_speed = 0.77
 shader_parameter/y_scale_amplitude = 2.0
 shader_parameter/y_scale_speed = 1.0
 
@@ -68,19 +75,20 @@ material = SubResource("ShaderMaterial_uq6pt")
 position = Vector2(0, -25)
 texture = ExtResource("2_rqqkm")
 
-[node name="inner_tentacles" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_t6x6i")
-position = Vector2(0, -25)
-texture = ExtResource("5_gixb6")
-
 [node name="side_tentacles" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_qec0a")
 position = Vector2(0, -25)
 texture = ExtResource("6_rrswg")
 
 [node name="outer_tentacles" type="Sprite2D" parent="."]
-position = Vector2(0, -25)
+material = SubResource("ShaderMaterial_7l2w1")
+position = Vector2(0, -32)
 texture = ExtResource("7_3pfxf")
+
+[node name="inner_tentacles" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_t6x6i")
+position = Vector2(0, -25)
+texture = ExtResource("5_gixb6")
 
 [node name="core" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_fqie6")

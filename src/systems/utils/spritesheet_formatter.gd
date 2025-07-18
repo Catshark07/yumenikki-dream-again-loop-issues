@@ -33,6 +33,7 @@ var row_within_bounds: bool = false
 
 func _ready() -> void: 
 	texture_changed.connect(format)
+	texture.changed.connect(format)
 	visibility_changed.connect(func(): set_process(self.visible))
 
 func refresh_frame_splitting() -> void:
@@ -65,7 +66,7 @@ func check_row() -> void:
 func attempt_row() -> void:
 	row = cached_row if cached_row <= frame_v_count - 1 else row
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	match strip_style:
 		style.HORIZONTAL:
 			frame_coords.x = clamp(round(progress), 0, frame_h_count)

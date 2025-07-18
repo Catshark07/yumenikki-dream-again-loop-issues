@@ -58,7 +58,7 @@ func _update(delta: float) -> void:
 		interactable_lost.emit()
 		found = false
 
-func _input_pass(event: InputEvent) -> void:
+func _input_pass(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact"): handle_interaction()
 	
 func handle_field() -> void: 

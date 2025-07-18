@@ -7,15 +7,12 @@ var bpm: float = 0
 var vol_bpm_multiplier: float = 1
 var pit_bpm_multiplier: float = 1
 
-func _ready() -> void:
+func _setup() -> void:
 	trauma = get_node("fx").material
-	
 	sound_player = $sound
 	sound_player.stream = preload("res://src/audio/se/se_heartbeat.wav")
 	sound_player.play()
 	
-	set_active(active)
-
 func _update(delta: float) -> void:
 	if Player.Instance.get_pl() != null:
 		bpm = Player.Instance.get_pl().components.get_component_by_name("mental_status").bpm
@@ -47,9 +44,14 @@ func set_active(_active: bool = true) -> void:
 		trauma.set_shader_parameter("blur_amount", 0)
 	
 	sound_player.muted = !_active
-	Game.Audio.set_effect_active("Music", 0, _active)
-	Game.Audio.set_effect_active("Music", 1, _active)
+	Game.Audio.set_effect_active("Distorted", 0, _active)
 	
 	super(_active)
 
-			
+func _on_bypass_enabled() -> void:
+	sound_player.mute()
+	Game.Audio.set_effect_active("Distorted", 0, false)
+func _on_bypass_lifted() -> void:
+	sound_player.unmute()
+	Game.Audio.set_effect_active("Distorted", 0, true)
+	

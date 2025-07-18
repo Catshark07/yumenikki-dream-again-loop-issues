@@ -1,6 +1,5 @@
 @tool
 
-
 class_name SeamlessDetectorV2
 extends Node2D
 
@@ -100,9 +99,9 @@ var pos_right_mirror: Vector2
 @export_group("Loop render properties.")
 @export var viewport_container	: Node
 @export var render_container	: Node
-var cameras			: Array[Camera2D]
-var renders			: Array[Sprite2D]
-var viewport_renders: Array[SubViewport]
+@export var cameras			: Array[Camera2D]
+@export var renders			: Array[Sprite2D]
+@export var viewport_renders: Array[SubViewport]
 
 @export_storage var player_detector: AreaRegion
 var player_in_region: Player
@@ -110,8 +109,6 @@ var player_relative_pos: Vector2
 
 func _ready() -> void: 
 	loop_render_setup()
-	print(get_viewport().world_2d)
-	
 	player_detector = GlobalUtils.get_child_node_or_null(self, "player_detector")
 	
 	if Engine.is_editor_hint(): 
@@ -122,8 +119,6 @@ func _ready() -> void:
 		GlobalUtils.connect_to_signal(player_entered, player_detector.player_enter_handle)
 		GlobalUtils.connect_to_signal(player_exited, player_detector.player_exit_handle)
 		
-		await Game.main_tree.process_frame
-		
 	queue_redraw()
 		
 	set_bound_active(bound_side.UP, up_disabled)
@@ -132,11 +127,13 @@ func _ready() -> void:
 	set_bound_active(bound_side.LEFT, left_disabled)
 	
 func player_entered(_pl: Player) -> void: 
-	if _pl is Player and _pl == Player.Instance.get_pl(): player_in_region = _pl
+	if _pl is Player and _pl == Player.Instance.get_pl(): 
+		player_in_region = _pl
 func player_exited(_pl: Player) -> void: 
-	if _pl is Player and _pl == Player.Instance.get_pl(): player_in_region = null
+	if _pl is Player and _pl == Player.Instance.get_pl():
+		player_in_region = null
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint(): 
 		resize(boundary_size)
 		queue_redraw()
@@ -221,27 +218,18 @@ func resize(new_size: Vector2) -> void:
 
 func loop_render_setup() -> void:
 	for v in range(3):
-		viewport_renders.append(GlobalUtils.get_child_node_or_null(viewport_container, "viewport_%s" % (v + 1)))
-		if  viewport_renders[v] == null:
-			viewport_renders[v] = (await GlobalUtils.add_child_node(viewport_container, SubViewport.new(), "viewport_%s" % (v + 1)))
-		
-		viewport_renders[v].size = Vector2(480, 270)
+		viewport_renders[v].size = Vector2(510, 300)
 		viewport_renders[v].transparent_bg = true
 		viewport_renders[v].own_world_3d = true
-		viewport_renders[v].canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR
-		viewport_renders[v].world_2d = get_viewport().world_2d
+		viewport_renders[v].canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+		viewport_renders[v].world_2d = self.get_world_2d()
+		viewport_renders[v].set_canvas_cull_mask_bit(16, false)
 		
-	for v in range(viewport_renders.size()): # camera 2D.
-		cameras.append(GlobalUtils.get_child_node_or_null(viewport_renders[v], "camera"))
-		if 	cameras[v] == null: 
-			cameras[v] = (await GlobalUtils.add_child_node(viewport_renders[v], Camera2D.new(), "camera"))
-			
 	for r in range(viewport_renders.size()): # sprite 2D renders.
-		renders.append(GlobalUtils.get_child_node_or_null(render_container, "render_%s" % (r + 1)))
-		if  renders[r] == null:
-			renders[r] = (await GlobalUtils.add_child_node(render_container, Sprite2D.new(), "render_%s" % (r + 1)))
-		
-		renders[r].texture = cameras[r].get_viewport().get_texture()
+		cameras[r].anchor_mode = Camera2D.ANCHOR_MODE_DRAG_CENTER
+		renders[r].texture = viewport_renders[r].get_texture()
+		renders[r].set_visibility_layer_bit(0, false)
+		renders[r].set_visibility_layer_bit(16, true)
 		
 func loop_render_update() -> void: 
 	if player_in_region == null: return
@@ -251,29 +239,31 @@ func loop_render_update() -> void:
 		# cam_0 is for the x-axis
 		# cam_1 is for the y-axis
 		# cam_2 is for both axes
-		if c == 0 or c == 2: # x_camera,
+		if c == 0 or c == 2: # x_camera, xy_camera
 			
-			renders[c].position.x = player_relative_pos.x 
-			cameras[c].position.x = player_relative_pos.x 
+			if c != 2: 
+				cameras[c].position.x = player_relative_pos.x 
+				#renders[c].position.x = player_relative_pos.x
 			
 			if player_relative_pos.y >= boundary_size.y / 2: 
 				cameras[c].position.y = 0
-				renders[c].position.y = boundary_size.y
+				#renders[c].position.y = boundary_size.y
 			else: 
-				cameras[c].position.y = boundary_size.y 
-				renders[c].position.y = 0
+				cameras[c].position.y = boundary_size.y
+				#renders[c].position.y = 0
 		
-		if c == 1 or c == 2: # y_camera,
+		if c == 1 or c == 2: # y_camera, xy_camera
 			
-			renders[c].position.y = player_relative_pos.y
-			cameras[c].position.y = player_relative_pos.y
+			if c != 2: 
+				cameras[c].position.y = player_relative_pos.y
+				#renders[c].position.y = player_relative_pos.y
 			
 			if player_relative_pos.x >= boundary_size.x / 2: 
-				cameras[c].position.x = 0 
-				renders[c].position.x = boundary_size.x
+				cameras[c].position.x = 0
+				#renders[c].position.x = boundary_size.x
 			else: 
 				cameras[c].position.x = boundary_size.x
-				renders[c].position.x = 0
+				#renders[c].position.x = 0
 			
 
 func player_looping_bounds_setup() -> void:
@@ -299,7 +289,6 @@ func player_looping_bounds_setup() -> void:
 	down.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.DOWN))
 	right.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.RIGHT))
 	left.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.LEFT))
-func player_enter_setup() -> void: pass
 	
 func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void: 
 	if is_instance_valid(_pl) and Player.Instance.get_pl() != null:

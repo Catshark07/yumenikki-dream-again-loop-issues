@@ -5,6 +5,7 @@ extends AreaRegion
 
 @export_group("Flags")
 @export var secret: bool = false
+@export var presence_detect: bool = true
 
 @export var area: bool = false
 @export var only_once: bool = false

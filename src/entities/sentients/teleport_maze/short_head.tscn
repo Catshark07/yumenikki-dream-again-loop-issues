@@ -8,7 +8,6 @@
 [node name="sprite_renderer" parent="." index="3"]
 texture = ExtResource("3_llmgx")
 hframes = 4
-frame = 1
 autoplay = true
 loop = true
 fps = 5.0

@@ -28,7 +28,7 @@ var shake_comp: CamShake
 @export_group("Camera Properties")
 
 @export var offset: Vector2 = Vector2(0, 0)
-@export_range(0.8, 1.2) var zoom: float = 1
+@export_range(0.8, 2) var zoom: float = 1
 
 @export var override: bool = false:
 	set(ov):

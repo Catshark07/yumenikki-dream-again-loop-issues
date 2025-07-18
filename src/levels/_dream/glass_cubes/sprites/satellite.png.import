@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7de0sgf7rbaj"
-path="res://.godot/imported/move.png-445f2642fa2defae78a43f65127e6d58.ctex"
+uid="uid://faah6pyfkpk"
+path="res://.godot/imported/satellite.png-a6027b96a06ab2a4164b1ef20a4be097.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/entities/sentients/cat_effect/move.png"
-dest_files=["res://.godot/imported/move.png-445f2642fa2defae78a43f65127e6d58.ctex"]
+source_file="res://src/levels/_dream/glass_cubes/sprites/satellite.png"
+dest_files=["res://.godot/imported/satellite.png-a6027b96a06ab2a4164b1ef20a4be097.ctex"]
 
 [params]
 

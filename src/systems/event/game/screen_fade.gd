@@ -15,7 +15,7 @@ extends Event
 @export var ease: Tween.EaseType = Tween.EASE_OUT
 
 func _execute() -> void:
-	if !wait_til_finished: finished.emit.call_deferred()
+	if !wait_til_finished: super()
 	await ScreenTransition.request_transition(
 		fade_type, 
 		fade_colour, 
@@ -26,4 +26,4 @@ func _execute() -> void:
 		transition,
 		ease)
 	
-	if wait_til_finished: finished.emit.call_deferred()
+	if wait_til_finished: super()

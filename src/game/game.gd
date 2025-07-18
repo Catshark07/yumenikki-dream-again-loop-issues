@@ -38,6 +38,8 @@ func singleton_setup() -> void:
 		game_manager = preload("res://src/main/game.tscn").instantiate()
 		game_manager.name = "game_manager"
 		self.add_child(game_manager)
+		print(game_manager)
+		
 	else:
 		game_manager.reparent(self)
 
@@ -87,6 +89,10 @@ func get_play_time() -> Dictionary:
 		"minutes" 	: floori(fmod(time_elapsed, 3600) / 60),
 		"seconds" 	: floori(fmod(fmod(time_elapsed, 3600), 60))
 	}
+func get_mouse_position_within_vp() -> Vector2:
+	return clamp(Application.main_viewport.get_mouse_position(), Vector2.ZERO, Application.get_viewport_dimens())
+func get_mouse_position() -> Vector2:
+	return Application.main_viewport.get_mouse_position() - (Application.get_viewport_dimens() / 2)
 # ---- rendering server control ----
 
 func lerp_timescale(_new: float):
@@ -253,12 +259,13 @@ class Application:
 		
 	static var viewport_width: int
 	static var viewport_length: int
+	static var viewport_content_scale: float
 	static var main_window: Window
 	static var main_viewport: Viewport
 	
-	
 	static func quit(): 
 		Optimization.set_max_fps(30)
+		
 		if Game.game_manager != null:
 			Game.game_manager.process_mode = Node.PROCESS_MODE_DISABLED
 		Music.fade_out()
@@ -275,11 +282,14 @@ class Application:
 	
 	static func get_viewport_width() -> int: return ProjectSettings.get("display/window/size/viewport_width")
 	static func get_viewport_height() -> int: return ProjectSettings.get("display/window/size/viewport_height")		
-	static func get_viewport_dimens() -> Vector2: return Vector2(viewport_width, viewport_length)
+	static func get_viewport_dimens(_account_content_scale: bool = false) -> Vector2: 
+		if _account_content_scale: return Vector2(viewport_width, viewport_length) / viewport_content_scale
+		else: return Vector2(viewport_width, viewport_length)
 	static func viewport_setup() -> void:
 		
 		viewport_width = get_viewport_width()
 		viewport_length = get_viewport_height()
+		viewport_content_scale = ProjectSettings.get("display/window/stretch/scale")
 	
 		main_window.focus_exited.connect(func(): 
 			Game.main_tree.paused = true
@@ -293,12 +303,15 @@ class Application:
 	static func window_setup() -> void:
 		Engine.max_fps = 60
 		ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_repeat", CanvasItem.TEXTURE_REPEAT_MIRROR)
-
-		main_window.size = Vector2(480, 270) * 3
+		
+		main_window.content_scale_size = Vector2(960, 540)
+		main_window.size = Vector2(960, 540)
+		main_window.content_scale_factor = 2
+		
+		main_window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 		main_window.position = DisplayServer.screen_get_size(DisplayServer.get_primary_screen()) / 2 - main_window.size / 2 
 		
 		main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-	static func change_window_res() -> void: pass
 	static func change_window_mode(new_mode: Window.Mode) -> void: main_window.mode = new_mode
 	static func set_window_borderless(_brd: bool = true) -> void: main_window.borderless = _brd
 	

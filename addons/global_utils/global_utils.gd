@@ -42,8 +42,16 @@ static func get_child_node_or_null(
 		var _owner: Node
 		var _child_node: Node
 		
-		if _parent_node == null: return null
+		if _parent_node == null or _child_node_name.is_empty(): 
+			push_warning("Parent is null or Child node could not be found.")
+			return null
 		return _parent_node.get_node_or_null(_child_node_name)
+
+# OS exclusive
+static func print_os(_args = [], _rich: bool = false):
+	if OS.is_debug_build(): 
+		if _rich: 	print_rich(_args)
+		else:		print(_args)
 
 # runtime exclusive
 static func connect_to_signal(

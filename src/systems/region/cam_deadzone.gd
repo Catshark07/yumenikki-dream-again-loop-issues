@@ -6,10 +6,10 @@ extends AreaRegion
 # --- clamps the camera to the deadzone rect.
 var in_deadzone: bool = false
 
-func _ready() -> void:
-	super()
+func _setup() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	
+	if rect.shape.size.x < 480: rect.shape.size.x = 480
+	if rect.shape.size.y < 270: rect.shape.size.y = 270
 	
 	if Engine.is_editor_hint(): 
 		set_physics_process(false)
@@ -26,13 +26,6 @@ func _physics_process(delta: float) -> void:
 			(rect.global_position) + (rect.shape.size / 2) - Vector2(480, 270) * .5
 			)
 			
-func _draw() -> void:
-	if Engine.is_editor_hint():
-		draw_circle(-rect.shape.size / 2 , 20, Color.RED)
-		draw_circle(rect.shape.size / 2, 20, Color.RED)
-	#(rect.global_position - rect.shape.size / 2) + Game.get_viewport_dimens() / 2,
-	#(rect.global_position + rect.shape.size / 2) - Game.get_viewport_dimens() / 2
-			#
 		
 func _handle_player_enter() -> void: in_deadzone = true
 func _handle_player_exit() -> void: in_deadzone = false

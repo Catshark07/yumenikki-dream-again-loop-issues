@@ -23,7 +23,7 @@ func play_sound(
 	_stream: AudioStream, 
 	_vol: float = 1, 
 	_pitch: float = 1, 
-	forget_after: bool = false) -> void:
+	_forget_after: bool = false) -> void:
 	if _stream and not muted: 
 		if ResourceLoader.exists(_stream.resource_path):
 			if playing: stop()

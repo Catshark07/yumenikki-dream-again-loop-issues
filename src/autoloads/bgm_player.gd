@@ -27,8 +27,8 @@ func _ready() -> void:
 func play_sound(
 	_stream: AudioStream, 
 	_vol: float = 1, 
-	_pitch: float = 1, 
-	forget_after: bool = false) -> void:
+	_pitch: float = 1,
+	_forget_after: bool = false) -> void:
 	
 	if playing: set_music_dict(pending_music, _stream, _vol, _pitch)
 		

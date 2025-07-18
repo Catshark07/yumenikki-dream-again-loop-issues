@@ -20,7 +20,7 @@ func physics_update(_delta: float) -> void:
 	if sentient.stamina < sentient.MAX_STAMINA and !sentient.is_exhausted:
 		sentient.stamina += _delta * (sentient.stamina_regen)
 	
-func input(event: InputEvent) -> void: 
+func input(_event: InputEvent) -> void: 
 	if Input.is_action_just_pressed("emote"):
 			sentient.perform_action(sentient.components.get_component_by_name("action_manager").emote)
 	if Input.is_action_just_pressed("pinch"):

@@ -44,10 +44,6 @@ button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":fa
 
 [node name="eye_l" parent="inventory_ui/inventory/display/white_petal_stats/mado" index="0"]
 frame = 0
-progress = 0
-
-[node name="eye_r" parent="inventory_ui/inventory/display/white_petal_stats/mado" index="1"]
-progress = 0
 
 [node name="pink" parent="inventory_ui/inventory/select/separator" index="0"]
 texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_pink_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("10_a4iu7"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)

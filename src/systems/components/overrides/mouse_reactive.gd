@@ -13,7 +13,7 @@ func _physics_update(delta: float) -> void:
 	var i = -1 if invert else 1
 
 	receiver.affector.position = receiver.affector.position.lerp(
-		i * Vector2(Global.get_mouse_position_within_vp() * mouse_pos_relativity).clamp(min_pos_clamp, max_pos_clamp), 
+		i * Vector2(Game.get_mouse_position_within_vp() * mouse_pos_relativity).clamp(min_pos_clamp, max_pos_clamp), 
 		delta * 12)
 		
 	

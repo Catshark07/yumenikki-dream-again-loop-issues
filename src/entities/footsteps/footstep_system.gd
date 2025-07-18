@@ -104,27 +104,27 @@ func play_footstep_sound(_footstep_se: AudioStream) -> void:
 		clampf(randf_range(0.75, sentient.noise), 0.75, 1.2))	
 
 func _on_body_shape_entered(
-	body_rid: RID, 
-	body: Node2D, 
-	body_shape_index: int, 
-	local_shape_index: int) -> void:
+	_body_rid: RID, 
+	_body: Node2D, 
+	_body_shape_index: int, 
+	_local_shape_index: int) -> void:
 		
-		if body is FootstepTileMap:
-			multiple_floors.append(body)
+		if _body is FootstepTileMap:
+			multiple_floors.append(_body)
 								
 		scan_ground_material()				
 				
 		sentient.shadow_renderer.visible = !transparent_surfaces[curr_material]
 				
 func _on_body_shape_exited(
-	body_rid: RID, 
-	body: Node2D, 
-	body_shape_index: int, 
-	local_shape_index: int) -> void:
-		if body is FootstepTileMap:
+	_body_rid: RID, 
+	_body: Node2D, 
+	_body_shape_index: int, 
+	_local_shape_index: int) -> void:
+		if _body is FootstepTileMap:
 			
-			if !area.overlaps_body(body):
-				multiple_floors.remove_at(multiple_floors.find(body)) 
+			if !area.overlaps_body(_body):
+				multiple_floors.remove_at(multiple_floors.find(_body)) 
 				greatest_index = -50
 				
 				if  multiple_floors.is_empty():

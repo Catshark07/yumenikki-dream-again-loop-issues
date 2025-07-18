@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6ajjtgk35j6l"
-path="res://.godot/imported/tree_tiles.png-8abf90e7250da26e3f2b2f0b32fb7239.ctex"
+uid="uid://c86s3qsn8cq7c"
+path="res://.godot/imported/grass.png-45f7412125337d96b8a6924de521d973.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/_dream/light_void/sprites/tree_tiles.png"
-dest_files=["res://.godot/imported/tree_tiles.png-8abf90e7250da26e3f2b2f0b32fb7239.ctex"]
+source_file="res://src/levels/_dream/light_void/sprites/grass.png"
+dest_files=["res://.godot/imported/grass.png-45f7412125337d96b8a6924de521d973.ctex"]
 
 [params]
 

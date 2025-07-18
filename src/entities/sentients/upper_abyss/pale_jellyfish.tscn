@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://c5vuul3xa6rqx"]
+
+[ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_u0e4e"]
+[ext_resource type="Texture2D" uid="uid://igeawgnb7dyk" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_small/transparent.png" id="2_ga86h"]
+[ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="3_jqsh2"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="3_ycocl"]
+[ext_resource type="AnimationLibrary" uid="uid://ckrlxt13tw453" path="res://src/entities/sentients/animation_libs/red_jellyfish.tres" id="4_bjgll"]
+[ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_djqh1"]
+[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_e65x6"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="7_2rqag"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jg6uj"]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4v1j"]
+size = Vector2(6, 3)
+
+[sub_resource type="GDScript" id="GDScript_5ta14"]
+script/source = "extends Event
+
+@export var animator: SentientAnimator
+@export var animation_path: String
+@export var animation_speed: float = 1
+@export var animation_backwards: bool = false
+
+func _execute() -> void:
+	await animator.play_animation(animation_path, animation_speed, animation_backwards)
+	super()
+"
+
+[node name="red_jellyfish" instance=ExtResource("1_u0e4e")]
+position = Vector2(0, -16)
+
+[node name="sprite_renderer" parent="." index="3"]
+position = Vector2(0, -8)
+texture = ExtResource("2_ga86h")
+hframes = 6
+frame = 3
+script = ExtResource("3_ycocl")
+autoplay = true
+loop = true
+reverse = false
+end_frame = false
+fps = 6.0
+frame_dimensions = Vector2i(30, 30)
+frame_h_count = 6
+
+[node name="animation_manager" type="Node" parent="sb_components" index="1"]
+script = ExtResource("3_jqsh2")
+metadata/_custom_type_script = "uid://dklkysmgxwdv2"
+
+[node name="animation_player" type="AnimationPlayer" parent="sb_components/animation_manager" index="0"]
+libraries = {
+&"red_jellyfish": ExtResource("4_bjgll")
+}
+
+[node name="footstep_manager" type="Node2D" parent="sb_components" index="2"]
+material = SubResource("CanvasItemMaterial_jg6uj")
+script = ExtResource("5_djqh1")
+
+[node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager" index="0"]
+max_distance = 750.0
+bus = &"Effects"
+script = ExtResource("6_e65x6")
+metadata/_custom_type_script = "uid://b8o626ec7226k"
+
+[node name="terrain_detector" type="Area2D" parent="sb_components/footstep_manager" index="1"]
+collision_layer = 8
+collision_mask = 9
+
+[node name="col" type="CollisionShape2D" parent="sb_components/footstep_manager/terrain_detector" index="0"]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_u4v1j")
+debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
+
+[node name="on_state_changed" type="Node" parent="stance_fsm/IDLE" index="0"]
+script = ExtResource("7_2rqag")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="play_animation" type="Node" parent="stance_fsm/IDLE/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
+script = SubResource("GDScript_5ta14")
+animator = NodePath("../../../../sb_components/animation_manager")
+animation_path = "pirori/idle"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="on_state_changed" type="Node" parent="stance_fsm/WALK" index="0"]
+script = ExtResource("7_2rqag")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="play_animation" type="Node" parent="stance_fsm/WALK/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
+script = SubResource("GDScript_5ta14")
+animator = NodePath("../../../../sb_components/animation_manager")
+animation_path = "pirori/walk"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"

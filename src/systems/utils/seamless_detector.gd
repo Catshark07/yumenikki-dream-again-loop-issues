@@ -213,7 +213,6 @@ func player_entered_setup() -> void:
 	right.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.RIGHT))
 	left.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.LEFT))
 	
-	
 func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void: 
 	if is_instance_valid(_pl) and Player.Instance.get_pl() != null:
 		if _pl == Player.Instance.get_pl().world_warp:
@@ -224,8 +223,6 @@ func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void:
 			loop_record[_bound_side] += 1
 			EventManager.invoke_event(
 				"WORLD_LOOP", [get_warp_vectors_of_sentient(Player.Instance.get_pl())[_bound_side]])
-			
-
 
 func get_warp_vectors_of_sentient(_sentient: SentientBase) -> Dictionary:
 	var warp_vectors := {

@@ -65,9 +65,9 @@ size = Vector2(16, 16)
 
 [node name="docks" type="Node"]
 script = ExtResource("1_kijfi")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":null)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":null)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
 load_transition = SubResource("ShaderMaterial_5m4g7")
 unload_transition = SubResource("ShaderMaterial_02b03")
@@ -121,12 +121,18 @@ rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner
 [node name="scene_traversal" parent="y_order/to_numbers/on_interact/travel_to_scene" index="0"]
 scene_path = "uid://dnjvpl85u4jl8"
 
+[node name="spawn_point" parent="y_order/to_numbers" index="1"]
+scene_path = "uid://dnjvpl85u4jl8"
+
 [node name="to_upper_abyss" parent="y_order" instance=ExtResource("20_w6cx3")]
 position = Vector2(1000, -312)
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.9, 0, 0.7, 0.3),"script":null)
 
 
 [node name="scene_traversal" parent="y_order/to_upper_abyss/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://hx52e5i78byf"
+
+[node name="spawn_point" parent="y_order/to_upper_abyss" index="1"]
 scene_path = "uid://hx52e5i78byf"
 
 [node name="beams" type="TileMapLayer" parent="y_order"]
@@ -184,7 +190,6 @@ metadata/_custom_type_script = "uid://f4sb25g3gpic"
 [node name="enter" type="Node" parent="y_order/offset_cam_region/SequenceRegion"]
 process_mode = 4
 script = ExtResource("13_c8ign")
-skip_warning = null
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="Event" type="Node" parent="y_order/offset_cam_region/SequenceRegion/enter"]
@@ -198,7 +203,6 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="exit" type="Node" parent="y_order/offset_cam_region/SequenceRegion"]
 process_mode = 4
 script = ExtResource("13_c8ign")
-skip_warning = null
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="Event2" type="Node" parent="y_order/offset_cam_region/SequenceRegion/exit"]
@@ -229,7 +233,6 @@ metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
 [node name="enter" type="Node" parent="y_order/to_hell/SequenceRegion"]
 script = ExtResource("13_c8ign")
-skip_warning = null
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="Event" type="Node" parent="y_order/to_hell/SequenceRegion/enter" node_paths=PackedStringArray("scene_traversal")]
@@ -247,6 +250,8 @@ metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 [node name="from_hell" type="Node2D" parent="y_order/to_hell" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(48, 8)
 script = ExtResource("18_w6cx3")
+scene_path = "uid://m50bp6u4vgts"
+connection_id = "hell"
 parent_instead_of_self = NodePath("..")
 as_sibling = true
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
@@ -257,11 +262,9 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("13_c8ign")
-skip_warning = null
 
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("13_c8ign")
-skip_warning = null
 
 [editable path="camera"]
 [editable path="y_order/to_numbers"]

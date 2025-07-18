@@ -8,7 +8,6 @@ extends Event
 func _execute() -> void:
 	if !wait_til_finished: finished.emit.call_deferred()
 
-
 	animator.play(
 		animation_path, -1,
 		animation_speed, animation_backwards)
@@ -18,5 +17,5 @@ func _execute() -> void:
 func _validate() -> bool:
 	if !animator.has_animation(animation_path): 
 		printerr("EVENT - PLAY ANIMATION :: Animation does not have animation!")
-
 		return false
+	return true

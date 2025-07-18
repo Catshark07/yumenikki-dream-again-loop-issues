@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://dnjvpl85u4jl8"]
+[gd_scene load_steps=19 format=4 uid="uid://dnjvpl85u4jl8"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_s2gkw"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_3yepy"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="11_vxiyi"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="12_vxiyi"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="13_u3o2y"]
+[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/event/game/screen_fade.gd" id="14_ubshi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ubshi"]
 
@@ -34,9 +35,9 @@ size = Vector2(2624, 1528)
 
 [node name="numbers_world" type="Node"]
 script = ExtResource("1_s2gkw")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":null)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":null)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
 load_transition = SubResource("ShaderMaterial_ubshi")
 unload_transition = SubResource("ShaderMaterial_dgdtf")
@@ -82,6 +83,9 @@ rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner
 [node name="scene_traversal" parent="entrance_section/to_nexus/on_interact/travel_to_scene" index="0"]
 scene_path = "uid://dl25joalnmaxt"
 
+[node name="spawn_point" parent="entrance_section/to_nexus" index="1"]
+scene_path = "uid://dl25joalnmaxt"
+
 [node name="renderer" parent="entrance_section/to_nexus" index="2"]
 texture = ExtResource("11_vxiyi")
 hframes = 1
@@ -93,6 +97,9 @@ rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner
 
 
 [node name="scene_traversal" parent="entrance_section/to_flys/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://clyak4figgq17"
+
+[node name="spawn_point" parent="entrance_section/to_flys" index="1"]
 scene_path = "uid://clyak4figgq17"
 
 [node name="walls" type="TileMapLayer" parent="entrance_section"]
@@ -125,11 +132,14 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("13_u3o2y")
-skip_warning = null
+
+[node name="fade_out" type="Node" parent="scene_load_sequence"]
+script = ExtResource("14_ubshi")
+fade_type = 1
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("13_u3o2y")
-skip_warning = null
 
 [editable path="camera"]
 [editable path="entrance_section/to_docks"]

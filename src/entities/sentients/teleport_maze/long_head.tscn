@@ -8,7 +8,6 @@
 [node name="sprite_renderer" parent="." index="3"]
 texture = ExtResource("3_xs8sg")
 hframes = 4
-frame = 3
 autoplay = true
 loop = true
 fps = 5.0

@@ -247,7 +247,7 @@ offset = Vector2(0, -24)
 script = ExtResource("30_kknx7")
 frame_dimensions = Vector2i(48, 48)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="sprite_renderer"]
+[node name="visible_on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="sprite_renderer"]
 position = Vector2(0, -10)
 
 [node name="shader" type="ColorRect" parent="sprite_renderer"]
@@ -255,6 +255,7 @@ offset_left = -24.0
 offset_top = -48.0
 offset_right = 24.0
 color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
 
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 13)

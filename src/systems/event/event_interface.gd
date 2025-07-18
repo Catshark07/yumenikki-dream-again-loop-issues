@@ -2,7 +2,7 @@ class_name Event extends Node
 signal finished
 
 # template pusherr line:
-# printerr("EVENT - PLAYSOUND :: Sound is null!")
+# printerr("EVENT - {NAME} :: {WARNING}!")
 
 @export var deferred: bool = true
 @export var wait_til_finished: bool = true
