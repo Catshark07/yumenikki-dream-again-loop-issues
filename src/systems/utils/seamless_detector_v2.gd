@@ -3,10 +3,10 @@
 class_name SeamlessDetectorV2
 extends Node2D
 
-signal pl_warped_right
-signal pl_warped_left
-signal pl_warped_up
-signal pl_warped_down
+signal sb_warped_up(_sentient: SentientBase)
+signal sb_warped_down(_sentient: SentientBase)
+signal sb_warped_right(_sentient: SentientBase)
+signal sb_warped_left(_sentient: SentientBase)
 
 var loop_record  := {
 	bound_side.UP: 0,
@@ -107,14 +107,20 @@ var pos_right_mirror: Vector2
 var player_in_region: Player
 var player_relative_pos: Vector2
 
+# TODO:
+	# the reason why this breaks is because this node alongside its parent is reparented
+	# under a canvaslayer (or has been reparented in general). make sure to call loop_render_setup()
+	# post reparenting.
+
+
 func _ready() -> void: 
-	loop_render_setup()
 	player_detector = GlobalUtils.get_child_node_or_null(self, "player_detector")
 	
 	if Engine.is_editor_hint(): 
+		loop_render_setup()
 		if player_detector == null: 
 			player_detector = await GlobalUtils.add_child_node(self, AreaRegion.new(), "player_detector")
-	if !Engine.is_editor_hint(): 
+	
 		player_looping_bounds_setup()
 		GlobalUtils.connect_to_signal(player_entered, player_detector.player_enter_handle)
 		GlobalUtils.connect_to_signal(player_exited, player_detector.player_exit_handle)
@@ -125,7 +131,7 @@ func _ready() -> void:
 	set_bound_active(bound_side.DOWN, down_disabled)
 	set_bound_active(bound_side.RIGHT, right_disabled)
 	set_bound_active(bound_side.LEFT, left_disabled)
-	
+
 func player_entered(_pl: Player) -> void: 
 	if _pl is Player and _pl == Player.Instance.get_pl(): 
 		player_in_region = _pl
@@ -217,12 +223,11 @@ func resize(new_size: Vector2) -> void:
 # but its working pre-runtime. maybe it has to do with the world_2D?
 
 func loop_render_setup() -> void:
-	for v in range(3):
-		viewport_renders[v].size = Vector2(510, 300)
+	for v in range(viewport_renders.size()):
 		viewport_renders[v].transparent_bg = true
 		viewport_renders[v].own_world_3d = true
 		viewport_renders[v].canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-		viewport_renders[v].world_2d = self.get_world_2d()
+		viewport_renders[v].size = Vector2(510, 300)
 		viewport_renders[v].set_canvas_cull_mask_bit(16, false)
 		
 	for r in range(viewport_renders.size()): # sprite 2D renders.
@@ -239,46 +244,23 @@ func loop_render_update() -> void:
 		# cam_0 is for the x-axis
 		# cam_1 is for the y-axis
 		# cam_2 is for both axes
-		if c == 0 or c == 2: # x_camera, xy_camera
-			
-			if c != 2: 
-				cameras[c].position.x = player_relative_pos.x 
-				#renders[c].position.x = player_relative_pos.x
-			
-			if player_relative_pos.y >= boundary_size.y / 2: 
-				cameras[c].position.y = 0
-				#renders[c].position.y = boundary_size.y
-			else: 
-				cameras[c].position.y = boundary_size.y
-				#renders[c].position.y = 0
+		cameras[c].position.x = 50
+		cameras[c].position.y = 50
 		
-		if c == 1 or c == 2: # y_camera, xy_camera
-			
-			if c != 2: 
-				cameras[c].position.y = player_relative_pos.y
-				#renders[c].position.y = player_relative_pos.y
-			
-			if player_relative_pos.x >= boundary_size.x / 2: 
-				cameras[c].position.x = 0
-				#renders[c].position.x = boundary_size.x
-			else: 
-				cameras[c].position.x = boundary_size.x
-				#renders[c].position.x = 0
-			
 
 func player_looping_bounds_setup() -> void:
 	up.area_entered.connect(func(_p): 
 		player_hit_border(_p, bound_side.UP)
-		pl_warped_up.emit())
+		sb_warped_up.emit())
 	down.area_entered.connect(func(_p): 
 		player_hit_border(_p, bound_side.DOWN)
-		pl_warped_down.emit())
+		sb_warped_down.emit())
 	right.area_entered.connect(func(_p): 
 		player_hit_border(_p, bound_side.RIGHT)
-		pl_warped_right.emit())
+		sb_warped_right.emit())
 	left.area_entered.connect(func(_p): 
 		player_hit_border(_p, bound_side.LEFT)
-		pl_warped_left.emit())	
+		sb_warped_left.emit())	
 	
 	up.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.UP))
 	down.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.DOWN))
@@ -289,7 +271,6 @@ func player_looping_bounds_setup() -> void:
 	down.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.DOWN))
 	right.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.RIGHT))
 	left.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.LEFT))
-	
 func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void: 
 	if is_instance_valid(_pl) and Player.Instance.get_pl() != null:
 		if _pl == Player.Instance.get_pl().world_warp:

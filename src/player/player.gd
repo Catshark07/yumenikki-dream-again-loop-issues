@@ -8,6 +8,8 @@ var input := Vector2(0, 0)
 
 #region ---- data variables ----
 
+var data: PLAttributeData
+
 @export_group("Mobility Multiplier")
 @export var walk_multiplier: float = WALK_MULTI
 @export var sneak_multiplier: float = SNEAK_MULTI
@@ -113,7 +115,7 @@ class Instance:
 			["SCENE_CHANGE_SUCCESS"],
 			func(): 
 				if get_pl():
-					(get_pl() as Player_YN).equip(equipment_pending, true)
+					(get_pl() as Player_YN).equip(equipment_pending)
 		)
 
 	static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:

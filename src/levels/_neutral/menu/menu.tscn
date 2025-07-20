@@ -7,7 +7,7 @@
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="3_dwoed"]
 [ext_resource type="PackedScene" uid="uid://7gkxfsran1js" path="res://src/scenes/credits.tscn" id="3_k4drn"]
 [ext_resource type="Texture2D" uid="uid://cr3septns1m3e" path="res://src/images/panorama/sunset_city.png" id="4_37vgk"]
-[ext_resource type="Texture2D" uid="uid://0lno8dwt7l4t" path="res://src/player/madotsuki/display/default/sit_sleep.png" id="4_d7jyh"]
+[ext_resource type="Texture2D" uid="uid://0lno8dwt7l4t" path="res://src/player/2D/madotsuki/display/default/sit_sleep.png" id="4_d7jyh"]
 [ext_resource type="Texture2D" uid="uid://dgilrv0qps4ve" path="res://src/levels/_neutral/menu/title.png" id="4_egbxm"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_bmll1"]
 [ext_resource type="PackedScene" uid="uid://bryqyqyp5scn7" path="res://src/ui/template_button.tscn" id="5_jissf"]

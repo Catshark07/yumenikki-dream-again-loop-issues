@@ -1,6 +1,4 @@
-
-extends Node
-
+extends Control
 
 var scene_manager: SceneManager
 
@@ -361,12 +359,12 @@ class Optimization:
 	static func setup_overridden_project_settings() -> void:
 		if override_godot_default_settings:
 			RenderingServer.viewport_set_default_canvas_item_texture_repeat(
-				Game.Application.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
+				Game.Application.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_MIRROR)
 			RenderingServer.viewport_set_default_canvas_item_texture_filter(
 				Game.Application.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)	
 			
 			Game.Application.main_window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-			Game.Application.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_ENABLED
+			Game.Application.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_MIRROR
 			Game.Application.main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	static func set_max_fps(_max_fps: int) -> void:
 		Engine.max_fps = _max_fps

@@ -24,8 +24,8 @@ static func add_child_node(
 		
 		if !_parent_node.has_node(_child_node_name):
 			
-			if Engine.is_editor_hint(): 
-				await EditorInterface.get_edited_scene_root().get_tree().process_frame
+			#if Engine.is_editor_hint(): 
+				#await EditorInterface.get_edited_scene_root().get_tree().process_frame
 			_parent_node.add_child(_child_node)
 			_child_node.name = _child_node_name
 			_child_node.owner = _owner

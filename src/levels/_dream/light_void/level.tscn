@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="6_1yaby"]
 [ext_resource type="Texture2D" uid="uid://devrumewya5bv" path="res://src/images/panorama/blurred_glow.png" id="6_7iakk"]
 [ext_resource type="Script" uid="uid://d3r72epfndsge" path="res://src/autoloads/panorama_system.gd" id="7_t4c3a"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="8_22psq"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="8_22psq"]
 [ext_resource type="Shader" uid="uid://b0qym6r6rs7ns" path="res://src/shaders/panorama/linear_additive.gdshader" id="8_lk8vc"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="9_hvmbn"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="11_21ood"]
@@ -15,7 +15,7 @@
 [ext_resource type="TileSet" uid="uid://b771j363m3vqt" path="res://src/levels/_dream/light_void/tilesets/light_void.tres" id="13_g7klr"]
 [ext_resource type="TileSet" uid="uid://7dng4ghwe3iu" path="res://src/levels/_dream/light_void/tilesets/pillars.tres" id="14_87p8m"]
 [ext_resource type="TileSet" uid="uid://fc40lcfxh2rr" path="res://src/levels/_dream/light_void/tilesets/trees.tres" id="16_tboo3"]
-[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tilemaps/_footstep_material.tres" id="16_uvis2"]
+[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_atlas/_footstep_material.tres" id="16_uvis2"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="17_xrxpj"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="20_8ac2k"]
 

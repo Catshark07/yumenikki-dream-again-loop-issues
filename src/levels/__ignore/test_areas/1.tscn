@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=4 uid="uid://dkpwf0m2skd6f"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_lu1jh"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_6175u"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_6175u"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_xuv0w"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="4_4e31m"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="4_vga2u"]
 [ext_resource type="Texture2D" uid="uid://b4gjcclvhphd7" path="res://src/images/panorama/earth.png" id="5_a27ul"]
-[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tilemaps/apartment.tres" id="6_4e31m"]
+[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_atlas/apartment_dream.tres" id="6_4e31m"]
 [ext_resource type="PackedScene" uid="uid://blgkyj1ogaecl" path="res://src/systems/seamless_detector_v2.tscn" id="8_4e31m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4e31m"]
@@ -44,9 +44,6 @@ position = Vector2(-192, -32)
 [node name="audio_listener" parent="madotsuki" index="5"]
 current = false
 
-[node name="shader" parent="madotsuki/sprite_renderer" index="1"]
-metadata/_edit_use_anchors_ = true
-
 [node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
 layer = -30
 
@@ -66,7 +63,7 @@ tile_map_data = PackedByteArray("AADy//r/AAABAAQAAADz//r/AAABAAQAAAD0//r/AAABAAQ
 tile_set = ExtResource("6_4e31m")
 
 [node name="seamless_detector_v2" parent="." instance=ExtResource("8_4e31m")]
-position = Vector2(-304, -112)
+position = Vector2(-240, -80)
 player_detector = Object(Area2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":3,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(368, 256),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"disable_mode":0,"collision_layer":1073741824,"collision_mask":1073741824,"collision_priority":1.0,"input_pickable":true,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector2(0, 1),"gravity_direction":Vector2(0, 1),"gravity":980.0,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":1.0,"audio_bus_override":false,"audio_bus_name":&"Master","script":Resource("res://src/systems/region/region.gd"),"region_priority":0,"rect":Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 ,"centred":false,"debug_colour":Color(0, 0, 0, 0.3))
 

@@ -20,11 +20,11 @@
 [ext_resource type="Script" uid="uid://b5eh18jkduvjk" path="res://src/systems/game/heartbeat_manager.gd" id="19_j0kuk"]
 [ext_resource type="Shader" uid="uid://dhvgpadvrk0e2" path="res://src/shaders/screen_overlay/vignette_blur.gdshader" id="20_3itkt"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="21_cy466"]
-[ext_resource type="Script" uid="uid://b28e410lfdesx" path="res://src/player/scripts/pl_effect_player.gd" id="22_qof35"]
+[ext_resource type="Script" uid="uid://b28e410lfdesx" path="res://src/player/2D/scripts/pl_effect_player.gd" id="22_qof35"]
 [ext_resource type="AudioStream" uid="uid://b5ua6uth0mp44" path="res://src/audio/se/effect_unequip.WAV" id="23_t4e1t"]
 [ext_resource type="AudioStream" uid="uid://xxugef5ihpej" path="res://src/audio/se/effect_equip.WAV" id="24_ranl0"]
-[ext_resource type="Texture2D" uid="uid://bvntqmlvl36s0" path="res://src/player/madotsuki/effects/effect_anim_petal_pink.png" id="25_hma5v"]
-[ext_resource type="Texture2D" uid="uid://daueebm63ch62" path="res://src/player/madotsuki/effects/effect_anim_petal_white.png" id="26_0wivy"]
+[ext_resource type="Texture2D" uid="uid://bvntqmlvl36s0" path="res://src/player/2D/madotsuki/effects/effect_anim_petal_pink.png" id="25_hma5v"]
+[ext_resource type="Texture2D" uid="uid://daueebm63ch62" path="res://src/player/2D/madotsuki/effects/effect_anim_petal_white.png" id="26_0wivy"]
 [ext_resource type="Script" uid="uid://bot0qrhchjod5" path="res://src/systems/game/time/time_manager.gd" id="27_x664t"]
 [ext_resource type="Script" uid="uid://dx4noqrry2gq1" path="res://src/systems/game/chase_manager.gd" id="28_y0xa8"]
 [ext_resource type="Script" uid="uid://drtlglqkjepmq" path="res://src/game/states/pause.gd" id="29_scyrd"]
@@ -548,7 +548,8 @@ button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":fa
 
 
 [node name="eye_r" parent="always/ui/hud/inventory_ui/inventory/display/white_petal_stats/mado" index="1"]
-frame = 0
+frame = 1
+progress = 1
 
 [node name="pink" parent="always/ui/hud/inventory_ui/inventory/select/separator" index="0"]
 texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_pink_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":Resource("res://src/systems/utils/spritesheet_formatter.gd"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":true,"row":0.0,"cached_row":0.0,"row_within_bounds":false)

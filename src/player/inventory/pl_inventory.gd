@@ -29,7 +29,7 @@ signal inventory_data_updated(_appended_effect: PLEffect)
 
 var data: PLInventoryData = DEFAULT_DATA
 const DEFAULT_DATA: PLInventoryData = preload("res://src/player/inventory/data/empty.tres")
-
+const DEBUG_DATA: PLInventoryData = preload("res://src/player/inventory/data/all_effects.tres")
 
 func _setup(_owner: Node) -> void:
 	white_petal.visible = false
@@ -37,7 +37,6 @@ func _setup(_owner: Node) -> void:
 	
 	super(_owner)
 	
-	# --- listeners..
 	special_invert_sequence_end = EventListener.new(
 		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], 
 		false, self)
@@ -62,9 +61,6 @@ func _setup(_owner: Node) -> void:
 
 	GlobalUtils.connect_to_signal(func(): _change_to_state("white_petal"), white_petal_button.pressed)
 	GlobalUtils.connect_to_signal(func(): _change_to_state("pink_petal"), pink_petal_button.pressed)
-
-	instantiate_buttons(data)
-	
 	GlobalUtils.connect_to_signal(
 		func(_toggle: bool): 
 			if _toggle: EventManager.invoke_event("SPECIAL_INVERT_START_REQUEST")
@@ -72,6 +68,8 @@ func _setup(_owner: Node) -> void:
 			inventory_toggle.toggled
 	)
 	
+	if OS.is_debug_build(): update_inventory(DEBUG_DATA)
+	else: 					update_inventory(data)
 
 func instantiate_buttons(_inv_data: PLInventoryData) -> void:
 	if _inv_data == null: return
@@ -86,27 +84,30 @@ func append_item(_item: PLEffect) -> void:
 	data.effects.append(_item)
 	
 	var button = GUIPanelButton.new()
-	button.unique_data = _item
-	button.text_display.text = (_item.get_eff_name())
+	button.custom_minimum_size = Vector2(80, 20)
+	item_container.add_child(button)
+	
+	button.abstract_button.unique_data = _item
+	button.text_display.text = (_item.name)
 	button.icon_display.texture = (_item.icon)
 	
-	button.name = (_item.get_eff_name())
+	button.name = (_item.name)
 	button.hover_exited.connect(func(): hovered_button = null)
 	button.hover_entered.connect(func(): hovered_button = button)	
 	button.pressed.connect(func():
-		if button.unique_data: (Player.Instance.get_pl() as Player_YN).equip(button.unique_data))
+		if button.abstract_button.unique_data: (Player.Instance.get_pl() as Player_YN).equip(button.abstract_button.unique_data))
 	
-	item_container.add_child(button)
 	inventory_data_updated.emit(_item)
 	
 	Player.Data.update_effects_data(data.effects)
+
+func update_inventory(_data: PLInventoryData) -> void:
+	delete_buttons()
+	instantiate_buttons(_data)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if (event as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
 			if hovered_button != null: 
-				favourite_effect = hovered_button.unique_data
+				favourite_effect = hovered_button.abstract_button.unique_data
 				favourite_icon.global_position = hovered_button.global_position
-func set_inventory_data(_data: PLInventoryData) -> void:
-	data = _data
-	

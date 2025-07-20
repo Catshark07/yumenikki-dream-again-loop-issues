@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://bv5x4rpikgrho"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_4ckat"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="1_28p51"]
+[ext_resource type="Shader" uid="uid://cccvkqo884ywx" path="res://src/shaders/masks/psychedelic.gdshader" id="2_4ckat"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="4_w4wdm"]
+[ext_resource type="TileSet" uid="uid://bior84yl5ty0u" path="res://src/levels/__ignore/tile_atlas/apartment_real.tres" id="5_2mqtp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qmak8"]
+shader = ExtResource("2_4ckat")
+shader_parameter/strength = 0.265
+shader_parameter/speed = 0.087
+shader_parameter/size = 4.099
+shader_parameter/colour_overlay = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2mqtp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqfg4"]
+
+[node name="psychedelic_vision" type="Node2D"]
+material = SubResource("ShaderMaterial_qmak8")
+script = ExtResource("1_4ckat")
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("4_w4wdm"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("4_w4wdm"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+
+load_transition = SubResource("ShaderMaterial_2mqtp")
+unload_transition = SubResource("ShaderMaterial_bqfg4")
+
+[node name="scene_load_sequence" type="Node" parent="."]
+script = ExtResource("4_w4wdm")
+
+[node name="scene_unload_sequence" type="Node" parent="."]
+script = ExtResource("4_w4wdm")
+
+[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="ColorRect" type="ColorRect" parent="panorama (bottom_layer)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="madotsuki" parent="." instance=ExtResource("1_28p51")]
+use_parent_material = true
+position = Vector2(182, 110)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_map_data = PackedByteArray(0, 0, 14, 0, 7, 0, 1, 0, 6, 0, 4, 0, 0, 0)
+tile_set = ExtResource("5_2mqtp")
+
+[editable path="madotsuki"]

@@ -58,7 +58,7 @@ func setup() -> void:
 			scene_node_packed = load(scene_node.scene_file_path)
 			await scene_node.on_load_request()
 			scene_node.on_load()
-		
+			
 		if additive_scene_node != null:
 			if GameManager.instance == null: additive_scene_node.reparent(Game)
 			else: additive_scene_node.reparent(GameManager.pausable_parent)

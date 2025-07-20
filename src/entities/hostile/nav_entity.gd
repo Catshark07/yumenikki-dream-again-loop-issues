@@ -15,12 +15,12 @@ func dependency_setup() -> void:
 	behaviour_fsm._setup(self)
 	sound_player = get_node("sound_player")
 	
-func _update(delta: float) -> void:
-	super(delta)
-	stance_fsm._update(delta)
-	behaviour_fsm._update(delta)
+func _update(_delta: float) -> void:
+	super(_delta)
+	stance_fsm._update(_delta)
+	behaviour_fsm._update(_delta)
 
-func _physics_update(delta: float) -> void:
-	super(delta)
-	stance_fsm._physics_update(delta)
-	behaviour_fsm._physics_update(delta)
+func _physics_update(_delta: float) -> void:
+	super(_delta)
+	stance_fsm._physics_update(_delta)
+	behaviour_fsm._physics_update(_delta)

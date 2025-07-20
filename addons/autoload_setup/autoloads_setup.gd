@@ -13,7 +13,6 @@ func _enter_tree() -> void:
 	add_autoload_singleton("AudioService", "res://src/autoloads/audio_service.gd")
 	
 	add_autoload_singleton("ScreenTransition", "res://src/autoloads/autoload_screentrans.tscn")
-
 	
 
 func _exit_tree() -> void:

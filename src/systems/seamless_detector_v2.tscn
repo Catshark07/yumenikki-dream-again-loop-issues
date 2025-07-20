@@ -47,24 +47,27 @@ player_detector = Object(Area2D,"_import_path":NodePath(""),"unique_name_in_owne
 [node name="viewport_1" type="SubViewport" parent="loop_renders"]
 own_world_3d = true
 transparent_bg = true
+canvas_item_default_texture_filter = 0
 canvas_cull_mask = 4294901759
-size = Vector2i(480, 270)
+size = Vector2i(510, 300)
 
 [node name="camera" type="Camera2D" parent="loop_renders/viewport_1"]
 
 [node name="viewport_2" type="SubViewport" parent="loop_renders"]
 own_world_3d = true
 transparent_bg = true
+canvas_item_default_texture_filter = 0
 canvas_cull_mask = 4294901759
-size = Vector2i(480, 270)
+size = Vector2i(510, 300)
 
 [node name="camera" type="Camera2D" parent="loop_renders/viewport_2"]
 
 [node name="viewport_3" type="SubViewport" parent="loop_renders"]
 own_world_3d = true
 transparent_bg = true
+canvas_item_default_texture_filter = 0
 canvas_cull_mask = 4294901759
-size = Vector2i(480, 270)
+size = Vector2i(510, 300)
 
 [node name="camera" type="Camera2D" parent="loop_renders/viewport_3"]
 

@@ -37,7 +37,7 @@ static var cb_tween: Tween
 static var game_fsm: StrategistFSM
 
 func setup() -> void:
-	self.process_mode = Node.PROCESS_MODE_ALWAYS
+	self.process_mode = Node.PROCESS_MODE_INHERIT
 	
 	if instance != null: instance.queue_free()
 	instance = self

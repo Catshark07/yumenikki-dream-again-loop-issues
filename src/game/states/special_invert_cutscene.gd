@@ -4,6 +4,7 @@ extends State
 @export var inventory: Control
 
 func enter_state() -> void: 
+	Ambience.mute()
 	GameManager.set_cinematic_bars(true)
 	Game.scene_manager.get_curr_scene().process_mode = Node.PROCESS_MODE_DISABLED
 	
@@ -13,6 +14,7 @@ func enter_state() -> void:
 	if inventory != null: inventory.visible = true
 	
 func exit_state() -> void: 	
+	Ambience.unmute()
 	Game.lerp_timescale(1)
 	Game.scene_manager.get_curr_scene().process_mode = Node.PROCESS_MODE_INHERIT
 	GameManager.set_cinematic_bars(false)

@@ -87,6 +87,7 @@ static var event_ids := {
 		"CHASE_FINISH" : {},
 
 		# ---- scene change invokes -----
+		"SCENE_INITIALIZED" : {},
 		"SCENE_LOADED" : {},
 		"SCENE_UNLOADED" : {},
 		"SCENE_CHANGE_REQUEST" : {},

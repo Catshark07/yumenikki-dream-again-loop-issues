@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b7vdcqrtnh77e"]
 
-[ext_resource type="Texture2D" uid="uid://oicnl35egh3r" path="res://src/levels/dream/sane/colorful_irises/sprites/blood_tiles.png" id="1_08g45"]
+[ext_resource type="Texture2D" uid="uid://oicnl35egh3r" path="res://src/levels/_dream/colorful_irises/sprites/blood_tiles.png" id="1_08g45"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vwoun"]
 texture = ExtResource("1_08g45")

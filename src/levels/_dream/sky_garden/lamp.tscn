@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d1gqp3s2ch5hg"]
 
 [ext_resource type="Texture2D" uid="uid://0aoqub5oq24s" path="res://src/levels/_dream/sky_garden/lamp.png" id="1_i58lt"]
-[ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/madotsuki/effects/earring/glow.png" id="2_i58lt"]
+[ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/2D/madotsuki/effects/earring/glow.png" id="2_i58lt"]
 
 [node name="lamp" type="Sprite2D"]
 texture = ExtResource("1_i58lt")

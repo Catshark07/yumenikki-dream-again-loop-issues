@@ -35,21 +35,31 @@ signal toggled(_truth)
 signal hover_entered
 signal hover_exited
 
+
+func _ready() -> void:
+	_children_components_setup()
+	_core_setup()
+	_additional_setup()
+
 func _children_components_setup() -> void:
-	await super()
+	super()
 	abstract_button = GlobalUtils.get_child_node_or_null(main_container, "abstract_button")
 	if abstract_button == null:
-		abstract_button = await GlobalUtils.add_child_node(main_container, AbstractButton.new(), "abstract_button")
+		abstract_button = GlobalUtils.add_child_node(main_container, AbstractButton.new(), "abstract_button")
 		
 	
 func on_visibility_change() -> void: 
 	unhover_animation()
 	set_modulate(curr_colour)
 
-func _ready() -> void:
-	await super()
+func _additional_setup() -> void:	
+	mouse_filter = Control.MOUSE_FILTER_PASS
 	
+	display_bg.texture = button_display_texture
+	display_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	display_bg.stretch_mode = TextureRect.STRETCH_SCALE
 	set_active(true)
+	
 	panel_display_colour = curr_colour
 	
 	display_bg.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
@@ -79,13 +89,6 @@ func _ready() -> void:
 		toggled.connect(func(_toggle): 
 			if _toggle: _on_toggle()
 			else: 		_on_untoggle())
-
-func _additional_setup() -> void:	
-	mouse_filter = Control.MOUSE_FILTER_PASS
-	
-	display_bg.texture = button_display_texture
-	display_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	display_bg.stretch_mode = TextureRect.STRETCH_SCALE
 	
 # --- visual & general behaviour functions ---
 func _on_hover() -> void: 

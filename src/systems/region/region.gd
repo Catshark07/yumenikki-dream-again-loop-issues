@@ -37,7 +37,6 @@ func _ready() -> void:
 		GlobalUtils.connect_to_signal(handle_player_enter, self.area_entered)
 		GlobalUtils.connect_to_signal(handle_player_exit, self.area_exited)
 	
-	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	self.visibility_changed.connect(func(): rect.disabled = !(self.visible and is_visible_in_tree()))
 	
 	_setup()

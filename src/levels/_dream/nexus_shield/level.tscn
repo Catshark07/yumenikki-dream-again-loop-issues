@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ku5ii"]
 [ext_resource type="Texture2D" uid="uid://dpneh20wgfr56" path="res://src/images/panorama/panorama_folk.png" id="2_2lxk3"]
-[ext_resource type="TileSet" uid="uid://2yegmxnc57fl" path="res://src/levels/__ignore/tilemaps/shieldfolk.tres" id="2_oi6n0"]
+[ext_resource type="TileSet" uid="uid://2yegmxnc57fl" path="res://src/levels/__ignore/tile_atlas/shieldfolk.tres" id="2_oi6n0"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_qg8hg"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_yqpiu"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_yqpiu"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="3_5def8"]
 [ext_resource type="AudioStream" uid="uid://breccbd84casl" path="res://src/audio/bgm/world_folk.ogg" id="4_mb7v3"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="6_2lxk3"]
-[ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/__ignore/door.tscn" id="7_8rl4g"]
+[ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="7_8rl4g"]
 [ext_resource type="Texture2D" uid="uid://ub6vwdilgxwn" path="res://src/levels/__ignore/doors/door_shield-folk.png" id="8_5luxr"]
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="25_ilpas"]
 

@@ -17,13 +17,8 @@ func _ready() -> void:
 	scene_unload_sequence = GlobalUtils.get_child_node_or_null(self, "scene_unload_sequence")
 	
 	if Engine.is_editor_hint():
-		if GlobalUtils.get_child_node_or_null(self, "scene_unload_seq") != null:
-			GlobalUtils.get_child_node_or_null(self, "scene_unload_seq").queue_free()
-		if GlobalUtils.get_child_node_or_null(self, "scene_load_seq") != null:
-			GlobalUtils.get_child_node_or_null(self, "scene_load_seq").queue_free()
-		
-		if scene_load_sequence == null: scene_load_sequence = await GlobalUtils.add_child_node(self, Sequence.new(), "scene_load_sequence")
-		if scene_unload_sequence == null: scene_unload_sequence = await GlobalUtils.add_child_node(self, Sequence.new(), "scene_unload_sequence")
+		if scene_load_sequence == null: scene_load_sequence = GlobalUtils.add_child_node(self, Sequence.new(), "scene_load_sequence")
+		if scene_unload_sequence == null: scene_unload_sequence = GlobalUtils.add_child_node(self, Sequence.new(), "scene_unload_sequence")
 	
 	if !Engine.is_editor_hint():
 		super()
@@ -52,10 +47,10 @@ func _on_unload() -> void:
 	for _r in rules: _r.unapply_on_scene_unload()
 
 func _on_unload_request() -> void:
-	scene_load_sequence._execute() 
+	if scene_load_sequence != null: scene_load_sequence._execute() 
 	process_mode = Node.PROCESS_MODE_DISABLED
 func _on_load_request() -> void: 
-	scene_unload_sequence._execute()
+	if scene_unload_sequence != null: scene_unload_sequence._execute()
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 # ---- saving. 

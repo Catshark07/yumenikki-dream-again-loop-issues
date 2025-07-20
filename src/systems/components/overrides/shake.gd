@@ -67,8 +67,7 @@ func _physics_update(_delta: float) -> void:
 	if shake_duration - (time_elapsed * int(decay)) <= 0: 
 		receiver.position = Vector2()
 		receiver.rotation_degrees = 0
-		if destroy_after_finish: self.queue_free()
-		else: set_active(false)
+		set_active(false)
 func reset(
 		_magnitude: float = shake_strength, 
 		_speed: float = shake_speed, 

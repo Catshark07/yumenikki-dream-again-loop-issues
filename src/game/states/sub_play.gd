@@ -13,6 +13,8 @@ func _ready() -> void:
 	on_scene_change.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): sentients = GlobalUtils.get_group_arr("sentients"))
 
 func enter_state() -> void:
+	PhysicsServer2D.set_active(true)
+	
 	player_global_components.set_bypass(false)
 	sentients = GlobalUtils.get_group_arr("sentients")
 	for s in sentients: if s != null: s._enter()
@@ -23,8 +25,9 @@ func enter_state() -> void:
 		dream_manager._setup(self)
 		
 func exit_state() -> void:
+	PhysicsServer2D.set_active(false)
+	
 	player_global_components.set_bypass(true)
-
 	dream_manager_setup = false
 	for s in sentients: if s != null: s._exit()
 
@@ -38,6 +41,5 @@ func physics_update(_delta: float) -> void:
 func input(event: InputEvent) -> void:
 	for s in sentients:
 		if s != null and s is Player: s._input_pass(event)
-		
+
 	if Input.is_action_just_pressed("esc_menu"): GameManager.pause_options(true)
-	if Input.is_action_just_pressed("hud_toggle"):GameManager.set_ui_visibility(!GameManager.ui_parent.visible)

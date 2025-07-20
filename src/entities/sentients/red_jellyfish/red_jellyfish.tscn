@@ -92,7 +92,7 @@ animator = NodePath("../../../../sb_components/animation_manager")
 animation_path = "pirori/walk"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="Interactable" type="Area2D" parent="." index="10"]
+[node name="Interactable" type="Area2D" parent="." index="9"]
 process_mode = 3
 collision_layer = 1073741824
 collision_mask = 1073741824

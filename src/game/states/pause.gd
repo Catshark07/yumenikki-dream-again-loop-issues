@@ -5,6 +5,7 @@ extends State
 
 
 func enter_state() -> void: 
+	Ambience.mute()
 	GameManager.set_ui_visibility(false)
 	
 	pause_menu.visible = true
@@ -13,6 +14,7 @@ func enter_state() -> void:
 	Game.Application.pause()
 
 func exit_state() -> void: 
+	Ambience.unmute()
 	GameManager.set_ui_visibility(true)
 
 	pause_menu.visible = false

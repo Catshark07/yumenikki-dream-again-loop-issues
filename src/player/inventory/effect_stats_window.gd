@@ -9,7 +9,7 @@ extends Control
 @export var stamina_regen: Control
 @export var stamina_decay: Control
 
-@onready var default_player_stats := load("res://src/player/madotsuki/effects/_none/_default.tres")
+@onready var default_player_stats := load("res://src/player/2D/madotsuki/effects/_none/_default.tres")
 
 @onready var stats_neutral_indicator := load("res://src/player/inventory/stats_neutral.png")
 @onready var stats_positive_indicator := load("res://src/player/inventory/stats_positive.png")

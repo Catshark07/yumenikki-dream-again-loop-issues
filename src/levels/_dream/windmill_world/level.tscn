@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_xajab"]
 [ext_resource type="AudioStream" uid="uid://dihvjedul7eg2" path="res://src/audio/bgm/world_windmill.ogg" id="3_kt1fc"]
 [ext_resource type="Texture2D" uid="uid://dp34flwy0nlvn" path="res://src/images/panorama/panorama_windmill.png" id="3_xajab"]
-[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="5_fmdty"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="6_0l84v"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_atlas/_common_objs.tres" id="5_fmdty"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_0l84v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p00n0"]
 

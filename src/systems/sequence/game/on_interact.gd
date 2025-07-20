@@ -2,6 +2,7 @@ class_name OnInteract
 extends Sequence
 
 var interactable: Interactable
+var count: int = 0
 
 func _ready() -> void: 
 	super()
@@ -12,3 +13,6 @@ func _ready() -> void:
 	
 	process_mode = Node.PROCESS_MODE_DISABLED	
 	
+func _execute() -> void:
+	super()
+	count += 1

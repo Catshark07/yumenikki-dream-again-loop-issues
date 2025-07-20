@@ -39,7 +39,7 @@ func open_message_display(
 	_sound: AudioStreamWAV = load("res://src/audio/se/se_talk.wav"),
 	_speed: int = 1,
 	_reset: bool = true, 
-	_pos: Vector2 = Vector2(Game.viewport_width / 2, Game.viewport_length - 110)) -> void: 
+	_pos: Vector2 = Vector2(Game.Application.viewport_width / 2, Game.Application.viewport_length - 110)) -> void: 
 		if is_open == true: return
 		current_index = 0
 		

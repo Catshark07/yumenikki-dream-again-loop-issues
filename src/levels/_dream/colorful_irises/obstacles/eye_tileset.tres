@@ -1,8 +1,8 @@
 [gd_resource type="TileSet" load_steps=7 format=3 uid="uid://dlytw3uf7vjuh"]
 
-[ext_resource type="Texture2D" uid="uid://hq1y7paxhmis" path="res://src/levels/dream/sane/colorful_irises/sprites/eye-big_1.png" id="2_2t8e0"]
-[ext_resource type="Texture2D" uid="uid://ddv8ptuvylhcp" path="res://src/levels/dream/sane/colorful_irises/sprites/eye-large_1.png" id="3_3gy28"]
-[ext_resource type="Texture2D" uid="uid://1aedbj4oic53" path="res://src/levels/dream/sane/colorful_irises/sprites/eye-small_1.png" id="4_l2ggd"]
+[ext_resource type="Texture2D" uid="uid://hq1y7paxhmis" path="res://src/levels/_dream/colorful_irises/sprites/eye-big_1.png" id="2_2t8e0"]
+[ext_resource type="Texture2D" uid="uid://ddv8ptuvylhcp" path="res://src/levels/_dream/colorful_irises/sprites/eye-large_1.png" id="3_3gy28"]
+[ext_resource type="Texture2D" uid="uid://1aedbj4oic53" path="res://src/levels/_dream/colorful_irises/sprites/eye-small_1.png" id="4_l2ggd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t8baa"]
 texture = ExtResource("2_2t8e0")

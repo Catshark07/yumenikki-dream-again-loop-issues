@@ -1,7 +1,7 @@
 [gd_scene load_steps=40 format=4 uid="uid://yp1tv6otq0nw"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_7o03b"]
-[ext_resource type="TileSet" uid="uid://du2wbc6fqtlpf" path="res://src/levels/__ignore/tilemaps/mars.tres" id="2_i6rw4"]
+[ext_resource type="TileSet" uid="uid://du2wbc6fqtlpf" path="res://src/levels/__ignore/tile_atlas/mars.tres" id="2_i6rw4"]
 [ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="3_3p07t"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="3_63ps5"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="3_guxvn"]
@@ -9,7 +9,7 @@
 [ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="3_veq4x"]
 [ext_resource type="Texture2D" uid="uid://dbsfwb1x0053s" path="res://src/images/panorama/mars_hills.png" id="4_4lalb"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_34rio"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="4_ew0vm"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="4_ew0vm"]
 [ext_resource type="Texture2D" uid="uid://c8k1sxkde80gi" path="res://src/images/panorama/clouds.png" id="4_veq4x"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_34rio"]
 [ext_resource type="Texture2D" uid="uid://cviohk1byswuk" path="res://src/images/panorama/saturn.png" id="5_bjp8k"]
