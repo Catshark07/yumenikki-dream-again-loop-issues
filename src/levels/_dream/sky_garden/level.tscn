@@ -1,7 +1,7 @@
 [gd_scene load_steps=41 format=4 uid="uid://d78nmmv8xxj"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ho5yo"]
-[ext_resource type="TileSet" uid="uid://8ycy6oceth0s" path="res://src/levels/__ignore/tile_atlas/sky_garden.tres" id="2_ftve3"]
+[ext_resource type="TileSet" uid="uid://8ycy6oceth0s" path="res://src/levels/__ignore/tile_set/sky_garden.tres" id="2_ftve3"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_s6vta"]
 [ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/scene_rule.gd" id="2_tn28s"]
 [ext_resource type="Shader" uid="uid://5k0375eqfw0q" path="res://src/shaders/masks/sub.gdshader" id="3_1mbd4"]
@@ -16,11 +16,11 @@
 [ext_resource type="Texture2D" uid="uid://b1ok2hm0hpyfv" path="res://src/levels/_dream/sky_garden/leaves.png" id="6_ei7bl"]
 [ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="6_giiqj"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="11_cb07h"]
-[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_atlas/_footstep_material.tres" id="13_p6455"]
+[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="13_p6455"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="14_gi06y"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="14_wsexu"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="16_4oe28"]
-[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_atlas/_common_objs.tres" id="21_bvc3k"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="16_4oe28"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="21_bvc3k"]
 
 [sub_resource type="Resource" id="Resource_dlrun"]
 script = ExtResource("3_bvc3k")

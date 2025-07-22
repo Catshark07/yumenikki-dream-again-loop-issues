@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://b67q2b5hm6tsu"]
+[gd_scene load_steps=21 format=4 uid="uid://b67q2b5hm6tsu"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_inoc5"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_odm8p"]
@@ -7,10 +7,15 @@
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="4_cu3a0"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_sthxv"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="5_cu3a0"]
-[ext_resource type="TileSet" uid="uid://ucja6rk8c0dh" path="res://src/levels/__ignore/tile_atlas/eyeball.tres" id="5_pagnx"]
+[ext_resource type="TileSet" uid="uid://ucja6rk8c0dh" path="res://src/levels/__ignore/tile_set/eyeball.tres" id="5_pagnx"]
 [ext_resource type="AudioStream" uid="uid://dexpefjcufc0b" path="res://src/audio/bgm/world_eyeball.ogg" id="6_jutn4"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="9_4j00j"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="13_x4bpl"]
+[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="11_ppt66"]
+[ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/event/sequence/game/sequence_region.gd" id="12_04s3o"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="12_d5n0m"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="13_x4bpl"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="14_d5n0m"]
+[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="16_fot1s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ppt66"]
 
@@ -26,6 +31,9 @@ shader_parameter/offset_strength = 0.15
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fot1s"]
+size = Vector2(16, 16)
 
 [node name="eyeball_world" type="Node"]
 script = ExtResource("1_inoc5")
@@ -80,6 +88,51 @@ min_boundary_size = Vector2i(480, 270)
 
 [node name="Madotsuki" parent="y_order" instance=ExtResource("9_4j00j")]
 position = Vector2(75, 45)
+
+[node name="AreaRegion" type="Area2D" parent="y_order"]
+position = Vector2(40, 976)
+collision_layer = 1073741824
+collision_mask = 1073741824
+script = ExtResource("11_ppt66")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_fot1s"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
+metadata/_custom_type_script = "uid://4dkyll6fxqod"
+
+[node name="rect" type="CollisionShape2D" parent="y_order/AreaRegion"]
+shape = SubResource("RectangleShape2D_fot1s")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="SpawnPoint" type="Node2D" parent="y_order/AreaRegion" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(-40, -1080)
+script = ExtResource("12_d5n0m")
+scene_path = "uid://b5h2bldsnmdsb"
+parent_instead_of_self = NodePath("..")
+as_sibling = true
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="SequenceRegion" type="Node" parent="y_order/AreaRegion" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
+process_mode = 4
+script = ExtResource("12_04s3o")
+enter_sequence = NodePath("enter")
+exit_sequence = NodePath("exit")
+metadata/_custom_type_script = "uid://f4sb25g3gpic"
+
+[node name="enter" type="Node" parent="y_order/AreaRegion/SequenceRegion"]
+script = ExtResource("13_x4bpl")
+
+[node name="Event" type="Node" parent="y_order/AreaRegion/SequenceRegion/enter" node_paths=PackedStringArray("scene_traversal")]
+script = ExtResource("14_d5n0m")
+scene_traversal = NodePath("SceneTraversal")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="SceneTraversal" type="Node" parent="y_order/AreaRegion/SequenceRegion/enter/Event" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("16_fot1s")
+scene_path = "uid://b5h2bldsnmdsb"
+spawn_point = NodePath("../../../../SpawnPoint")
+metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+
+[node name="exit" type="Node" parent="y_order/AreaRegion/SequenceRegion"]
+script = ExtResource("13_x4bpl")
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("13_x4bpl")

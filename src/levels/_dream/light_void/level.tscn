@@ -15,9 +15,9 @@
 [ext_resource type="TileSet" uid="uid://b771j363m3vqt" path="res://src/levels/_dream/light_void/tilesets/light_void.tres" id="13_g7klr"]
 [ext_resource type="TileSet" uid="uid://7dng4ghwe3iu" path="res://src/levels/_dream/light_void/tilesets/pillars.tres" id="14_87p8m"]
 [ext_resource type="TileSet" uid="uid://fc40lcfxh2rr" path="res://src/levels/_dream/light_void/tilesets/trees.tres" id="16_tboo3"]
-[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_atlas/_footstep_material.tres" id="16_uvis2"]
+[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="16_uvis2"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="17_xrxpj"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="20_8ac2k"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="20_8ac2k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0x8fy"]
 

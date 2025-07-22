@@ -15,7 +15,6 @@ func enter_state() -> void:
 
 func exit_state() -> void: 
 	Ambience.unmute()
-	GameManager.set_ui_visibility(true)
 
 	pause_menu.visible = false
 	Music.play_music_dict(Music.prev_music)

@@ -8,14 +8,14 @@
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="6_rxu3j"]
 [ext_resource type="PackedScene" uid="uid://jioru3rh3jtn" path="res://src/levels/_real/apartment/balcony_real.tscn" id="7_33y2f"]
 [ext_resource type="PackedScene" uid="uid://dp6063trlnao1" path="res://src/levels/_real/apartment/room_real.tscn" id="8_kxofn"]
-[ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/sequence/game/sequence_region.gd" id="9_rbx1l"]
+[ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/event/sequence/game/sequence_region.gd" id="9_rbx1l"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="9_xma33"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="10_p0cyb"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="10_rxu3j"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="13_160am"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="13_160am"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="13_jd4xj"]
 [ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/__ignore/rain.tscn" id="13_l6oh8"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="14_8p0b5"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/event/sequence/game/on_interact.gd" id="14_8p0b5"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="15_3b43y"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/event/game/invoke_game_event.gd" id="15_8p0b5"]
 [ext_resource type="AudioStream" uid="uid://b5flsa2lqe3h0" path="res://src/audio/se/door_rattle.mp3" id="16_1674n"]
@@ -107,9 +107,11 @@ layer = -1
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
 
-[node name="sequence" type="Node" parent="balcony/y_order/cam_deadzone" index="1"]
+[node name="sequence" type="Node" parent="balcony/y_order/cam_deadzone" index="1" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
 process_mode = 4
 script = ExtResource("9_rbx1l")
+enter_sequence = NodePath("enter")
+exit_sequence = NodePath("exit")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
 [node name="enter" type="Node" parent="balcony/y_order/cam_deadzone/sequence"]

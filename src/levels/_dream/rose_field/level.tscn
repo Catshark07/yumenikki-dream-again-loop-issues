@@ -1,7 +1,7 @@
 [gd_scene load_steps=36 format=4 uid="uid://fy7ltowqs546"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_lmxqw"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="2_2i47j"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="2_2i47j"]
 [ext_resource type="Texture2D" uid="uid://bxj6fihryk3ea" path="res://src/levels/_dream/rose_field/sprites/tilemap.png" id="2_ct8qg"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="3_k3e6d"]
 [ext_resource type="AudioStream" uid="uid://b6mtbauq1ex02" path="res://src/audio/bgm/silas_lumentorch.ogg" id="3_pgbku"]

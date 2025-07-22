@@ -34,3 +34,6 @@ func play_animation_priority(_path: String, _speed: float = 1, _backwards: bool 
 	can_play = false
 func has_animation(_path: String) -> bool:
 	return animation_player.has_animation(_path)
+
+func _on_bypass_enabled() -> void:
+	animation_player.pause()

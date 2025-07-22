@@ -15,16 +15,20 @@ var text_container: RichTextLabel
 var typewriter_timer: Timer
 
 var sound_player: SoundPlayer
-var iterate_sound: AudioStreamWAV = preload("res://src/audio/se/se_talk.wav")
+var iterate_sound: AudioStreamWAV = preload("res://src/audio/se/se_talk_default.wav")
 
 var text: String = ""
 
 var buttons_container: Container
-
-var text_color: Color = Color.WHITE
-
 var can_progress: bool = false
 var animation_tween: Tween
+
+# -- internal properties
+var sound: AudioStream = load("res://src/audio/se/se_talk_default.wav")
+var speed: float = 1
+var colour: Color = Color.WHITE
+
+signal finished
 
 func _ready() -> void:
 	self.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -72,7 +76,15 @@ func _additional() -> void:
 	await typewriter_timer.timeout
 	MessageDisplayManager.instance.proceed_current_message_display()
 
-func open(_position: Vector2) -> void:
+func open(
+	_position: Vector2,
+	_sound: AudioStream,
+	_speed: float = 1,
+	_font_colour: Color = Color.WHITE) -> void:
+		sound = _sound if _sound != null else sound
+		speed = _speed if _speed != 1 else speed
+		colour = _font_colour 
+		
 		initial_position = _position
 		self.position = initial_position - self.size / 2
 		
@@ -85,15 +97,14 @@ func open(_position: Vector2) -> void:
 		
 func close() -> void:
 	text_container.text = ""
+	finished.emit()
 	await close_animation()
 	
 func display_text(
 		_text: String, 
-		_sound: AudioStreamWAV = load("res://src/audio/se/se_talk.wav"),
-		_speed: float = 1,
 		append_to_current: bool = false
 		) -> void:
-			await iterate_text(_text, _sound, _speed)
+			await iterate_text(_text, sound, speed, colour)
 			_additional()
 
 func return_parsed(_text: String, c: int = 0, j: int = c + 1) -> String: 
@@ -122,8 +133,11 @@ func return_raw(_text: String, c: int = 0, j: int = c + 1) -> String:
 
 func iterate_text(
 		_text: String, 
-		_sound: AudioStreamWAV = load("res://src/audio/se/se_talk.wav"),
-		_speed: float = 1) -> String:
+		_sound: AudioStream = load("res://src/audio/se/se_talk_default.wav"),
+		_speed: float = 1,
+		_font_colour: Color = Color.WHITE) -> String:
+			text_container.modulate = _font_colour
+			
 			var full_text: String
 			can_progress = false
 			

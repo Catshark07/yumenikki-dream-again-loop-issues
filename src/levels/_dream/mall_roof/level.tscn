@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=4 uid="uid://bop5qd1lade80"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ctqlh"]
-[ext_resource type="TileSet" uid="uid://c0iu5kuqnnmc6" path="res://src/levels/__ignore/tile_atlas/graffiti.tres" id="2_d6u63"]
+[ext_resource type="TileSet" uid="uid://c0iu5kuqnnmc6" path="res://src/levels/__ignore/tile_set/graffiti.tres" id="2_d6u63"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_kk6dd"]
 [ext_resource type="AudioStream" uid="uid://dnnteerppdlka" path="res://src/audio/bgm/event_witch.WAV" id="3_thvms"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_g13ea"]

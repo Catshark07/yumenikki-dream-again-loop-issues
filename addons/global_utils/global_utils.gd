@@ -2,6 +2,11 @@
 class_name GlobalUtils
 extends EditorPlugin
 
+static var bottom_panel: HBoxContainer
+
+func _exit_tree() -> void:
+	bottom_panel = null
+	
 func _handles(object: Object) -> bool:
 	return object is Node
 

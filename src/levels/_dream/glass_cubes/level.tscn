@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/event/event_interface.gd" id="19_kf87u"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="20_myjgy"]
 [ext_resource type="AudioStream" uid="uid://bipehuwb1yaul" path="res://src/audio/se/se_door_open-1.wav" id="21_tbxjv"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="22_3mapr"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="22_3mapr"]
 [ext_resource type="Texture2D" uid="uid://c3byfy6b7jo86" path="res://src/levels/_dream/upper_abyss/sprites/closed.png" id="23_orxyj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlbi4"]

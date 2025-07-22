@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=3 uid="uid://cijogi38yfo57"]
 
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_84h6v"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="2_dcrlv"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/event/sequence/game/on_interact.gd" id="2_dcrlv"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/event/game/invoke_game_event.gd" id="3_onajm"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/event/game/screen_fade.gd" id="4_dcrlv"]
 [ext_resource type="Shader" uid="uid://dfvq1pars23rw" path="res://src/shaders/transition/tr_circle.gdshader" id="5_onajm"]
@@ -45,7 +45,6 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 [node name="on_interact" type="Node" parent="."]
 process_mode = 4
 script = ExtResource("2_dcrlv")
-remove_invalid_events = false
 halt_sequence = true
 
 [node name="request_cutscene_start" type="Node" parent="on_interact"]
@@ -101,7 +100,6 @@ metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 position = Vector2(0, 12)
 script = ExtResource("9_6byum")
 parent_instead_of_self = NodePath("..")
-as_sibling = true
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="renderer" type="Sprite2D" parent="."]

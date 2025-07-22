@@ -12,7 +12,7 @@
 [ext_resource type="TileSet" uid="uid://b7vdcqrtnh77e" path="res://src/levels/_dream/colorful_irises/obstacles/bloody_tileset.tres" id="9_n1xg1"]
 [ext_resource type="TileSet" uid="uid://dlytw3uf7vjuh" path="res://src/levels/_dream/colorful_irises/obstacles/eye_tileset.tres" id="18_nqkx8"]
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="18_nqkye"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="20_5siph"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="20_5siph"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bsomg"]
 

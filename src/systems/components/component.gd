@@ -23,11 +23,9 @@ func _ready() -> void:
 	if get_parent() is ComponentReceiver: 
 		receiver = get_parent()
 
-		if !receiver.bypass_enabled.is_connected(_on_bypass_enabled): 
-			receiver.bypass_enabled.connect(_on_bypass_enabled)
-		if !receiver.bypass_lifted.is_connected(_on_bypass_lifted): 
-			receiver.bypass_lifted.connect(_on_bypass_lifted)
-				
+		GlobalUtils.connect_to_signal(_on_bypass_enabled, receiver.bypass_enabled)
+		GlobalUtils.connect_to_signal(_on_bypass_lifted, receiver.bypass_lifted)
+		
 	_setup()
 
 # ---- component functions ----

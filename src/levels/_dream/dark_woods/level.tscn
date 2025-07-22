@@ -6,14 +6,14 @@
 [ext_resource type="AudioStream" uid="uid://16b7dcgbyc2n" path="res://src/audio/bgm/world_dense-woods-b.WAV" id="4_xplsa"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_jpgby"]
 [ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/__ignore/rain.tscn" id="6_pt7pb"]
-[ext_resource type="TileSet" uid="uid://fd37qogr0ale" path="res://src/levels/__ignore/tile_atlas/dense_woods.tres" id="7_jpgby"]
+[ext_resource type="TileSet" uid="uid://fd37qogr0ale" path="res://src/levels/__ignore/tile_set/dense_woods.tres" id="7_jpgby"]
 [ext_resource type="Shader" uid="uid://dv1dx75w12wav" path="res://src/shaders/screen_overlay/vignette_dark.gdshader" id="7_oeolx"]
 [ext_resource type="Shader" uid="uid://5k0375eqfw0q" path="res://src/shaders/masks/sub.gdshader" id="8_3nswl"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="8_5vei8"]
-[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_atlas/_common_objs.tres" id="8_xjav8"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="8_xjav8"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="9_od30p"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="10_3nswl"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="12_naoxy"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="12_naoxy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xjav8"]
 

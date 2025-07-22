@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bwfx54ckkdqkm"]
+[gd_scene load_steps=28 format=3 uid="uid://bwfx54ckkdqkm"]
 
 [ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="1_6wkix"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="2_gdk7d"]
@@ -21,8 +21,10 @@
 [ext_resource type="Script" uid="uid://dbo5xans8s5ib" path="res://src/entities/hostile/behaviour_states/chase.gd" id="14_oa7jr"]
 [ext_resource type="Script" uid="uid://cbg0uhsr4h72h" path="res://src/entities/hostile/behaviour_states/stare_at.gd" id="15_gy8qw"]
 [ext_resource type="Script" uid="uid://sahjehrg3n8o" path="res://src/entities/hostile/behaviour_states/follow.gd" id="16_nkab7"]
+[ext_resource type="Script" uid="uid://c4jf04237m0wj" path="res://src/entities/hostile/behaviour_states/wander_sub_idle.gd" id="18_1bo1t"]
 [ext_resource type="Script" uid="uid://ch7860xvkjcqb" path="res://src/entities/hostile/behaviour_states/taunt.gd" id="18_rq7m6"]
-[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="21_vv2et"]
+[ext_resource type="Script" uid="uid://cgrlne63ptsn5" path="res://src/entities/hostile/behaviour_states/wander_sub_move.gd" id="19_i4du2"]
+[ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="23_bqdwf"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18lqh"]
 blend_mode = 2
@@ -95,8 +97,11 @@ frame_h_count = 2
 metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
 
 [node name="suspicion_region" type="Area2D" parent="sb_components/aggression_component"]
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("8_a6dv8")
-size = null
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"script":null)
+
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="rect" type="CollisionShape2D" parent="sb_components/aggression_component/suspicion_region"]
@@ -141,13 +146,22 @@ metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 script = ExtResource("11_i4du2")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("initial_state_fsm")]
 script = ExtResource("12_m1sdc")
-stance_fsm = NodePath("../../stance_fsm")
-idle_timer = NodePath("idle_timer")
+initial_state_fsm = NodePath("WANDER_IDLE")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER"]
+[node name="WANDER_IDLE" type="Node" parent="behaviour_fsm/WANDER" node_paths=PackedStringArray("idle_timer", "repath_timer")]
+script = ExtResource("18_1bo1t")
+idle_timer = NodePath("idle_timer")
+repath_timer = NodePath("repath_timer")
+
+[node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER/WANDER_IDLE"]
+
+[node name="repath_timer" type="Timer" parent="behaviour_fsm/WANDER/WANDER_IDLE"]
+
+[node name="WANDER_MOVE" type="Node" parent="behaviour_fsm/WANDER"]
+script = ExtResource("19_i4du2")
 
 [node name="OBSERVE" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "aggression_component", "hesitance_timer")]
 script = ExtResource("13_g45i6")
@@ -177,5 +191,5 @@ script = ExtResource("16_nkab7")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="sound_player" type="AudioStreamPlayer" parent="."]
-script = ExtResource("21_vv2et")
+script = ExtResource("23_bqdwf")
 metadata/_custom_type_script = "uid://b8o626ec7226k"

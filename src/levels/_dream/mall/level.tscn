@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_v3cbk"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_i1adm"]
-[ext_resource type="TileSet" uid="uid://c0iu5kuqnnmc6" path="res://src/levels/__ignore/tile_atlas/graffiti.tres" id="2_rs5fx"]
+[ext_resource type="TileSet" uid="uid://c0iu5kuqnnmc6" path="res://src/levels/__ignore/tile_set/graffiti.tres" id="2_rs5fx"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="3_i777p"]
 [ext_resource type="AudioStream" uid="uid://cpgf8yj5cwu0y" path="res://src/audio/bgm/world_mall.ogg" id="4_kt1pb"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="5_kt1pb"]
@@ -10,8 +10,8 @@
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="8_5blm1"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="8_pggeg"]
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="9_o1qdx"]
-[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_atlas/_common_objs.tres" id="10_cvqvi"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="11_rxjs4"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="10_cvqvi"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/event/sequence/game/on_interact.gd" id="11_rxjs4"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="12_1bbrq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcgo8"]

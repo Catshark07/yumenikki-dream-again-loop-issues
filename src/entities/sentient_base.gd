@@ -49,7 +49,6 @@ func _ready() -> void:
 	components = $sb_components
 	components._setup(self)
 		
-	await self.ready
 	self.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	
 	dependency_components()

@@ -59,9 +59,6 @@ func _update(_delta: float) -> void:
 		
 func _physics_update(delta: float) -> void: pass
 
-
-
-
 func _setup(_sentient: SentientBase) -> void: 
 	super(_sentient)
 	_sentient.draw.connect(_draw)
@@ -83,13 +80,14 @@ func _setup(_sentient: SentientBase) -> void:
 			suspicion_over_zero = false)
 
 func _draw() -> void:
-	sentient.draw_circle(Vector2.ZERO, radius, Color.YELLOW, false, 3)
-	
-	sentient.draw_line(
-		Vector2(radius * cos(atan2(target.position.y - sentient.position.y, target.position.x  - sentient.position.x)), radius * sin(atan2(target.position.y  - sentient.position.y, target.position.x  - sentient.position.x))),
-		target.position - sentient.position,
-		Color.GREEN if displacement.length() > suspicion_distance_threshold else Color.RED,
-		2)
+	if Engine.is_editor_hint():
+		sentient.draw_circle(Vector2.ZERO, radius, Color.YELLOW, false, 3)
+		
+		sentient.draw_line(
+			Vector2(radius * cos(atan2(target.position.y - sentient.position.y, target.position.x  - sentient.position.x)), radius * sin(atan2(target.position.y  - sentient.position.y, target.position.x  - sentient.position.x))),
+			target.position - sentient.position,
+			Color.GREEN if displacement.length() > suspicion_distance_threshold else Color.RED,
+			2)
 
 func dist_from_to(_from: Vector2, _to: Vector2) -> Vector2:
 	return _to - _from

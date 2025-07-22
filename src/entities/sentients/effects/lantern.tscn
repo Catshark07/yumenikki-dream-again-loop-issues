@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="3_xui3l"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_5j888"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_grvug"]
-[ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/sequence/game/on_state.gd" id="7_addxj"]
+[ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/event/sequence/game/on_state.gd" id="7_addxj"]
 [ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/levels/__ignore/template_effect_collect.tscn" id="8_d620m"]
 [ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/event/animation/play_animation.gd" id="8_smbp0"]
 [ext_resource type="Resource" uid="uid://dtb7ixtykb6a0" path="res://src/player/2D/madotsuki/effects/lamp/lamp.tres" id="9_4o1dq"]

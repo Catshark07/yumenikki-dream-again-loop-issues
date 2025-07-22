@@ -24,7 +24,7 @@
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="17_rgmiv"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="17_yf5ir"]
 [ext_resource type="Texture2D" uid="uid://btlafmy6pq5vq" path="res://src/images/panorama/sea_galaxy.png" id="18_2m3qo"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="18_rgmiv"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="18_rgmiv"]
 [ext_resource type="Texture2D" uid="uid://c0pf76njxs5ss" path="res://src/images/panorama/inv_petal_pink.jpeg" id="19_ucojc"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="20_2m3qo"]
 [ext_resource type="Texture2D" uid="uid://dg8u266glj2nw" path="res://src/scenes/save/sprites/load_title.png" id="20_ucojc"]

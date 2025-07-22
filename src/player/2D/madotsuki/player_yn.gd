@@ -4,6 +4,7 @@ class_name Player_YN extends Player
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
+@onready var DEFAULT_DATA: PLAttributeData
 @onready var DEFAULT_EFFECT: PLEffect = load("res://src/player/2D/madotsuki/effects/_none/_default.tres")
 @onready var behaviour: PLBehaviour = load("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
 
@@ -20,11 +21,7 @@ func dependency_components() -> void:
 	audio_listener = $audio_listener
 	sound_player = $sound_player
 	marker_look_at = $look_at
-	
 func dependency_setup() -> void:
-	if Instance.equipment_pending == null:
-		equip.call_deferred(DEFAULT_EFFECT)
-		
 	marker_look_at._setup()		# --- fsm; not player dependency but required
 	stamina_fsm._setup(self) 		# --- fsm; not player dependency but required
 	input_fsm._setup(self) 		# --- fsm; not player dependency but required
@@ -67,8 +64,8 @@ func perform_action(_action: PLAction) -> void:
 func cancel_action(_action: PLAction = action) -> void: 
 	components.get_component_by_name("action_manager").cancel_action(_action, self)
 
-func equip(_effect: PLEffect) -> void: 
-	components.get_component_by_name("equip_manager").equip(_effect, self)
+func equip(_effect: PLEffect, _skip: bool = false) -> void: 
+	components.get_component_by_name("equip_manager").equip(_effect, self, _skip)
 func deequip_effect(_skip_anim: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").deequip(self)
 

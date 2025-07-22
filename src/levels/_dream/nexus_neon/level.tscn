@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=4 uid="uid://0qgtp6ou1opf"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_asmaa"]
-[ext_resource type="TileSet" uid="uid://b6b68ymed8ei7" path="res://src/levels/__ignore/tile_atlas/neon_world.tres" id="2_8o705"]
+[ext_resource type="TileSet" uid="uid://b6b68ymed8ei7" path="res://src/levels/__ignore/tile_set/neon_world.tres" id="2_8o705"]
 [ext_resource type="Shader" uid="uid://ddu7kkuhhl8ef" path="res://src/shaders/panorama/linear_fog_noadd.gdshader" id="2_s6tmi"]
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="3_g10md"]
 [ext_resource type="Texture2D" uid="uid://cbkmsjp1as6au" path="res://src/images/panorama/neon_world_parallax.png" id="3_s6tmi"]
@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="12_43bly"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="13_k18mo"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="14_k18mo"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="15_ovgwb"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/event/sequence/game/on_interact.gd" id="15_ovgwb"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="16_k0n33"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="17_0ec7f"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="17_k0n33"]

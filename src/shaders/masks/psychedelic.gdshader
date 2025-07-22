@@ -32,6 +32,6 @@ void fragment() {
   col = pow(col, vec3(0.4545));
 
   // Set final output
-  COLOR.rgb = col * colour_overlay.rgb;
+  COLOR.rgb = col + colour_overlay.rgb;
 
 }

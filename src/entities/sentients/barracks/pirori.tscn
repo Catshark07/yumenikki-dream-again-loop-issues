@@ -8,10 +8,10 @@
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="9_4v8pq"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="9_u4v1j"]
 [ext_resource type="AnimationLibrary" uid="uid://br0km4uq5dly" path="res://src/entities/sentients/animation_libs/pirori.tres" id="10_4v8pq"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="10_lpcqq"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/event/sequence/game/on_interact.gd" id="10_lpcqq"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="11_scd0i"]
 [ext_resource type="AudioStream" uid="uid://btc4tvdxrt213" path="res://src/audio/se/se_rpgmaker_teleport.wav" id="12_u4v1j"]
-[ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/sequence/game/on_state.gd" id="13_4v8pq"]
+[ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/event/sequence/game/on_state.gd" id="13_4v8pq"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m2dek"]
 

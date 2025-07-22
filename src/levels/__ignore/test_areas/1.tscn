@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_6175u"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_xuv0w"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="4_4e31m"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="4_vga2u"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="4_vga2u"]
 [ext_resource type="Texture2D" uid="uid://b4gjcclvhphd7" path="res://src/images/panorama/earth.png" id="5_a27ul"]
-[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_atlas/apartment_dream.tres" id="6_4e31m"]
+[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_set/apartment_dream.tres" id="6_4e31m"]
 [ext_resource type="PackedScene" uid="uid://blgkyj1ogaecl" path="res://src/systems/seamless_detector_v2.tscn" id="8_4e31m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4e31m"]

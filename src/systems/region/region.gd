@@ -3,16 +3,17 @@
 class_name AreaRegion
 extends Area2D
 
-var region_priority: int = 0
 @export_storage var rect: CollisionShape2D
-
-@export var centred: bool = false
 @export var debug_colour: Color = Color(0, 0, 0, .3):
 	set(_colour):
 		if Engine.is_editor_hint():
 			debug_colour = _colour
 			rect.debug_color = _colour
-		
+
+var region_priority: int = 0
+var shape: Shape2D:
+	get: return rect.shape
+
 signal player_enter_handle(_pl: Player)
 signal player_exit_handle(_pl: Player)
 

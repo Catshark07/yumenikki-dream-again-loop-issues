@@ -115,7 +115,7 @@ class Instance:
 			["SCENE_CHANGE_SUCCESS"],
 			func(): 
 				if get_pl():
-					(get_pl() as Player_YN).equip(equipment_pending)
+					(get_pl() as Player_YN).equip(equipment_pending, true)
 		)
 
 	static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:

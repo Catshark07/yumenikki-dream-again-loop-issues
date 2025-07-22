@@ -13,6 +13,8 @@ func _ready() -> void:
 	on_scene_change.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): sentients = GlobalUtils.get_group_arr("sentients"))
 
 func enter_state() -> void:
+	await Game.main_tree.process_frame
+	
 	PhysicsServer2D.set_active(true)
 	
 	player_global_components.set_bypass(false)
@@ -25,6 +27,8 @@ func enter_state() -> void:
 		dream_manager._setup(self)
 		
 func exit_state() -> void:
+	await Game.main_tree.process_frame
+	
 	PhysicsServer2D.set_active(false)
 	
 	player_global_components.set_bypass(true)

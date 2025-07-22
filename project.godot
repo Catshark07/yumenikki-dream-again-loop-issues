@@ -36,7 +36,6 @@ general/3d_panning_strength=1.0
 NodeSaveService="*res://src/systems/game/node_save_service.gd"
 Game="*res://src/game/game.gd"
 GlobalPanoramaManager="*res://src/autoloads/panorama_system.gd"
-Global="*res://src/autoloads/global.gd"
 Music="*res://src/autoloads/bgm_player_music.gd"
 Ambience="*res://src/autoloads/bgm_player_amb.gd"
 AudioService="*res://src/autoloads/audio_service.gd"

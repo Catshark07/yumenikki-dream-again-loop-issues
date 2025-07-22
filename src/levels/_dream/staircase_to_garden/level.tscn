@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_6xaa2"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_qj4la"]
-[ext_resource type="TileSet" uid="uid://bxbyiqlq3ywcr" path="res://src/levels/__ignore/tile_atlas/wilderness.tres" id="2_wvc5e"]
+[ext_resource type="TileSet" uid="uid://bxbyiqlq3ywcr" path="res://src/levels/__ignore/tile_set/wilderness.tres" id="2_wvc5e"]
 [ext_resource type="AudioStream" uid="uid://b2nuspx4k6ipv" path="res://src/audio/bgm/world_stair-to-sky.ogg" id="3_iuhpm"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="3_rsnat"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_iuhpm"]
@@ -13,10 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://c8k1sxkde80gi" path="res://src/images/panorama/clouds.png" id="8_gp4xt"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="9_11tov"]
 [ext_resource type="Texture2D" uid="uid://je4i3rhyniaw" path="res://src/images/panorama/morning_sun.png" id="10_qygai"]
-[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_atlas/_common_objs.tres" id="12_gp4xt"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="12_gp4xt"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="13_1xaug"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="14_0tda1"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="18_bx2sr"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="18_bx2sr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u42id"]
 

@@ -10,8 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dqeshbkbbqv3j" path="res://src/levels/__ignore/doors/door_snow.png" id="8_64qtr"]
 [ext_resource type="Texture2D" uid="uid://c60hig0a0fk6p" path="res://src/images/panorama/space_blurr.png" id="9_u3y08"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_45x4p"]
-[ext_resource type="TileSet" uid="uid://brqwoejg6tdhi" path="res://src/levels/__ignore/tile_atlas/snow.tres" id="10_for1j"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="13_8naql"]
+[ext_resource type="TileSet" uid="uid://brqwoejg6tdhi" path="res://src/levels/__ignore/tile_set/snow.tres" id="10_for1j"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="13_8naql"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u3y08"]
 

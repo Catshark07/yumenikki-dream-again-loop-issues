@@ -5,7 +5,7 @@ var effect_prefab: PLPhysicalEff = null
 var effect_data: PLEffect = null
 
 # ----> equip / de-equip.
-func equip(_ef: PLEffect, _pl: Player) -> void:
+func equip(_ef: PLEffect, _pl: Player, _skip: bool = false) -> void:
 	if _ef == effect_data:
 		await deequip(_pl)
 		return
@@ -22,12 +22,12 @@ func equip(_ef: PLEffect, _pl: Player) -> void:
 				_pl.add_child(effect_prefab)
 				effect_prefab._enter(_pl)
 
-		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", [_ef.skip_equip_animation])
+		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", [_ef.skip_equip_animation or _skip])
 		EventManager.invoke_event("PLAYER_EQUIP", [_ef])
 		Player.Instance.equipment_pending = _ef
 		_ef._apply(_pl)
 		
-func deequip(_pl: Player) -> void:
+func deequip(_pl: Player, _skip: bool = false) -> void:
 	if effect_data:
 		EventManager.invoke_event("PLAYER_DEEQUIP_SKIP_ANIM", [effect_data.skip_deequip_animation])
 		EventManager.invoke_event("PLAYER_DEEQUIP", [effect_data])

@@ -36,10 +36,12 @@ func _ready() -> void:
 func open_message_display(
 	_display: MessageDisplay,
 	_texts: Array[String], 
-	_sound: AudioStreamWAV = load("res://src/audio/se/se_talk.wav"),
+	_sound: AudioStream,
 	_speed: int = 1,
 	_reset: bool = true, 
+	_font_colour: Color = Color.WHITE, 
 	_pos: Vector2 = Vector2(Game.Application.viewport_width / 2, Game.Application.viewport_length - 110)) -> void: 
+		
 		if is_open == true: return
 		current_index = 0
 		
@@ -50,21 +52,24 @@ func open_message_display(
 		texts.clear()
 		for t in _texts: texts.append(t)
 		
-		message_display.open(_pos)
-		message_display.display_text(_texts[current_index], _sound, _speed)
+		message_display.open(_pos, _sound, _speed, _font_colour)
+		message_display.display_text(_texts[current_index])
 		
 func close_message_display(_display: MessageDisplay) -> void:
 	is_open = false
 	await _display.close()
 
-func get_current_message_display() -> MessageDisplay: 
+func get_current() -> MessageDisplay: 
 	if message_display: return message_display
 	return
+	
 func proceed_current_message_display() -> void:
-	if get_current_message_display().can_progress:
+	if get_current().can_progress:
 		if current_index < texts.size() - 1:
+			
 			current_index += 1
-			message_display.display_text(texts[current_index])
+			message_display.display_text(
+				texts[current_index])
 
 		else:
-			close_message_display(get_current_message_display())
+			close_message_display(get_current())

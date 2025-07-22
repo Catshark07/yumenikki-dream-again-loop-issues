@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://6hbdjnabl7un" path="res://src/images/panorama/hills.png" id="12_ykehj"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="13_w0pgu"]
 [ext_resource type="AudioStream" uid="uid://drbxal7equ2eo" path="res://src/audio/bgm/balcony.WAV" id="14_dox4u"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="15_n3qbt"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="15_n3qbt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2004a"]
 

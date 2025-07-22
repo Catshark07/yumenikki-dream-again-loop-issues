@@ -3,7 +3,7 @@ var library_path := "normal"
 var pinch: PLAction
 
 func _setup() -> void:
-	pinch = load("res://src/player/madotsuki/effects/_none/_pinch.tres")
+	pinch = load("res://src/player/2D/madotsuki/effects/_none/_pinch.tres")
 
 func enter_state() -> void: 
 	(sentient as Player_YN).set_texture_using_sprite_sheet("idle")

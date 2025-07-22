@@ -10,10 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="8_f8lfk"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="9_ksvw7"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="10_scjaa"]
-[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_atlas/apartment_dream.tres" id="11_r2slo"]
-[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_atlas/_common_objs.tres" id="14_25aso"]
+[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_set/apartment_dream.tres" id="11_r2slo"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="14_25aso"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="15_f8lfk"]
-[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_atlas/_footstep_material.tres" id="16_ksvw7"]
+[ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="16_ksvw7"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="17_scjaa"]
 [ext_resource type="PackedScene" uid="uid://cijogi38yfo57" path="res://src/levels/__ignore/nexus_door.tscn" id="18_25aso"]
 [ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="19_s0ejm"]
@@ -26,7 +26,7 @@
 [ext_resource type="AudioStream" uid="uid://blvfuo72u6lrh" path="res://src/audio/bgm/-1 - Drifting Thoughts.ogg" id="23_mah0q"]
 [ext_resource type="Texture2D" uid="uid://cycu3tgkj5mjl" path="res://src/levels/__ignore/doors/door_dark.png" id="24_25aso"]
 [ext_resource type="Texture2D" uid="uid://p030n5rywk1s" path="res://src/levels/__ignore/doors/door_grafitti.png" id="25_f8lfk"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="26_feke8"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="26_feke8"]
 [ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="26_ksvw7"]
 [ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="27_scjaa"]
 
@@ -78,9 +78,9 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 [node name="nexus" type="Node"]
 script = ExtResource("1_0iw03")
 scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"order":Array[Node]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_kv8np"),"fade_type":1,"fade_shader":null,"fade_colour":Color(0, 0, 0, 1),"fade_speed":1.0,"start_progress":0.0,"end_progress":1.0,"transition":0,"ease":1,"deferred":true,"wait_til_finished":true,"skip_warning":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
-]),"remove_invalid_events":true,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
+]),"marked_for_skip":null,"skip_invalid_sequences":null,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"order":Array[Node]([]),"marked_for_skip":null,"skip_invalid_sequences":null,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
 
 load_transition = SubResource("ShaderMaterial_1rd4d")
 unload_transition = SubResource("ShaderMaterial_jxym7")
@@ -385,10 +385,10 @@ loop = true
 end_frame = false
 fps = 5.0
 frame_h_count = 3
-progress = 1
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("26_feke8")
+skip_invalid_sequences = null
 deferred = false
 
 [node name="fade_out" type="Node" parent="scene_load_sequence"]
@@ -398,6 +398,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("26_feke8")
+skip_invalid_sequences = null
 deferred = false
 
 [editable path="camera"]

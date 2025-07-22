@@ -8,11 +8,11 @@
 [ext_resource type="AudioStream" uid="uid://ktspl5gkuqq8" path="res://src/audio/bgm/world_numbers.WAV" id="3_5chxp"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="5_1q3ts"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="5_5chxp"]
-[ext_resource type="TileSet" uid="uid://by00rslt3yu5s" path="res://src/levels/__ignore/tile_atlas/numbers.tres" id="8_1q3ts"]
+[ext_resource type="TileSet" uid="uid://by00rslt3yu5s" path="res://src/levels/__ignore/tile_set/numbers.tres" id="8_1q3ts"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_idt0i"]
 [ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="11_vxiyi"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="12_vxiyi"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="13_u3o2y"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="13_u3o2y"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/event/game/screen_fade.gd" id="14_ubshi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ubshi"]

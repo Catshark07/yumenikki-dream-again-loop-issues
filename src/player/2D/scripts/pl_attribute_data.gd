@@ -34,7 +34,6 @@ func _apply(_pl: Player) -> void:
 	_pl.walk_noise_mult = walk_noise_mult
 	_pl.sneak_noise_mult = sneak_noise_mult
 	_pl.run_noise_mult = run_noise_mult
-	
 func _unapply(_pl: Player) -> void: 
 	_pl.initial_speed = Player.BASE_SPEED
 	
