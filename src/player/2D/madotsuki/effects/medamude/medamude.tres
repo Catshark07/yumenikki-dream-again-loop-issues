@@ -8,7 +8,6 @@
 
 [sub_resource type="Resource" id="Resource_jp5jo"]
 script = ExtResource("4_y478k")
-base_speed = 27.5
 walk_multi = 1.25
 sprint_multi = 2.9
 sneak_multi = 0.735

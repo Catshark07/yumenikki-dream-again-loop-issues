@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://ittvroyj4f8f" path="res://src/shaders/transition/tr_side.gdshader" id="4_kgx21"]
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="4_qpdbx"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="5_khl73"]
-[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="5_sc1ku"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_button.gd" id="5_sc1ku"]
 [ext_resource type="Shader" uid="uid://bhdcejnx8m6be" path="res://src/shaders/ui/button_texture_grad_mask.gdshader" id="6_khl73"]
 [ext_resource type="LabelSettings" uid="uid://dbxux4dchsxxt" path="res://src/global_label_settings.tres" id="7_y57b5"]
 [ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="8_0w81o"]

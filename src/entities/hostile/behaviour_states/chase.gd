@@ -12,7 +12,7 @@ func enter_state() -> void:
 	(sentient as NavSentient).nav_agent.set_navigation_layer_value(3, true)
 	
 	(sentient as NavSentient).nav_agent.target_desired_distance = 20.75
-	sentient.look_at_dir((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
+	sentient.handle_direction((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
 	super()
 
 func exit_state() -> void:
@@ -22,8 +22,8 @@ func exit_state() -> void:
 func physics_update(_delta: float) -> void: 
 	if (sentient as NavSentient).nav_agent.is_target_reachable():
 		
-		sentient.handle_velocity((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position, 2)
-		sentient.look_at_dir((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
+		sentient.handle_direction((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
+		sentient.handle_direction((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
 		update_chase_point()
 	
 	else:

@@ -22,9 +22,8 @@ config/version="PREALPHA - 00"
 run/main_scene="uid://l5hlafq1udx4"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
-config/icon="uid://dmp6kq3mp7d78"
-config/macos_native_icon="uid://dmp6kq3mp7d78"
-config/windows_native_icon="uid://dmp6kq3mp7d78"
+config/icon="uid://bkfvddho8eetw"
+config/windows_native_icon="res://game_icon.ico"
 
 [audio]
 

@@ -181,7 +181,7 @@ func shake(_magnitude: float, _speed: float, _dur: float) -> void:
 		shake_comp.ignore_rotation = false
 
 class CamShake:
-	extends Object
+	extends RefCounted
 	var time_elapsed: float
 
 	var origin_rot: float

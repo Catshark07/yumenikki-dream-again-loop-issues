@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqg1xufl2vdws"
-path="res://.godot/imported/pause_menu_audio_label.png-35c3ff803f9362743c1529d10869d0f6.ctex"
+uid="uid://dtvwh5fdmawvg"
+path="res://.godot/imported/_common_non_damagable_entities.png-8da3576e827adf3021e508fae742e6c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/images/ui/pause_menu_audio_label.png"
-dest_files=["res://.godot/imported/pause_menu_audio_label.png-35c3ff803f9362743c1529d10869d0f6.ctex"]
+source_file="res://src/levels/__ignore/tile_atlas/_common_non_damagable_entities.png"
+dest_files=["res://.godot/imported/_common_non_damagable_entities.png-8da3576e827adf3021e508fae742e6c2.ctex"]
 
 [params]
 

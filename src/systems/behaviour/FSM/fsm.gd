@@ -7,7 +7,7 @@ signal state_changed(_new_state)
 signal setup
 var is_setup: bool = false
 
-var state_dict: Dictionary
+var state_dict: Dictionary[String, State]
 var curr_state: State
 @export var initial_state: State
 
@@ -23,7 +23,7 @@ func _setup(_owner: Node) -> void:
 		if states is State:
 			states.fsm = self 
 			state_dict[states.name.to_lower()] = states 
-			states._setup()
+			states.setup()
 			
 	curr_state = initial_state
 	if curr_state != null: curr_state.enter_state()
@@ -31,7 +31,7 @@ func _change_to_state(_new: StringName) -> void:
 	_new = _new.to_lower()
 	if _new != "" and _has_state(_new):
 		var newstate: State = state_dict.get(_new.to_lower())
-		if curr_state != newstate and newstate.transitionable:
+		if curr_state != newstate and curr_state.can_transition_to(newstate):
 			
 			state_changed.emit(newstate)	
 			

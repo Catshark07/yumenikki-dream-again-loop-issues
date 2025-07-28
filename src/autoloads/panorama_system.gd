@@ -17,8 +17,8 @@ func setup() -> void:
 	panorama_update.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): eqn = Vector2.ZERO)
 	
 	initial_screen_centre = (
-		Game.Application.main_viewport.get_camera_2d().get_screen_center_position()
-			if Game.Application.main_viewport.get_camera_2d()
+		Application.main_viewport.get_camera_2d().get_screen_center_position()
+			if Application.main_viewport.get_camera_2d()
 			else Vector2.ZERO)
 			
 	viewport_size = Vector2(
@@ -28,19 +28,19 @@ func setup() -> void:
 			
 func update(_delta: float) -> void:
 		if !initial: initial_screen_centre = (
-			Game.Application.main_viewport.get_camera_2d().get_screen_center_position()
-			if Game.Application.main_viewport.get_camera_2d()
+			Application.main_viewport.get_camera_2d().get_screen_center_position()
+			if Application.main_viewport.get_camera_2d()
 			else Vector2.ZERO)
 
 		initial = true
 						
 		screen_centre = (
-			Game.Application.main_viewport.get_camera_2d().get_screen_center_position()
-			if Game.Application.main_viewport.get_camera_2d()
+			Application.main_viewport.get_camera_2d().get_screen_center_position()
+			if Application.main_viewport.get_camera_2d()
 			else Vector2.ZERO) - initial_screen_centre
 		
 		if !warp_check and CameraHolder.instance != null:
-			eqn += (CameraHolder.instance.vel) / Game.Application.get_viewport_dimens()
+			eqn += (CameraHolder.instance.vel) / Application.get_viewport_dimens()
 			RenderingServer.global_shader_parameter_set(
 			"uv_offset",  eqn)
 		elif warp_check: warp_check = false

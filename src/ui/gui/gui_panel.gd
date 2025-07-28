@@ -98,8 +98,8 @@ static func _create() -> GUIPanel:
 	
 func _additional_setup() -> void: pass
 func _core_setup() -> void:
-	main_container.size = size
-	main_container.set_anchors_preset.call_deferred(Control.PRESET_FULL_RECT)
+	main_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	main_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
 	text_display.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	text_display.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -108,7 +108,6 @@ func _core_setup() -> void:
 	icon_display_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon_content_seperator.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	inner_main_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	main_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	display_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	display_bg.stretch_mode = TextureRect.STRETCH_SCALE
@@ -129,12 +128,13 @@ func _core_setup() -> void:
 	display_bg.size.y = main_container.size.y
 		
 	set_panel_texture_display_shader(panel_display_shader)
-	if theme == null: theme = preload("res://src/code_theme.tres")
+	if theme == null: theme = preload("res://src/global_theme.tres")
 	set_panel_modulate(panel_display_colour)
 	
 # --- setter functions ---	
 func set_panel_texture_display_shader(_shader: Shader) -> void:
-	if display_bg.material == null: display_bg.material = ShaderMaterial.new()
+	if display_bg != null and display_bg.material == null: 
+		display_bg.material = ShaderMaterial.new()
 	display_bg.material.shader = _shader
 
 func set_panel_modulate(_modu: Color) -> void:

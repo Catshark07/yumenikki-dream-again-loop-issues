@@ -28,7 +28,7 @@ func _ready() -> void:
 	fade_out_shader = default_shader
 	# im so confused
 	
-	transition_instance.size = Vector2(Game.Application.get_viewport_dimens())
+	transition_instance.size = Vector2(Application.get_viewport_dimens())
 	
 	request_transition(fade_type.FADE_OUT)
 

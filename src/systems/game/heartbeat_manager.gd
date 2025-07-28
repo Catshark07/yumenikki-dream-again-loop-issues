@@ -33,25 +33,23 @@ func _update(delta: float) -> void:
 		pit_bpm_multiplier = (0.225 * (bpm - 60))
 	
 
-		Game.Audio.adjust_bus_effect( # --- distortion
+		Audio.adjust_bus_effect( # --- distortion
 			"Distorted", 0, 
 			"drive", (0.002 * (bpm - 60)))
 
 func set_active(_active: bool = true) -> void:
 	if !_active:
-		sound_player.volume_db = -50
-		sound_player.pitch_scale = 1
+		sound_player.mute()
 		trauma.set_shader_parameter("blur_amount", 0)
 	
-	sound_player.muted = !_active
-	Game.Audio.set_effect_active("Distorted", 0, _active)
+	Audio.set_effect_active("Distorted", 0, _active)
 	
 	super(_active)
 
 func _on_bypass_enabled() -> void:
 	sound_player.mute()
-	Game.Audio.set_effect_active("Distorted", 0, false)
+	Audio.set_effect_active("Distorted", 0, false)
 func _on_bypass_lifted() -> void:
 	sound_player.unmute()
-	Game.Audio.set_effect_active("Distorted", 0, true)
+	Audio.set_effect_active("Distorted", 0, true)
 	

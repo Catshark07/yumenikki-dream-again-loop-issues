@@ -3,6 +3,8 @@
 class_name SeamlessDetectorV2
 extends Node2D
 
+var loop_components: Node2D
+
 signal sb_warped_up(_sentient: SentientBase)
 signal sb_warped_down(_sentient: SentientBase)
 signal sb_warped_right(_sentient: SentientBase)
@@ -112,25 +114,33 @@ var player_relative_pos: Vector2
 	# under a canvaslayer (or has been reparented in general). make sure to call loop_render_setup()
 	# post reparenting.
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WORLD_2D_CHANGED: update_world_2d()
 
 func _ready() -> void: 
+	loop_components = GlobalUtils.get_child_node_or_null(self, "loop_components")
 	player_detector = GlobalUtils.get_child_node_or_null(self, "player_detector")
 	
 	if Engine.is_editor_hint(): 
 		loop_render_setup()
 		if player_detector == null: 
-			player_detector = await GlobalUtils.add_child_node(self, AreaRegion.new(), "player_detector")
+			player_detector = await GlobalUtils.add_child_node(loop_components, AreaRegion.new(), "player_detector")
 	
 		player_looping_bounds_setup()
 		GlobalUtils.connect_to_signal(player_entered, player_detector.player_enter_handle)
 		GlobalUtils.connect_to_signal(player_exited, player_detector.player_exit_handle)
 		
-	queue_redraw()
 		
 	set_bound_active(bound_side.UP, up_disabled)
 	set_bound_active(bound_side.DOWN, down_disabled)
 	set_bound_active(bound_side.RIGHT, right_disabled)
 	set_bound_active(bound_side.LEFT, left_disabled)
+	
+		
+func update_world_2d() -> void:
+	for v in range(viewport_renders.size()):
+		viewport_renders[v].world_2d = get_world_2d()
+
 
 func player_entered(_pl: Player) -> void: 
 	if _pl is Player and _pl == Player.Instance.get_pl(): 
@@ -142,10 +152,6 @@ func player_exited(_pl: Player) -> void:
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint(): 
 		resize(boundary_size)
-		queue_redraw()
-	
-	else:
-		loop_render_update()
 
 func _draw() -> void:
 	if Engine.is_editor_hint():
@@ -229,6 +235,8 @@ func loop_render_setup() -> void:
 		viewport_renders[v].canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 		viewport_renders[v].size = Vector2(510, 300)
 		viewport_renders[v].set_canvas_cull_mask_bit(16, false)
+		
+	update_world_2d()
 		
 	for r in range(viewport_renders.size()): # sprite 2D renders.
 		cameras[r].anchor_mode = Camera2D.ANCHOR_MODE_DRAG_CENTER

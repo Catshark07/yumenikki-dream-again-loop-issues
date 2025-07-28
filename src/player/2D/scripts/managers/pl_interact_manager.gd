@@ -33,16 +33,18 @@ func _ready() -> void:
 	
 	interactable_found.connect(func(interactable):
 		AudioService.play_sound(load("res://src/audio/se/se_interaction_prompt.wav"), 0.3, 0.8)
-		prompt_icon.global_position = interactable.global_position - Vector2(0, 18)
-		show_prompt(true)
-		)
+		prompt_icon.global_position = sentient.global_position - Vector2(0, 24)
+		show_prompt(true))
 	interactable_lost.connect(func():
-		show_prompt(false)
-		)
+		show_prompt(false))
+		
+func _setup(_sb: SentientBase) -> void:
+	super(_sb)
+	GlobalUtils.connect_to_signal(handle_interaction, sentient.quered_interact)
 	
 func _update(delta: float) -> void:
 	handle_field()
-	field.rotation = sentient.get_dir().angle()
+	field.rotation = sentient.direction.angle()
 	
 	if cooldown: 
 		interaction_cooldown -= delta
@@ -57,12 +59,8 @@ func _update(delta: float) -> void:
 	elif found and curr_interactable == null: 
 		interactable_lost.emit()
 		found = false
-
-func _input_pass(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("interact"): handle_interaction()
 	
 func handle_field() -> void: 
-
 	for i in range(interactables.size()):
 		if interactables[i] != null:
 			if interactables[i].global_position.distance_to(self.global_position) < closest_interactable_threshold: 
@@ -79,11 +77,11 @@ func handle_interaction() -> void:
 	if curr_interactable and !cooldown: 
 		if (
 			
-			sentient.get_dir().x >= curr_interactable.dir_min.x and 
-			sentient.get_dir().x <= curr_interactable.dir_max.x and
+			sentient.direction.x >= curr_interactable.dir_min.x and 
+			sentient.direction.x <= curr_interactable.dir_max.x and
 			
-			-sentient.get_dir().y >= curr_interactable.dir_min.y and 
-			-sentient.get_dir().y <= curr_interactable.dir_max.y
+			-sentient.direction.y >= curr_interactable.dir_min.y and 
+			-sentient.direction.y <= curr_interactable.dir_max.y
 			
 			) or curr_interactable.omni_dir:
 				
@@ -120,7 +118,6 @@ func prompt_show_animation() -> void:
 	
 	prompt_tween.tween_property(prompt_icon, "self_modulate:a", 1, .5)
 	prompt_tween.tween_property(prompt_icon, "scale", Vector2.ONE, .5)
-	
 func prompt_hide_animation() -> void:
 	if prompt_tween != null: prompt_tween.kill()
 	prompt_tween = prompt_icon.create_tween()

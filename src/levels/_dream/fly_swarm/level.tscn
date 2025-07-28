@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://clyak4figgq17"]
+[gd_scene load_steps=36 format=4 uid="uid://clyak4figgq17"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ri5tq"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_7xq5b"]
@@ -97,14 +97,11 @@ texture_region_size = Vector2i(143, 210)
 [sub_resource type="TileSet" id="TileSet_yod8u"]
 sources/0 = SubResource("TileSetAtlasSource_a5wrg")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rq6g"]
-size = Vector2(16, 16)
-
 [node name="fly_swarm" type="Node"]
 script = ExtResource("1_ri5tq")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("22_my6es"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("22_my6es"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("22_my6es"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("22_my6es"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
 
 load_transition = SubResource("ShaderMaterial_fskr8")
 unload_transition = SubResource("ShaderMaterial_ym1ci")
@@ -193,7 +190,7 @@ metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
 [node name="door_interactable" parent="." instance=ExtResource("18_aswm8")]
 position = Vector2(248, 88)
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_3rq6g"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.9, 0, 0.7, 0.3),"script":null)
 
 
 [node name="to_nexus" type="Node" parent="door_interactable/on_interact/travel_to_scene" index="0" node_paths=PackedStringArray("spawn_point")]
@@ -202,9 +199,8 @@ scene_path = "uid://dl25joalnmaxt"
 spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
-[node name="rect" type="CollisionShape2D" parent="door_interactable"]
-shape = SubResource("RectangleShape2D_3rq6g")
-debug_color = Color(0.2, 0, 0.7, 0.2)
+[node name="spawn_point" parent="door_interactable" index="1"]
+scene_path = "uid://dl25joalnmaxt"
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("22_my6es")

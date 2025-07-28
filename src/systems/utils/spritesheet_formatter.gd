@@ -35,7 +35,9 @@ func _ready() -> void:
 	texture_changed.connect(format)
 	texture.changed.connect(format)
 	visibility_changed.connect(func(): set_process(self.visible))
-
+	
+	set_process(Engine.is_editor_hint())
+	
 func refresh_frame_splitting() -> void:
 	format()
 	

@@ -18,5 +18,5 @@ func physics_update(_delta: float) -> void:
 		if stance_fsm == null: return
 		stance_fsm._change_to_state("idle")
 	else:
-		(sentient as NavSentient).handle_velocity((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
-		sentient.look_at_dir((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
+		(sentient as NavSentient).handle_direction((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
+		sentient.handle_direction((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)

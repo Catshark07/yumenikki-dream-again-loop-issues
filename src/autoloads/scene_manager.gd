@@ -1,4 +1,5 @@
-class_name SceneManager extends Object
+class_name SceneManager 
+extends RefCounted
 
 signal setup_complete
 
@@ -53,7 +54,7 @@ func setup() -> void:
 	if !initial_scene_setup_complete: 
 		if scene_node != null:
 			if GameManager.instance == null: scene_node.reparent(Game)
-			else: scene_node.reparent(GameManager.pausable_parent)
+			else: scene_node.reparent(GameManager.pausable_parent) 
 			
 			scene_node_packed = load(scene_node.scene_file_path)
 			await scene_node.on_load_request()
@@ -61,7 +62,7 @@ func setup() -> void:
 			
 		if additive_scene_node != null:
 			if GameManager.instance == null: additive_scene_node.reparent(Game)
-			else: additive_scene_node.reparent(GameManager.pausable_parent)
+			else: additive_scene_node.reparent(GameManager.pausable_parent) 
 			
 			additive_scene_node_packed = load(additive_scene_node.scene_file_path)
 			await additive_scene_node.on_load_request()
@@ -150,6 +151,9 @@ func change_scene_to(
 			EventManager.invoke_event("SCENE_CHANGE_FAIL")
 			print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 
+func reparent_scene_nodes_to(_scene_node: SceneNode, _new_parent: Node) -> void:
+	_scene_node.reparent(_new_parent)
+	_scene_node.reparented.emit()
 # ---------- 									---------- #
 # ----
 # here are the scene events called in order:

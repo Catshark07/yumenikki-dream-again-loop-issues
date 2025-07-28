@@ -14,10 +14,11 @@ func _ready() -> void:
 
 func enter_state() -> void:
 	await Game.main_tree.process_frame
-	
 	PhysicsServer2D.set_active(true)
+	InputManager.request_curr_controller_change(InputManager.sb_input_controller)
 	
 	player_global_components.set_bypass(false)
+	
 	sentients = GlobalUtils.get_group_arr("sentients")
 	for s in sentients: if s != null: s._enter()
 	
@@ -28,22 +29,22 @@ func enter_state() -> void:
 		
 func exit_state() -> void:
 	await Game.main_tree.process_frame
-	
 	PhysicsServer2D.set_active(false)
 	
 	player_global_components.set_bypass(true)
+	
 	dream_manager_setup = false
 	for s in sentients: if s != null: s._exit()
 
 
 func update(_delta: float) -> void: 
-	for s in sentients:
-		if s != null: s._update(_delta)
+	for s: Node in sentients:
+		if s != null and s.can_process(): 
+			s._update(_delta)
 func physics_update(_delta: float) -> void: 
-	for s in sentients:
-		if s != null: s._physics_update(_delta)
-func input(event: InputEvent) -> void:
-	for s in sentients:
-		if s != null and s is Player: s._input_pass(event)
+	for s: Node in sentients:
+		if s != null and s.can_process(): 
+			s._physics_update(_delta)
 
-	if Input.is_action_just_pressed("esc_menu"): GameManager.pause_options(true)
+
+	if Input.is_action_just_pressed("ui_esc_menu"): GameManager.pause_options(true)

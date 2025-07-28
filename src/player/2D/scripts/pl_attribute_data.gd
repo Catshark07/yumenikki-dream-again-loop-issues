@@ -2,7 +2,6 @@ class_name PLAttributeData
 extends Resource
 
 @export_group("Speed & Multipliers")
-@export var base_speed: float = Player.BASE_SPEED
 @export var walk_multi: float = Player.WALK_MULTI
 @export var sprint_multi: float = Player.SPRINT_MULTI
 @export var sneak_multi: float = Player.SNEAK_MULTI
@@ -19,8 +18,6 @@ extends Resource
 @export var run_noise_mult: float = Player.RUN_NOISE_MULTI
 
 func _apply(_pl: Player) -> void: 
-	_pl.initial_speed = base_speed
-	
 	_pl.walk_multiplier = self.walk_multi
 	_pl.sprint_multiplier = self.sprint_multi
 	_pl.sneak_multiplier = self.sneak_multi
@@ -35,8 +32,6 @@ func _apply(_pl: Player) -> void:
 	_pl.sneak_noise_mult = sneak_noise_mult
 	_pl.run_noise_mult = run_noise_mult
 func _unapply(_pl: Player) -> void: 
-	_pl.initial_speed = Player.BASE_SPEED
-	
 	_pl.walk_multiplier = Player.WALK_MULTI
 	_pl.sprint_multiplier = Player.SPRINT_MULTI
 	_pl.sneak_multiplier = Player.SNEAK_MULTI

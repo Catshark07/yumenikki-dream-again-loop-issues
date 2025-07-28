@@ -11,31 +11,20 @@ func _unapply(_pl: Player) -> void: _pl.revert_def_behaviour()
 
 # ---- movement ----
 func _idle(_pl: Player) -> void: 
-	_pl.handle_velocity(_pl.input)
-	if _pl.speed > 0: _pl.force_change_state("walk")
-	
-func _walk(_pl: Player, _dir: Vector2) -> void: 
-	_pl.handle_velocity(_dir,  _pl.exhaust_multiplier if _pl.is_exhausted else _pl.walk_multiplier)
-	
-	if (_pl.stamina > 0 
-		&& !_pl.is_exhausted
-		&& _pl.can_run
-		&& Input.is_action_pressed("sprint")): _pl.force_change_state("run")	
-	if Input.is_action_pressed("sneak"): _pl.force_change_state("sneak")
-		
-func _run(_pl: Player, _dir: Vector2) -> void:
-	_pl.handle_velocity(_dir, _pl.sprint_multiplier)
-	_pl.look_at_dir(_pl.velocity.normalized())
-		
-	if _pl.speed <= 0 or !Input.is_action_pressed("sprint"):
+	if _pl.desired_speed > 0:
 		_pl.force_change_state("walk")
-func _sneak(_pl: Player, _dir: Vector2) -> void:
-	_pl.handle_velocity(_dir, _pl.sneak_multiplier)
-	if _pl.speed == 0: _pl.force_change_state("idle")
+	
+func _walk(_pl: Player) -> void: pass
+
+		
+func _run(_pl: Player) -> void:
+	_pl.handle_direction(_pl.velocity.normalized())
+		
+func _sneak(_pl: Player) -> void:
+	if _pl.desired_speed == 0: _pl.force_change_state("idle")
 	if !Input.is_action_pressed("sneak"):  _pl.force_change_state("walk")
 
-func _climb(_pl: Player) -> void:
-	_pl.handle_velocity(Vector2(0, _pl.walk_multiplier))
+func _climb(_pl: Player) -> void: pass
 
 # ---- miscallenous ----
 func _interact(_pl: Player, _obj: Node) -> void: 

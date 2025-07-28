@@ -15,11 +15,16 @@ enum MUSIC_BUS {MUSIC, AMBIENCE}
 
 ## -------- AUDIO CLIP CONTROL (E.G LOOP or smth) -------- ##	
 func _ready() -> void:	
-	if autoplay: play_music()
+	if autoplay: 
+		play_music()
 
 func play_music() -> void:
 	match music_bus:
-		MUSIC_BUS.MUSIC: Music.play_sound(stream, vol, pitch)
-		MUSIC_BUS.AMBIENCE: Ambience.play_sound(stream, vol, pitch) 
+		MUSIC_BUS.MUSIC: 
+			Music.fade_in()
+			Music.play_sound(stream, vol, pitch)
+		MUSIC_BUS.AMBIENCE: 
+			Ambience.fade_in()
+			Ambience.play_sound(stream, vol, pitch) 
 
 ## -------- AUDIO CONTROL (E.G AUDIO FADE) -------- ##

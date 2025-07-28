@@ -15,40 +15,11 @@ var direction: Vector2 = Vector2(0, 1):
 var height: float = 0
 
 func _ready() -> void: pass
-
 func set_active(_active: bool) -> void:
 	self.set_process(_active)
 	self.set_physics_process(_active)
 	self.set_process_input(_active)	
-func _handle_heading(_dir: Vector2 = direction) -> compass_headings:
-		if abs(_dir.x) > .5: 
-			if _dir.y > .5: heading = compass_headings.SOUTH_HORIZ
-			elif _dir.y < -.5: heading = compass_headings.NORTH_HORIZ
-			else: heading = compass_headings.HORIZ
-		else:
-			if _dir.y > .5: heading = compass_headings.SOUTH
-			elif _dir.y < -.5: heading = compass_headings.NORTH
-			
-		return heading
 
 # -------------------------------------------------------------------
 # --------------------------SENTIENT ENTITY--------------------------
 # -------------------------------------------------------------------
-
-class SentientEntity:
-	extends Entity
-	
-	var noise			: float = 0
-	var push_strength	: float = 1.0
-	var is_moving: bool = false
-	
-	func _init() -> void:
-		assert(is_instance_of(self, PhysicsBody2D), "Error: ObjectEntity must be a derivative of PhysicsBody2D!")
-		assert(is_instance_of(self, SentientBase), "Error: SentientEntity must be a derivative of SentientBase!")
-		# --- apply forces on rigid bodies.
-		#for i in range((self as SentientBase).get_slide_collision_count()):
-			#var c = (self as SentientBase).get_slide_collision(i)
-			#
-			#if c.get_collider() is RigidBody2D: 
-				#c.get_collider().apply_central_impulse(
-					#-c.get_normal() * (push_strength / (c.get_collider().mass * 1.25)))

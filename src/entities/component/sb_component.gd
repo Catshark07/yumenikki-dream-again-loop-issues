@@ -14,7 +14,7 @@ func _ready() -> void:
 	GlobalUtils.connect_to_signal(_on_bypass_enabled, sb_component_receiver.bypass_enabled)
 	GlobalUtils.connect_to_signal(_on_bypass_lifted, sb_component_receiver.bypass_lifted)
 
-func _setup(_sentient: SentientBase) -> void: sentient = _sentient
+func _setup(_sb: SentientBase) -> void: sentient = _sb
 func _update(_delta: float) -> void: pass
 func _physics_update(_delta: float) -> void: pass
 func _input_pass(_event: InputEvent) -> void: pass

@@ -4,36 +4,38 @@
 # ----					----
 
 class_name SentientBase
-extends Entity.SentientEntity
+extends Entity
+
+var vel_input: Vector2i
+var dir_input: Vector2i
+
+var noise: 			float = 0
+var is_moving: bool = false
 
 var world_warp: Area2D
 var components: SBComponentReceiver
-const TRANS_WEIGHT := 0.225
 
-const BASE_SPEED: float = 27.5
-const SPRINT_MULT: float = 2.3
-const MAX_SPEED: float = 35
-
-@export_category("Base Entity Behaviour")
+const TRANS_WEIGHT:	float = 0.225
+const BASE_SPEED: 	float = 27.5
+const SPRINT_MULT: 	float = 2.3
+const MAX_SPEED: 	float = 95
 
 var sprite_renderer: Sprite2D
-var shadow_renderer: Sprite2D # -- optional
-var desired_vel: Vector2
+var shadow_renderer: Sprite2D 
 
-@export_subgroup("Direction Vectors")
+var desired_vel: Vector2
+var desired_speed: float
 var lerped_direction: Vector2 = Vector2.DOWN
+
+@export_category("Base Entity Behaviour")
 
 #region ---- mobility and velocity properties ----
 @export_group("Mobility Values")
 
 var speed: float = 0
 var speed_multiplier: float = 1
-@export var initial_speed: float = BASE_SPEED
-
 var abs_velocity: Vector2:
 	get: return abs(self.velocity)
-var normalized_vel: Vector2:
-	get: return self.velocity.normalized()
 
 @export_group("Auditorial")
 var noise_multi: float = 1
@@ -66,43 +68,38 @@ func dependency_setup() -> void: pass
 
 # ---- base processes ----
 func _physics_update(_delta: float) -> void:
-	if !can_process(): return
 	(self as SentientBase).move_and_slide()
 	
 	components._physics_update(_delta)
-	abs_velocity = abs(self.velocity)
-	speed = abs_velocity.length()
+	abs_velocity 	= abs(self.velocity)
+	speed 			= abs_velocity.length()
+	desired_speed 	= desired_vel.length()
 	
+	handle_velocity(vel_input)
+	handle_heading()
 func _update(_delta: float) -> void:
-	if !can_process(): return
 	is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO	
-	
-	_handle_heading(direction)
 	components._update(_delta)
-
-#region ---- velocity and acceleration handling ----
-func handle_velocity(_dir: Vector2, _mult: float = 1) -> void:
-	if _dir.length() > 0: 
-		desired_vel = ((_dir.normalized() * initial_speed) * _mult)
-		self.velocity = desired_vel
-	else: self.velocity = Vector2.ZERO
-	
-#endregion
-#region ---- direction ----
-
-func get_dir() -> Vector2: 
-	return self.direction
-func get_lerped_dir() -> Vector2: 
-	return self.lerped_direction
-
-func lerp_dir(_dir: Vector2, interpolation_multi: float = 1) -> void:
-	if _dir != Vector2.ZERO: 
-		lerped_direction = lerped_direction.lerp(_dir, interpolation_multi)
-func look_at_dir(_dir: Vector2) -> void: 
-	if _dir != Vector2.ZERO: 
-		direction = _dir
-		lerp_dir(_dir, TRANS_WEIGHT)
-#endregion
 
 func handle_noise() -> void:
 	noise = (self.speed / self.MAX_SPEED) * noise_multi
+
+func handle_velocity(_dir: Vector2) -> void:
+	desired_vel = ((_dir.normalized() * BASE_SPEED))
+	self.velocity = desired_vel.limit_length(MAX_SPEED)
+	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
+	
+	print("VEL:::  ", self.velocity,"DIR:::  ", _dir)
+		
+func handle_direction(_dir: Vector2) -> void: 
+	if _dir != Vector2.ZERO:
+		direction = _dir
+		lerped_direction = lerped_direction.lerp(_dir, 1)
+func handle_heading() -> void:
+		if abs(direction.x) > .5: 
+			if direction.y > .5: heading = compass_headings.SOUTH_HORIZ
+			elif direction.y < -.5: heading = compass_headings.NORTH_HORIZ
+			else: heading = compass_headings.HORIZ
+		else:
+			if direction.y > .5: heading = compass_headings.SOUTH
+			elif direction.y < -.5: heading = compass_headings.NORTH

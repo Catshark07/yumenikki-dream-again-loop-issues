@@ -36,6 +36,7 @@ func _ready() -> void:
 		#seed = randf_range(0, 1) * fps
 		#time_elapsed = seed
 	if autoplay: play(texture)
+	if !playing: set_process(false) 
 	animation_loop.connect(func(): if !loop: playing = false)
 	super()
 func format(_spr: Texture2D = texture) -> void:
@@ -46,8 +47,10 @@ func play(
 	_sprite: Texture2D, 
 	_reverse: bool = false, 
 	_fps: float = 1) -> void:
+		set_process(true)
 		set_sprite(_sprite)
 		playing = true
+		
 		progress = 0 if !_reverse else frame_h_count - 1
 		if _fps > 1: fps = _fps
 		reverse = _reverse
@@ -56,8 +59,10 @@ func play_one_shot(
 	_sprite: Texture2D, 
 	_reverse: bool = false, 
 	_fps: float = 1) -> void:
+		set_process(true)
 		set_sprite(_sprite)
 		playing = true
+		
 		end_frame = true
 		progress = 0 if !_reverse else frame_h_count - 1
 		if _fps > 1: fps = _fps

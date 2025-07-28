@@ -11,7 +11,6 @@ var sound_player: AudioStreamPlayer
 # ----> trait components
 
 @export var stamina_fsm: FSM
-@export var input_fsm: SentientFSM
 var marker_look_at: Strategist
 
 var sprite_sheet: SerializableDict = preload("res://src/player/2D/madotsuki/display/no_effect.tres")
@@ -24,7 +23,6 @@ func dependency_components() -> void:
 func dependency_setup() -> void:
 	marker_look_at._setup()		# --- fsm; not player dependency but required
 	stamina_fsm._setup(self) 		# --- fsm; not player dependency but required
-	input_fsm._setup(self) 		# --- fsm; not player dependency but required
 	fsm._setup(self)			# --- fsm; not player dependency but required
 	
 	if components.get_component_by_name("health"):
@@ -42,7 +40,6 @@ func set_marker_direction_mode(_new_mode: Strategy) -> void:
 func _update(_delta: float) -> void:	
 	super(_delta)
 	handle_noise()
-	input_fsm._update(_delta)
 	if fsm: fsm._update(_delta)
 func _physics_update(_delta: float) -> void:
 	super(_delta)

@@ -78,9 +78,9 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 [node name="nexus" type="Node"]
 script = ExtResource("1_0iw03")
 scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"order":Array[Node]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_kv8np"),"fade_type":1,"fade_shader":null,"fade_colour":Color(0, 0, 0, 1),"fade_speed":1.0,"start_progress":0.0,"end_progress":1.0,"transition":0,"ease":1,"deferred":true,"wait_til_finished":true,"skip_warning":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
-]),"marked_for_skip":null,"skip_invalid_sequences":null,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
+]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"order":Array[Node]([]),"marked_for_skip":null,"skip_invalid_sequences":null,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":false,"wait_til_finished":true,"skip_warning":false)
 
 load_transition = SubResource("ShaderMaterial_1rd4d")
 unload_transition = SubResource("ShaderMaterial_jxym7")
@@ -388,7 +388,6 @@ frame_h_count = 3
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("26_feke8")
-skip_invalid_sequences = null
 deferred = false
 
 [node name="fade_out" type="Node" parent="scene_load_sequence"]
@@ -398,7 +397,6 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("26_feke8")
-skip_invalid_sequences = null
 deferred = false
 
 [editable path="camera"]

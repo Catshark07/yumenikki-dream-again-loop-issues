@@ -40,7 +40,7 @@ func open_message_display(
 	_speed: int = 1,
 	_reset: bool = true, 
 	_font_colour: Color = Color.WHITE, 
-	_pos: Vector2 = Vector2(Game.Application.viewport_width / 2, Game.Application.viewport_length - 110)) -> void: 
+	_pos: Vector2 = Vector2(Application.viewport_width / 2, Application.viewport_length - 110)) -> void: 
 		
 		if is_open == true: return
 		current_index = 0

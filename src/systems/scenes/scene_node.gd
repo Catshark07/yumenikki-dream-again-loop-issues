@@ -5,6 +5,8 @@ const ID_NUMS = "0123456789"
 const ID_ALPHA = "abcdefghijklmnopqrstuvwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ"
 @export_storage var id: String
 
+signal reparented
+
 func set_node_active(active: Node.ProcessMode) -> void:
 	self.set_process_mode.call_deferred(active)
 

@@ -5,5 +5,5 @@ extends Event
 
 func _execute() -> void:
 	if node == null: return 
-	(node as ComponentReceiver).set_bypass(enable)
+	(node as ComponentReceiver).set_bypass(!enable)
 	super()

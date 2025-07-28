@@ -35,23 +35,14 @@ signal toggled(_truth)
 signal hover_entered
 signal hover_exited
 
-
-func _ready() -> void:
-	_children_components_setup()
-	_core_setup()
-	_additional_setup()
+func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"): pressed.emit()
 
 func _children_components_setup() -> void:
 	super()
 	abstract_button = GlobalUtils.get_child_node_or_null(main_container, "abstract_button")
 	if abstract_button == null:
 		abstract_button = GlobalUtils.add_child_node(main_container, AbstractButton.new(), "abstract_button")
-		
-	
-func on_visibility_change() -> void: 
-	unhover_animation()
-	set_modulate(curr_colour)
-
 func _additional_setup() -> void:	
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	
@@ -67,6 +58,7 @@ func _additional_setup() -> void:
 	
 	abstract_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	abstract_button.focus_mode = Control.FOCUS_NONE
+	self.focus_mode = Control.FOCUS_ALL
 	
 	if Engine.is_editor_hint():
 		set_button_modulate(curr_colour)
@@ -86,21 +78,34 @@ func _additional_setup() -> void:
 		GlobalUtils.connect_to_signal(_on_hover, hover_entered)
 		GlobalUtils.connect_to_signal(_on_unhover, hover_exited)
 		
+		GlobalUtils.connect_to_signal(_on_focus_enter, focus_entered)
+		GlobalUtils.connect_to_signal(_on_focus_exit, focus_exited)
+		
 		toggled.connect(func(_toggle): 
 			if _toggle: _on_toggle()
 			else: 		_on_untoggle())
+
+func on_visibility_change() -> void: 
+	unhover_animation()
+	set_modulate(curr_colour)
 	
 # --- visual & general behaviour functions ---
 func _on_hover() -> void: 
+	grab_focus()
+func _on_unhover() -> void: 
+	if has_focus(): release_focus()
+
+func _on_focus_enter() -> void:
 	if !abstract_button.button.disabled:
 		AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)
 		hover_animation()
 		set_button_modulate(hover_colour)
-func _on_unhover() -> void: 
+func _on_focus_exit() -> void: 
 	if !abstract_button.button.disabled:
 		AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"), .5)
 		unhover_animation()
 		set_button_modulate(normal_colour)
+
 func _on_press() -> void: 
 	if !abstract_button.button.disabled:
 		AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"))

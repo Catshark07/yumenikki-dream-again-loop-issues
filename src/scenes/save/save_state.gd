@@ -38,8 +38,8 @@ func open_prompt() -> void: prompt.visible = true
 func _save(_slot: int = 0) -> void: 
 	var save_slot = save_buttons[_slot - 1] if _slot > 0 else null
 	var save := func():
-		Game.Save.save_data(_slot)
-		save_slot.abstract_button.unique_data = Game.Save.get_data_as_json("save_%s" % [_slot])
+		Save.save_data(_slot)
+		save_slot.abstract_button.unique_data = Save.get_data_as_json("save_%s" % [_slot])
 			
 	if  save_slot != null:
 		

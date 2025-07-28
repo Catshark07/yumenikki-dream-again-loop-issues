@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="2_juckd"]
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="2_k0aey"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="2_o2rco"]
-[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="3_juckd"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_button.gd" id="3_juckd"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="4_tcehx"]
 [ext_resource type="Script" uid="uid://d3r72epfndsge" path="res://src/autoloads/panorama_system.gd" id="6_v2jl3"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="7_tcehx"]

@@ -1,9 +1,6 @@
 class_name Player
 extends SentientBase
 
-var input := Vector2(0, 0)
-
-@export_file("*.tscn") var access_menu: String
 @export var fsm: SentientFSM
 
 #region ---- data variables ----
@@ -47,6 +44,21 @@ var walk_noise_mult: float = WALK_NOISE_MULTI
 var run_noise_mult: float = RUN_NOISE_MULTI
 var sneak_noise_mult: float =SNEAK_NOISE_MULTI
 #endregion ---- data variables ----
+
+# ---- signals ----
+signal quered_primary_action
+signal quered_secondary_action
+signal quered_teritiary_action
+
+signal quered_interact
+signal quered_exhaust
+
+signal quered_sprint_start
+signal quered_sprint_end
+
+signal quered_sneak_start
+signal quered_sneak_end
+
 
 # ---- initial ----
 func _enter_tree() -> void: 

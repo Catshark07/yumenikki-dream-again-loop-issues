@@ -19,11 +19,11 @@ func handle_sprite_subtle_rotation(_sentient: SentientBase) -> void:
 	if _sentient != null:
 		_sentient.sprite_renderer.rotation_degrees = lerp(
 			_sentient.sprite_renderer.rotation_degrees, 
-			sign(_sentient.direction.x) * abs((_sentient.velocity.x / _sentient.initial_speed) * dynamic_rot_intensity * dynamic_rot_multi),
+			sign(_sentient.direction.x) * abs((_sentient.velocity.x / _sentient.BASE_SPEED) * dynamic_rot_intensity * dynamic_rot_multi),
 			(get_process_delta_time()) / _sentient.TRANS_WEIGHT)
 func handle_sprite_flip(_sentient: SentientBase) -> void:
 	if _sentient != null:
-		if _sentient.get_lerped_dir().x < 0: _sentient.sprite_renderer.flip_h = true
+		if _sentient.lerped_direction.x < 0: _sentient.sprite_renderer.flip_h = true
 		else: _sentient.sprite_renderer.flip_h = false
 func handle_sprite_direction(_sentient: SentientBase) -> void:
 	if sentient.is_moving : lerp_sprite_direction(_sentient, _sentient.heading)

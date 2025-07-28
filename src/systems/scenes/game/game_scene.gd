@@ -11,7 +11,6 @@ extends SceneNode
 @export var load_transition: ShaderMaterial = ShaderMaterial.new()
 @export var unload_transition: ShaderMaterial = ShaderMaterial.new()
 
-
 func _ready() -> void: 
 	scene_load_sequence = GlobalUtils.get_child_node_or_null(self, "scene_load_sequence")
 	scene_unload_sequence = GlobalUtils.get_child_node_or_null(self, "scene_unload_sequence")

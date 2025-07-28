@@ -92,7 +92,7 @@ func initate_footstep() -> void:
 	else:
 		play_footstep_sound(sound_to_be_played)
 func spawn_footstep_fx() -> void: 
-	if Game.Optimization.footstep_instances < Game.Optimization.FOOTSTEP_MAX_INSTANCES:
+	if Optimization.footstep_instances < Optimization.FOOTSTEP_MAX_INSTANCES:
 		var footstep_fx := FootstepDust.new(curr_anim)
 		self.add_child(footstep_fx)
 		footstep_fx.global_position = sentient.global_position
@@ -145,7 +145,7 @@ class FootstepDust:
 	extends SpriteSheetFormatterAnimated
 
 	func _init(_anim: CompressedTexture2D) -> void:
-		Game.Optimization.footstep_instances += 1
+		Optimization.footstep_instances += 1
 		
 		self.frame_dimensions = Vector2i(48, 48)
 		self.fps = 10
@@ -159,7 +159,7 @@ class FootstepDust:
 		set_sprite(_anim)	
 		
 	func _exit_tree() -> void:
-		Game.Optimization.footstep_instances -= 1
+		Optimization.footstep_instances -= 1
 		
 	func _ready() -> void:
 		self.play(texture)

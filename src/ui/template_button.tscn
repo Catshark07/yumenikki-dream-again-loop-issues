@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bryqyqyp5scn7"]
+[gd_scene load_steps=9 format=3 uid="uid://bryqyqyp5scn7"]
 
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="1_lxebl"]
-[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="2_dk1jx"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_button.gd" id="2_dk1jx"]
 [ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="3_dk1jx"]
 [ext_resource type="Shader" uid="uid://bhdcejnx8m6be" path="res://src/shaders/ui/button_texture_grad_mask.gdshader" id="3_ix8fw"]
 [ext_resource type="LabelSettings" uid="uid://dbxux4dchsxxt" path="res://src/global_label_settings.tres" id="4_p0njy"]
@@ -18,14 +18,14 @@ shader_parameter/position = 0.0
 shader_parameter/size = 1.0
 shader_parameter/angle = 0.0
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_igyce"]
-
 [node name="GUIPanelButton" type="Control"]
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 80.0
 offset_bottom = 20.0
+focus_mode = 2
+mouse_filter = 1
 theme = ExtResource("1_lxebl")
 script = ExtResource("2_dk1jx")
 button_display_texture = SubResource("CanvasTexture_ix8fw")
@@ -34,7 +34,7 @@ abstract_button = Object(Control,"_import_path":NodePath(""),"unique_name_in_own
 
 panel_display_texture = SubResource("CanvasTexture_p0njy")
 panel_display_colour = Color(1, 1, 1, 1)
-display_bg = Object(TextureRect,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":SubResource("ShaderMaterial_ix8fw"),"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":2,"size_flags_horizontal":0,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","texture":SubResource("CanvasTexture_igyce"),"expand_mode":1,"stretch_mode":0,"flip_h":false,"flip_v":false,"script":null)
+display_bg = Object(TextureRect,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":SubResource("ShaderMaterial_ix8fw"),"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":2,"size_flags_horizontal":0,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","texture":SubResource("CanvasTexture_ix8fw"),"expand_mode":1,"stretch_mode":0,"flip_h":false,"flip_v":false,"script":null)
 
 main_container = Object(PanelContainer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":1,"anchors_preset":15,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":null)
 
@@ -66,7 +66,7 @@ material = SubResource("ShaderMaterial_ix8fw")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
-texture = SubResource("CanvasTexture_igyce")
+texture = SubResource("CanvasTexture_ix8fw")
 expand_mode = 1
 
 [node name="margin_container" type="MarginContainer" parent="main_container"]

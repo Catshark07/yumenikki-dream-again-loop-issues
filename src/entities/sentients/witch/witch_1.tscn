@@ -17,4 +17,3 @@ reverse = false
 end_frame = false
 fps = 10.0
 frame_h_count = 3
-progress = 2

@@ -12,6 +12,11 @@ class_name Component extends Node
 	in the concrete classes of "component", we can use assert to ensure-
 	-that the component works with certain types of nodes.
 '''
+
+var invalid_setup: bool = false
+var invalid_update: bool = false
+var invalid_physics_update: bool = false
+
 @export var receiver: ComponentReceiver
 @export var active: bool = true:
 	set(_a): 

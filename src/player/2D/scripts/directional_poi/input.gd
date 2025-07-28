@@ -3,4 +3,4 @@ extends Strategy
 
 func _physics_update(_delta: float, _context: Variant = null) -> void: 
 	if Player.Instance.get_pl():
-		_context.position = (Player.Instance.get_pl().velocity.normalized())
+		_context.position = (Player.Instance.get_pl().dir_input)

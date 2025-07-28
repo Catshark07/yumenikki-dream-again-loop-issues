@@ -5,7 +5,7 @@ var pre_mute_vol: float = 0
 var pre_mute_pit: float = 1
 var was_playing: bool = false
 
-const ZERO_VOLUME = -50
+const ZERO_VOLUME = -80
 
 @export var muted: bool = false
 @export var affected_by_timescale: bool = false:
@@ -16,8 +16,10 @@ const ZERO_VOLUME = -50
 			false: Game.true_time_scale_changed.disconnect(set_timescale_factor)
 var timescale_factor: float = 0
 
-func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_PAUSABLE
+func _ready() -> void: process_mode = Node.PROCESS_MODE_PAUSABLE
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PAUSED: mute()
+	if what == NOTIFICATION_UNPAUSED: unmute()
 	
 func play_sound(
 	_stream: AudioStream, 
@@ -35,12 +37,9 @@ func play_sound(
 func mute() -> void: 
 	pre_mute_vol = volume_db
 	pre_mute_pit = pitch_scale
-	
 	volume_db = ZERO_VOLUME
-	was_playing = playing
-	stop()
+	
 func unmute() -> void:
-	if was_playing: play()
 	volume_db = pre_mute_vol
 	pitch_scale = pre_mute_pit
 

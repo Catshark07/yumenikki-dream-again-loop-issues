@@ -1,4 +1,5 @@
-class_name GameManager extends Node
+class_name GameManager 
+extends Node
 
 ## this is meant for when the actual game is played, ONLY under this gamemanager instance.
 ## although I could go about doing an autoload, it would seem to be less able for dependency injection.
@@ -19,7 +20,7 @@ static var global_screen_effect: WorldEnvironment
 static var instance
 
 # ---- process parents ----
-static var pausable_parent: CanvasLayer
+static var pausable_parent: Node2D
 static var always_parent: CanvasLayer
 static var ui_parent: CanvasLayer
 
@@ -63,7 +64,6 @@ func setup() -> void:
 	
 	global_screen_effect.environment.glow_enabled = bloom
 	await Game.scene_manager.setup_complete
-	print("eh")
 	state_handler._setup()
 	
 func update(delta: float) -> void: state_handler._update(delta)
@@ -75,8 +75,8 @@ static func pause_options(_pause: bool = true) -> void:
 	if _pause: change_to_state("pause")
 	else: change_to_state(game_fsm._get_prev_state_name())
 static func pause(_pause: bool = true) -> void:
-	if _pause: Game.Application.pause()
-	else: Game.Application.resume()
+	if _pause: Application.pause()
+	else: Application.resume()
 	
 # ---- secondary scene handling (instead of using scenemanager directly) ----
 static func change_scene_to(_new: PackedScene) -> void: 

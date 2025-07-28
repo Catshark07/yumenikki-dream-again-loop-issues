@@ -20,7 +20,7 @@ func _setup(_sentient: SentientBase) -> void:
 func _update(_delta: float) -> void:
 
 	if sentient.is_moving: 
-		animation_player.speed_scale = clamp(.21 * log(sentient.speed / sentient.MAX_SPEED) + 1, 0, INF)
+		animation_player.speed_scale = clamp(.09 * log(sentient.speed / sentient.MAX_SPEED) + 1, 0, INF)
 	else: animation_player.speed_scale = 1
 		
 # --- handler functions ---

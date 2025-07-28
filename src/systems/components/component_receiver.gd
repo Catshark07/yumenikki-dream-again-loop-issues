@@ -23,6 +23,7 @@ func _ready() -> void:
 	set_independent(independent)
 	for component in components: 
 		if component and component is Component: 
+			if component.invalid_setup: continue 
 			component._setup()
 func set_bypass(_by: bool) -> void: bypass = _by
 
@@ -32,11 +33,14 @@ func _physics_process(delta: float) -> void: _physics_update(delta)
 func _update(_delta: float) -> void:
 	if bypass: return
 	for component in components: 
-		if component != null and component is Component: component._update(_delta)
+		if component != null and component is Component: 
+			if component.invalid_update: continue
+			component._update(_delta)
 func _physics_update(_delta: float) -> void: 
 	if bypass: return
 	for component in components: 
-		if component != null and component is Component: 
+		if component != null and component is Component:
+			if component.invalid_physics_update: continue 
 			component._physics_update(_delta)
 
 func set_independent(_independ: bool) -> void:
