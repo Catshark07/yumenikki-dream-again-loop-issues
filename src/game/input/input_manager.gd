@@ -9,7 +9,7 @@ extends Game.GameSubClass
 static var hide_mouse_after_time := 300
 
 static var sb_input_controller	: SBInputController
-static var ui_input_controller	: InputController
+static var def_input_controller	: UIInputController
 static var curr_controller		: InputController
 
 static var keybind: Keybind
@@ -20,7 +20,7 @@ static var direction_vector_4		: Vector4i
 static func _setup() -> void:
 	keybind = Keybind.new()
 	sb_input_controller = SBInputController.new()
-	ui_input_controller = InputController.new()
+	def_input_controller = UIInputController.new()
 	
 static func request_curr_controller_change(_controller: InputController) -> void: 
 	curr_controller = _controller
@@ -44,10 +44,11 @@ static func _update(_delta: float) -> void:
 		
 	
 static func _input_pass(_event: InputEvent) -> void: 
-	if _event is InputEventMouse: Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	elif _event is InputEventKey or _event is InputEventAction: Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	if curr_controller != null: 
-		curr_controller._controller_input(_event)
+		curr_controller._handled_input(_event)
+static func _unhandled_input_pass(_event: InputEvent) -> void:
+	if curr_controller != null: 
+		curr_controller._unhandled_input(_event)
 	
 # definitions:
 #	KEYBIND: 
@@ -82,7 +83,7 @@ class Keybind:
 		# -- miscallenous
 		"ui_esc_menu" 		: [ KEY_ESCAPE ],
 		"ui_hud_toggle" 	: [ KEY_TAB ],
-		"ui_favourite_effect" : [ KEY_F ],
+		"ui_favourite_effect" : [ KEY_F , MOUSE_BUTTON_RIGHT],
 		
 		# -- UI
 		"ui_up" 			: [ KEY_UP, KEY_W ],
@@ -90,7 +91,7 @@ class Keybind:
 		"ui_right" 			: [ KEY_RIGHT, KEY_D ],
 		"ui_left" 			: [ KEY_LEFT, KEY_A ],
 		
-		"ui_accept" 		: [ KEY_Z, KEY_ENTER, KEY_SPACE ],
+		"ui_accept" 		: [ KEY_Z, KEY_ENTER ],
 		"ui_cancel" 		: [ KEY_X, KEY_BACKSPACE, KEY_ESCAPE ],
 		
 		# -- player

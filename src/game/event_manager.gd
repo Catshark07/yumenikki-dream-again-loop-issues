@@ -61,6 +61,7 @@ static var event_ids := {
 		"PLAYER_UPDATED" : {},
 		
 		"PLAYER_MOVE" : {},
+		"PLAYER_EXHAUST" : {},
 		"PLAYER_ACTION" : {},
 		"PLAYER_EMOTE" : {},
 		"PLAYER_INTERACT" : {},

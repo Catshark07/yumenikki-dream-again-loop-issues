@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://itkq6v7b7bm0" path="res://src/levels/_dream/fly_swarm/sprites/stop.png" id="19_wrbgk"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="20_w36fr"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="20_ym1ci"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="22_my6es"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="22_my6es"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fskr8"]
 

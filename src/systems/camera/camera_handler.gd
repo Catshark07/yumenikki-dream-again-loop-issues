@@ -1,3 +1,5 @@
+@tool
+
 class_name CameraHolder
 extends Node2D
 
@@ -8,14 +10,16 @@ var old_pos: Vector2
 var new_pos: Vector2
 var vel: Vector2
 
+@export var fsm: FSM
+
 # ---- FOLLOW STRATS ----
 @export_group("Miscallenous")
-static var default := CameraFollowStrategy.new()
-static var follow_player := FollowStrategyPlayer.new()
-static var follow_lerp := FollowStrategyLerp.new()
+static var default := STRAT_FOLLOW.new()
+static var follow_player := STRAT_FOLLOW_SENTIENT.new()
+static var follow_lerp := STRAT_FOLLOW_DEFAULT.new()
 
-var prev_follow_strat: CameraFollowStrategy = default
-var curr_follow_strat: CameraFollowStrategy = default
+var prev_follow_strat: STRAT_FOLLOW = default
+var curr_follow_strat: STRAT_FOLLOW = default
 
 # ---- components
 var marker: Marker2D
@@ -27,8 +31,9 @@ var shake_comp: CamShake
 # ---- cam properties
 @export_group("Camera Properties")
 
-@export var offset: Vector2 = Vector2(0, 0)
-@export_range(0.8, 2) var zoom: float = 1
+var switch_duration: float = .5
+@export var offset: Vector2 = Vector2(0, 0): set = set_offset
+@export_range(0.8, 2) var zoom: float = 1: set = set_zoom
 
 @export var override: bool = false:
 	set(ov):
@@ -53,13 +58,9 @@ var zoom_tween: Tween
 
 # ---- target
 @export_group("Target Properties")
-@export var target: CanvasItem
+@export var initial_target: CanvasItem
 var curr_target: CanvasItem
 var prev_target: CanvasItem
-
-var switching_to_target: bool = false
-var switching_duration: float = 0.325
-var switching_time_elapsed: float = 0
 
 func _init() -> void: 
 	self.name = "camera_handler"
@@ -78,43 +79,43 @@ func _ready() -> void:
 	
 	motion_reduction = motion_reduction
 	
-	set_zoom(zoom)
-	set_offset(offset)
-	set_target(target)
-	
+	if Engine.is_editor_hint(): 
+		if initial_target != null:
+			global_position = initial_target.global_position
 	if !Engine.is_editor_hint():
+		fsm._setup(self)
+		set_target(initial_target)
+		
 		cam.editor_draw_screen = true
 		cam.editor_draw_limits = true
 		
-		if !target: target = self ## ensures that its going to be static at least.
+		if !initial_target: initial_target = self ## ensures that its going to be static at least.
 		await Game.main_tree.process_frame
 		
-		assert(target is CanvasItem)
-		global_position = target.global_position
+		assert(initial_target is CanvasItem)
 		if shake_comp == null: shake_comp = CamShake.new(self.cam)
 		shake_comp.cam = self.cam
 	
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint(): return
 	
-func _process(delta: float) -> void:
 	set_zoom(zoom)
 	set_offset(offset)
-	if shake_comp: shake_comp._handle(delta)
+	if shake_comp: shake_comp._handle(_delta)
+	
+	fsm._update(_delta)
 
 func _physics_process(_delta: float) -> void:
+	if Engine.is_editor_hint(): return
+	
 	old_pos = new_pos
 	new_pos = self.global_position
 	vel = new_pos - old_pos
 	
-
-	if !Engine.is_editor_hint():
-		curr_follow_strat._follow(self, self.global_position, target.global_position)
-
-# ========== getters. ==========
-func get_velocity() -> Vector2: return vel
-
-# ========== setters. ==========
+	fsm._physics_update(_delta)
+	
 # ---- follow strats  ----
-func set_follow_strategy(strat: CameraFollowStrategy):
+func set_follow_strategy(strat: STRAT_FOLLOW):
 	prev_follow_strat = curr_follow_strat
 	curr_follow_strat = strat
 	curr_follow_strat._changed()
@@ -133,20 +134,20 @@ func set_cam_limit(_up: float, _down: float, _right: float, _left: float) -> voi
 func set_offset(_offset: Vector2) -> void: 
 	offset = _offset
 	marker.position = _offset
-func set_target(_target: Node, _instant: bool = false) -> void:
-	switching_to_target = true
+func set_target(_target: CanvasItem, _dur: float = .5) -> void:
+	print("CAM TARGET IS::: ", _target)
+	if _target == null: return
 	
+	switch_duration = _dur
+	curr_target = _target
+	fsm.change_to_state("changing_target")
 	
-	if _target:
-		target = _target
-		
-		if target is SentientBase: set_follow_strategy(follow_player if !motion_reduction else default)
-		else: set_follow_strategy(follow_lerp if !motion_reduction else default)
-		
-		if curr_target: prev_target = curr_target
-		curr_target = _target
-		
-		if _instant: self.global_position = target.global_position
+	if _target is SentientBase: 
+		set_follow_strategy(follow_player if !motion_reduction else default)
+	else: set_follow_strategy(follow_lerp if !motion_reduction else default)
+	
+	if curr_target: prev_target = curr_target
+	curr_target = _target
 		
 func set_override_flag(_override: bool) -> void:
 	cam.top_level = _override
@@ -242,3 +243,42 @@ class CamShake:
 	func request() -> void: 
 		time_elapsed = 0
 		is_shaking = true
+
+# -- strats
+class STRAT_FOLLOW:
+	extends Strategy
+
+	var follow_speed := 4.0
+	var final: Vector2
+
+	func _setup(_cam: CameraHolder) -> void: pass
+	func _follow(_cam: CameraHolder, _point: Vector2) -> void: 
+		_cam.global_position = _point
+
+	func _changed() -> void: pass
+
+class STRAT_FOLLOW_DEFAULT:
+	extends STRAT_FOLLOW
+	func _follow(_cam: CameraHolder, _point: Vector2) -> void:
+		final = _cam.global_position.lerp(_point, Game.get_real_delta() * follow_speed)
+		_cam.global_position = final
+class STRAT_FOLLOW_SENTIENT:
+	extends STRAT_FOLLOW
+	
+	var player: Player
+	var calculated: Vector2
+
+	var look_ahead_distance: float = 10
+	var look_ahead: Vector2
+	var MAX_LOOK_AHEAD_PIXELS := Vector2(10, 10)
+
+	func _setup(_cam: CameraHolder) -> void:
+		player = Player.Instance.get_pl()
+	func _follow(_cam: CameraHolder, point: Vector2) -> void:
+		look_ahead = look_ahead.lerp(
+			(player.dir_input * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 
+			Game.get_real_delta() * follow_speed)
+		final = point + look_ahead
+
+		_cam.global_position = final
+	func _changed() -> void: look_ahead = Vector2.ZERO

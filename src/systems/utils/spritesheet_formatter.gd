@@ -36,7 +36,7 @@ func _ready() -> void:
 	texture.changed.connect(format)
 	visibility_changed.connect(func(): set_process(self.visible))
 	
-	set_process(Engine.is_editor_hint())
+	set_process(!Engine.is_editor_hint())
 	
 func refresh_frame_splitting() -> void:
 	format()
@@ -55,9 +55,9 @@ func format(_spr: Texture2D = texture) -> void:
 		self.hframes = clamp(frame_h_count, 1, frame_h_count)
 		self.vframes = clamp(frame_v_count, 1, frame_v_count)
 func set_sprite(_spr: Texture2D) -> void:
-	if _spr == texture: return
+	if _spr == texture or _spr == null: return
 	format(_spr)
-	if _spr: texture = _spr
+	texture = _spr
 
 func set_row(_r: float) -> void:
 	if row <= frame_v_count - 1: row = clamp(_r, 0, frame_v_count - 1)

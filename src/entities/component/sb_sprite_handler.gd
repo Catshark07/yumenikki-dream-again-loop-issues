@@ -1,6 +1,6 @@
 extends SBComponent
 
-var sprite_renderer: Sprite2D
+var sprite_renderer: SpriteSheetFormatter
 
 const DEFAULT_DYNAMIC_ROT_MULTI = 1
 var dynamic_rot_intensity: float = 3.85

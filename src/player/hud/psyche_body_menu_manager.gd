@@ -13,8 +13,8 @@ func _setup() -> void:
 	
 	initial_state = state_dict[0]
 	
-	mind_button.button.pressed.connect(func(): _change_to_state("mind", null))
-	psyche_button.button.pressed.connect(func(): _change_to_state("psyche", null))
-	body_button.button.pressed.connect(func(): _change_to_state("body", null))
+	mind_button.button.pressed.connect(func(): change_to_state("mind", null))
+	psyche_button.button.pressed.connect(func(): change_to_state("psyche", null))
+	body_button.button.pressed.connect(func(): change_to_state("body", null))
 	
 	super(s)

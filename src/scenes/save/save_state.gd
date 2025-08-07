@@ -12,7 +12,7 @@ extends State
 var tween: Tween
 var pending_save_id: int = 0
 
-func enter_state() -> void:
+func _enter_state() -> void:
 	prompt.get_node("prompt").text_display.text = "Are you sure you want to save in this slot?"
 	
 	for save in save_buttons: 
@@ -27,7 +27,7 @@ func enter_state() -> void:
 	tween.tween_property(path_follow_cam, "progress_ratio", 0, 2)
 	tween.tween_property(path_follow_ui, "progress_ratio", 0, 2)
 
-func exit_state() -> void:
+func _exit_state() -> void:
 	for save in save_buttons:
 		GlobalUtils.disconnect_from_signal(_save.bind(int(save.name)), save.pressed)
 

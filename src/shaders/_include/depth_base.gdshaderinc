@@ -1,17 +1,23 @@
 render_mode world_vertex_coords;
 
 global uniform vec2 uv_offset;
-uniform vec2 uv_offset_initial;
 
 group_uniforms depth;
-uniform float offset_strength;
-uniform float offset_strength_x_influence = 1;
-uniform float offset_strength_y_influence = 1;
 uniform vec2 initial_uv_offset;
+uniform float snapped_val = 0.0016;
+
+uniform float offset_strength;
+uniform vec2 offset_strength_influence = vec2(1.);
 
 vec2 _depth_vertex(vec2 uv, vec2 _pixel_size)
 {
-	uv.x = ((vec4(uv, _pixel_size)).xy + ((uv_offset / 2.5) * (offset_strength * offset_strength_x_influence))).x + uv_offset_initial.x;
-	uv.y = ((vec4(uv, _pixel_size)).xy + (uv_offset * (offset_strength * offset_strength_y_influence))).y + uv_offset_initial.y;
+	vec2 uv_offset_snapped = floor(((uv_offset * offset_strength * offset_strength_influence) + initial_uv_offset) / (snapped_val)) * (snapped_val);
+
+	float depth_x = (vec4(uv, _pixel_size).xy + (uv_offset_snapped / 1.2)).x;
+	float depth_y = (vec4(uv, _pixel_size).xy + (uv_offset_snapped / 1.6)).y;
+
+	uv.x = depth_x;
+	uv.y = depth_y;
+
 	return uv;
 }

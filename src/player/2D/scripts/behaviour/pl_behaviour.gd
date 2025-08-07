@@ -1,28 +1,22 @@
 class_name PLBehaviour
 extends Resource
 
+@export var auto_run: bool = false
+
 # ---- behaviour enter - exit ----
 func _enter(_pl: Player) -> void: pass	
 func _exit(_pl: Player) -> void: pass
 
 # ---- behaviour apply - unapply ----
-func _apply(_pl: Player) -> void: _pl.set_behaviour(self)
-func _unapply(_pl: Player) -> void: _pl.revert_def_behaviour()
+func _apply(_pl: Player) -> void: pass
+func _unapply(_pl: Player) -> void: pass
 
 # ---- movement ----
-func _idle(_pl: Player) -> void: 
-	if _pl.desired_speed > 0:
-		_pl.force_change_state("walk")
-	
-func _walk(_pl: Player) -> void: pass
-
+func _idle(_pl: Player) -> void:  _pl.handle_direction(_pl.dir_input)
+func _walk(_pl: Player) -> void:  _pl.handle_direction(_pl.dir_input)
+func _run(_pl: Player) -> void:   _pl.handle_direction(_pl.vel_input)
 		
-func _run(_pl: Player) -> void:
-	_pl.handle_direction(_pl.velocity.normalized())
-		
-func _sneak(_pl: Player) -> void:
-	if _pl.desired_speed == 0: _pl.force_change_state("idle")
-	if !Input.is_action_pressed("sneak"):  _pl.force_change_state("walk")
+func _sneak(_pl: Player) -> void: _pl.handle_direction(_pl.dir_input)
 
 func _climb(_pl: Player) -> void: pass
 

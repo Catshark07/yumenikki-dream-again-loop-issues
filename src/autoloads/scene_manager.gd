@@ -3,26 +3,21 @@ extends RefCounted
 
 signal setup_complete
 
+var scene_stack: Stack
 var scene_node: SceneNode
-var scene_node_packed: PackedScene
-var prev_scene_ps: PackedScene
+var curr_scene_resource: PackedScene
+var prev_scene_resource: PackedScene
 
-var additive_scene_node: SceneNode
-var additive_scene_node_packed: PackedScene
-var prev_additive_node_ps: PackedScene
-
-var initial_scene_setup_complete: bool = false
 var scene_change_pending: bool = false
 
 # ---------- 	BACKGROUND LOADING 		---------- #
 var load_requested: bool = false
 var bg_load_finished: bool = false
 
-var load_progress: Array[int]
+var load_progress: Array[int] = [0]
 var scene_load_err_check: Error
 var scene_load_status: ResourceLoader.ThreadLoadStatus
 
-var instantiated_scene: SceneNode = null
 var result: ResourceLoader.ThreadLoadStatus
 
 func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoader.ThreadLoadStatus:
@@ -32,7 +27,7 @@ func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoade
 	if !load_requested or bg_load_finished: 
 		print("case two")
 		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
-	if scene == scene_node_packed or !ResourceLoader.exists(scene.resource_path): 
+	if scene == curr_scene_resource or !ResourceLoader.exists(scene.resource_path): 
 		print("case tree")
 		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
 	
@@ -40,120 +35,102 @@ func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoade
 	
 	if scene_load_err_check == OK:
 		match scene_load_status:
-			ResourceLoader.ThreadLoadStatus.THREAD_LOAD_INVALID_RESOURCE: ## 0
+			ResourceLoader.ThreadLoadStatus.THREAD_LOAD_INVALID_RESOURCE: # - 0
 				print_rich("[b]SceneManager // Loading :: Scene (as resource) is invalid. Please check the resource's status.[/b]")
-			ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED: ## 2
-				print_rich("[b]SceneManager // Loading :: Scene loading has failed.[/b]")
-				bg_load_finished = true
-			ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED: ## 3
-				print_rich("[b]SceneManager // Loading :: what.[/b]")
+			ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED | ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED: # - 2 or 3
 				bg_load_finished = true
 	
 	return scene_load_status
 func setup() -> void: 
-	if !initial_scene_setup_complete: 
-		if scene_node != null:
-			if GameManager.instance == null: scene_node.reparent(Game)
-			else: scene_node.reparent(GameManager.pausable_parent) 
-			
-			scene_node_packed = load(scene_node.scene_file_path)
-			await scene_node.on_load_request()
-			scene_node.on_load()
-			
-		if additive_scene_node != null:
-			if GameManager.instance == null: additive_scene_node.reparent(Game)
-			else: additive_scene_node.reparent(GameManager.pausable_parent) 
-			
-			additive_scene_node_packed = load(additive_scene_node.scene_file_path)
-			await additive_scene_node.on_load_request()
-			additive_scene_node.on_load()
-	
-	initial_scene_setup_complete = true
+	scene_stack = Stack.new()
+	for i: SceneNode in GlobalUtils.get_group_arr("scene_node"):
+		
+		if i.lonely: 
+			i.initialize()
+			handle_scene_push(i)
+		
 	setup_complete.emit()
 	
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
-func unload_current_scene() -> bool:
-	if scene_node: 	
-		return await unload_scene(scene_node)
-	return false
-func unload_scene(scene: SceneNode) -> bool:
-		scene.queue_free()
-		EventManager.invoke_event("SCENE_UNLOADED")
-		print_rich("[b]SceneManager // Unloading : Scene Unloaded![/b]")
+func unload_scene(_scene_node: SceneNode) -> bool:
+	if _scene_node == null: return false
+
+	await _scene_node.on_unload()
+	_scene_node.queue_free()
+	EventManager.invoke_event("SCENE_UNLOADED")
+	print_rich("[b]SceneManager // Unloading : Scene Unloaded![/b]")
 			
-		return true 
-func load_scene(scene: PackedScene, root_node: Node, backup_root_node: Node = null) -> void:
-	if ResourceLoader.exists(scene.resource_path) && scene.can_instantiate():
-		prev_scene_ps = scene_node_packed
+	return true 
+func load_scene(_scene: PackedScene) -> void:
 		
-		scene_load_err_check = ResourceLoader.load_threaded_request(scene.resource_path)
+	if ResourceLoader.exists(_scene.resource_path) and _scene.can_instantiate():
+		scene_load_err_check = ResourceLoader.load_threaded_request(_scene.resource_path)
 		
-		instantiated_scene = null
 		load_requested = true
 		bg_load_finished = false
 		
-		result = await handle_background_loading_upon_request(scene)
-		scene_node_packed = scene
+		result = await handle_background_loading_upon_request(_scene)
 		
 		if result == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
-			instantiated_scene = scene.instantiate()
-			
-			if root_node != null: root_node.add_child(instantiated_scene)
-			else: backup_root_node.add_child(instantiated_scene)
+			scene_node = _scene.instantiate()
+			handle_scene_push(scene_node)
 			
 			EventManager.invoke_event("SCENE_LOADED")
-			await scene_node.on_load_request()
-			scene_node.on_load()
 					
 		load_requested = false
 		bg_load_finished = true
 		
-		
 		print(str("SceneManager // Load Status: ", scene_load_status))
 		print_rich("[b]SceneManager // Loading :: Loading Scene was a success![/b]")
-		print_rich("[b]SceneManager // Loading :: Scene Loaded : [/b]", scene)
 
-	else: scene_node_packed = null
+	else: curr_scene_resource = null
 
-func get_curr_scene() -> SceneNode: return scene_node
+func handle_scene_push(_scene_node: SceneNode) -> void:
+	prev_scene_resource = curr_scene_resource
+	curr_scene_resource = load(_scene_node.scene_file_path)
 
-func get_curr_packed_scene() -> PackedScene: return scene_node_packed
-func get_prev_packed_scene() -> PackedScene: return prev_scene_ps
+	scene_stack.push(_scene_node)
+	scene_node = scene_stack.top
+	scene_node.initialize()
+	
+	if scene_node.get_parent() == null:
+		GameManager.pausable_parent.add_child(scene_node)
+	else:
+		scene_node.reparent(GameManager.pausable_parent)
+func handle_scene_pop() -> void:
+	var scene_to_pop = scene_stack.top
+	scene_stack.pop()
 
-func get_curr_additive_packed_scene() -> PackedScene: return null
-func get_prev_additive_packed_scene() -> PackedScene: return null
-
-func change_scene_to(
-	scene: PackedScene, 
-	root_node: Node, 
-	backup_root_node: Node = null) -> void:
+func change_scene_to(scene: PackedScene) -> void:
+	if !ResourceLoader.exists(scene.resource_path): 
+		print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
+		return
 		
-		if scene_node and scene and scene != scene_node_packed:
-			if !scene_change_pending:
-				prev_scene_ps = scene_node_packed
-				scene_change_pending = true
+	if scene_node and scene and scene != curr_scene_resource:
+	
+		if !scene_change_pending:
+			scene_change_pending = true
 
-				EventManager.invoke_event("SCENE_CHANGE_REQUEST")
-				await scene_node.on_unload_request()
-				scene_node.on_unload()
-				unload_current_scene()
+			EventManager.invoke_event("SCENE_CHANGE_REQUEST")
+			GameManager.change_to_state("CHANGING_SCENES")
+			scene_stack.queue_pop()
+			await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
+			
+			handle_scene_pop()
+			await load_scene(scene)
+			
+			GameManager.request_transition(ScreenTransition.fade_type.FADE_OUT)
+			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
+			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
 				
-				await Game.main_tree.create_timer(.5).timeout
-				
-				if ResourceLoader.exists(scene.resource_path):
-					await load_scene(scene, root_node, backup_root_node)
-					print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
-					EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
+			scene_change_pending = false
+			
+	else: 
+		EventManager.invoke_event("SCENE_CHANGE_FAIL")
+		print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 
-				scene_change_pending = false
-				
-		else: 
-			EventManager.invoke_event("SCENE_CHANGE_FAIL")
-			print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
-
-func reparent_scene_nodes_to(_scene_node: SceneNode, _new_parent: Node) -> void:
-	_scene_node.reparent(_new_parent)
-	_scene_node.reparented.emit()
+func _update(_delta: float) -> void: if scene_node: scene_node._update(_delta)
+func _physics_update(_delta: float) -> void: if scene_node: scene_node._physics_update(_delta)
 # ---------- 									---------- #
 # ----
 # here are the scene events called in order:

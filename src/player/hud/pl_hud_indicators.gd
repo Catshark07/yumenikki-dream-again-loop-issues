@@ -9,7 +9,7 @@ var pl_stamina_change: EventListener
 func _ready() -> void:
 	effect_equip = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
 	effect_equip.do_on_notify(["PLAYER_EQUIP"], func(): 
-		if EventManager.get_event_param("PLAYER_EQUIP")[0] != Player.Instance.get_pl().DEFAULT_EFFECT: 
+		if EventManager.get_event_param("PLAYER_EQUIP")[0] != Player.Instance.DEFAULT_EQUIPMENT: 
 			effect_ind.progress = 1)
 	effect_equip.do_on_notify(["PLAYER_DEEQUIP"], func(): effect_ind.progress = 0)
 	

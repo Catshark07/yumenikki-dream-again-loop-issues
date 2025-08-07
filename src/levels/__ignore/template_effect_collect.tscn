@@ -1,15 +1,15 @@
 [gd_scene load_steps=12 format=3 uid="uid://36fsvg2ttglw"]
 
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_b3i0q"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/event/sequence/game/on_interact.gd" id="2_cnxb5"]
-[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/event/game/invoke_game_event.gd" id="3_a8id6"]
-[ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/event/player/event_pl_append_effect.gd" id="3_ksobs"]
-[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="3_rhkvi"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="2_cnxb5"]
+[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="3_a8id6"]
+[ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/sequencing/event/player/event_pl_append_effect.gd" id="3_ksobs"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="3_rhkvi"]
 [ext_resource type="AudioStream" uid="uid://berstp18uwqhm" path="res://src/audio/se/effect_found.WAV" id="4_a8id6"]
-[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/event/message/open_message.gd" id="5_a8id6"]
-[ext_resource type="Script" uid="uid://ct0tihw5baew2" path="res://src/systems/event/node/set_interactable.gd" id="6_6xq3u"]
+[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="5_a8id6"]
+[ext_resource type="Script" uid="uid://ct0tihw5baew2" path="res://src/systems/sequencing/event/node/set_interactable.gd" id="6_6xq3u"]
 [ext_resource type="Script" uid="uid://bdm7kig80eqqk" path="res://src/systems/save/save_node_properties.gd" id="7_55c36"]
-[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/event/game/wait_seconds.gd" id="9_rhkvi"]
+[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="9_rhkvi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6xq3u"]
 size = Vector2(16, 16)
@@ -22,7 +22,6 @@ script = ExtResource("1_b3i0q")
 secret = true
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_6xq3u"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
-centred = true
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 

@@ -5,8 +5,6 @@ var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
 @onready var DEFAULT_DATA: PLAttributeData
-@onready var DEFAULT_EFFECT: PLEffect = load("res://src/player/2D/madotsuki/effects/_none/_default.tres")
-@onready var behaviour: PLBehaviour = load("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
 
 # ----> trait components
 
@@ -16,12 +14,14 @@ var marker_look_at: Strategist
 var sprite_sheet: SerializableDict = preload("res://src/player/2D/madotsuki/display/no_effect.tres")
 var action: PLAction 
 
+func _ready() -> void:
+	super()
+	equip(Instance.equipment_pending, true)
+
 func dependency_components() -> void:	
 	audio_listener = $audio_listener
 	sound_player = $sound_player
-	marker_look_at = $look_at
 func dependency_setup() -> void:
-	marker_look_at._setup()		# --- fsm; not player dependency but required
 	stamina_fsm._setup(self) 		# --- fsm; not player dependency but required
 	fsm._setup(self)			# --- fsm; not player dependency but required
 	
@@ -30,13 +30,6 @@ func dependency_setup() -> void:
 			func(_dmg: float):
 				EventManager.invoke_event("PLAYER_HURT", [_dmg]))
 
-func get_marker_direction() -> Vector2: 
-	return marker_look_at.position
-func set_marker_direction_mode(_new_mode: Strategy) -> void: 
-	assert(_new_mode is Strategy)
-	marker_look_at._change_strat(_new_mode)
-
-#region PROCESS and INPUT
 func _update(_delta: float) -> void:	
 	super(_delta)
 	handle_noise()
@@ -44,39 +37,29 @@ func _update(_delta: float) -> void:
 func _physics_update(_delta: float) -> void:
 	super(_delta)
 	stamina_fsm._physics_update(_delta)
-	if behaviour: behaviour._physics_update(self, _delta)
 	if fsm: fsm._physics_update(_delta)
 func _input_pass(event: InputEvent) -> void:
-	dependency_input(event)
-	if fsm: fsm._input_pass(event)
+	if components != null: 	components._input_pass(event)
+	if fsm != null: 		fsm._input_pass(event)
 	
-func dependency_input(event: InputEvent) -> void:
-	if components != null: 
-		components._input_pass(event)
-#endregion
-
 #region EMOTES, UNIQUE, BEHAVIOUR
 func perform_action(_action: PLAction) -> void: 
 	components.get_component_by_name("action_manager").perform_action(_action, self)
 func cancel_action(_action: PLAction = action) -> void: 
 	components.get_component_by_name("action_manager").cancel_action(_action, self)
 
-func equip(_effect: PLEffect, _skip: bool = false) -> void: 
+func equip(_effect: PLSystemData, _skip: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").equip(_effect, self, _skip)
-func deequip_effect(_skip_anim: bool = false) -> void: 
+func deequip_effect() -> void: 
 	components.get_component_by_name("equip_manager").deequip(self)
 
-func set_behaviour(_beh: PLBehaviour) -> void:
-	behaviour = _beh
-func revert_def_behaviour() -> void: behaviour = DEFAULT_EFFECT.behaviour
 func get_behaviour() -> PLBehaviour: 
-	if behaviour == null: return DEFAULT_EFFECT.behaviour
-	return behaviour
+	return components.get_component_by_name("equip_manager").behaviour
 #endregion
 
 #region STATES and ANIMATIONS
-func force_change_state(_new: String) -> void: fsm._change_to_state(_new)
-func get_state_name() -> String: return fsm._get_curr_state_name()
+func force_change_state(_new: String) -> void: fsm.change_to_state(_new)
+func get_state_name() -> String: return fsm.get_curr_state_name()
 
 func play_sound(_sound: AudioStreamWAV, _vol: float, _pitch: float) -> void:
 	if sound_player != null: sound_player.play_sound(_sound, _vol, _pitch)

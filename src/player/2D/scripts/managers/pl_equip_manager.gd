@@ -2,16 +2,24 @@ class_name PlEquipManager
 extends SBComponent
 
 var effect_prefab: PLPhysicalEff = null
-var effect_data: PLEffect = null
+var effect_data: PLSystemData = null
+var behaviour: PLBehaviour:
+	get:
+		if effect_data == null: return load("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
+		else: return effect_data.behaviour
+
+const IGNORE := [preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")]
 
 # ----> equip / de-equip.
-func equip(_ef: PLEffect, _pl: Player, _skip: bool = false) -> void:
+func equip(_ef: PLSystemData, _pl: Player, _skip: bool = false) -> void:
 	if _ef == effect_data:
-		await deequip(_pl)
+		deequip(_pl)
 		return
+		
 	if _ef:
 		await deequip(_pl)
 		effect_data = _ef
+		behaviour = effect_data.behaviour
 		if 	( 
 			!_ef.player_component_prefab.is_empty() and
 			ResourceLoader.exists(_ef.player_component_prefab) and 
@@ -26,12 +34,12 @@ func equip(_ef: PLEffect, _pl: Player, _skip: bool = false) -> void:
 		EventManager.invoke_event("PLAYER_EQUIP", [_ef])
 		Player.Instance.equipment_pending = _ef
 		_ef._apply(_pl)
-		
 func deequip(_pl: Player, _skip: bool = false) -> void:
+	if effect_data in IGNORE: return
 	if effect_data:
-		EventManager.invoke_event("PLAYER_DEEQUIP_SKIP_ANIM", [effect_data.skip_deequip_animation])
+		EventManager.invoke_event("PLAYER_DEEQUIP_SKIP_ANIM", [effect_data.skip_deequip_animation or _skip])
 		EventManager.invoke_event("PLAYER_DEEQUIP", [effect_data])
-		Player.Instance.equipment_pending = null
+		Player.Instance.equipment_pending = Player.Instance.DEFAULT_EQUIPMENT
 		
 		_pl.components.get_component_by_name("action_manager").cancel_action(
 			_pl.components.get_component_by_name("action_manager").curr_action, _pl, true)
@@ -42,13 +50,15 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 
 		effect_data._unapply(_pl)
 		effect_data = null
-		
-		equip(_pl.DEFAULT_EFFECT, _pl)
+		Player.Instance.DEFAULT_EQUIPMENT._apply(_pl)
+
 func _input_effect(_input: InputEvent, _pl: Player) -> void: 
 	if effect_prefab != null: effect_prefab.input(_input, _pl)
 	
 func _physics_update(_delta: float) -> void:
 	if effect_prefab != null: effect_prefab._physics_update(_delta, sentient)
+	if behaviour: behaviour._physics_update(sentient, _delta)
+
 func _update(_delta: float) -> void:
 	if effect_prefab != null: effect_prefab._update(_delta, sentient)
 	

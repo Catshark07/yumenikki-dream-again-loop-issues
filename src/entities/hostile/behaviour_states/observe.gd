@@ -19,13 +19,13 @@ func _setup() -> void:
 	hesitance_timer.one_shot = true
 
 	hesitance_timer.timeout.connect(func():
-		stance_fsm._change_to_state("idle")	
+		stance_fsm.change_to_state("idle")	
 		hesitance_timer.wait_time = randf_range(min_wait_time, max_wait_time)
 		update_hesitance_observe_point())
 		
 	(sentient as NavSentient).nav_agent.target_reached.connect(hesitance_timer.start)
 
-func enter_state() -> void:
+func _enter_state() -> void:
 	roll = randf()
 	 		
 	target = aggression_component.target
@@ -38,7 +38,7 @@ func enter_state() -> void:
 	hesitance_timer.start()
 	super()
 	
-func exit_state() -> void: 
+func _exit_state() -> void: 
 	
 	aggression_component.suspicion_indicator_status.visible = false
 	hesitance_timer.stop()
@@ -47,13 +47,13 @@ func exit_state() -> void:
 func update(_delta: float) -> void:
 	if aggression_component.suspicion > aggression_component.min_chase_threshold:
 		if fsm._has_state("taunt") and roll >= aggression_component.taunt_chance: 
-			fsm._change_to_state("taunt")
+			fsm.change_to_state("taunt")
 		
 		else: 
-			fsm._change_to_state("chase")
+			fsm.change_to_state("chase")
 			
 	if aggression_component.suspicion < 10:
-		fsm._change_to_state("wander")
+		fsm.change_to_state("wander")
 		
 func physics_update(_delta: float) -> void: 
 	if (!(sentient as NavSentient).nav_agent.is_target_reached() and 
@@ -63,7 +63,7 @@ func physics_update(_delta: float) -> void:
 		sentient.handle_direction((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
 	
 	else:
-		stance_fsm._change_to_state("idle")	
+		stance_fsm.change_to_state("idle")	
 		
 	if !(sentient as NavSentient).nav_agent.is_target_reachable():
 		update_hesitance_observe_point()

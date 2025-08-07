@@ -21,15 +21,15 @@ static func quit():
 		Game.game_manager.process_mode = Node.PROCESS_MODE_DISABLED
 	Music.fade_out()
 	Ambience.fade_out()
-	await Game.Save.save_data()
+	Save.save_data()
 	await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
 	Game.main_tree.quit.call_deferred()
 static func pause(): 
-	Game.main_tree.paused = true
 	Game.is_paused = true
+	Game.main_tree.paused = true
 static func resume(): 
-	Game.main_tree.paused = false
 	Game.is_paused = false
+	Game.main_tree.paused = false
 
 static func get_viewport_width() -> int: return ProjectSettings.get("display/window/size/viewport_width")
 static func get_viewport_height() -> int: return ProjectSettings.get("display/window/size/viewport_height")		
@@ -55,9 +55,7 @@ static func window_setup() -> void:
 	Engine.max_fps = 60
 	ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_repeat", CanvasItem.TEXTURE_REPEAT_MIRROR)
 	
-	main_window.content_scale_size = Vector2(960, 540)
 	main_window.size = Vector2(960, 540)
-	main_window.content_scale_factor = 2
 	
 	main_window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 	main_window.position = DisplayServer.screen_get_size(DisplayServer.get_primary_screen()) / 2 - main_window.size / 2 

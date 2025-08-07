@@ -7,7 +7,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://ckrlxt13tw453" path="res://src/entities/sentients/animation_libs/red_jellyfish.tres" id="4_bjgll"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_djqh1"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_e65x6"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="7_2rqag"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="7_2rqag"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jg6uj"]
 blend_mode = 1

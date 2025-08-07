@@ -52,8 +52,8 @@ func _update(_delta: float) -> void:
 	if in_range: suspicion += suspicion_increase_multiplier * (1 / displacement.length())
 	else: suspicion -= suspicion_decay_multiplier * (displacement.length() / 1000) 
 	
-	if suspicion >= min_observe_threshold and behaviour_fsm._get_curr_state_name() == "wander":
-		behaviour_fsm._change_to_state("observe")
+	if suspicion >= min_observe_threshold and behaviour_fsm.get_curr_state_name() == "wander":
+		behaviour_fsm.change_to_state("observe")
 	
 	sentient.queue_redraw()
 		

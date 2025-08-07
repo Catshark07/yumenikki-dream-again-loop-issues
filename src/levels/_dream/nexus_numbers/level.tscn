@@ -6,14 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://b50sb4jpjcoy" path="res://src/images/panorama/number_world.png" id="2_fr60b"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_p5x5m"]
 [ext_resource type="AudioStream" uid="uid://ktspl5gkuqq8" path="res://src/audio/bgm/world_numbers.WAV" id="3_5chxp"]
-[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="5_1q3ts"]
+[ext_resource type="Script" uid="uid://buwx0x51eley6" path="res://src/panorama/panorama_placeholder.gd" id="4_ubshi"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="5_5chxp"]
 [ext_resource type="TileSet" uid="uid://by00rslt3yu5s" path="res://src/levels/__ignore/tile_set/numbers.tres" id="8_1q3ts"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_idt0i"]
 [ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="11_vxiyi"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="12_vxiyi"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="13_u3o2y"]
-[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/event/game/screen_fade.gd" id="14_ubshi"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="13_u3o2y"]
+[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_fade.gd" id="14_ubshi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ubshi"]
 
@@ -24,42 +24,34 @@ shader = ExtResource("2_3yepy")
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.03
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.25
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.25
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2l745"]
 size = Vector2(2624, 1528)
 
 [node name="numbers_world" type="Node"]
 script = ExtResource("1_s2gkw")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_u3o2y"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 load_transition = SubResource("ShaderMaterial_ubshi")
 unload_transition = SubResource("ShaderMaterial_dgdtf")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
-layer = -30
-
-[node name="parallax" type="TextureRect" parent="panorama (bottom_layer)"]
+[node name="parallax" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_1q3ts")
 offset_right = 485.0
 offset_bottom = 400.0
 texture = ExtResource("2_fr60b")
+script = ExtResource("4_ubshi")
 
-[node name="camera" parent="." instance=ExtResource("2_p5x5m")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../entrance_section/Madotsuki")
-
-[node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
-script = ExtResource("5_1q3ts")
-metadata/_custom_type_script = "uid://bptlrkdn0tpua"
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_p5x5m")]
+position = Vector2(176, 64)
+initial_target = NodePath("../entrance_section/madotsuki")
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("2_7n23t")
@@ -112,11 +104,10 @@ z_index = -1
 tile_map_data = PackedByteArray("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AAAxAPX/AAAGAAIAAAAwAPX/AAAJAAIAAAAvAPX/AAAFAAEAAAAuAPX/AAAFAAIAAAAtAPX/AAAHAAIAAAAsAPX/AAAIAAEAAAAvAPb/AAAFAAIAAAAwAPb/AAAIAAIAAAAxAPb/AAAGAAIAAAAyAPb/AAAGAAEAAAAuAPb/AAAJAAEAAAAtAPb/AAAJAAIAAAAtAPf/AAAFAAIAAAAsAPf/AAAFAAEAAAArAPf/AAAHAAIAAAAuAPj/AAAJAAIAAAAvAPj/AAAIAAEAAAAwAPj/AAAIAAIAAAAwAPn/AAAIAAIAAAAvAPn/AAAFAAIAAAAtAPj/AAAFAAEAAAAsAPj/AAAIAAIAAAAtAPn/AAAIAAIAAAAuAPn/AAAGAAIAAAA0APv/AAAJAAEAAAAzAPv/AAAIAAIAAAAsAP3/AAAIAAIAAAArAP3/AAAJAAEAAAAoAP7/AAAFAAIAAAApAP//AAAFAAEAAAAqAP//AAAHAAIAAAArAP//AAAGAAIAAAAqAAAAAAAFAAEAAAA3AP//AAAGAAEAAAA2AP//AAAFAAIAAAA1AP//AAAFAAIAAAA3AAAAAAAFAAEAAAA2AAAAAAAJAAEAAAA1AAAAAAAGAAEAAAA4AAwAAAAJAAIAAAA3AAwAAAAJAAIAAAA2AAwAAAAHAAIAAAA2AA0AAAAFAAIAAAA3AA0AAAAIAAIAAAA3AA4AAAAJAAEAAAA2AA4AAAAGAAEAAAA4AA8AAAAIAAEAAAA3AA8AAAAJAAIAAAA1ABgAAAAHAAEAAAA2ABgAAAAIAAIAAAA0ABgAAAAFAAIAAAA0ABkAAAAHAAIAAAAzABkAAAAHAAIAAAAyABkAAAAGAAIAAAAhAAYAAAAIAAEAAAAgAAYAAAAFAAEAAAAfAAYAAAAFAAEAAAA=")
 tile_set = ExtResource("8_1q3ts")
 
-[node name="Madotsuki" parent="entrance_section" instance=ExtResource("5_5chxp")]
+[node name="madotsuki" parent="entrance_section" instance=ExtResource("5_5chxp")]
 position = Vector2(176, 64)
 
 [node name="CamDeadzone" type="Area2D" parent="entrance_section"]
-process_mode = 3
 position = Vector2(-1416, -536)
 collision_layer = 1073741824
 collision_mask = 1073741824

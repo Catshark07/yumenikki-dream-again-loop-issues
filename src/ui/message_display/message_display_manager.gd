@@ -3,13 +3,9 @@ extends Control
 
 static var instance: MessageDisplayManager
 
-const BASE := preload("res://src/ui/message_display/message_instance.tscn")
-const DEFAULT_THEME := preload("res://src/global_theme.tres")
-
 var is_open: bool = false
 
 var active: MessageDisplay
-
 var message_display: MessageDisplay
 var prompt_display: MessageDisplay
 var dialogue_display: MessageDisplay
@@ -19,7 +15,6 @@ var texts: Array[String]
 
 func _ready() -> void:
 	instance = self
-	theme = DEFAULT_THEME
 	
 	message_display = MessageDisplay.new()
 	prompt_display = Prompt.new()
@@ -56,15 +51,15 @@ func open_message_display(
 		message_display.display_text(_texts[current_index])
 		
 func close_message_display(_display: MessageDisplay) -> void:
+	_display.close()
 	is_open = false
-	await _display.close()
 
 func get_current() -> MessageDisplay: 
-	if message_display: return message_display
-	return
+	return message_display
 	
 func proceed_current_message_display() -> void:
 	if get_current().can_progress:
+		print("continue to next line")
 		if current_index < texts.size() - 1:
 			
 			current_index += 1

@@ -1,4 +1,4 @@
-extends Node
+extends UIStackNode
 
 @export var borderless: CheckBox
 @export var full_screen: CheckBox
@@ -6,6 +6,8 @@ extends Node
 @export var bloom: CheckBox
 
 func _ready() -> void:
+	super()
+	
 	borderless.button_pressed = Config.get_setting_data("graphics", "borderless", false)
 	full_screen.button_pressed = Config.get_setting_data("graphics", "fullscreen", false)
 	cam_reduction.button_pressed = Config.get_setting_data("graphics", "motion_reduce", false)

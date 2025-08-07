@@ -8,4 +8,4 @@ func physics_update(_delta: float) -> void:
 			(sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
 	
 	else:
-		(fsm as SentientHFSM)._change_to_state_or_fsm("wander_idle")
+		(fsm as SentientHFSM).change_to_state_or_fsm("wander_idle")

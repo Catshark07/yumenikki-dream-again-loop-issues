@@ -8,21 +8,21 @@ extends SentientBase
 var data: PLAttributeData
 
 @export_group("Mobility Multiplier")
-@export var walk_multiplier: float = WALK_MULTI
-@export var sneak_multiplier: float = SNEAK_MULTI
-@export var sprint_multiplier: float = SPRINT_MULTI
-@export var exhaust_multiplier: float = EXHAUST_MULTI
+@export_storage var walk_multiplier: float = WALK_MULTI
+@export_storage var sneak_multiplier: float = SNEAK_MULTI
+@export_storage var sprint_multiplier: float = SPRINT_MULTI
+@export_storage var exhaust_multiplier: float = EXHAUST_MULTI
 
 @export_group("Stamina Modifier")
-@export var stamina_drain: float = STAMINA_DRAIN
-@export var stamina_regen: float = STAMINA_REGEN
-var stamina: float = MAX_STAMINA:
+@export_storage var stamina_drain: float = STAMINA_DRAIN
+@export_storage var stamina_regen: float = STAMINA_REGEN
+@export_storage var stamina: float = MAX_STAMINA:
 	set(_stam):
 		stamina = _stam
 		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", [_stam])
 
 var is_exhausted: bool = false
-var can_run: bool = CAN_RUN
+@export_storage var can_run: bool = CAN_RUN
 
 # ---- data constants ----
 const CAN_RUN: bool = true
@@ -34,7 +34,7 @@ const EXHAUST_MULTI: float = 0.9
 
 const MAX_STAMINA := 5
 const STAMINA_DRAIN: float = .78
-const STAMINA_REGEN: float = 1
+const STAMINA_REGEN: float = .9
 
 const WALK_NOISE_MULTI: float = 1
 const RUN_NOISE_MULTI: float = 2.2
@@ -59,9 +59,9 @@ signal quered_sprint_end
 signal quered_sneak_start
 signal quered_sneak_end
 
-
 # ---- initial ----
 func _enter_tree() -> void: 
+	super()
 	Instance._pl = self
 	EventManager.invoke_event("PLAYER_UPDATED")
 func _input_pass(event: InputEvent) -> void: pass
@@ -76,7 +76,7 @@ class Data:
 		"effects" : [],
 		}
 		
-	static func update_effects_data(_effects_data: Array[PLEffect]) -> void: 
+	static func update_effects_data(_effects_data: Array[PLSystemData]) -> void: 
 		data["effects"] = _effects_data
 	static func get_data() -> Dictionary: return data
 	static func set_data(_data: Dictionary) -> Error:
@@ -89,11 +89,12 @@ class Instance:
 	static var effects: Array
 
 	static var door_went_flag: bool = false
-
 	static var door_listener: EventListener
-	static var equipment_auto_apply: EventListener 
 
-	static var equipment_pending: PLEffect
+
+	const DEFAULT_EQUIPMENT = preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")
+	static var equipment_auto_apply: EventListener 
+	static var equipment_pending: PLSystemData = DEFAULT_EQUIPMENT
 
 	static func setup() -> void: 	
 		door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
@@ -102,12 +103,10 @@ class Instance:
 			
 			for points: SpawnPoint in GlobalUtils.get_group_arr("spawn_points"):
 				if (
-					load(points.scene_path) == Game.scene_manager.prev_scene_ps and 
+					load(points.scene_path) == Game.scene_manager.curr_scene_resource and 
 					door_went_flag and
 					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
 						
-						print(points.scene_path, Game.scene_manager.prev_scene_ps)
-						print(points.connection_id)
 						
 						teleport_player(points.global_position, points.spawn_dir, true)
 						if points.parent_instead_of_self != null:
@@ -126,16 +125,16 @@ class Instance:
 		equipment_auto_apply.do_on_notify(
 			["SCENE_CHANGE_SUCCESS"],
 			func(): 
-				if get_pl():
-					(get_pl() as Player_YN).equip(equipment_pending, true)
+				if get_pl(): (get_pl() as Player_YN).equip(equipment_pending)
 		)
 
 	static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:
 		if get_pl():
 			get_pl().global_position = _pos
 			get_pl().direction = (_dir)
-			if w_camera and CameraHolder.instance.target == get_pl(): 
+			if w_camera and CameraHolder.instance.initial_target == get_pl(): 
 				CameraHolder.instance.global_position = get_pl().global_position
+				
 	static func handle_player_world_warp(_pos: Vector2, _dir: Vector2) -> void:
 		if get_pl():
 			get_pl().global_position = _pos

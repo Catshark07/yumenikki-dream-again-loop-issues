@@ -20,7 +20,7 @@ func _setup(_sentient: SentientBase) -> void:
 func _update(_delta: float) -> void:
 
 	if sentient.is_moving: 
-		animation_player.speed_scale = clamp(.09 * log(sentient.speed / sentient.MAX_SPEED) + 1, 0, INF)
+		animation_player.speed_scale = clamp(.36 * log(sentient.speed / 2.75 + 1), 0, INF)
 	else: animation_player.speed_scale = 1
 		
 # --- handler functions ---
@@ -35,5 +35,5 @@ func play_animation_priority(_path: String, _speed: float = 1, _backwards: bool 
 func has_animation(_path: String) -> bool:
 	return animation_player.has_animation(_path)
 
-func _on_bypass_enabled() -> void:
-	animation_player.pause()
+func _on_bypass_enabled() -> void: animation_player.pause()
+func _on_bypass_lifted() -> void: animation_player.play()

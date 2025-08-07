@@ -26,20 +26,5 @@ func _physics_process(delta: float) -> void:
 			(rect.global_position) + (rect.shape.size / 2) - Vector2(480, 270) * .5
 			)
 			
-		
 func _handle_player_enter() -> void: in_deadzone = true
 func _handle_player_exit() -> void: in_deadzone = false
-
-
-
-#class square_deadzone:
-	#extends Strategy
-	#
-	#func _update(_delta: float, _context: Variant = null) -> void: 
-		#if _context.shape.size < Vector2(480, 270): _context.shape.size =  Vector2(480, 270)
-		#
-	#func _physics_update(_delta: float, _context: Variant = null) -> void: 
-		#CameraHolder.instance.global_position = CameraHolder.instance.global_position.clamp(
-			#_context.get_parent().global_position + (Vector2(Game.get_viewport_dimens().x, Game.get_viewport_dimens().y) / 2),
-			#_context.get_parent().global_position + (_context.shape.size - Vector2(Game.get_viewport_dimens().x, Game.get_viewport_dimens().y) / 2)
-			#)

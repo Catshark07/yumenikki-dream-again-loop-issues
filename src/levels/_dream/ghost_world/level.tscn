@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://521c46cl7a4a"]
+[gd_scene load_steps=10 format=4 uid="uid://521c46cl7a4a"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_b5yjn"]
 [ext_resource type="TileSet" uid="uid://8ycy6oceth0s" path="res://src/levels/__ignore/tile_set/sky_garden.tres" id="2_0u4d7"]
@@ -6,19 +6,24 @@
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="4_ipb7q"]
 [ext_resource type="AudioStream" uid="uid://bo1cyh85ps0gg" path="res://src/audio/bgm/world_ghost.ogg" id="5_20vas"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="6_20vas"]
-[ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="7_32t0h"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="7_0xipv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1mkmk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ngsdk"]
 
 [node name="ghost_world" type="Node"]
 script = ExtResource("1_b5yjn")
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("7_0xipv"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("7_0xipv"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+
+load_transition = SubResource("ShaderMaterial_1mkmk")
+unload_transition = SubResource("ShaderMaterial_ngsdk")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="level" type="Node2D" parent="."]
 y_sort_enabled = true
-
-[node name="seamless_detector" parent="level" instance=ExtResource("7_32t0h")]
-position = Vector2(-576, -224)
-expansion = Vector2i(140, 90)
-boundary_size = Vector2i(2720, 1696)
 
 [node name="wall_b-1" type="TileMapLayer" parent="level"]
 y_sort_enabled = true
@@ -40,7 +45,10 @@ metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="camera" parent="." instance=ExtResource("6_20vas")]
 
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../level/madotsuki")
+[node name="scene_load_sequence" type="Node" parent="."]
+script = ExtResource("7_0xipv")
+
+[node name="scene_unload_sequence" type="Node" parent="."]
+script = ExtResource("7_0xipv")
 
 [editable path="camera"]

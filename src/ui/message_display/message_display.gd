@@ -55,10 +55,12 @@ func _ready() -> void:
 	container.add_theme_constant_override("margin_right", 10)
 	container.add_theme_constant_override("margin_top", 10)
 	container.add_theme_constant_override("margin_bottom", 10)
+	container.set_anchors_preset(Control.PRESET_FULL_RECT)
 	
 	sub_container.add_child(text_container)
 	sub_container.add_child(buttons_container)
 	sub_container.dragger_visibility = SplitContainer.DRAGGER_HIDDEN_COLLAPSED 
+	sub_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 	
 	buttons_container.add_theme_constant_override("separation", 10)
 	
@@ -68,7 +70,6 @@ func _ready() -> void:
 	text_container.scroll_active = false
 	
 	sub_container.split_offset = 150
-	
 
 func _additional() -> void: 
 	typewriter_timer.wait_time = 1.25 + text.length() / 1000
@@ -98,7 +99,7 @@ func open(
 func close() -> void:
 	text_container.text = ""
 	finished.emit()
-	await close_animation()
+	close_animation()
 	
 func display_text(
 		_text: String, 
@@ -175,10 +176,10 @@ func open_animation() -> void:
 	animation_tween.tween_property(self, "position:y", initial_position.y, 1)
 	animation_tween.tween_property(self, "modulate:a", 1, 1)
 	
-	await animation_tween.finished
 func close_animation() -> void: 
 	if animation_tween != null: animation_tween.kill()
 	animation_tween = self.create_tween()
+	
 	animation_tween.set_parallel(true)
 	animation_tween.set_ease(Tween.EASE_OUT)
 	animation_tween.set_trans(Tween.TRANS_EXPO)
@@ -186,4 +187,3 @@ func close_animation() -> void:
 	animation_tween.tween_property(self, "position:y", position.y + 50, 1)
 	animation_tween.tween_property(self, "modulate:a", 0, 1)
 	
-	await animation_tween.finished

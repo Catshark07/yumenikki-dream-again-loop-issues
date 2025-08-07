@@ -7,7 +7,7 @@ static func _setup() -> void:
 static var override_godot_default_settings: bool = true
 static var footstep_instances: int = 0
 
-const FOOTSTEP_MAX_INSTANCES: int = 16
+const FOOTSTEP_MAX_INSTANCES: int = 24
 const PARTICLES_MAX_INSTANCES: int = 128
 
 static func setup_overridden_project_settings() -> void:

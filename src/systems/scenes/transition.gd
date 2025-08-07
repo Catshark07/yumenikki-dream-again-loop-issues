@@ -1,10 +1,11 @@
-extends CanvasLayer
+class_name ScreenTransition
+extends ColorRect
+
 var DEFAULT_SHADER: Shader = preload("res://src/shaders/transition/tr_fade.gdshader")
 
 var fade_in_shader: ShaderMaterial
 var fade_out_shader: ShaderMaterial
 var default_shader: ShaderMaterial
-var transition_instance: ColorRect
 
 var fade_tween: Tween
 var fade_progress: float = 0:
@@ -13,10 +14,7 @@ var fade_progress: float = 0:
 enum fade_type {FADE_IN, FADE_OUT}
 
 func _ready() -> void:
-	transition_instance = get_node("transition_instance")
-	transition_instance.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
-	self.layer = 99
+	self.z_index = 99
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	fade_in_shader = ShaderMaterial.new()
@@ -28,7 +26,7 @@ func _ready() -> void:
 	fade_out_shader = default_shader
 	# im so confused
 	
-	transition_instance.size = Vector2(Application.get_viewport_dimens())
+	self.size = Vector2(Application.get_viewport_dimens())
 	
 	request_transition(fade_type.FADE_OUT)
 
@@ -41,12 +39,12 @@ func fade_in(
 	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
 		 
 		if fade_tween != null: fade_tween.kill()
-		fade_tween = transition_instance.create_tween()
+		fade_tween = self.create_tween()
 		
-		if _shader == null: transition_instance.material = default_shader
-		else: transition_instance.material = _shader
+		if _shader == null: self.material = default_shader
+		else: self.material = _shader
 		
-		transition_instance.material.set_shader_parameter("progress", 0)
+		self.material.set_shader_parameter("progress", 0)
 		
 		fade_tween.tween_method(
 			set_fade_progress,
@@ -65,11 +63,11 @@ func fade_out(
 	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
 		
 		if fade_tween != null: fade_tween.kill()
-		fade_tween = transition_instance.create_tween()
+		fade_tween = self.create_tween()
 		
-		if _shader == null: transition_instance.material = default_shader
-		else: transition_instance.material = _shader
-		transition_instance.material.set_shader_parameter("progress", 1)
+		if _shader == null: self.material = default_shader
+		else: self.material = _shader
+		self.material.set_shader_parameter("progress", 1)
 		
 		fade_tween.tween_method(
 			set_fade_progress,
@@ -80,7 +78,7 @@ func fade_out(
 		await fade_tween.finished
 func set_fade_progress(_progress):
 	fade_progress = _progress
-	transition_instance.material.set_shader_parameter("progress", fade_progress)
+	self.material.set_shader_parameter("progress", fade_progress)
 	
 func request_transition(
 	_fade_type: fade_type, 
@@ -92,7 +90,7 @@ func request_transition(
 	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
 	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
 		
-	transition_instance.color = _colour
+	self.color = _colour
 	match _fade_type:
 		fade_type.FADE_IN: await fade_in(_speed, _custom_shader, _a_progress, _b_progress, _transition, _ease)
 		fade_type.FADE_OUT: await fade_out(_speed, _custom_shader, _b_progress, _a_progress, _transition, _ease)
@@ -100,19 +98,19 @@ func request_transition(
 func set_fade_out_shader(_shader: ShaderMaterial) -> void: 
 	if _shader.shader == null: 
 		fade_out_shader.shader = DEFAULT_SHADER
-		transition_instance.material = fade_out_shader
+		self.material = fade_out_shader
 		return
 		
 	fade_out_shader = _shader
-	transition_instance.material = _shader
+	self.material = _shader
 func set_fade_in_shader(_shader: ShaderMaterial) -> void:
 	if _shader.shader == null: 
 		fade_in_shader.shader = DEFAULT_SHADER
-		transition_instance.material = fade_in_shader
+		self.material = fade_in_shader
 		return
 		
 	fade_in_shader = _shader
-	transition_instance.material = _shader
+	self.material = _shader
 
 func reset_fade_shaders() -> void:
 	fade_in_shader.shader = DEFAULT_SHADER

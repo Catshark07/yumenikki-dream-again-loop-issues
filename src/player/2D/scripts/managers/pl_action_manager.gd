@@ -35,8 +35,8 @@ func set_curr_action(_action: PLAction) -> void: curr_action = _action
 
 func perform_action(_action: PLAction, _pl: Player) -> void: 
 	if _action and can_action:
-		if (_pl.fsm._get_curr_state_name() in _action.supported_states and 
-			_action.supported_states[_pl.fsm._get_curr_state_name()]): 
+		if (_pl.fsm.get_curr_state_name() in _action.supported_states and 
+			_action.supported_states[_pl.fsm.get_curr_state_name()]): 
 			
 			did_something.emit()
 			set_curr_action(_action)

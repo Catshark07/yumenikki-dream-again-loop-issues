@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="6_pb4fl"]
 [ext_resource type="PackedScene" uid="uid://b4efdoikr5o84" path="res://src/entities/sentients/animated_sentient.tscn" id="10_piylt"]
 [ext_resource type="Texture2D" uid="uid://be2qw2tmuysbc" path="res://src/entities/sentients/hell/hell_1.png" id="11_51q7j"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="26_d1jl7"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="26_d1jl7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_etem8"]
 

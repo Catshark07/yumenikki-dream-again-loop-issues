@@ -8,17 +8,16 @@ var main_tree: SceneTree
 
 var is_paused: bool
 # ---- time
-var true_time_scale: float:
+var true_time_scale: float: 
 	set(true_ts): 
 		true_time_scale = true_ts
 		true_time_scale_changed.emit(true_ts)
-var true_delta: float
-
+var true_delta: float: get = get_real_delta
 
 signal time_scale_changed(_new: float)
 signal true_time_scale_changed(_new: float)
 
-static var game_manager
+static var game_manager: GameManager
 
 # The main game holds a child node that acts as the scene currently active.
 # Upon scene change, remove the current child and queue load for the requested one.
@@ -30,7 +29,6 @@ func singleton_setup() -> void:
 		game_manager = preload("res://src/main/game.tscn").instantiate()
 		game_manager.name = "game_manager"
 		self.add_child(game_manager)
-		print(game_manager)
 		
 	else:
 		game_manager.reparent(self)
@@ -42,16 +40,16 @@ func _ready() -> void:
 	
 	true_time_scale = Engine.time_scale
 		
-	root = get_tree().root
-	main_tree = get_tree()
+	main_tree 	= get_tree()
+	root 		= get_tree().root
 	
-	Application._setup()
-	Audio._setup()
-	Config._setup()
-	Directory._setup()
-	Optimization._setup()
-	Save._setup() 
-	InputManager._setup()
+	Application.	_setup()
+	Audio.			_setup()
+	Config.			_setup()
+	Directory.		_setup()
+	Optimization.	_setup()
+	Save.			_setup() 
+	InputManager.	_setup()
 	
 	singleton_setup()
 	
@@ -59,26 +57,24 @@ func _ready() -> void:
 	
 	game_manager.setup()
 	scene_manager.setup()
-	GlobalPanoramaManager.setup()
 	
 	set_process(true)
 	set_physics_process(true)
 	set_process_input(true)
 	
 func _process(delta: float) -> void: 
-	GlobalPanoramaManager.update(delta)
 	InputManager._update(delta)
-	
-	true_delta = get_real_delta()
-	true_time_scale = get_real_timescale()
 	game_manager.update(delta)
+	scene_manager._update(delta)
 func _physics_process(delta: float) -> void:
 	InputManager._physics_update(delta)
 	game_manager.physics_update(delta)
-func _input(event: InputEvent) -> void:
-	game_manager.input_pass(event)
-	InputManager._input_pass(event)
-
+	scene_manager._physics_update(delta)
+func _input(_event: InputEvent) -> void:
+	game_manager.input_pass(_event)
+	InputManager._input_pass(_event)
+func _unhandled_input(_event: InputEvent) -> void:
+	InputManager._unhandled_input_pass(_event)
 
 func get_mouse_position_within_vp() -> Vector2:
 	return clamp(Application.main_viewport.get_mouse_position(), Vector2.ZERO, Application.get_viewport_dimens())

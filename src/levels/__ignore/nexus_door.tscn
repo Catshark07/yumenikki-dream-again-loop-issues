@@ -1,18 +1,18 @@
 [gd_scene load_steps=20 format=3 uid="uid://cijogi38yfo57"]
 
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_84h6v"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/event/sequence/game/on_interact.gd" id="2_dcrlv"]
-[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/event/game/invoke_game_event.gd" id="3_onajm"]
-[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/event/game/screen_fade.gd" id="4_dcrlv"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="2_dcrlv"]
+[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="3_onajm"]
+[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_fade.gd" id="4_dcrlv"]
 [ext_resource type="Shader" uid="uid://dfvq1pars23rw" path="res://src/shaders/transition/tr_circle.gdshader" id="5_onajm"]
-[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="5_wsq5t"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="5_wsq5t"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="6_d4kb7"]
-[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="7_sdwye"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="7_sdwye"]
 [ext_resource type="AudioStream" uid="uid://by7k6jmjwi11m" path="res://src/audio/se/door_nexus_enter.ogg" id="8_fmbam"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="8_hdc4p"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="9_6byum"]
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="10_dnuke"]
-[ext_resource type="Script" uid="uid://73k0qjnjemhd" path="res://src/systems/event/sprite/play_sprite_animation.gd" id="11_fmbam"]
+[ext_resource type="Script" uid="uid://73k0qjnjemhd" path="res://src/systems/sequencing/event/sprite/play_sprite_animation.gd" id="11_fmbam"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="12_vwfyr"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="14_fmbam"]
 
@@ -45,7 +45,6 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 [node name="on_interact" type="Node" parent="."]
 process_mode = 4
 script = ExtResource("2_dcrlv")
-halt_sequence = true
 
 [node name="request_cutscene_start" type="Node" parent="on_interact"]
 script = ExtResource("3_onajm")

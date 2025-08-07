@@ -37,13 +37,13 @@ func add_custom_types() -> void:
 	add_custom_type(
 		"Event", 
 		"Node", 
-		preload("res://src/systems/event/event_interface.gd"), 
+		preload("res://src/systems/sequencing/event_interface.gd"), 
 		preload("res://addons/miscallenous/editor/event_flag.png")
 		)
 	add_custom_type(
 		"Sequence", 
 		"Event", 
-		preload("res://src/systems/event/sequence/sequence_interface.gd"), 
+		preload("res://src/systems/sequencing/sequence_interface.gd"), 
 		preload("res://addons/miscallenous/editor/sequence_flag.png")
 		)
 func remove_custom_types() -> void:

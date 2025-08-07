@@ -15,14 +15,14 @@ func _setup() -> void:
 	idle_timer.autostart = false
 	idle_timer.one_shot = true
 	idle_timer.timeout.connect(func():
-		fsm._change_to_state_or_fsm("wander_move"))
+		fsm.change_to_state_or_fsm("wander_move"))
 	
 	repath_timer.autostart = false
 	repath_timer.one_shot = false
 	repath_timer.timeout.connect(func(): update_random_wander_point())
 	repath_timer.wait_time = 2
 	
-func enter_state() -> void:
+func _enter_state() -> void:
 	update_random_wander_point()
 	sentient.velocity = Vector2.ZERO
 	idle_timer.wait_time = randf_range(fsm.min_wait_time, fsm.max_wait_time)
@@ -30,7 +30,7 @@ func enter_state() -> void:
 	idle_timer.start()
 	repath_timer.start()
 
-func exit_state() -> void:
+func _exit_state() -> void:
 	idle_timer.stop()
 	repath_timer.stop()
 	

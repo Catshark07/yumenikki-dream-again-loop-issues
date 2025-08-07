@@ -1,10 +1,12 @@
-extends Node
+extends UIStackNode
 
 @export var music_slider: HSlider
 @export var amb_slider: HSlider
 @export var sfx_slider: HSlider
 
 func _ready() -> void:
+	super()
+	
 	music_slider.value 	= Config.get_setting_data("audio", "music")
 	amb_slider.value 	= Config.get_setting_data("audio", "ambience")
 	sfx_slider.value 	= Config.get_setting_data("audio", "se")

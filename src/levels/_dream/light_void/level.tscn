@@ -1,23 +1,22 @@
-[gd_scene load_steps=26 format=4 uid="uid://5qpf265bummq"]
+[gd_scene load_steps=25 format=4 uid="uid://5qpf265bummq"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_kphg3"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_mi76w"]
 [ext_resource type="AudioStream" uid="uid://dxel6g1uub7r7" path="res://src/audio/bgm/silas_passing-tones.ogg" id="3_jwstn"]
+[ext_resource type="Script" uid="uid://buwx0x51eley6" path="res://src/panorama/panorama_placeholder.gd" id="4_0x8fy"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="5_lhts1"]
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="6_1yaby"]
 [ext_resource type="Texture2D" uid="uid://devrumewya5bv" path="res://src/images/panorama/blurred_glow.png" id="6_7iakk"]
-[ext_resource type="Script" uid="uid://d3r72epfndsge" path="res://src/autoloads/panorama_system.gd" id="7_t4c3a"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="8_22psq"]
 [ext_resource type="Shader" uid="uid://b0qym6r6rs7ns" path="res://src/shaders/panorama/linear_additive.gdshader" id="8_lk8vc"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="9_hvmbn"]
-[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="11_21ood"]
 [ext_resource type="Texture2D" uid="uid://cbvnq8kcolqfd" path="res://src/levels/_dream/light_void/sprites/wowie.png" id="12_vgmgu"]
 [ext_resource type="TileSet" uid="uid://b771j363m3vqt" path="res://src/levels/_dream/light_void/tilesets/light_void.tres" id="13_g7klr"]
 [ext_resource type="TileSet" uid="uid://7dng4ghwe3iu" path="res://src/levels/_dream/light_void/tilesets/pillars.tres" id="14_87p8m"]
 [ext_resource type="TileSet" uid="uid://fc40lcfxh2rr" path="res://src/levels/_dream/light_void/tilesets/trees.tres" id="16_tboo3"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="16_uvis2"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="17_xrxpj"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="20_8ac2k"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="20_8ac2k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0x8fy"]
 
@@ -28,22 +27,20 @@ shader = ExtResource("5_lhts1")
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.02
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ur078"]
 shader = ExtResource("8_lk8vc")
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
-shader_parameter/scroll_speed = 0.01
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/scroll_speed = 0.04
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d4bgs"]
 particles_animation = true
@@ -60,9 +57,9 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="light_void" type="Node2D"]
 script = ExtResource("1_kphg3")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 load_transition = SubResource("ShaderMaterial_0x8fy")
 unload_transition = SubResource("ShaderMaterial_85jal")
@@ -71,29 +68,30 @@ unload_transition = SubResource("ShaderMaterial_85jal")
 script = ExtResource("2_mi76w")
 stream = ExtResource("3_jwstn")
 
-[node name="panorama (top_layer)" type="CanvasLayer" parent="."]
-layer = -20
+[node name="panorama (top_layer)" type="SubViewport" parent="."]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+script = ExtResource("4_0x8fy")
 
 [node name="normal" type="TextureRect" parent="panorama (top_layer)"]
 material = SubResource("ShaderMaterial_gx4cu")
 offset_right = 480.0
 offset_bottom = 270.0
 texture = ExtResource("6_1yaby")
-script = ExtResource("7_t4c3a")
 
 [node name="glow" type="TextureRect" parent="panorama (top_layer)"]
 material = SubResource("ShaderMaterial_ur078")
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 480.0
+offset_bottom = 270.0
 texture = ExtResource("6_7iakk")
-script = ExtResource("7_t4c3a")
 
-[node name="camera" parent="." instance=ExtResource("9_hvmbn")]
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("9_hvmbn")]
+position = Vector2(768, -80)
+initial_target = NodePath("../Node2D/mado")
 
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../Node2D/mado")
-
-[node name="leaves" type="CPUParticles2D" parent="camera/camera_handler/marker/camera" index="0"]
+[node name="leaves" type="CPUParticles2D" parent="camera"]
 material = SubResource("CanvasItemMaterial_d4bgs")
 position = Vector2(0, -144)
 amount = 12
@@ -111,7 +109,7 @@ color_ramp = SubResource("Gradient_yd63f")
 anim_speed_min = 5.0
 anim_speed_max = 10.0
 
-[node name="particles" type="CPUParticles2D" parent="camera/camera_handler/marker/camera" index="1"]
+[node name="particles" type="CPUParticles2D" parent="camera"]
 emission_shape = 3
 emission_rect_extents = Vector2(240, 135)
 direction = Vector2(0, -1)
@@ -122,10 +120,6 @@ initial_velocity_max = 70.0
 scale_amount_min = 0.5
 scale_amount_max = 1.5
 color_ramp = SubResource("Gradient_a54rf")
-
-[node name="wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
-script = ExtResource("11_21ood")
-ignore_rotation = false
 
 [node name="Node2D" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -173,9 +167,6 @@ metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 script = ExtResource("20_8ac2k")
 
 [node name="scene_unload_sequence" type="Node" parent="."]
-script = ExtResource("20_8ac2k")
-
-[node name="scene_load_sequence2" type="Node" parent="."]
 script = ExtResource("20_8ac2k")
 
 [editable path="camera"]

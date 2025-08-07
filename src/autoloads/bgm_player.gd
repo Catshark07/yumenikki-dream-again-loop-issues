@@ -72,17 +72,15 @@ func tween_pitch(_pitch: float, _from: float = self.pitch_scale) -> void:
 	if pitch_tween != null: pitch_tween.kill()
 	pitch_tween = self.create_tween()	
 	pitch_tween.tween_method(set_pitch, _from, _pitch, 1)
-	await pitch_tween.finished
 func tween_volume(_vol: float, _from: float = self.volume_db) -> void:
 	if vol_tween != null: vol_tween.kill()
 	volume_db = _from
 	vol_tween = self.create_tween()	
 	vol_tween.tween_method(set_volume, _from, _vol, 1)
-	await vol_tween.finished
 
 # ---- music control ----
 func fade_in() -> void:
-	await tween_volume(get_bgm_volume(), 0)
+	tween_volume(get_bgm_volume(), 0)
 func fade_out() -> void:
 	await tween_volume(0, db_to_linear(self.volume_db))
 	stop()

@@ -5,6 +5,7 @@ static var time_elapsed: float
 static var data := {
 	"game" : {
 		"version" : "00",
+		"completed" : false,
 		"read_warning" : false,
 		"time_played" : 00,
 		},
@@ -28,9 +29,9 @@ static func save_data(_number: int = 0) -> Dictionary:
 	
 	curr_data["game"]["version"] = ProjectSettings.get_setting("application/config/version")
 	curr_data["game"]["time_played"] = {
-		"hours" 	: Game.get_play_time()["hours"],
-		"minutes" 	: Game.get_play_time()["minutes"], 
-		"seconds" 	: Game.get_play_time()["seconds"]
+		"hours" 	: get_play_time()["hours"],
+		"minutes" 	: get_play_time()["minutes"], 
+		"seconds" 	: get_play_time()["seconds"]
 		}
 		
 	curr_data["player"] = Player.Data.get_data()
@@ -53,6 +54,7 @@ static func load_data(_number: int = 0) -> Error:
 		
 		load_file.close()
 		load_file = null
+		time_elapsed = content["game"]["time_played"]
 		
 		Player.Data.set_data(content["player"])
 		NodeSaveService.set_data(content["scene"])

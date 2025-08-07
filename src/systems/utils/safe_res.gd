@@ -1,2 +1,0 @@
-class_name SafeResource
-extends Resource

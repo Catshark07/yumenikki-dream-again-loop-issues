@@ -5,8 +5,9 @@ render_mode blend_add;
 #include "res://src/shaders/_include/depth_base.gdshaderinc"
 #include "res://src/shaders/_include/radial_base.gdshaderinc"
 
-uniform bool rotation = true;
+group_uniforms LensFlare;
 
+uniform bool rotation = true;
 uniform float max_opacity = 1;
 uniform float min_opacity = 0;
 uniform float flicker_speed = 1;

@@ -1,38 +1,31 @@
 class_name SceneNode
-extends Node
+extends StackNode
 
-const ID_NUMS = "0123456789"
-const ID_ALPHA = "abcdefghijklmnopqrstuvwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ"
-@export_storage var id: String
-
-signal reparented
+var initialized: bool = false
+var lonely: bool = true
 
 func set_node_active(active: Node.ProcessMode) -> void:
 	self.set_process_mode.call_deferred(active)
 
-# ---- on load / unload ----
-func _ready() -> void: 
-	generate_id()
+# -- concrete
+func _ready() -> void:
+	self.add_to_group("scene_node")
 
-func on_load() -> void: 
-	_on_load()
-func on_load_request() -> void: 
-	_on_unload_request()
+func initialize() -> void: 
+	if !initialized:
+		lonely = false
+		initialized = true
+		_initialize()
+
+# -- virtual 
+func _initialize() -> void: pass
+
+func _on_pop() -> void:
+	queue_free()
+func _on_pre_pop() -> void: 
+	set_node_active(Node.PROCESS_MODE_DISABLED)
+func _on_push() -> void: 
 	set_node_active(Node.PROCESS_MODE_INHERIT)
 
-func on_unload() -> void: 
-	_on_unload()
-func on_unload_request() -> void: 
-	_on_unload_request()
-	set_node_active(Node.PROCESS_MODE_DISABLED)
-
-func generate_id() -> void:
-	if !id.is_empty(): return
-	for i in range(5): id += ID_NUMS[randi_range(0, ID_NUMS.length() - 1)]
-	for i in range(5): id += ID_ALPHA[randi_range(0, ID_ALPHA.length() - 1)]
-
-func _on_load() -> void: pass
-func _on_load_request() -> void: pass 
-
-func _on_unload() -> void: pass 
-func _on_unload_request() -> void: pass 
+func _update(_delta: float) -> void: pass
+func _physics_update(_delta: float) -> void: pass

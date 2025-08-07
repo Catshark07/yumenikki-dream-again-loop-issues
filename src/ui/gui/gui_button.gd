@@ -19,10 +19,10 @@ const  button_display_texture_shader: Shader = preload("res://src/shaders/ui/but
 
 @export_group("Color Visuals")
 var curr_colour = Color.WHITE
-@export var normal_colour = Color(1, 1, 1, 1)
-@export var hover_colour: Color = Color(1, 0.0, 0.23, 1)
+@export var normal_colour = Color(1, 1, 1)
+@export var hover_colour: Color = Color(1, 0.0, 0.23)
 @export var disabled_colour: Color = Color(0.35, 0.35, 0.45) 
-@export var press_colour: Color = Color(1, 1, 0, 1)
+@export var press_colour: Color = Color(1, 1, 0)
 
 # ---- misc ----
 @export_storage var abstract_button: AbstractButton
@@ -45,13 +45,9 @@ func _children_components_setup() -> void:
 		abstract_button = GlobalUtils.add_child_node(main_container, AbstractButton.new(), "abstract_button")
 func _additional_setup() -> void:	
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	
-	display_bg.texture = button_display_texture
-	display_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	display_bg.stretch_mode = TextureRect.STRETCH_SCALE
 	set_active(true)
 	
-	panel_display_colour = curr_colour
+	set_panel_modulate(curr_colour)
 	
 	display_bg.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	display_bg.size_flags_vertical = Control.SIZE_FILL
@@ -109,7 +105,7 @@ func _on_focus_exit() -> void:
 func _on_press() -> void: 
 	if !abstract_button.button.disabled:
 		AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"))
-		await press_animation()
+		press_animation()
 	
 func _on_toggle() -> void: 
 	abstract_button.button.mouse_entered.disconnect(_on_hover)
@@ -151,7 +147,7 @@ func unhover_animation() -> void:
 	disp_tw.tween_property(icon_display, "modulate:v", 1, .35)
 
 func press_animation() -> void:
-	await set_button_modulate(normal_colour, Tween.EASE_OUT, Tween.TRANS_CUBIC, 2)
+	set_button_modulate(normal_colour, Tween.EASE_OUT, Tween.TRANS_CUBIC, 2)
 	set_button_modulate(press_colour, Tween.EASE_OUT, Tween.TRANS_LINEAR)
 func unpress_animation() -> void:
 	unhover_animation()
@@ -176,7 +172,7 @@ func set_button_modulate(
 	
 	modu_tw.tween_method(set_modulate, modulate, _modu, dur * get_process_delta_time())
 		
-	await modu_tw.finished
+	modu_tw.finished
 
 func set_active(_active: bool) -> void:
 	abstract_button.set_active(_active)

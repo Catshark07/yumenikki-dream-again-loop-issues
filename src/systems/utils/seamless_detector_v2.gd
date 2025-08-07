@@ -79,7 +79,7 @@ enum loop {LOOP, DISABLED}
 @export var  vertical_size: Vector2i
 
 # ---- read-only :: DRAW 
-var loop_region_size: Vector2
+var loop_viewports_size: Vector2 = Vector2i(510, 300)
 
 var v_size: Vector2
 var h_size: Vector2
@@ -114,19 +114,18 @@ var player_relative_pos: Vector2
 	# under a canvaslayer (or has been reparented in general). make sure to call loop_render_setup()
 	# post reparenting.
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WORLD_2D_CHANGED: update_world_2d()
-
 func _ready() -> void: 
 	loop_components = GlobalUtils.get_child_node_or_null(self, "loop_components")
 	player_detector = GlobalUtils.get_child_node_or_null(self, "player_detector")
+	loop_render_setup()
 	
 	if Engine.is_editor_hint(): 
-		loop_render_setup()
 		if player_detector == null: 
 			player_detector = await GlobalUtils.add_child_node(loop_components, AreaRegion.new(), "player_detector")
 	
 		player_looping_bounds_setup()
+	
+	else:
 		GlobalUtils.connect_to_signal(player_entered, player_detector.player_enter_handle)
 		GlobalUtils.connect_to_signal(player_exited, player_detector.player_exit_handle)
 		
@@ -137,11 +136,6 @@ func _ready() -> void:
 	set_bound_active(bound_side.LEFT, left_disabled)
 	
 		
-func update_world_2d() -> void:
-	for v in range(viewport_renders.size()):
-		viewport_renders[v].world_2d = get_world_2d()
-
-
 func player_entered(_pl: Player) -> void: 
 	if _pl is Player and _pl == Player.Instance.get_pl(): 
 		player_in_region = _pl
@@ -152,6 +146,8 @@ func player_exited(_pl: Player) -> void:
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint(): 
 		resize(boundary_size)
+	else:
+		loop_render_update()
 
 func _draw() -> void:
 	if Engine.is_editor_hint():
@@ -228,32 +224,31 @@ func resize(new_size: Vector2) -> void:
 # its stil flawed however, the viewports are not rendering the screen during runtime for some reason,
 # but its working pre-runtime. maybe it has to do with the world_2D?
 
-func loop_render_setup() -> void:
+func loop_render_setup() -> void:	
 	for v in range(viewport_renders.size()):
+		viewport_renders[v].world_2d = get_world_2d()
 		viewport_renders[v].transparent_bg = true
 		viewport_renders[v].own_world_3d = true
 		viewport_renders[v].canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-		viewport_renders[v].size = Vector2(510, 300)
+		viewport_renders[v].size = loop_viewports_size
 		viewport_renders[v].set_canvas_cull_mask_bit(16, false)
-		
-	update_world_2d()
 		
 	for r in range(viewport_renders.size()): # sprite 2D renders.
 		cameras[r].anchor_mode = Camera2D.ANCHOR_MODE_DRAG_CENTER
+		cameras[r].position = loop_viewports_size / 2
 		renders[r].texture = viewport_renders[r].get_texture()
 		renders[r].set_visibility_layer_bit(0, false)
 		renders[r].set_visibility_layer_bit(16, true)
 		
 func loop_render_update() -> void: 
-	if player_in_region == null: return
-	player_relative_pos = player_in_region.global_position - self.global_position
-	
+	if player_in_region != null:
+		player_relative_pos = player_in_region.global_position - global_position
 	for c in range(cameras.size()):
-		# cam_0 is for the x-axis
-		# cam_1 is for the y-axis
-		# cam_2 is for both axes
-		cameras[c].position.x = 50
-		cameras[c].position.y = 50
+		if c == 0:
+			if player_relative_pos.x > boundary_size.x: pass
+			else: 
+				cameras[c].position = Vector2(boundary_size.x, player_relative_pos.y)
+				renders[c].position = Vector2(0, player_relative_pos.y)
 		
 
 func player_looping_bounds_setup() -> void:
@@ -313,7 +308,6 @@ func handle_sentient_enter(_wanderer: SentientBase, _side: bound_side) -> void:
 		sentients_to_be_looped[_side].append(_wanderer)
 func handle_sentient_exit(_wanderer: SentientBase, _side: bound_side) -> void:
 	if _wanderer is NavSentient:
-		print(sentients_to_be_looped[_side])
 		if _wanderer in sentients_to_be_looped[_side]: 
 			(sentients_to_be_looped[_side] as Array).remove_at((sentients_to_be_looped[_side] as Array).find(_wanderer))
 

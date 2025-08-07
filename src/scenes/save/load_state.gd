@@ -12,13 +12,13 @@ extends State
 var tween: Tween
 var pending_load_id: int = 0
 
-func enter_state() -> void:
+func _enter_state() -> void:
 	prompt.get_node("prompt").text_display.text = "Are you sure you want to load data from this slot?"
 	
 	for load in load_buttons: 
 		GlobalUtils.connect_to_signal(_load_data.bind(int(load.name)), load.pressed)
 		
-	GlobalUtils.connect_to_signal(Game.Save.load_data.bind(pending_load_id), prompt_yes.pressed)
+	GlobalUtils.connect_to_signal(Save.load_data.bind(pending_load_id), prompt_yes.pressed)
 	
 	to_load_button.set_active(false)
 	
@@ -28,13 +28,13 @@ func enter_state() -> void:
 	tween.tween_property(path_follow_cam, "progress_ratio", 1, 2)
 	tween.tween_property(path_follow_ui, "progress_ratio", 1, 2)
 
-func exit_state() -> void:
+func _exit_state() -> void:
 	for load in load_buttons:
 		GlobalUtils.disconnect_from_signal(open_prompt, load.pressed)
-	GlobalUtils.disconnect_from_signal(Game.Save.load_data.bind(pending_load_id), prompt_yes.pressed)
+	GlobalUtils.disconnect_from_signal(Save.load_data.bind(pending_load_id), prompt_yes.pressed)
 	to_load_button.set_active(true)
 
 func _load_data(_slot: int = 0) -> void: 
-	Game.Save.load_data(_slot)
+	Save.load_data(_slot)
 	
 func open_prompt() -> void: prompt.visible = true

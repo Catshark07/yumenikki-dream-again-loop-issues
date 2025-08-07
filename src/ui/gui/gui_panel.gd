@@ -21,11 +21,6 @@ var resize_tweener: Tween
 
 # ---- constants ----
 
-var icon: Texture:
-	get:
-		icon_display_container.visible = (icon_display.texture != null)
-		return icon_display.texture
-
 const DEFAULT_PANEL_DISPLAY_SHADER: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
 const DEFAULT_DISPLAY_BG_COLOR = Color(0,0,0,1)
 var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
@@ -41,13 +36,10 @@ var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 			else: main_container.remove_theme_stylebox_override("panel")
 @export var panel_display_texture: Texture2D = DEFAULT_PANEL_DISPLAY_TEXTURE
 @export var panel_display_colour: Color = DEFAULT_DISPLAY_BG_COLOR
-@export var panel_display_shader: Shader = DEFAULT_PANEL_DISPLAY_SHADER:
-	set(_shader):
-		panel_display_shader = _shader
-		if Engine.is_editor_hint():set_panel_texture_display_shader(panel_display_shader)
+@export var panel_display_shader: Shader = DEFAULT_PANEL_DISPLAY_SHADER
 
 # ---- inner button components ---- 
-@export_storage var display_bg: TextureRect
+@export_storage var display_bg: ColorRect
 
 @export_storage var main_container: PanelContainer
 @export_storage var inner_main_container: CenterContainer
@@ -77,7 +69,7 @@ func _children_components_setup() -> void:
 	
 	if main_container == null: main_container = GlobalUtils.add_child_node(self, PanelContainer.new(), "main_container")
 	
-	if display_bg == null: display_bg = GlobalUtils.add_child_node(self.main_container, TextureRect.new(), "display_bg")
+	if display_bg == null: display_bg = GlobalUtils.add_child_node(self.main_container, ColorRect.new(), "display_bg")
 	if margin_container == null: margin_container = GlobalUtils.add_child_node(self.main_container, MarginContainer.new(), "margin_container")
 	
 	if icon_content_seperator == null: icon_content_seperator = GlobalUtils.add_child_node(self.margin_container, HBoxContainer.new(), "icon_content_seperator")
@@ -110,9 +102,6 @@ func _core_setup() -> void:
 	inner_main_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	display_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	display_bg.stretch_mode = TextureRect.STRETCH_SCALE
-	display_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	
 	icon_display.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	text_display.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	margin_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -122,24 +111,19 @@ func _core_setup() -> void:
 	margin_container.add_theme_constant_override("margin_right", 4)
 	margin_container.add_theme_constant_override("margin_left", 4)
 	
-	display_bg.texture = CanvasTexture.new()
 	display_bg.size_flags_horizontal = true
 	display_bg.size.y = main_container.size.x
 	display_bg.size.y = main_container.size.y
 		
-	set_panel_texture_display_shader(panel_display_shader)
+	display_bg.material = ShaderMaterial.new()
+	display_bg.material.shader = DEFAULT_PANEL_DISPLAY_SHADER
 	if theme == null: theme = preload("res://src/global_theme.tres")
 	set_panel_modulate(panel_display_colour)
 	
 # --- setter functions ---	
-func set_panel_texture_display_shader(_shader: Shader) -> void:
-	if display_bg != null and display_bg.material == null: 
-		display_bg.material = ShaderMaterial.new()
-	display_bg.material.shader = _shader
 
 func set_panel_modulate(_modu: Color) -> void:
-	display_bg.modulate = _modu
-
+	display_bg.color = _modu
 
 # --- transform functions --
 

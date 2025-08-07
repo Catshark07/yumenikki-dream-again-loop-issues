@@ -1,4 +1,4 @@
 extends State
 
-func enter_state() -> void: 
-	GameManager.set_ui_visibility(false)
+func _enter_state() -> void: 
+	GameManager.set_control_visibility(GameManager.player_hud.indicators, false)

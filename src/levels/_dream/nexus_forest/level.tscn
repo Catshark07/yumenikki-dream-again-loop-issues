@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_y1apy"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="8_01jpm"]
 [ext_resource type="AudioStream" uid="uid://csycwkjx38vti" path="res://src/audio/bgm/world_forest.WAV" id="9_y0igy"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="11_5by3o"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="11_5by3o"]
 [ext_resource type="PackedScene" uid="uid://blgkyj1ogaecl" path="res://src/systems/seamless_detector_v2.tscn" id="11_28cgd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_28cgd"]

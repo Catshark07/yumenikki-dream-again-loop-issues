@@ -42,8 +42,6 @@ var noise_multi: float = 1
 #endregion
 
 func _ready() -> void:
-	add_to_group("sentients")
-	
 	sprite_renderer = get_node_or_null("sprite_renderer")
 	shadow_renderer = get_node_or_null("shadow_renderer")
 	
@@ -55,6 +53,9 @@ func _ready() -> void:
 	
 	dependency_components()
 	dependency_setup()
+	
+func _enter_tree() -> void: add_to_group("sentients")
+func _exit_tree() -> void:  remove_from_group("sentients")
 	
 func _exit() -> void: 
 	self.velocity = Vector2.ZERO
@@ -86,10 +87,8 @@ func handle_noise() -> void:
 
 func handle_velocity(_dir: Vector2) -> void:
 	desired_vel = ((_dir.normalized() * BASE_SPEED))
-	self.velocity = desired_vel.limit_length(MAX_SPEED)
+	self.velocity = Vector2(desired_vel * speed_multiplier).limit_length(MAX_SPEED) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
-	
-	print("VEL:::  ", self.velocity,"DIR:::  ", _dir)
 		
 func handle_direction(_dir: Vector2) -> void: 
 	if _dir != Vector2.ZERO:

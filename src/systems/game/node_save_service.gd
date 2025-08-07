@@ -18,7 +18,6 @@ func save_scene_data(_scene: SceneNode) -> void:
 	var stringified_scene_name: String = _scene.name as String
 	
 	data["scene"][stringified_scene_name] = scene_data_template["scene_name"]
-	data["scene"][stringified_scene_name]["id"] = _scene.id
 	
 	for node in node_saves: 
 		if node != null: data["scene"][stringified_scene_name]["data"] = node.save_data()			

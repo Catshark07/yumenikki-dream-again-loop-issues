@@ -3,48 +3,40 @@ extends State
 @export var dream_manager: FSM
 @export var dream_manager_setup: bool = false
 @export var player_global_components: ComponentReceiver
-# - the player will be controlled from here.
 
+var sentients_updated: bool = false
 var sentients: Array
-var on_scene_change: EventListener
 
 func _ready() -> void:
-	on_scene_change = EventListener.new(["SCENE_CHANGE_SUCCESS"], false, self)
-	on_scene_change.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): sentients = GlobalUtils.get_group_arr("sentients"))
-
-func enter_state() -> void:
-	await Game.main_tree.process_frame
-	PhysicsServer2D.set_active(true)
-	InputManager.request_curr_controller_change(InputManager.sb_input_controller)
-	
-	player_global_components.set_bypass(false)
-	
-	sentients = GlobalUtils.get_group_arr("sentients")
-	for s in sentients: if s != null: s._enter()
-	
-	print_rich("[color=yellow]GAME STATE:: = PLAY[/color]")
 	if !dream_manager_setup:
 		dream_manager_setup = true
 		dream_manager._setup(self)
 		
-func exit_state() -> void:
+func _enter_state() -> void:
 	await Game.main_tree.process_frame
+	
+	for s in GlobalUtils.get_group_arr("sentients"): 
+		if s != null: s.unfreeze()
+	PhysicsServer2D.set_active(true)
+	InputManager.request_curr_controller_change(InputManager.sb_input_controller)
+	dream_manager._enter()
+	
+	player_global_components.set_bypass(false)
+		
+func _exit_state() -> void:
+	await Game.main_tree.process_frame
+	
+	for s in GlobalUtils.get_group_arr("sentients"): 
+		if s != null: s.freeze()
 	PhysicsServer2D.set_active(false)
+	InputManager.request_curr_controller_change(InputManager.def_input_controller)
+	dream_manager._exit()
 	
 	player_global_components.set_bypass(true)
 	
 	dream_manager_setup = false
-	for s in sentients: if s != null: s._exit()
 
-
-func update(_delta: float) -> void: 
-	for s: Node in sentients:
-		if s != null and s.can_process(): 
-			s._update(_delta)
-func physics_update(_delta: float) -> void: 
-	for s: Node in sentients:
-		if s != null and s.can_process(): 
-			s._physics_update(_delta)
-
-
-	if Input.is_action_just_pressed("ui_esc_menu"): GameManager.pause_options(true)
+func input(event: InputEvent) -> void:
+	dream_manager._input_pass(event)
+	if Input.is_action_just_pressed("ui_esc_menu"):
+		GameManager.pause_options(true)

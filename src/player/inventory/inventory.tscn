@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://drhfxkok0x64j" path="res://src/images/panorama/inv_petal_white.jpeg" id="8_im28w"]
 [ext_resource type="Texture2D" uid="uid://bwu4uvhnwkx8j" path="res://src/player/inventory/menu/white_petal_stats.png" id="12_tlelv"]
 [ext_resource type="Texture2D" uid="uid://4hm3ms1l4bg" path="res://src/player/inventory/menu/inv_stats.png" id="13_jwvlf"]
-[ext_resource type="Script" uid="uid://bqp8xu5yrv1tn" path="res://src/ui/gui/texture_button.gd" id="17_2m1ok"]
+[ext_resource type="Script" uid="uid://bqp8xu5yrv1tn" path="res://src/ui/gui/gui_texture_button.gd" id="17_2m1ok"]
 [ext_resource type="PackedScene" uid="uid://demusraqmvy5s" path="res://src/player/inventory/inventory_effect_stats.gd.tscn" id="17_6jr1t"]
 [ext_resource type="Texture2D" uid="uid://c4n8hvjbra1w" path="res://src/player/inventory/menu/select_white_petal.png" id="17_qtnvx"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="18_3gg6c"]
@@ -41,7 +41,7 @@ script/source = "extends State
 var tween: Tween
 
 
-func enter_state() -> void: 
+func _enter_state() -> void: 
 	section.visible = true
 	
 	mado.position.x -= 10
@@ -56,7 +56,7 @@ func enter_state() -> void:
 	
 	tween.tween_property(section, \"modulate:a\", 1, 0.5)
 	
-	tween.tween_property(mado, \"position:x\", 96, 0.5)
+	tween.tween_property(mado, \"position:x\", 8, 0.5)
 	tween.tween_property(effects, \"position:x\", 192, 0.5)
 	tween.tween_property(container, \"position:x\", 184, 0.5)
 	
@@ -64,7 +64,7 @@ func enter_state() -> void:
 	
 	handle_animation_enter()
 	
-func exit_state() -> void:
+func _exit_state() -> void:
 	if tween != null: tween.kill()
 	tween = self.create_tween()
 	
@@ -73,7 +73,7 @@ func exit_state() -> void:
 	
 	tween.tween_property(section, \"modulate:a\", 0, 0.5)
 	
-	tween.tween_property(mado, \"position:x\", 96 - 10, 0.5)
+	tween.tween_property(mado, \"position:x\", 8 - 15, 0.5)
 	tween.tween_property(effects, \"position:x\", 192 - 20, 0.5)
 	tween.tween_property(container, \"position:x\", 184 - 35, 0.5)
 	
@@ -111,7 +111,7 @@ var player_stats_changed: EventListener
 
 func _ready() -> void:
 	pass
-func enter_state() -> void: 
+func _enter_state() -> void: 
 	container.update_stats_display(EventManager.get_event_param(\"PLAYER_EQUIP\")[0])
 	
 	section.visible = true
@@ -136,7 +136,7 @@ func enter_state() -> void:
 	
 	handle_animation_enter()
 	
-func exit_state() -> void:
+func _exit_state() -> void:
 	if tween != null: tween.kill()
 	tween = self.create_tween()
 	
@@ -181,14 +181,14 @@ shader = ExtResource("5_2m1ok")
 shader_parameter/dirX = 0.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.0
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 
 [node name="inventory" type="Control" node_paths=PackedStringArray("display", "white_petal", "pink_petal", "white_petal_button", "pink_petal_button", "item_container", "deequip_prompt", "effect_indicator", "favourite_icon", "initial_state")]
 clip_contents = true
+custom_minimum_size = Vector2(480, 270)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,7 +209,7 @@ effect_indicator = NodePath("display/pink_petal_effects/deequip/texture_renderer
 favourite_icon = NodePath("display/pink_petal_effects/favourite_icon")
 initial_state = NodePath("PINK_PETAL")
 
-[node name="PINK_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "effects", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate")]
+[node name="PINK_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "effects", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate", "transitions")]
 script = SubResource("GDScript_8vhxa")
 section = NodePath("../display/pink_petal_effects")
 mado = NodePath("../display/pink_petal_effects/mado")
@@ -218,9 +218,10 @@ container = NodePath("../display/pink_petal_effects/inv_container")
 spr_white_petal = NodePath("../display/spr_white_petal")
 spr_pink_petal = NodePath("../display/spr_pink_petal")
 overlay_modulate = NodePath("../display/multiply_modulate")
+transitions = [NodePath("../WHITE_PETAL")]
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
-[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate")]
+[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate", "transitions")]
 script = SubResource("GDScript_ssbrt")
 section = NodePath("../display/white_petal_stats")
 mado = NodePath("../display/white_petal_stats/mado")
@@ -229,10 +230,16 @@ container = NodePath("../display/white_petal_stats/stats_container")
 spr_white_petal = NodePath("../display/spr_white_petal")
 spr_pink_petal = NodePath("../display/spr_pink_petal")
 overlay_modulate = NodePath("../display/multiply_modulate")
+transitions = [NodePath("../PINK_PETAL")]
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
 [node name="display" type="Control" parent="."]
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="bw_invert" type="TextureRect" parent="display"]
 material = SubResource("ShaderMaterial_8vhxa")
@@ -241,8 +248,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 480.0
-offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_qtnvx")
@@ -293,6 +298,7 @@ texture = ExtResource("6_l1wax")
 clip_children = 2
 
 [node name="pink_petal_effects" type="Control" parent="display"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -331,8 +337,9 @@ mouse_filter = 2
 columns = 3
 
 [node name="mado" type="Sprite2D" parent="display/pink_petal_effects"]
-position = Vector2(104, 160)
+position = Vector2(8, 40)
 texture = ExtResource("2_3hyeo")
+centered = false
 
 [node name="effects" type="Sprite2D" parent="display/pink_petal_effects"]
 position = Vector2(192, 32)
@@ -347,12 +354,13 @@ texture = ExtResource("19_3gg6c")
 custom_minimum_size = Vector2(48, 48)
 anchors_preset = 0
 offset_left = 136.0
-offset_top = 72.0
+offset_top = 120.0
 offset_right = 184.0
-offset_bottom = 120.0
+offset_bottom = 168.0
+scale = Vector2(1, 0.990508)
 mouse_filter = 1
 script = ExtResource("17_2m1ok")
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("20_l1wax"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":2,"vframes":1,"frame":1,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(48, 48),"frame_h_count":2,"frame_v_count":1,"progress":1,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("20_l1wax"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":2,"vframes":1,"frame":1,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(48, 48),"frame_h_count":2,"frame_v_count":1,"progress":1,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":true)
 
 unhover_cell = 1
 hover_cell = 1
@@ -445,7 +453,6 @@ frame_h_count = 2
 progress = 1
 
 [node name="white_petal_stats" type="Control" parent="display"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -457,8 +464,8 @@ grow_vertical = 2
 layout_mode = 1
 offset_left = 32.0
 offset_top = 80.0
-offset_right = 296.0
-offset_bottom = 240.0
+offset_right = -168.0
+offset_bottom = -14.0
 
 [node name="mado" type="Sprite2D" parent="display/white_petal_stats"]
 position = Vector2(394, 150)
@@ -468,7 +475,6 @@ texture = ExtResource("12_tlelv")
 position = Vector2(-29, -15)
 texture = ExtResource("20_ub6k2")
 hframes = 3
-frame = 2
 script = ExtResource("21_cgott")
 autoplay = true
 loop = true
@@ -482,7 +488,6 @@ position = Vector2(29, -15)
 texture = ExtResource("20_ub6k2")
 flip_h = true
 hframes = 3
-frame = 2
 script = ExtResource("21_cgott")
 autoplay = true
 loop = true
@@ -498,22 +503,21 @@ centered = false
 
 [node name="select" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -240.0
+offset_bottom = 32.0
 grow_horizontal = 2
-grow_vertical = 2
 
 [node name="separator" type="HBoxContainer" parent="select"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="pink" type="Control" parent="select/separator"]
 custom_minimum_size = Vector2(27, 14)
 layout_mode = 2
 mouse_filter = 1
 script = ExtResource("17_2m1ok")
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("27_cgott"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("27_cgott"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":true,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
 
 hover_cell = 1
 press_cell = 2
@@ -608,7 +612,7 @@ custom_minimum_size = Vector2(27, 14)
 layout_mode = 2
 mouse_filter = 1
 script = ExtResource("17_2m1ok")
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("17_qtnvx"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":ExtResource("17_qtnvx"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("18_3gg6c"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":true,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
 
 hover_cell = 1
 press_cell = 2

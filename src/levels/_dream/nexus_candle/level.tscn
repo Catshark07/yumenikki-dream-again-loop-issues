@@ -12,7 +12,7 @@
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="9_ksaur"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_uvoel"]
 [ext_resource type="Texture2D" uid="uid://dr7f1rsayw4om" path="res://src/levels/__ignore/doors/door_candle.png" id="11_g3i3s"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/event/sequence/sequence_interface.gd" id="18_othme"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="18_othme"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ki2h2"]
 

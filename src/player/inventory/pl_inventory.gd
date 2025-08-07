@@ -9,7 +9,6 @@ var special_invert_sequence_end: EventListener
 @export var white_petal: Control
 @export var pink_petal: Control
 
-@export var inventory_toggle: AbstractButton
 @export var white_petal_button: AbstractButton
 @export var pink_petal_button: AbstractButton
 
@@ -21,25 +20,31 @@ var special_invert_sequence_end: EventListener
 var petal_tween: Tween
 
 var hovered_button: GUIPanelButton
-static var favourite_effect: PLEffect
+static var favourite_effect: PLSystemData
 @export var favourite_icon: Sprite2D
 
 signal inventory_data_changed(_new_data: PLInventoryData)
-signal inventory_data_updated(_appended_effect: PLEffect)
+signal inventory_data_updated(_appended_effect: PLSystemData)
 
 var data: PLInventoryData = DEFAULT_DATA
 const DEFAULT_DATA: PLInventoryData = preload("res://src/player/inventory/data/empty.tres")
 const DEBUG_DATA: PLInventoryData = preload("res://src/player/inventory/data/all_effects.tres")
 
-func _setup(_owner: Node) -> void:
+func _enter() -> void: 
+	(self.visible) = true
+	curr_state._enter_state()
+func _exit() -> void: 
+	(self.visible) = false
+	curr_state._exit_state()
+
+func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 	white_petal.visible = false
 	pink_petal.visible = false
 	
-	super(_owner)
+	super(_owner, _skip_initial_state_setup)
 	
 	special_invert_sequence_end = EventListener.new(
-		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], 
-		false, self)
+		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
 	special_invert_sequence_end.do_on_notify(
 		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], 
 		EventManager.invoke_event.bind("SPECIAL_INVERT_END_REQUEST"))
@@ -50,23 +55,19 @@ func _setup(_owner: Node) -> void:
 		effect_indicator.progress = 1
 		)
 	player_equip_listener.do_on_notify(["PLAYER_EQUIP"], func(): 
-		if EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.get_pl().DEFAULT_EFFECT: 
+		if EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.DEFAULT_EQUIPMENT: 
 			return
 		deequip_prompt.set_active(true)
 		effect_indicator.progress = 0
 		)
 	
-	GlobalUtils.connect_to_signal(
+	GlobalUtils.connect_to_signal( # - dequip effect if dequip sigil is pressed.
 		func():(Player.Instance.get_pl() as Player_YN).deequip_effect(), deequip_prompt.pressed)
 
-	GlobalUtils.connect_to_signal(func(): _change_to_state("white_petal"), white_petal_button.pressed)
-	GlobalUtils.connect_to_signal(func(): _change_to_state("pink_petal"), pink_petal_button.pressed)
-	GlobalUtils.connect_to_signal(
-		func(_toggle: bool): 
-			if _toggle: EventManager.invoke_event("SPECIAL_INVERT_START_REQUEST")
-			else:		EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST"), 
-			inventory_toggle.toggled
-	)
+	GlobalUtils.connect_to_signal( # - change to white petal menu on white petal button.
+		func(): change_to_state("white_petal"), white_petal_button.pressed)
+	GlobalUtils.connect_to_signal( # - change to pink petal menu on pink petal button.
+		func(): change_to_state("pink_petal"), pink_petal_button.pressed)
 	
 	if OS.is_debug_build(): update_inventory(DEBUG_DATA)
 	else: 					update_inventory(data)
@@ -79,7 +80,7 @@ func delete_buttons() -> void:
 	for i in item_container.get_children():
 		i.queue_free()
 
-func append_item(_item: PLEffect) -> void: 
+func append_item(_item: PLSystemData) -> void: 
 	if _item == null or _item in data.effects: return
 	data.effects.append(_item)
 	
@@ -95,7 +96,9 @@ func append_item(_item: PLEffect) -> void:
 	button.hover_exited.connect(func(): hovered_button = null)
 	button.hover_entered.connect(func(): hovered_button = button)	
 	button.pressed.connect(func():
-		if button.abstract_button.unique_data: (Player.Instance.get_pl() as Player_YN).equip(button.abstract_button.unique_data))
+		if button.abstract_button.unique_data:
+			EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST")
+			(Player.Instance.get_pl() as Player_YN).equip(button.abstract_button.unique_data))
 	
 	inventory_data_updated.emit(_item)
 	
@@ -106,8 +109,7 @@ func update_inventory(_data: PLInventoryData) -> void:
 	instantiate_buttons(_data)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if (event as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
-			if hovered_button != null: 
-				favourite_effect = hovered_button.abstract_button.unique_data
-				favourite_icon.global_position = hovered_button.global_position
+	if event.is_action_pressed("ui_favourite_effect"):
+		if hovered_button != null: 
+			favourite_effect = hovered_button.abstract_button.unique_data
+			favourite_icon.global_position = hovered_button.global_position
