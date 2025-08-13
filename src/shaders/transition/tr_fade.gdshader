@@ -5,6 +5,5 @@ shader_type canvas_item;
 
 void fragment()
 {
-	COLOR.rgb = colour.rgb;
 	COLOR.a = (progress);
 }

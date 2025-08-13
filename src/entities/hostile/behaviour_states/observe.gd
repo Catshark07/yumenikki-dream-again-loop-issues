@@ -1,7 +1,7 @@
 extends SentientState
 
 @export var stance_fsm: SentientFSM
-@export var aggression_component: SBAggression
+@export var sb_aggression: SBAggression
 @export var hesitance_timer: Timer
 
 @export var min_wait_time: float = 1
@@ -13,7 +13,7 @@ var target: SentientBase
 var roll: float = 0
 
 func _setup() -> void:
-	if aggression_component == null: return
+	if sb_aggression == null: return
 	hesitance_timer.wait_time = randf_range(min_wait_time, max_wait_time)
 	hesitance_timer.autostart = false
 	hesitance_timer.one_shot = true
@@ -28,9 +28,9 @@ func _setup() -> void:
 func _enter_state() -> void:
 	roll = randf()
 	 		
-	target = aggression_component.target
-	aggression_component.suspicion_indicator_status.visible = true
-	aggression_component.suspicion_indicator_status.progress = 0
+	target = sb_aggression.target
+	sb_aggression.suspicion_indicator_status.visible = true
+	sb_aggression.suspicion_indicator_status.progress = 0
 	
 	(sentient as NavSentient).nav_agent.target_desired_distance = 10
 	(sentient as NavSentient).nav_agent.set_navigation_layer_value(2, false)
@@ -40,19 +40,19 @@ func _enter_state() -> void:
 	
 func _exit_state() -> void: 
 	
-	aggression_component.suspicion_indicator_status.visible = false
+	sb_aggression.suspicion_indicator_status.visible = false
 	hesitance_timer.stop()
 	super()
 	
 func update(_delta: float) -> void:
-	if aggression_component.suspicion > aggression_component.min_chase_threshold:
-		if fsm._has_state("taunt") and roll >= aggression_component.taunt_chance: 
+	if sb_aggression.suspicion > sb_aggression.min_chase_threshold:
+		if fsm._has_state("taunt") and roll >= sb_aggression.taunt_chance: 
 			fsm.change_to_state("taunt")
 		
 		else: 
 			fsm.change_to_state("chase")
 			
-	if aggression_component.suspicion < 10:
+	if sb_aggression.suspicion < 10:
 		fsm.change_to_state("wander")
 		
 func physics_update(_delta: float) -> void: 

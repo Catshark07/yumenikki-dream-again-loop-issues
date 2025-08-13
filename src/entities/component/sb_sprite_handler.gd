@@ -6,7 +6,7 @@ const DEFAULT_DYNAMIC_ROT_MULTI = 1
 var dynamic_rot_intensity: float = 3.85
 var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
 
-func _setup(_sentient: SentientBase) -> void:
+func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	sprite_renderer = sentient.sprite_renderer
 	(sentient.sprite_renderer as SpriteSheetFormatter).set_row(sentient.heading)
@@ -23,18 +23,18 @@ func handle_sprite_subtle_rotation(_sentient: SentientBase) -> void:
 			(get_process_delta_time()) / _sentient.TRANS_WEIGHT)
 func handle_sprite_flip(_sentient: SentientBase) -> void:
 	if _sentient != null:
-		if _sentient.lerped_direction.x < 0: _sentient.sprite_renderer.flip_h = true
-		else: _sentient.sprite_renderer.flip_h = false
+		if _sentient.direction.x < 0: _sentient.sprite_renderer.flip_h = true
+		elif _sentient.direction.x > 0: _sentient.sprite_renderer.flip_h = false
 func handle_sprite_direction(_sentient: SentientBase) -> void:
 	if sentient.is_moving : lerp_sprite_direction(_sentient, _sentient.heading)
 	else: set_sprite_direction(_sentient, _sentient.heading)
 
-func lerp_sprite_direction(_sentient: SentientBase, _heading: Entity.compass_headings) -> void:
+func lerp_sprite_direction(_sentient: SentientBase, _heading: SentientBase.compass_headings) -> void:
 	_sentient.sprite_renderer.set_row(lerpf(
 		_sentient.sprite_renderer.row, 
 		_heading, 
 		0.3))
-func set_sprite_direction(_sentient: SentientBase, _heading: Entity.compass_headings) -> void: 
+func set_sprite_direction(_sentient: SentientBase, _heading: SentientBase.compass_headings) -> void: 
 	_sentient.sprite_renderer.set_row(_heading)
 func set_dynamic_rot_multi(_multi: float) -> void:
 	dynamic_rot_multi = _multi

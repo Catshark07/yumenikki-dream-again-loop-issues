@@ -46,6 +46,12 @@ func add_custom_types() -> void:
 		preload("res://src/systems/sequencing/sequence_interface.gd"), 
 		preload("res://addons/miscallenous/editor/sequence_flag.png")
 		)
+	add_custom_type(
+		"SpawnPoint", 
+		"Node2D", 
+		preload("res://src/systems/components/independent/spawn_point.gd"), 
+		preload("res://addons/miscallenous/editor/spawn_point.png")
+		)
 func remove_custom_types() -> void:
 	remove_custom_type("GameScene2D")
 	remove_custom_type("AdditiveGameScene2D")

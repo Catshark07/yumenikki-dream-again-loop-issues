@@ -23,7 +23,7 @@ func _ready() -> void:
 		["PLAYER_EQUIP"], 
 		func(): update_stats_display(EventManager.get_event_param("PLAYER_EQUIP")[0]))
 
-func update_stats_display(_effect: PLSystemData) -> void:
+func update_stats_display(_effect: PLEffect) -> void:
 		handle_stats_display_value(walk_speed, "WALK SPEED: %.2f m/s" % (_effect.stats.walk_multi * SentientBase.BASE_SPEED / 16))
 		handle_stats_display_value(sprint_speed, "SPRINT SPEED: %.2f m/s" % (_effect.stats.sprint_multi * SentientBase.BASE_SPEED / 16))
 		handle_stats_display_value(sneak_speed, "SNEAK SPEED: %.2f m/s" % (_effect.stats.sneak_multi * SentientBase.BASE_SPEED / 16))

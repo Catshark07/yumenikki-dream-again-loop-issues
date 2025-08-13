@@ -82,8 +82,7 @@ func tween_volume(_vol: float, _from: float = self.volume_db) -> void:
 func fade_in() -> void:
 	tween_volume(get_bgm_volume(), 0)
 func fade_out() -> void:
-	await tween_volume(0, db_to_linear(self.volume_db))
-	stop()
+	await tween_volume(0, get_bgm_volume())
 
 # ---- logic ----
 func same_as_previous() -> bool: 

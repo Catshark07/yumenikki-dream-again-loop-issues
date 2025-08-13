@@ -39,17 +39,13 @@ static var event_ids := {
 		"STATE_PREGAME" : {},
 		"STATE_PAUSE" : {},
 		"STATE_ACTIVE" : {},
-		"STATE_ACTIVE_PLAY" : {},
-		"STATE_ACTIVE_CUTSCENE" : {},
-		"STATE_ACTIVE_INVENTORY" : {},
 		
 		"GAME_FILE_SAVE" : {},
 		"GAME_CONFIG_SAVE" : {},
 		
 		# ---- reality states -----
-		"REALITY_REAL" : {},
 		"REALITY_DREAM" : {},
-		"REALITY_NEITHER" : {},
+		"REALITY_NEUTRAL" : {},
 		
 		# ---- cutscenes -----
 		"CUTSCENE_START" : {},
@@ -67,7 +63,7 @@ static var event_ids := {
 		"PLAYER_INTERACT" : {},
 		"PLAYER_HURT" : {},
 		"PLAYER_STAMINA_CHANGE" : {},
-		"PLAYER_WAKE-UP" : {},
+		"PLAYER_WAKE_UP" : {},
 		
 		"PLAYER_EQUIP" : {},
 		"PLAYER_DEEQUIP" : {},

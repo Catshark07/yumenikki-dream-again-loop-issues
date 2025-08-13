@@ -1,12 +1,13 @@
 extends Control
 
 var scene_manager: SceneManager
+const GAME_VER := "pre_alpha_002"
 
 # ---- windows
+var is_paused: bool = false
 var root: Window
 var main_tree: SceneTree
 
-var is_paused: bool
 # ---- time
 var true_time_scale: float: 
 	set(true_ts): 
@@ -16,6 +17,11 @@ var true_delta: float: get = get_real_delta
 
 signal time_scale_changed(_new: float)
 signal true_time_scale_changed(_new: float)
+
+# - signals
+signal game_ready
+signal scene_loaded
+signal scene_unloaded
 
 static var game_manager: GameManager
 
@@ -34,6 +40,8 @@ func singleton_setup() -> void:
 		game_manager.reparent(self)
 
 func _ready() -> void:
+	ProjectSettings.set_setting("application/config/version", GAME_VER)
+	
 	set_process(false)
 	set_physics_process(false)
 	set_process_input(false)
@@ -43,31 +51,38 @@ func _ready() -> void:
 	main_tree 	= get_tree()
 	root 		= get_tree().root
 	
-	Application.	_setup()
-	Audio.			_setup()
-	Config.			_setup()
-	Directory.		_setup()
-	Optimization.	_setup()
-	Save.			_setup() 
-	InputManager.	_setup()
+	Application.		_setup()
+	Audio.				_setup()
+	Config.				_setup()
+	Directory.			_setup()
+	Optimization.		_setup()
+	Save.				_setup() 
+	InputManager.		_setup()
+	SequencerManager.	_setup()
 	
 	singleton_setup()
 	
 	await main_tree.process_frame
 	
-	game_manager.setup()
-	scene_manager.setup()
-	
+	game_manager.					_setup()
+	game_manager.global_component.	_setup()
+	scene_manager.					_setup()
+	game_manager.state_handle.		_setup()
+
 	set_process(true)
 	set_physics_process(true)
 	set_process_input(true)
 	
+	game_ready.emit()
+	
 func _process(delta: float) -> void: 
 	InputManager._update(delta)
+	SequencerManager._update(delta)
 	game_manager.update(delta)
 	scene_manager._update(delta)
 func _physics_process(delta: float) -> void:
 	InputManager._physics_update(delta)
+	SequencerManager._physics_update(delta)
 	game_manager.physics_update(delta)
 	scene_manager._physics_update(delta)
 func _input(_event: InputEvent) -> void:
@@ -90,6 +105,9 @@ func set_timescale(_new: float) -> void:
 	Engine.time_scale = _new
 	time_scale_changed.emit(_new)
 	
+static func change_scene_to(_new: PackedScene) -> void: 
+	if _new == null: return
+	Game.scene_manager.change_scene_to(_new)
 # ---- game values ----	
 func get_real_delta() -> float: 
 	return (true_time_scale / Engine.max_fps)

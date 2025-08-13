@@ -1,20 +1,16 @@
+@tool
+
 class_name SBComponentReceiver
-extends Node2D
+extends ComponentReceiver
 
 var sentient: SentientBase
-var components: Array
-var bypass: bool = false:
-	set(_by):
-		bypass = _by
-		if _by: bypass_enabled.emit()
-		else: bypass_lifted.emit()
 
-signal bypass_enabled
-signal bypass_lifted
-
+func _validate_property(property: Dictionary) -> void:
+	if property.name == "affector":
+		property.usage = PROPERTY_USAGE_NO_EDITOR
 func _ready() -> void:
 	self.name = "sb_components"
-func _setup(_sb: SentientBase) -> void: 
+func _setup(_sb: SentientBase = null) -> void: 
 	components = self.get_children()
 	
 	for component in components: 
@@ -46,5 +42,8 @@ func has_component_by_name(_name: String) -> bool:
 		if i and i.name == _name: return true
 	return false
 
-func set_bypass(_bypass: bool) -> void: bypass = _bypass
+func set_bypass(_bypass: bool) -> void: 
+	bypass = _bypass
+	if _bypass: bypass_enabled.emit()
+	else: 		bypass_lifted.emit()
 	

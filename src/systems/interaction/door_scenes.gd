@@ -16,7 +16,7 @@ func _draw() -> void:
 func _interact() -> void:
 	super()
 	EventManager.invoke_event("PLAYER_DOOR_USED", [connection_id])
-	GameManager.change_scene_to(load(scene_path))
+	Game.change_scene_to(load(scene_path))
 
 func get_spawn_point() -> Vector2:
 	return self.global_position + spawn_point

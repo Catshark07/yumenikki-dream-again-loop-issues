@@ -1,9 +1,8 @@
 extends SentientState
-var library_path := "normal"
 
-func _setup() -> void: 
-	(sentient as Player).quered_sprint_start.connect(handle_to_run)
-	(sentient as Player).quered_sprint_end.connect(func(): (sentient as Player_YN).force_change_state("idle"))
+@export var sb_sprint: SBSprint
+
+var library_path := "normal"
 
 func _enter_state() -> void: 	
 	super()
@@ -16,18 +15,16 @@ func update(_delta: float) -> void:
 	if sentient.desired_speed <= 0: 
 		sentient.force_change_state("idle")
 
-func physics_update(_delta: float, ) -> void:
+func physics_update(_delta: float) -> void:
 	sentient.get_behaviour()._run(sentient)
+	sentient.handle_velocity()
+
+	sb_sprint.drain(_delta)
  
 	if sentient.is_exhausted: 
 		sentient.force_change_state("walk")
 		return
 	
-	if sentient.stamina > 0: sentient.stamina -= (sentient.stamina_drain * sentient.get_process_delta_time()) 	
-	elif sentient.stamina < 0:
-		sentient.force_change_state("walk")
-		sentient.stamina_fsm.change_to_state("exhausted")
 
-func handle_to_run() -> void:
-	if (sentient as Player_YN).can_run: (sentient as Player_YN).force_change_state("run")
+
 	

@@ -1,13 +1,13 @@
-[gd_scene load_steps=30 format=4 uid="uid://b7ixvvfnudrtd"]
+[gd_scene load_steps=32 format=4 uid="uid://b7ixvvfnudrtd"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_kijfi"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_3srwc"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="2_gpjm5"]
+[ext_resource type="Script" uid="uid://buwx0x51eley6" path="res://src/panorama/panorama_placeholder.gd" id="2_w6cx3"]
 [ext_resource type="Texture2D" uid="uid://23r5ntk6t2nl" path="res://src/images/panorama/aurora_galaxy_blur.png" id="3_8idnc"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="3_tfslo"]
 [ext_resource type="AudioStream" uid="uid://b01e5plqcruwi" path="res://src/audio/bgm/world_mural.WAV" id="4_gpjm5"]
 [ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="4_j70n8"]
-[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="5_gpjm5"]
 [ext_resource type="TileSet" uid="uid://cydwtbt1yg005" path="res://src/levels/__ignore/tile_set/docks.tres" id="5_r8oj2"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_4vx6f"]
 [ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="11_npwiy"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="18_w6cx3"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="19_tdqbh"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="20_w6cx3"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="21_d3oed"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5m4g7"]
 
@@ -27,11 +28,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vas87"]
 shader = ExtResource("2_gpjm5")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.58
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.58
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
@@ -44,11 +44,10 @@ noise = SubResource("FastNoiseLite_j70n8")
 shader = ExtResource("4_j70n8")
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.08
@@ -63,18 +62,21 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k40gg"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5m4g7"]
+size = Vector2(480, 270)
+
 [node name="docks" type="Node"]
 script = ExtResource("1_kijfi")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"order":Array[Node]([]),"remove_invalid_events":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_c8ign"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 load_transition = SubResource("ShaderMaterial_5m4g7")
 unload_transition = SubResource("ShaderMaterial_02b03")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
-layer = -30
+[node name="panorama (bottom_layer)" type="SubViewport" parent="."]
+script = ExtResource("2_w6cx3")
 
 [node name="galaxy" type="TextureRect" parent="panorama (bottom_layer)"]
 material = SubResource("ShaderMaterial_vas87")
@@ -92,17 +94,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_tdqbh")
 
-[node name="camera" parent="." instance=ExtResource("2_3srwc")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../y_order/Madotsuki")
-
-[node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
-script = ExtResource("5_gpjm5")
-wig_x_strn = 8.0
-wig_y_strn = 6.0
-wig_pos_speed = 1.2
-metadata/_custom_type_script = "uid://bptlrkdn0tpua"
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_3srwc")]
+position = Vector2(16, 40)
+initial_target = NodePath("../y_order/madotsuki")
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("3_tfslo")
@@ -120,9 +114,11 @@ rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner
 
 [node name="scene_traversal" parent="y_order/to_numbers/on_interact/travel_to_scene" index="0"]
 scene_path = "uid://dnjvpl85u4jl8"
+connection_id = "jellyfish"
 
 [node name="spawn_point" parent="y_order/to_numbers" index="1"]
 scene_path = "uid://dnjvpl85u4jl8"
+connection_id = "jellyfish"
 
 [node name="to_upper_abyss" parent="y_order" instance=ExtResource("20_w6cx3")]
 position = Vector2(1000, -312)
@@ -168,7 +164,7 @@ tile_map_data = PackedByteArray("AAAfAAQAAQAAAAEAAAAeAAQAAQAAAAEAAAAdAAQAAQAAAAE
 tile_set = ExtResource("19_tdqbh")
 script = ExtResource("13_02b03")
 
-[node name="Madotsuki" parent="y_order" instance=ExtResource("6_4vx6f")]
+[node name="madotsuki" parent="y_order" instance=ExtResource("6_4vx6f")]
 position = Vector2(16, 40)
 
 [node name="offset_cam_region" type="Area2D" parent="y_order"]
@@ -182,6 +178,7 @@ rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="SequenceRegion" type="Node" parent="y_order/offset_cam_region" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
+process_mode = 4
 script = ExtResource("12_3whc7")
 enter_sequence = NodePath("enter")
 exit_sequence = NodePath("exit")
@@ -226,9 +223,11 @@ rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner
 
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
-[node name="SequenceRegion" type="Node" parent="y_order/to_hell" node_paths=PackedStringArray("enter_sequence")]
+[node name="SequenceRegion" type="Node" parent="y_order/to_hell" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
+process_mode = 4
 script = ExtResource("12_3whc7")
 enter_sequence = NodePath("enter")
+exit_sequence = NodePath("exit")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
 [node name="enter" type="Node" parent="y_order/to_hell/SequenceRegion"]
@@ -239,6 +238,9 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 script = ExtResource("16_1h25o")
 scene_traversal = NodePath("../../../SceneTraversal")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="exit" type="Node" parent="y_order/to_hell/SequenceRegion"]
+script = ExtResource("13_c8ign")
 
 [node name="SceneTraversal" type="Node" parent="y_order/to_hell" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("17_tdqbh")
@@ -253,11 +255,23 @@ script = ExtResource("18_w6cx3")
 scene_path = "uid://m50bp6u4vgts"
 connection_id = "hell"
 parent_instead_of_self = NodePath("..")
-as_sibling = true
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="rect" type="CollisionShape2D" parent="y_order/to_hell"]
 shape = SubResource("RectangleShape2D_k40gg")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="CamDeadzone" type="Area2D" parent="y_order"]
+position = Vector2(1000, -288)
+collision_layer = 1073741824
+collision_mask = 1073741824
+script = ExtResource("21_d3oed")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_5m4g7"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
+metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="rect" type="CollisionShape2D" parent="y_order/CamDeadzone"]
+shape = SubResource("RectangleShape2D_5m4g7")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="scene_load_sequence" type="Node" parent="."]

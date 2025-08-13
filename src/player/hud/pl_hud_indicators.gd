@@ -14,7 +14,6 @@ func _ready() -> void:
 	effect_equip.do_on_notify(["PLAYER_DEEQUIP"], func(): effect_ind.progress = 0)
 	
 	# ----
-	
 	pl_stamina_change = EventListener.new(["PLAYER_STAMINA_CHANGE"], false, self)
 	pl_stamina_change.do_on_notify(
 		["PLAYER_STAMINA_CHANGE"],

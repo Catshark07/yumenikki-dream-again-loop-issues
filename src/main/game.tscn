@@ -1,8 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://ra24ysq2f70c"]
+[gd_scene load_steps=46 format=3 uid="uid://ra24ysq2f70c"]
 
 [ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_y4aoe"]
 [ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_3apph"]
-[ext_resource type="Script" uid="uid://cfw3rjlf6vw4q" path="res://src/game/game_state_identifier.gd" id="3_ci86m"]
+[ext_resource type="Script" uid="uid://cfw3rjlf6vw4q" path="res://src/game/game_state_handle.gd" id="3_ci86m"]
 [ext_resource type="Script" uid="uid://d3r72epfndsge" path="res://src/autoloads/panorama_system.gd" id="3_y4aoe"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/tools/FSM/fsm.gd" id="4_v3f7h"]
 [ext_resource type="Script" uid="uid://bkcfhq2u2bvbg" path="res://src/game/states/pregame.gd" id="6_tboue"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://byjfgx55roir" path="res://src/systems/game/dream/dream_state.gd" id="12_qks74"]
 [ext_resource type="Script" uid="uid://bss18y7yx0sjl" path="res://src/game/states/cutscene.gd" id="14_eb0fa"]
 [ext_resource type="Script" uid="uid://cwsl1s56sohmv" path="res://src/game/states/special_invert_cutscene.gd" id="15_x5cou"]
+[ext_resource type="Script" uid="uid://dt42f6rbv7tp" path="res://src/player/inventory/pl_inventory_manager.gd" id="16_ci86m"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="16_qe24a"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="18_sjocp"]
 [ext_resource type="Script" uid="uid://b5eh18jkduvjk" path="res://src/systems/game/heartbeat_manager.gd" id="19_j0kuk"]
@@ -35,6 +36,13 @@
 [ext_resource type="PackedScene" uid="uid://c2sv1637gh6ub" path="res://src/ui/pause_menu/pause_screen.tscn" id="32_r2hvo"]
 [ext_resource type="PackedScene" uid="uid://q5moiijg0b7a" path="res://src/player/hud/pl_hud.tscn" id="33_a0tkc"]
 [ext_resource type="Texture2D" uid="uid://co64pugf2as81" path="res://src/shaders/ui/cinematic_bars_grad.tres" id="34_nnm53"]
+
+[sub_resource type="Gradient" id="Gradient_dpjd1"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jdkml"]
+gradient = SubResource("Gradient_dpjd1")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_73454"]
 shader = ExtResource("20_3itkt")
@@ -377,7 +385,14 @@ _data = {
 &"effect_equip": SubResource("Animation_ylvyo")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3apph"]
+[sub_resource type="Gradient" id="Gradient_ci86m"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dpjd1"]
+gradient = SubResource("Gradient_ci86m")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ci86m"]
 shader = ExtResource("31_i8erk")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -392,14 +407,82 @@ script = ExtResource("1_y4aoe")
 [node name="global_screen_effect" type="WorldEnvironment" parent="."]
 environment = ExtResource("2_3apph")
 
-[node name="panorama_system" type="Node" parent="." node_paths=PackedStringArray("panorama_rect")]
-script = ExtResource("3_y4aoe")
-panorama_rect = NodePath("../panorama (top_layer)/display")
-
-[node name="state_handler" type="Node" parent="." node_paths=PackedStringArray("game_state_fsm", "play_mode_fsm")]
+[node name="state_handle" type="Node" parent="." node_paths=PackedStringArray("game_state_fsm")]
 script = ExtResource("3_ci86m")
 game_state_fsm = NodePath("../game_fsm")
-play_mode_fsm = NodePath("../game_fsm/ACTIVE")
+
+[node name="global_component" type="Node" parent="."]
+script = ExtResource("18_sjocp")
+
+[node name="panorama_component" type="Node" parent="global_component" node_paths=PackedStringArray("panorama_rect")]
+script = ExtResource("3_y4aoe")
+panorama_rect = NodePath("../../panorama (top_layer)/display")
+default_panorama_texture = SubResource("GradientTexture2D_jdkml")
+
+[node name="screen_overlay" type="CanvasLayer" parent="global_component"]
+layer = 10
+script = ExtResource("19_j0kuk")
+
+[node name="fx" type="ColorRect" parent="global_component/screen_overlay"]
+material = SubResource("ShaderMaterial_73454")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="sound" type="AudioStreamPlayer" parent="global_component/screen_overlay"]
+volume_db = -80.0
+bus = &"Effects"
+script = ExtResource("21_cy466")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="effect_equip_anim" type="Node2D" parent="global_component" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("22_qof35")
+animation_player = NodePath("player")
+
+[node name="player" type="AnimationPlayer" parent="global_component/effect_equip_anim"]
+libraries = {
+&"": SubResource("AnimationLibrary_lm638")
+}
+
+[node name="pink_1" type="Sprite2D" parent="global_component/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("25_hma5v")
+
+[node name="pink_2" type="Sprite2D" parent="global_component/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+rotation = -0.785398
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("25_hma5v")
+
+[node name="white_1" type="Sprite2D" parent="global_component/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("26_0wivy")
+
+[node name="white_2" type="Sprite2D" parent="global_component/effect_equip_anim"]
+modulate = Color(1, 1, 1, 0)
+rotation = 0.528835
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("26_0wivy")
+
+[node name="sound" type="AudioStreamPlayer" parent="global_component/effect_equip_anim"]
+bus = &"Effects"
+script = ExtResource("21_cy466")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="time_manager" type="Node" parent="global_component"]
+script = ExtResource("27_x664t")
+
+[node name="chase_manager" type="Node" parent="global_component"]
+script = ExtResource("28_y0xa8")
+
+[node name="inventory_manager" type="Node" parent="global_component" node_paths=PackedStringArray("inventory")]
+script = ExtResource("16_ci86m")
+inventory = NodePath("../../always/ui/hud/inventory")
 
 [node name="game_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_v3f7h")
@@ -414,106 +497,43 @@ script = ExtResource("7_8fuah")
 initial_state_fsm = NodePath("PLAY")
 transitions = [NodePath("../PAUSE"), NodePath("../PREGAME"), NodePath("../CHANGING_SCENES")]
 
-[node name="PLAY" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("dream_manager", "player_global_components")]
+[node name="PLAY" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("dream_component", "player_global_components")]
 script = ExtResource("9_yapge")
-dream_manager = NodePath("dream_fsm")
-player_global_components = NodePath("player_global_components")
+dream_component = NodePath("dream_component")
+player_global_components = NodePath("../../../global_component")
 
-[node name="dream_fsm" type="Node" parent="game_fsm/ACTIVE/PLAY" node_paths=PackedStringArray("initial_state")]
+[node name="dream_component" type="Node" parent="game_fsm/ACTIVE/PLAY" node_paths=PackedStringArray("dream_mode", "neutral_mode")]
 script = ExtResource("10_nupip")
-initial_state = NodePath("NEUTRAL")
+dream_mode = NodePath("DREAM")
+neutral_mode = NodePath("NEUTRAL")
 
-[node name="NEUTRAL" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_fsm" node_paths=PackedStringArray("transitions")]
+[node name="NEUTRAL" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" node_paths=PackedStringArray("transitions")]
 script = ExtResource("11_cjakg")
 transitions = [NodePath("../DREAM")]
 
-[node name="DREAM" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_fsm" node_paths=PackedStringArray("transitions")]
+[node name="DREAM" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" node_paths=PackedStringArray("transitions")]
 script = ExtResource("12_qks74")
 transitions = [NodePath("../NEUTRAL")]
 
-[node name="player_global_components" type="Node" parent="game_fsm/ACTIVE/PLAY"]
-script = ExtResource("18_sjocp")
-bypass = true
-independent = true
-
-[node name="screen_overlay" type="CanvasLayer" parent="game_fsm/ACTIVE/PLAY/player_global_components"]
-layer = 10
-script = ExtResource("19_j0kuk")
-
-[node name="fx" type="ColorRect" parent="game_fsm/ACTIVE/PLAY/player_global_components/screen_overlay"]
-material = SubResource("ShaderMaterial_73454")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="sound" type="AudioStreamPlayer" parent="game_fsm/ACTIVE/PLAY/player_global_components/screen_overlay"]
-volume_db = -80.0
-bus = &"Effects"
-script = ExtResource("21_cy466")
-metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
-
-[node name="effect_equip_anim" type="Node2D" parent="game_fsm/ACTIVE/PLAY/player_global_components" node_paths=PackedStringArray("animation_player")]
-script = ExtResource("22_qof35")
-animation_player = NodePath("player")
-
-[node name="player" type="AnimationPlayer" parent="game_fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
-libraries = {
-&"": SubResource("AnimationLibrary_lm638")
-}
-
-[node name="pink_1" type="Sprite2D" parent="game_fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("25_hma5v")
-
-[node name="pink_2" type="Sprite2D" parent="game_fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-rotation = -0.785398
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("25_hma5v")
-
-[node name="white_1" type="Sprite2D" parent="game_fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("26_0wivy")
-
-[node name="white_2" type="Sprite2D" parent="game_fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
-modulate = Color(1, 1, 1, 0)
-rotation = 0.528835
-scale = Vector2(1.1, 1.1)
-texture = ExtResource("26_0wivy")
-
-[node name="sound" type="AudioStreamPlayer" parent="game_fsm/ACTIVE/PLAY/player_global_components/effect_equip_anim"]
-bus = &"Effects"
-script = ExtResource("21_cy466")
-metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
-
-[node name="time_manager" type="Node" parent="game_fsm/ACTIVE/PLAY/player_global_components"]
-script = ExtResource("27_x664t")
-
-[node name="chase_manager" type="Node" parent="game_fsm/ACTIVE/PLAY/player_global_components"]
-script = ExtResource("28_y0xa8")
-
 [node name="CUTSCENE" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("dream_fsm", "transitions")]
 script = ExtResource("14_eb0fa")
-dream_fsm = NodePath("../PLAY/dream_fsm")
+dream_fsm = NodePath("../PLAY/dream_component")
 transitions = [NodePath("../PLAY"), NodePath("../SPECIAL_INVERT_SCENE")]
 
-[node name="SPECIAL_INVERT_SCENE" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("transitions")]
+[node name="SPECIAL_INVERT_SCENE" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("inventory", "transitions")]
 script = ExtResource("15_x5cou")
+inventory = NodePath("../../../always/ui/hud/inventory")
 transitions = [NodePath("../CUTSCENE"), NodePath("../PLAY")]
+
+[node name="play_state_handle" type="Node" parent="game_fsm/ACTIVE"]
 
 [node name="CHANGING_SCENES" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("25_3apph")
-transitions = [NodePath("../ACTIVE"), NodePath("../PREGAME"), NodePath("../PAUSE")]
+transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE"), NodePath("../PREGAME")]
 
-[node name="PAUSE" type="Node" parent="game_fsm" node_paths=PackedStringArray("pause_menu", "pause_bgm", "transitions")]
+[node name="PAUSE" type="Node" parent="game_fsm" node_paths=PackedStringArray("pause_menu", "transitions")]
 script = ExtResource("29_scyrd")
 pause_menu = NodePath("../../always/pause")
-pause_bgm = NodePath("BGM")
 transitions = [NodePath("../PREGAME"), NodePath("../ACTIVE")]
 
 [node name="BGM" type="Node" parent="game_fsm/PAUSE"]
@@ -536,12 +556,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = SubResource("GradientTexture2D_dpjd1")
 
 [node name="always" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 15
 
-[node name="transition_instance" type="ColorRect" parent="always"]
+[node name="secondary_transition" type="ColorRect" parent="always"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("29_3apph")
+metadata/_custom_type_script = "uid://dmro0dra81fni"
+
+[node name="primary_transition" type="ColorRect" parent="always"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -558,7 +588,7 @@ visible = false
 abstract_button = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":2,"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":1,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":Resource("res://src/ui/abstract_button.gd"),"unique_data":null,"button":Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
 ,"is_toggled":false)
 
-display_bg = Object(ColorRect,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":SubResource("ShaderMaterial_3apph"),"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":2,"size_flags_horizontal":0,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","color":Color(1, 1, 1, 1),"script":null)
+display_bg = Object(ColorRect,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":SubResource("ShaderMaterial_ci86m"),"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":2,"size_flags_horizontal":0,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","color":Color(1, 1, 1, 1),"script":null)
 
 main_container = Object(PanelContainer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":1,"anchors_preset":15,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":null)
 
@@ -576,7 +606,7 @@ text_display = Object(Label,"_import_path":NodePath(""),"unique_name_in_owner":f
 
 
 [node name="display_bg" parent="always/pause/menu/container/go_back/main_container" index="0"]
-material = SubResource("ShaderMaterial_3apph")
+material = SubResource("ShaderMaterial_ci86m")
 
 [node name="abstract_button" parent="always/pause/menu/container/go_back/main_container" index="2"]
 button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)

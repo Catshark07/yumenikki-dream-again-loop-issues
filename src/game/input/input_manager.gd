@@ -107,9 +107,8 @@ class Keybind:
 		"pl_interact" 		: [ KEY_E ],
 		"pl_emote" 			: [ KEY_G ],
 		
-		"pl_primary_action"	: [ KEY_Z ],
+		"pl_primary_action"		: [ KEY_Z ],
 		"pl_secondary_action" 	: [ KEY_X ],
-		"pl_teritary_action" 	: [ KEY_Q ],
 		
 		"pl_inventory" 		: [ KEY_ALT ],
 		}

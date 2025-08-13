@@ -18,7 +18,7 @@ var fear: float: 		# --- [0 - 100] induces spiking BPP. affects music and ambien
 var exhaustion: float 	# --- [0 - 100] induces blurred outer visual. affects music and ambience volumes and invokes distorted audio.
 
 
-func _setup(_sentient: SentientBase) -> void:
+func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	bpm = calculate_bpm()
 

@@ -12,7 +12,7 @@ func _apply(_pl: Player) -> void: pass
 func _unapply(_pl: Player) -> void: pass
 
 # ---- movement ----
-func _idle(_pl: Player) -> void:  _pl.handle_direction(_pl.dir_input)
+func _idle(_pl: Player) -> void:  pass
 func _walk(_pl: Player) -> void:  _pl.handle_direction(_pl.dir_input)
 func _run(_pl: Player) -> void:   _pl.handle_direction(_pl.vel_input)
 		

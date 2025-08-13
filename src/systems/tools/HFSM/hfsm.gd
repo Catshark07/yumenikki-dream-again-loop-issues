@@ -42,7 +42,9 @@ func _exit_state() -> void:
 	if curr_state_fsm is State: curr_state_fsm._exit_state()
 	if curr_state_fsm is FSM: curr_state_fsm._exit()
 
-func change_to_state_or_fsm(_new: StringName) -> void: 
+func change_to_state_or_fsm(_new: StringName) -> void:
+	if (fsm as FSM).get_curr_state() != self: return
+	
 	if _new != "" and _has_state_or_fsm(_new):
 		var new_state_or_fsm: Node = state_fsm_dict.get(_new.to_lower())
 		if curr_state_fsm != new_state_or_fsm:

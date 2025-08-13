@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cc0cly5p7lhxv"
-path="res://.godot/imported/origin.png-3e6f2c72132c97774eed2c48ad0b6409.ctex"
+uid="uid://bp7van4fgn22w"
+path="res://.godot/imported/spawn_point.png-46a968a0eb9a5d6620562766158a1d48.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/miscallenous/editor/spawn_points/origin.png"
-dest_files=["res://.godot/imported/origin.png-3e6f2c72132c97774eed2c48ad0b6409.ctex"]
+source_file="res://addons/miscallenous/editor/spawn_point.png"
+dest_files=["res://.godot/imported/spawn_point.png-46a968a0eb9a5d6620562766158a1d48.ctex"]
 
 [params]
 

@@ -11,15 +11,7 @@ func _setup(_sb: SentientBase = null) -> void:
 	
 func _unhandled_input(_event: InputEvent) -> void: 
 	if sentient == null: return
-	
-	if sentient is Player:
-		if _event.is_action_pressed("pl_interact"):  (sentient as Player).quered_interact.emit()
-		
-		if _event.is_action_pressed("pl_sprint"): 	 (sentient as Player).quered_sprint_start.emit()
-		elif _event.is_action_released("pl_sprint"): (sentient as Player).quered_sprint_end.emit()
-		
-		if _event.is_action_pressed("pl_sneak"): 	 (sentient as Player).quered_sneak_start.emit()
-		elif _event.is_action_released("pl_sneak"):  (sentient as Player).quered_sneak_end.emit()
+	(sentient as Player)._pl_input(_event)
 
 func _update(_delta: float) -> void:
 	if input_component == null: return

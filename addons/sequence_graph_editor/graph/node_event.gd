@@ -18,7 +18,7 @@ func _init() -> void:
 	_init_flags()
 
 	set_slot(0, true, 0, Color.WHITE, true, 0, Color.WHITE)
-	event_script = preload("res://src/systems/event/event_interface.gd")
+	#event_script = preload("res://src/systems/event/event_interface.gd")
 func _init_flags() -> void:
 	title = "Event"
 	resizable = true

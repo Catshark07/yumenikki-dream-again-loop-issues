@@ -1,4 +1,4 @@
-class_name PLSystemData
+class_name PLEffect
 extends Resource
 
 @export_group("Information")

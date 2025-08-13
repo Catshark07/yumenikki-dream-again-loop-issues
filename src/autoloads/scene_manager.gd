@@ -20,7 +20,7 @@ var scene_load_status: ResourceLoader.ThreadLoadStatus
 
 var result: ResourceLoader.ThreadLoadStatus
 
-func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoader.ThreadLoadStatus:
+func handle_scene_resource_load(scene: PackedScene) -> ResourceLoader.ThreadLoadStatus:
 	if scene == null: 
 		print("case one")
 		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
@@ -41,7 +41,7 @@ func handle_background_loading_upon_request(scene: PackedScene) -> ResourceLoade
 				bg_load_finished = true
 	
 	return scene_load_status
-func setup() -> void: 
+func _setup() -> void: 
 	scene_stack = Stack.new()
 	for i: SceneNode in GlobalUtils.get_group_arr("scene_node"):
 		
@@ -52,15 +52,6 @@ func setup() -> void:
 	setup_complete.emit()
 	
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
-func unload_scene(_scene_node: SceneNode) -> bool:
-	if _scene_node == null: return false
-
-	await _scene_node.on_unload()
-	_scene_node.queue_free()
-	EventManager.invoke_event("SCENE_UNLOADED")
-	print_rich("[b]SceneManager // Unloading : Scene Unloaded![/b]")
-			
-	return true 
 func load_scene(_scene: PackedScene) -> void:
 		
 	if ResourceLoader.exists(_scene.resource_path) and _scene.can_instantiate():
@@ -69,40 +60,41 @@ func load_scene(_scene: PackedScene) -> void:
 		load_requested = true
 		bg_load_finished = false
 		
-		result = await handle_background_loading_upon_request(_scene)
+		result = await handle_scene_resource_load(_scene)
 		
 		if result == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
 			scene_node = _scene.instantiate()
 			handle_scene_push(scene_node)
 			
-			EventManager.invoke_event("SCENE_LOADED")
+			EventManager.invoke_event("SCENE_LOADED", [_scene])
 					
 		load_requested = false
 		bg_load_finished = true
 		
-		print(str("SceneManager // Load Status: ", scene_load_status))
-		print_rich("[b]SceneManager // Loading :: Loading Scene was a success![/b]")
+		print_rich(str("[color=yellow]SceneManager // Load Status: %s [/color]" % scene_load_status))
+		print_rich("[color=yellow]SceneManager // Loading :: Loading Scene was a success![/color]")
 
 	else: curr_scene_resource = null
 
 func handle_scene_push(_scene_node: SceneNode) -> void:
 	prev_scene_resource = curr_scene_resource
 	curr_scene_resource = load(_scene_node.scene_file_path)
+	scene_node = _scene_node
 
-	scene_stack.push(_scene_node)
-	scene_node = scene_stack.top
-	scene_node.initialize()
+	if scene_node.get_parent() == null: GameManager.pausable_parent.add_child(scene_node)
+	else: scene_node.reparent(GameManager.pausable_parent)
 	
-	if scene_node.get_parent() == null:
-		GameManager.pausable_parent.add_child(scene_node)
-	else:
-		scene_node.reparent(GameManager.pausable_parent)
+	scene_node.initialize()
+	scene_stack.push(_scene_node)
+	
+	EventManager.invoke_event("SCENE_PUSHED", [_scene_node])
+	
 func handle_scene_pop() -> void:
 	var scene_to_pop = scene_stack.top
 	scene_stack.pop()
 
 func change_scene_to(scene: PackedScene) -> void:
-	if !ResourceLoader.exists(scene.resource_path): 
+	if scene == null or !ResourceLoader.exists(scene.resource_path): 
 		print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 		return
 		
@@ -115,13 +107,16 @@ func change_scene_to(scene: PackedScene) -> void:
 			GameManager.change_to_state("CHANGING_SCENES")
 			scene_stack.queue_pop()
 			await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
+			Game.scene_unloaded.emit()
 			
 			handle_scene_pop()
 			await load_scene(scene)
+			Game.scene_loaded.emit()
 			
 			GameManager.request_transition(ScreenTransition.fade_type.FADE_OUT)
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
 			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
+			GameManager.change_to_state(GameManager.game_fsm.prev_state.name)
 				
 			scene_change_pending = false
 			

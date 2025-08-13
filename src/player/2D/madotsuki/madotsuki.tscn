@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=41 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
@@ -16,6 +16,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/2D/madotsuki/animation_libs/reset.tres" id="11_wc1wu"]
 [ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="13_p5dbe"]
 [ext_resource type="Texture2D" uid="uid://cgt6yqo0ynnak" path="res://src/player/2D/scripts/behaviour/interaction_prompt.png" id="17_cin7d"]
+[ext_resource type="Script" uid="uid://ckdi4htcyco6l" path="res://src/entities/component/sb_sprint.gd" id="18_k7c3c"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/systems/tools/FSM/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://du8llo3s6lchk" path="res://src/entities/component/sb_input.gd" id="19_57bvo"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/tools/FSM/fsm.gd" id="19_hy2th"]
@@ -85,10 +86,9 @@ size = Vector2(2, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ylvyo"]
 size = Vector2(16, 26)
 
-[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stamina_fsm", "fsm")]
+[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
 collision_layer = 5
 script = ExtResource("1_wub1p")
-stamina_fsm = NodePath("stamina_fsm")
 fsm = NodePath("stance_fsm")
 
 [node name="sb_components" type="Node2D" parent="."]
@@ -115,7 +115,7 @@ libraries = {
 }
 playback_auto_capture = false
 
-[node name="sprite_handler" type="Node" parent="sb_components"]
+[node name="sprite_manager" type="Node" parent="sb_components"]
 script = ExtResource("13_p5dbe")
 metadata/_custom_type_script = "uid://bgisym1hdeqgt"
 
@@ -170,6 +170,11 @@ texture = ExtResource("17_cin7d")
 script = ExtResource("19_57bvo")
 metadata/_custom_type_script = "uid://du8llo3s6lchk"
 
+[node name="sprint_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("stamina_fsm")]
+script = ExtResource("18_k7c3c")
+stamina_fsm = NodePath("../../stamina_fsm")
+metadata/_custom_type_script = "uid://ckdi4htcyco6l"
+
 [node name="stamina_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("19_hy2th")
 initial_state = NodePath("NORMAL")
@@ -194,8 +199,9 @@ transitions = [NodePath("../WALK"), NodePath("../ACTION")]
 script = ExtResource("24_ydgy1")
 transitions = [NodePath("../IDLE"), NodePath("../RUN"), NodePath("../SNEAK")]
 
-[node name="RUN" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
+[node name="RUN" type="Node" parent="stance_fsm" node_paths=PackedStringArray("sb_sprint", "transitions")]
 script = ExtResource("25_fc8o1")
+sb_sprint = NodePath("../../sb_components/sprint_manager")
 transitions = [NodePath("../WALK"), NodePath("../IDLE")]
 
 [node name="SNEAK" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]

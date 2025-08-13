@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://bv5x4rpikgrho"]
+[gd_scene load_steps=55 format=4 uid="uid://bv5x4rpikgrho"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_4ckat"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="1_28p51"]
@@ -10,8 +10,9 @@
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="4_w4wdm"]
 [ext_resource type="TileSet" uid="uid://bior84yl5ty0u" path="res://src/levels/__ignore/tile_set/apartment_real.tres" id="5_2mqtp"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="5_cgqcc"]
-[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_fade.gd" id="6_37x7p"]
+[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="6_37x7p"]
 [ext_resource type="Shader" uid="uid://dve6sxb5g6bgj" path="res://src/shaders/transition/tr_dissolve.gdshader" id="7_7agr2"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="9_7agr2"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="10_r2lfa"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="11_42v82"]
 [ext_resource type="Script" uid="uid://br3wayftgqqpo" path="res://src/systems/sequencing/sequence/game/on_game_event.gd" id="11_516q3"]
@@ -50,6 +51,13 @@ _data = {
 &"intro": SubResource("Animation_oaq00")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uwvvk"]
+shader = ExtResource("2_4ckat")
+shader_parameter/strength = 0.4
+shader_parameter/speed = 0.062
+shader_parameter/size = 2.286
+shader_parameter/colour_overlay = Color(0.58729, 0.945392, 0.961148, 1)
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_37x7p"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7agr2"]
@@ -69,13 +77,6 @@ shader_parameter/noise_tex = SubResource("NoiseTexture2D_7agr2")
 shader_parameter/strength = 1.0
 shader_parameter/pixel_count = 160.0
 shader_parameter/alpha_threshold = 0.1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uwvvk"]
-shader = ExtResource("2_4ckat")
-shader_parameter/strength = 0.4
-shader_parameter/speed = 0.062
-shader_parameter/size = 2.286
-shader_parameter/colour_overlay = Color(0.58729, 0.945392, 0.961148, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmak8"]
 shader = ExtResource("2_4ckat")
@@ -109,8 +110,75 @@ libraries = {
 &"": SubResource("AnimationLibrary_7rtwp")
 }
 
+[node name="on_player_exhaustion" type="Node" parent="."]
+script = ExtResource("11_516q3")
+event_id = PackedStringArray("PLAYER_EXHAUST")
+skip_invalid_events = true
+call_limit = 1
+metadata/_custom_type_script = "uid://br3wayftgqqpo"
+
+[node name="replenish_player_stam" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("node")]
+process_mode = 4
+script = ExtResource("33_7rtwp")
+node = NodePath("../../y_order/madotsuki")
+property_name = "stamina"
+property_info = {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "stamina",
+"type": 3,
+"usage": 2
+}
+property_value = 5.0
+new_value = 5.0
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="request_cutscene_start" type="Node" parent="on_player_exhaustion"]
+script = ExtResource("15_2pbgt")
+event_id = "CUTSCENE_START_REQUEST"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="alert_player_1" type="Node" parent="on_player_exhaustion"]
+script = ExtResource("27_neteg")
+texts = Array[String](["Be mindful of your energy little one...", "... for you shall rest should fatigue befall you."])
+sound_override = ExtResource("33_oaq00")
+font_colour_override = Color(0, 0, 0, 1)
+hide_panel = true
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="alert_player_2" type="Node" parent="on_player_exhaustion"]
+script = ExtResource("27_neteg")
+texts = Array[String](["(stamina regenerates over time. you can also stand still for faster regeneration.)"])
+font_colour_override = Color(0, 0.690196, 0.392157, 1)
+hide_panel = true
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="request_cutscene_end" type="Node" parent="on_player_exhaustion"]
+script = ExtResource("15_2pbgt")
+event_id = "CUTSCENE_END_REQUEST"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("4_w4wdm")
+skip_invalid_events = true
+
+[node name="apply_panorama" type="ColorRect" parent="scene_load_sequence"]
+material = SubResource("ShaderMaterial_uwvvk")
+custom_minimum_size = Vector2(480, 270)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 480.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_7agr2")
+
+[node name="request_cutscene_start" type="Node" parent="scene_load_sequence"]
+script = ExtResource("15_2pbgt")
+event_id = "CUTSCENE_START_REQUEST"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="play_music" type="Node" parent="scene_load_sequence"]
 script = ExtResource("3_37x7p")
@@ -122,14 +190,9 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("6_37x7p")
 fade_type = 1
 fade_shader = SubResource("ShaderMaterial_y5y2e")
-start_progress = 1.0
+a = 0.765
 transition = 2
 ease = 2
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cutscene_start" type="Node" parent="scene_load_sequence"]
-script = ExtResource("15_2pbgt")
-event_id = "CUTSCENE_START_REQUEST"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="wait" type="Node" parent="scene_load_sequence"]
@@ -142,7 +205,8 @@ script = ExtResource("6_37x7p")
 fade_type = 1
 fade_shader = SubResource("ShaderMaterial_y5y2e")
 fade_speed = 0.875
-start_progress = 0.4
+a = 0.425
+b = 0.765
 transition = 2
 ease = 2
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -159,7 +223,7 @@ script = ExtResource("6_37x7p")
 fade_type = 1
 fade_shader = SubResource("ShaderMaterial_y5y2e")
 fade_speed = 0.875
-end_progress = 0.4
+b = 0.425
 transition = 2
 ease = 2
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -186,6 +250,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("4_w4wdm")
+skip_invalid_events = true
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("3_00xaa")]
 position = Vector2(-280, 104)
@@ -194,17 +259,6 @@ initial_target = NodePath("../y_order/madotsuki")
 [node name="Wiggle" type="Node" parent="camera/marker/camera/components_receiver" index="0"]
 script = ExtResource("4_d2u0k")
 metadata/_custom_type_script = "uid://bptlrkdn0tpua"
-
-[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
-layer = -30
-
-[node name="ColorRect" type="ColorRect" parent="panorama (bottom_layer)"]
-material = SubResource("ShaderMaterial_uwvvk")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="y_order" type="Node2D" parent="."]
 material = SubResource("ShaderMaterial_qmak8")
@@ -387,7 +441,7 @@ collision_layer = 1073741824
 collision_mask = 1073741824
 script = ExtResource("13_305sw")
 spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 8),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("19_2suwl"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":SubResource("ShaderMaterial_qmak8"),"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
-,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/systems/components/independent/pl_spawn.png"))
 
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_qd70c"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -476,7 +530,7 @@ collision_layer = 1073741824
 collision_mask = 1073741824
 script = ExtResource("13_305sw")
 spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 16),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("19_2suwl"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":SubResource("ShaderMaterial_qmak8"),"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
-,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
+,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/systems/components/independent/pl_spawn.png"))
 
 rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_qd70c"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
 
@@ -547,20 +601,20 @@ use_parent_material = true
 position = Vector2(-360, 208)
 texture = ExtResource("29_uwvvk")
 hframes = 7
-frame = 4
+frame = 5
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 10.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
-progress = 4
 
 [node name="jellyfish_2" type="Sprite2D" parent="y_order"]
 use_parent_material = true
 position = Vector2(-224, 16)
 texture = ExtResource("29_uwvvk")
 hframes = 7
+frame = 1
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
@@ -583,54 +637,6 @@ script = ExtResource("4_d2u0k")
 wig_x_strn = 12.0
 wig_y_strn = 12.0
 metadata/_custom_type_script = "uid://bptlrkdn0tpua"
-
-[node name="on_player_exhaustion" type="Node" parent="."]
-script = ExtResource("11_516q3")
-event_id = PackedStringArray("PLAYER_EXHAUST")
-call_limit = 1
-metadata/_custom_type_script = "uid://br3wayftgqqpo"
-
-[node name="replenish_player_stam" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("node")]
-process_mode = 4
-script = ExtResource("33_7rtwp")
-node = NodePath("../../y_order/madotsuki")
-property_name = "stamina"
-property_info = {
-"class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "stamina",
-"type": 3,
-"usage": 2
-}
-property_value = 5.0
-new_value = 5.0
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cutscene_start" type="Node" parent="on_player_exhaustion"]
-script = ExtResource("15_2pbgt")
-event_id = "CUTSCENE_START_REQUEST"
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="alert_player_1" type="Node" parent="on_player_exhaustion"]
-script = ExtResource("27_neteg")
-texts = Array[String](["Be mindful of your energy little one...", "... for you shall rest should fatigue befall you."])
-sound_override = ExtResource("33_oaq00")
-font_colour_override = Color(0, 0, 0, 1)
-hide_panel = true
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="alert_player_2" type="Node" parent="on_player_exhaustion"]
-script = ExtResource("27_neteg")
-texts = Array[String](["(stamina regenerates over time. you can also stand still for faster regeneration.)"])
-font_colour_override = Color(0, 0.690196, 0.392157, 1)
-hide_panel = true
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cutscene_end" type="Node" parent="on_player_exhaustion"]
-script = ExtResource("15_2pbgt")
-event_id = "CUTSCENE_END_REQUEST"
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [editable path="camera"]
 [editable path="y_order/madotsuki"]

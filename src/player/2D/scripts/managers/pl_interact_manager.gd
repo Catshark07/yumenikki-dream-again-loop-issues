@@ -38,7 +38,7 @@ func _ready() -> void:
 	interactable_lost.connect(func():
 		show_prompt(false))
 		
-func _setup(_sb: SentientBase) -> void:
+func _setup(_sb: SentientBase = null) -> void:
 	super(_sb)
 	GlobalUtils.connect_to_signal(handle_interaction, sentient.quered_interact)
 	
@@ -130,3 +130,6 @@ func prompt_hide_animation() -> void:
 	
 	await prompt_tween.finished
 	prompt_icon.visible = false
+
+func _input_pass(_input: InputEvent) -> void: 
+	if _input.is_action_pressed("pl_interact"): sentient.quered_interact.emit()

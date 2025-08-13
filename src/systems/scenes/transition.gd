@@ -1,17 +1,22 @@
 class_name ScreenTransition
 extends ColorRect
 
-var DEFAULT_SHADER: Shader = preload("res://src/shaders/transition/tr_fade.gdshader")
+const DEFAULT_SHADER: Shader = preload("res://src/shaders/transition/tr_fade.gdshader")
 
-var fade_in_shader: ShaderMaterial
-var fade_out_shader: ShaderMaterial
-var default_shader: ShaderMaterial
+var fade_in_shader: 	ShaderMaterial
+var fade_out_shader: 	ShaderMaterial
+var default_shader: 	ShaderMaterial
 
 var fade_tween: Tween
 var fade_progress: float = 0:
 	set = set_fade_progress
 
 enum fade_type {FADE_IN, FADE_OUT}
+
+# - transition animation properties.
+var transition_type: 	Tween.TransitionType = Tween.TRANS_LINEAR
+var ease_type: 			Tween.EaseType = Tween.EASE_OUT
+var speed: float = 1
 
 func _ready() -> void:
 	self.z_index = 99
@@ -27,74 +32,75 @@ func _ready() -> void:
 	# im so confused
 	
 	self.size = Vector2(Application.get_viewport_dimens())
-	
-	request_transition(fade_type.FADE_OUT)
+	self.material = default_shader
+	self.visible = false
 
 func fade_in(
-	_speed: float = 1,
-	_shader: ShaderMaterial = fade_in_shader,
 	_start_progress: float = 0,
-	_end_progress: float = 1,
-	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
-	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
-		 
+	_end_progress: float = 1) -> void:
+		
 		if fade_tween != null: fade_tween.kill()
 		fade_tween = self.create_tween()
 		
-		if _shader == null: self.material = default_shader
-		else: self.material = _shader
-		
+		self.visible = true 
 		self.material.set_shader_parameter("progress", 0)
 		
 		fade_tween.tween_method(
 			set_fade_progress,
 			_start_progress, 
 			_end_progress, 
-			(1 / _speed) if _speed > 0 else 1).set_trans(_transition).set_ease(_ease)
+			(1 / speed) if speed > 0 else 1).set_trans(transition_type).set_ease(ease_type)
 			
 		await fade_tween.finished
-		reset_fade_shaders()
 func fade_out(
-	_speed: float = 1, 
-	_shader: ShaderMaterial = fade_out_shader,
 	_start_progress: float = 1,
-	_end_progress: float = 0,
-	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
-	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
+	_end_progress: float = 0) -> void:
+		self.visible = true 
 		
 		if fade_tween != null: fade_tween.kill()
 		fade_tween = self.create_tween()
 		
-		if _shader == null: self.material = default_shader
-		else: self.material = _shader
 		self.material.set_shader_parameter("progress", 1)
 		
 		fade_tween.tween_method(
 			set_fade_progress,
 			_start_progress, 
 			_end_progress, 
-			(1 / _speed) if _speed > 0 else 1).set_trans(_transition).set_ease(_ease)
+			(1 / speed) if speed > 0 else 1).set_trans(transition_type).set_ease(ease_type)
 			
 		await fade_tween.finished
+		
+		if _end_progress <= 0:
+			self.visible = false 
+		
 func set_fade_progress(_progress):
 	fade_progress = _progress
 	self.material.set_shader_parameter("progress", fade_progress)
 	
 func request_transition(
 	_fade_type: fade_type, 
+	_a_progress: float = 0,
+	_b_progress: float = 1) -> void:
+		
+	match _fade_type:
+		fade_type.FADE_IN: await fade_in(_a_progress, _b_progress)
+		fade_type.FADE_OUT: await fade_out(_b_progress, _a_progress)
+
+func set_transition(
 	_colour: Color = Color.BLACK,
 	_speed: float = 1,
 	_custom_shader: ShaderMaterial = null,
-	_a_progress: float = 0,
-	_b_progress: float = 1,
 	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
-	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
+	_ease: Tween.EaseType = Tween.EASE_OUT) -> void: 
+		self.color 				= _colour
+		self.transition_type 	= _transition
+		self.ease_type 			= _ease
+		self.speed				= _speed
 		
-	self.color = _colour
-	match _fade_type:
-		fade_type.FADE_IN: await fade_in(_speed, _custom_shader, _a_progress, _b_progress, _transition, _ease)
-		fade_type.FADE_OUT: await fade_out(_speed, _custom_shader, _b_progress, _a_progress, _transition, _ease)
-
+		if _custom_shader == null: self.material = default_shader
+		else: self.material = _custom_shader
+		
+	
 func set_fade_out_shader(_shader: ShaderMaterial) -> void: 
 	if _shader.shader == null: 
 		fade_out_shader.shader = DEFAULT_SHADER
@@ -113,5 +119,4 @@ func set_fade_in_shader(_shader: ShaderMaterial) -> void:
 	self.material = _shader
 
 func reset_fade_shaders() -> void:
-	fade_in_shader.shader = DEFAULT_SHADER
-	fade_out_shader.shader = DEFAULT_SHADER
+	self.material = default_shader

@@ -40,9 +40,9 @@ shader_parameter/noise_fwd = SubResource("NoiseTexture2D_yqgqu")
 
 [node name="colorful_irises" type="Node"]
 script = ExtResource("1_vndl4")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_5siph"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_5siph"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_5siph"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_5siph"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 load_transition = SubResource("ShaderMaterial_bsomg")
 unload_transition = SubResource("ShaderMaterial_rlt31")
@@ -110,8 +110,10 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("20_5siph")
+skip_invalid_events = true
 
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("20_5siph")
+skip_invalid_events = true
 
 [editable path="camera"]

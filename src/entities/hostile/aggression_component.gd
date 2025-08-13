@@ -59,7 +59,7 @@ func _update(_delta: float) -> void:
 		
 func _physics_update(delta: float) -> void: pass
 
-func _setup(_sentient: SentientBase) -> void: 
+func _setup(_sentient: SentientBase = null) -> void: 
 	super(_sentient)
 	_sentient.draw.connect(_draw)
 	for i in target_states:

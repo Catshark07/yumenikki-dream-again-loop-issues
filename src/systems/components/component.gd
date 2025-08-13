@@ -31,8 +31,6 @@ func _ready() -> void:
 		GlobalUtils.connect_to_signal(_on_bypass_enabled, receiver.bypass_enabled)
 		GlobalUtils.connect_to_signal(_on_bypass_lifted, receiver.bypass_lifted)
 		
-	_setup()
-
 # ---- component functions ----
 func set_active(_active: bool = true) -> void:
 	match _active:
@@ -42,28 +40,10 @@ func set_active(_active: bool = true) -> void:
 # ---- node functions ----
 func _setup() -> void: pass
 	
-func delete() -> void: 
-	self.queue_free()
-
 # ---- virtual functions ----
 func _execute() -> void: pass
 func _update(_delta: float) -> void: pass
 func _physics_update(_delta: float) -> void: pass
 
-# ---- INDEPENDENT INSTANCE PROCESS ----
-#func _process(delta: float) -> void: 
-	#if active and receiver != null and !receiver.bypass:
-		#_update(delta)
-#func _physics_process(delta: float) -> void: 
-	#if active and receiver != null and !receiver.bypass:
-		#_physics_update(delta)
-
-# ---- ON RECIEVER BYPASS ----
 func _on_bypass_enabled() -> void: pass
 func _on_bypass_lifted() -> void: pass
-
-# ---- STATIC / GLOBAL FUNCS ----
-static func has_component(_parent: Node, _comp: Component) -> bool: return false
-static func add_component(_parent: Node, _comp: Component) -> Component:
-	_parent.add_child(_comp)
-	return _comp

@@ -10,7 +10,7 @@ extends FSM
 @export var slots			: Array[GUIPanelButton]
 
 func _ready() -> void:
-	_setup()
+	_setup(self)
 	
 	GlobalUtils.connect_to_signal(close_prompt, prompt_yes.pressed)
 	GlobalUtils.connect_to_signal(close_prompt, prompt_no.pressed)
@@ -18,7 +18,5 @@ func _ready() -> void:
 	to_load_section.pressed.connect(func(): change_to_state("LOAD_STATE"))
 	to_save_section.pressed.connect(func(): change_to_state("SAVE_STATE"))
 	
-
-		
 
 func close_prompt() -> void: prompt_window.visible = false

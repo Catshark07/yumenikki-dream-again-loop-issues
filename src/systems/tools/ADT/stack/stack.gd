@@ -47,5 +47,6 @@ func push(_element: Variant) -> void:
 		 
 	array.append(_element)
 	top = _element
-	if _element is StackNode: _element._on_push()
+	if _element is StackNode: 
+		_element._on_push()
 	pushed.emit(_element)

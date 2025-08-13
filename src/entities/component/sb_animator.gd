@@ -14,7 +14,7 @@ var dynamic_rot_intensity: float = 3.85
 var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
 
 # --- setup functions --- 
-func _setup(_sentient: SentientBase) -> void:
+func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	animation_player = get_node("animation_player")
 func _update(_delta: float) -> void:

@@ -19,10 +19,11 @@ var call_count: int = 0
 func _ready() -> void: process_mode = Node.PROCESS_MODE_DISABLED
 
 # -- virtual, override these.
+func _cancel() -> void: pass
 func _execute() -> void: pass
 func _end() -> void: pass
-func _validate() -> bool:
-	return true
+
+func _validate() -> bool: return true
 
 # -- concrete
 func execute() -> void: 

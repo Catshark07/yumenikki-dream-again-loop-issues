@@ -4,11 +4,8 @@ class_name Player_YN extends Player
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
-@onready var DEFAULT_DATA: PLAttributeData
-
 # ----> trait components
 
-@export var stamina_fsm: FSM
 var marker_look_at: Strategist
 
 var sprite_sheet: SerializableDict = preload("res://src/player/2D/madotsuki/display/no_effect.tres")
@@ -22,13 +19,7 @@ func dependency_components() -> void:
 	audio_listener = $audio_listener
 	sound_player = $sound_player
 func dependency_setup() -> void:
-	stamina_fsm._setup(self) 		# --- fsm; not player dependency but required
 	fsm._setup(self)			# --- fsm; not player dependency but required
-	
-	if components.get_component_by_name("health"):
-		components.get_component_by_name("health").took_damage.connect( 
-			func(_dmg: float):
-				EventManager.invoke_event("PLAYER_HURT", [_dmg]))
 
 func _update(_delta: float) -> void:	
 	super(_delta)
@@ -36,9 +27,8 @@ func _update(_delta: float) -> void:
 	if fsm: fsm._update(_delta)
 func _physics_update(_delta: float) -> void:
 	super(_delta)
-	stamina_fsm._physics_update(_delta)
 	if fsm: fsm._physics_update(_delta)
-func _input_pass(event: InputEvent) -> void:
+func _pl_input(event: InputEvent) -> void:
 	if components != null: 	components._input_pass(event)
 	if fsm != null: 		fsm._input_pass(event)
 	
@@ -48,7 +38,7 @@ func perform_action(_action: PLAction) -> void:
 func cancel_action(_action: PLAction = action) -> void: 
 	components.get_component_by_name("action_manager").cancel_action(_action, self)
 
-func equip(_effect: PLSystemData, _skip: bool = false) -> void: 
+func equip(_effect: PLEffect, _skip: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").equip(_effect, self, _skip)
 func deequip_effect() -> void: 
 	components.get_component_by_name("equip_manager").deequip(self)

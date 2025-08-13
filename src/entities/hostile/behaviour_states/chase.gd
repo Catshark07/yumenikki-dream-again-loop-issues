@@ -1,11 +1,11 @@
 extends SentientState
 
 @export var stance_fsm: SentientFSM
-@export var aggression_component: SBAggression
+@export var sb_aggression: SBAggression
 var target: SentientBase
 
 func _enter_state() -> void:
-	if aggression_component.emits_chase_sequence:
+	if sb_aggression.emits_chase_sequence:
 		EventManager.invoke_event("CHASE_ACTIVE")
 		
 	(sentient as NavSentient).nav_agent.set_navigation_layer_value(2, false)
@@ -16,7 +16,7 @@ func _enter_state() -> void:
 	super()
 
 func _exit_state() -> void:
-	if aggression_component.emits_chase_sequence:
+	if sb_aggression.emits_chase_sequence:
 		EventManager.invoke_event("CHASE_FINISH")
 
 func physics_update(_delta: float) -> void: 
@@ -31,8 +31,8 @@ func physics_update(_delta: float) -> void:
 		update_chase_point()
 
 func update(_delta: float) -> void:
-	if aggression_component.suspicion <= 50:
-		aggression_component.suspicion = 20
+	if sb_aggression.suspicion <= 50:
+		sb_aggression.suspicion = 20
 		fsm.change_to_state("observe")
 
 func update_chase_point() -> void: 

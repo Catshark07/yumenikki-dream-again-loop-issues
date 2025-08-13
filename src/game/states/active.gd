@@ -7,8 +7,10 @@ func _setup() -> void:
 	if player_setup == false: 
 		Player.Instance.setup()
 		player_setup = true
-
-func _enter_state() -> void:
+		
+func _enter_state() -> void: 
 	super()
-	for s in GlobalUtils.get_group_arr("sentients"): 
-		if s != null: s.unfreeze()
+	GameManager.set_control_visibility(GameManager.player_hud, true)
+func _exit_state() -> void:
+	super()
+	InputManager.request_curr_controller_change(InputManager.def_input_controller)

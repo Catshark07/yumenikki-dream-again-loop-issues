@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_84h6v"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="2_dcrlv"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="3_onajm"]
-[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_fade.gd" id="4_dcrlv"]
+[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="4_dcrlv"]
 [ext_resource type="Shader" uid="uid://dfvq1pars23rw" path="res://src/shaders/transition/tr_circle.gdshader" id="5_onajm"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="5_wsq5t"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="6_d4kb7"]
@@ -63,6 +63,7 @@ script = ExtResource("11_fmbam")
 animator = NodePath("../../renderer")
 animation_sheet = ExtResource("10_dnuke")
 animation_speed = 12.0
+skip_warning = true
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="screen_fade_in" type="Node" parent="on_interact"]
@@ -79,11 +80,6 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("5_wsq5t")
 sound = ExtResource("8_fmbam")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
-
-[node name="request_cutscene_end" type="Node" parent="on_interact"]
-script = ExtResource("3_onajm")
-event_id = "CUTSCENE_END_REQUEST"
-metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("scene_traversal")]
 script = ExtResource("7_sdwye")

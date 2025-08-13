@@ -1,6 +1,5 @@
-class_name PLPhysicalEff
+class_name PLEffectComponent
 extends Node
-
 
 # ---- 	DO NOT TOUCH THESE 	----
 func _enter(_pl: Player) -> void: pass

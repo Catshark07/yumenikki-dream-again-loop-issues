@@ -11,6 +11,7 @@ exhaust_multi = 0.9
 stamina_drain = 0.78
 stamina_regen = 1.0
 can_run = true
+disable_drain = false
 walk_noise_mult = 1.0
 sneak_noise_mult = 0.5
 run_noise_mult = 2.2

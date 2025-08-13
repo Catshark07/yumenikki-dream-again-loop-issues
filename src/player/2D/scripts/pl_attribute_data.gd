@@ -11,6 +11,7 @@ extends Resource
 @export var stamina_drain: float = Player.STAMINA_DRAIN
 @export var stamina_regen: float = Player.STAMINA_REGEN
 @export var can_run: bool = Player.CAN_RUN
+@export var disable_drain: bool = false
 
 @export_group("Noise Multipliers")
 @export var walk_noise_mult: float = Player.WALK_NOISE_MULTI
@@ -44,5 +45,5 @@ func _unapply(_pl: Player) -> void:
 	_pl.walk_noise_mult = Player.WALK_NOISE_MULTI
 	_pl.sneak_noise_mult = Player.SNEAK_NOISE_MULTI
 	_pl.run_noise_mult = Player.RUN_NOISE_MULTI
-
+	
 func _physics_update(_delta: float, _pl: Player) -> void: pass

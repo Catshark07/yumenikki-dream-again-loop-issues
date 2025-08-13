@@ -5,9 +5,7 @@ var interactable: Node2D
 
 func _execute() -> void:
 	EventManager.invoke_event("PLAYER_DOOR_USED", [scene_traversal.connection_id])
-	await super()
-	
-	GameManager.change_scene_to(load(scene_traversal.scene_path))
+	Game.change_scene_to(load(scene_traversal.scene_path))
 
 func _validate() -> bool:
 	if scene_traversal == null:

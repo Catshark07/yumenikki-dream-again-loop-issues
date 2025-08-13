@@ -29,12 +29,6 @@ func load_scene_data(_scene: SceneNode) -> void:
 		for node in node_saves: 
 			if node != null: node.load_data(_scene)
 
-func get_data() -> Dictionary:
-	return data
-func set_data(_data) -> Error: 
-	data = _data
-	return OK
-
 func change_data_value(_key: String, _val: Variant) -> void:
 	if !_key in data: return
 	data[_key] = _val 

@@ -1,17 +1,20 @@
 class_name Save
 extends Game.GameSubClass
 
-static var time_elapsed: float
-static var data := {
+const TEMPLATE_DATA := {
+	"version" : "00",
 	"game" : {
-		"version" : "00",
 		"completed" : false,
 		"read_warning" : false,
 		"time_played" : 00,
 		},
 	"player" : {},
 	"scene" : {}}
+
+static var time_elapsed: float
+static var data = TEMPLATE_DATA
 static var curr_data: Dictionary
+static var curr_idx: int = 0
 
 const SAVE_DIR := "user://save/"
 
@@ -20,44 +23,40 @@ static func _setup() -> void:
 	if !DirAccess.dir_exists_absolute(SAVE_DIR): 
 		DirAccess.make_dir_absolute(SAVE_DIR)
 
-static func save_data(_number: int = 0) -> Dictionary:
+static func save_data(_number: int = 0) -> void:
 	DirAccess.make_dir_absolute(SAVE_DIR)
 	
 	if curr_data.is_empty(): curr_data = Dictionary(data)
-	var save_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.WRITE)
+	var save_data_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.WRITE)
 	var curr_data := Dictionary(data)
 	
-	curr_data["game"]["version"] = ProjectSettings.get_setting("application/config/version")
-	curr_data["game"]["time_played"] = {
-		"hours" 	: get_play_time()["hours"],
-		"minutes" 	: get_play_time()["minutes"], 
-		"seconds" 	: get_play_time()["seconds"]
-		}
+	curr_data["version"] = Game.GAME_VER
+	curr_data["game"]["time_played"] = time_elapsed
 		
-	curr_data["player"] = Player.Data.get_data()
-	curr_data["scene"] = NodeSaveService.get_data()
+	curr_data["player"] = Player.Data.content
+	curr_data["player"]["effects"] = Player.Data.get_effects_as_path()
+	curr_data["scene"] = NodeSaveService.data
 	
-	print(save_file.get_path())
-	save_file.store_string(JSON.stringify(curr_data, "\t"))
-	save_file.close()
-	save_file = null
-	
-	EventManager.invoke_event("GAME_FILE_SAVE")
-	return curr_data
+	save_data_file.store_string(JSON.stringify(curr_data, "\t"))
+	save_data_file.close()
+	save_data_file = null
+
+	EventManager.invoke_event("GAME_FILE_SAVE", [curr_data])
 static func load_data(_number: int = 0) -> Error:
 	if FileAccess.file_exists(str(SAVE_DIR, "save_%s.json" % [_number])): 
 		var load_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.READ)
 		var content = JSON.parse_string(load_file.get_as_text())
 		curr_data = content
 		
-		print(load_file.get_path())
-		
 		load_file.close()
 		load_file = null
-		time_elapsed = content["game"]["time_played"]
+
+		if !verify_data_version(curr_data):
+			return ERR_CANT_OPEN
 		
-		Player.Data.set_data(content["player"])
-		NodeSaveService.set_data(content["scene"])
+		time_elapsed 			= content["game"]["time_played"]
+		Player.Data.content 	= content["player"]
+		NodeSaveService.data 	= content["scene"]
 		
 	else: return ERR_CANT_OPEN
 	return OK
@@ -67,11 +66,13 @@ static func get_data_as_json(_json_file_name: String) -> JSON:
 	if json_file_path.is_empty() or json_file_path == ".json": return
 	
 	return ResourceLoader.load(json_file_path)
+static func get_data(_number: int = 0) -> Dictionary:
+	var load_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.READ)
+	var content = JSON.parse_string(load_file.get_as_text())
+	return content
 
 static func clear_data() -> Error:
-	data["player"] = {}
-	data["scene"] = {}
-	data["game"]["read_warning"] = false
+	data = TEMPLATE_DATA
 	return OK
 
 static func change_data_value(_key: String, _val: Variant) -> void:
@@ -81,7 +82,16 @@ static func read_data_value(_key: String) -> Variant:
 	if !_key in data: return
 	return data[_key]
 
-static func get_play_time() -> Dictionary:
+# - helper
+static func verify_data_version(_data: Dictionary) -> bool:
+	if _data.is_empty(): return false
+	
+	if  _data.has("version"):
+		return _data["version"] == Game.GAME_VER
+		
+	return false
+
+static func get_time_elapsed_in_HMS() -> Dictionary:
 	return {
 		"hours" 	: floori(fmod(time_elapsed / 3600, 24)),
 		"minutes" 	: floori(fmod(time_elapsed, 3600) / 60),

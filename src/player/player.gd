@@ -34,7 +34,7 @@ const EXHAUST_MULTI: float = 0.9
 
 const MAX_STAMINA := 5
 const STAMINA_DRAIN: float = .78
-const STAMINA_REGEN: float = .9
+const STAMINA_REGEN: float = .8
 
 const WALK_NOISE_MULTI: float = 1
 const RUN_NOISE_MULTI: float = 2.2
@@ -64,10 +64,10 @@ func _enter_tree() -> void:
 	super()
 	Instance._pl = self
 	EventManager.invoke_event("PLAYER_UPDATED")
-func _input_pass(event: InputEvent) -> void: pass
+func _pl_input(event: InputEvent) -> void: pass
 
 class Data:
-	static var data: Dictionary = {		
+	static var content: Dictionary = {		
 		"data" : 
 			{
 			"innocent_killed" : 0,
@@ -75,26 +75,29 @@ class Data:
 			},
 		"effects" : [],
 		}
+	
+	static var effects: Array[PLEffect]
+	
+	static func get_effects_as_path() -> PackedStringArray:
+		var arr = []
+		for i in effects:
+			arr.append(i.resource_path)
 		
-	static func update_effects_data(_effects_data: Array[PLSystemData]) -> void: 
-		data["effects"] = _effects_data
-	static func get_data() -> Dictionary: return data
-	static func set_data(_data: Dictionary) -> Error:
-		data = _data
-		return OK
+		return arr
+			
+	
 class Instance:
 	static var _pl: Player 
 	
-	static var inventory: Array
-	static var effects: Array
-
 	static var door_went_flag: bool = false
 	static var door_listener: EventListener
-
+	static var equipment_auto_apply: EventListener 
 
 	const DEFAULT_EQUIPMENT = preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")
-	static var equipment_auto_apply: EventListener 
-	static var equipment_pending: PLSystemData = DEFAULT_EQUIPMENT
+	
+	static var equipment_pending	: PLEffect = DEFAULT_EQUIPMENT
+	static var equipment_favourite	: PLEffect = null
+	static var effects_inventory: Array
 
 	static func setup() -> void: 	
 		door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
@@ -103,10 +106,9 @@ class Instance:
 			
 			for points: SpawnPoint in GlobalUtils.get_group_arr("spawn_points"):
 				if (
-					load(points.scene_path) == Game.scene_manager.curr_scene_resource and 
+					load(points.scene_path) == Game.scene_manager.prev_scene_resource and 
 					door_went_flag and
 					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
-						
 						
 						teleport_player(points.global_position, points.spawn_dir, true)
 						if points.parent_instead_of_self != null:
@@ -134,7 +136,6 @@ class Instance:
 			get_pl().direction = (_dir)
 			if w_camera and CameraHolder.instance.initial_target == get_pl(): 
 				CameraHolder.instance.global_position = get_pl().global_position
-				
 	static func handle_player_world_warp(_pos: Vector2, _dir: Vector2) -> void:
 		if get_pl():
 			get_pl().global_position = _pos

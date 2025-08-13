@@ -31,7 +31,7 @@ var shake_comp: CamShake
 # ---- cam properties
 @export_group("Camera Properties")
 
-var switch_duration: float = .5
+var switch_duration: float = .35
 @export var offset: Vector2 = Vector2(0, 0): set = set_offset
 @export_range(0.8, 2) var zoom: float = 1: set = set_zoom
 
@@ -276,7 +276,7 @@ class STRAT_FOLLOW_SENTIENT:
 		player = Player.Instance.get_pl()
 	func _follow(_cam: CameraHolder, point: Vector2) -> void:
 		look_ahead = look_ahead.lerp(
-			(player.dir_input * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 
+			(player.velocity * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 
 			Game.get_real_delta() * follow_speed)
 		final = point + look_ahead
 

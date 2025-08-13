@@ -8,8 +8,11 @@ const EMOTE_PATH := "emote/"
 @export var emote_speed: float = 1
 @export var auto_exit: bool = false
 
-func _perform(_pl: Player) -> void:
-	(_pl as Player_YN).force_change_state("action")
+func _perform(_pl: Player) -> bool:
+	if _pl.fsm.get_curr_state_name() == "idle":
+		(_pl as Player_YN).force_change_state("action")
+		return true
+	return false
 	
 func _enter(_pl: Player) -> void:
 	(_pl as Player_YN).components.get_component_by_name("animation_manager").play_animation(get_enter_anim_path())
@@ -19,12 +22,15 @@ func _quit_emote(_pl: Player) -> void:
 		(_pl as Player_YN).components.get_component_by_name("animation_manager").play_animation(get_exit_anim_path())
 		await (_pl as Player_YN).components.get_component_by_name("animation_manager").animation_player.animation_finished
 
+func _physics_update(_pl: Player, _delta: float) -> void:
+	_pl.stamina += _delta * (_pl.stamina_regen) / 1.4
+
 func _cancel(_pl: Player) -> void:
 	(_pl as Player_YN).force_change_state("idle")
 
 
 func _input(_pl: Player, _input: InputEvent) -> void: 
-	if (Input.is_action_pressed("emote")  or _pl.input.length() > 0):
+	if (Input.is_action_pressed("pl_emote")  or _pl.desired_speed > 0):
 		await _quit_emote(_pl)
 		_cancel(_pl)
 

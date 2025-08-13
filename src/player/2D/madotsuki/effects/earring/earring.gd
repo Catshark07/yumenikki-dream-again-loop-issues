@@ -1,4 +1,4 @@
-extends PLPhysicalEff
+extends PLEffectComponent
 
 @export var sound_player: SoundPlayer
 @export var field: Area2D

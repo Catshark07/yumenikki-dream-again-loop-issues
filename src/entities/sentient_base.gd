@@ -9,22 +9,37 @@ extends Entity
 var vel_input: Vector2i
 var dir_input: Vector2i
 
-var noise: 			float = 0
 var is_moving: bool = false
 
 var world_warp: Area2D
 var components: SBComponentReceiver
 
+var noise: 			float = 0
+
+# - consts
 const TRANS_WEIGHT:	float = 0.225
 const BASE_SPEED: 	float = 27.5
-const SPRINT_MULT: 	float = 2.3
 const MAX_SPEED: 	float = 95
 
+# - sprites
 var sprite_renderer: Sprite2D
 var shadow_renderer: Sprite2D 
 
+# - vel and speed.
 var desired_vel: Vector2
 var desired_speed: float
+
+# - direction
+enum compass_headings {
+	NORTH = 0,
+	NORTH_HORIZ = 1,
+	HORIZ = 2,
+	SOUTH_HORIZ = 3,
+	SOUTH = 4}
+
+var heading: compass_headings
+var direction: Vector2 = Vector2(0, 1):
+	set(dir): direction = clamp(dir, Vector2(-1, -1), Vector2(1, 1))
 var lerped_direction: Vector2 = Vector2.DOWN
 
 @export_category("Base Entity Behaviour")
@@ -34,8 +49,6 @@ var lerped_direction: Vector2 = Vector2.DOWN
 
 var speed: float = 0
 var speed_multiplier: float = 1
-var abs_velocity: Vector2:
-	get: return abs(self.velocity)
 
 @export_group("Auditorial")
 var noise_multi: float = 1
@@ -54,15 +67,18 @@ func _ready() -> void:
 	dependency_components()
 	dependency_setup()
 	
-func _enter_tree() -> void: add_to_group("sentients")
-func _exit_tree() -> void:  remove_from_group("sentients")
+func _enter_tree() -> void: add_to_group("actors")
+func _exit_tree() -> void:  remove_from_group("actors")
 	
-func _exit() -> void: 
+func freeze() -> void: 
 	self.velocity = Vector2.ZERO
 	components.set_bypass(true)
-func _enter() -> void: 
+func unfreeze() -> void: 
 	self.velocity = Vector2.ZERO
 	components.set_bypass(false)
+	
+func _exit() -> void: freeze()
+func _enter() -> void: unfreeze()
 	
 func dependency_components() -> void: pass 	
 func dependency_setup() -> void: pass 
@@ -72,21 +88,17 @@ func _physics_update(_delta: float) -> void:
 	(self as SentientBase).move_and_slide()
 	
 	components._physics_update(_delta)
-	abs_velocity 	= abs(self.velocity)
-	speed 			= abs_velocity.length()
-	desired_speed 	= desired_vel.length()
+	speed 			= abs(self.velocity).length()
 	
-	handle_velocity(vel_input)
+	handle_desired_velocity(vel_input)
 	handle_heading()
 func _update(_delta: float) -> void:
-	is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO	
+	is_moving = speed > 0	
 	components._update(_delta)
 
 func handle_noise() -> void:
 	noise = (self.speed / self.MAX_SPEED) * noise_multi
-
-func handle_velocity(_dir: Vector2) -> void:
-	desired_vel = ((_dir.normalized() * BASE_SPEED))
+func handle_velocity() -> void:
 	self.velocity = Vector2(desired_vel * speed_multiplier).limit_length(MAX_SPEED) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
 		
@@ -102,3 +114,8 @@ func handle_heading() -> void:
 		else:
 			if direction.y > .5: heading = compass_headings.SOUTH
 			elif direction.y < -.5: heading = compass_headings.NORTH
+
+func handle_desired_velocity(_dir: Vector2) -> void:
+	desired_vel = ((_dir.normalized() * BASE_SPEED))
+	desired_speed 	= desired_vel.length()
+	

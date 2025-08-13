@@ -1,14 +1,17 @@
-[gd_scene load_steps=38 format=4 uid="uid://hx52e5i78byf"]
+[gd_scene load_steps=47 format=4 uid="uid://hx52e5i78byf"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_6knvu"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="2_h8r0l"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_tq601"]
 [ext_resource type="AudioStream" uid="uid://d3ne7k6ma2gud" path="res://src/audio/bgm/luff_yta_thalassophobia.ogg" id="3_fpoo2"]
+[ext_resource type="Texture2D" uid="uid://btlafmy6pq5vq" path="res://src/images/panorama/sea_galaxy.png" id="5_4xmih"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="6_3s5hh"]
+[ext_resource type="Script" uid="uid://buwx0x51eley6" path="res://src/panorama/panorama_placeholder.gd" id="6_h8r0l"]
 [ext_resource type="Texture2D" uid="uid://igeawgnb7dyk" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_small/transparent.png" id="6_jboc0"]
 [ext_resource type="Texture2D" uid="uid://cnv28x5lj43m6" path="res://src/levels/_dream/upper_abyss/sprites/bubble_big.png" id="6_nhhmy"]
+[ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="8_4xmih"]
+[ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="8_s1u5h"]
 [ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="10_2w56n"]
-[ext_resource type="Texture2D" uid="uid://crn4ltkx2gral" path="res://src/images/panorama/temp.png" id="10_oxeah"]
 [ext_resource type="Texture2D" uid="uid://bel8k7h7lfio5" path="res://src/levels/_dream/upper_abyss/sprites/bubble_small.png" id="11_gap0c"]
 [ext_resource type="PackedScene" uid="uid://c1crevnw4c26l" path="res://src/levels/_dream/upper_abyss/entities/medium_jellyfish.tscn" id="12_3veyl"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="14_wlpfk"]
@@ -19,7 +22,7 @@
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="20_wwa0q"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="22_4xmih"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="22_purwu"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="23_fc2sj"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="24_4xmih"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="24_yd7mj"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="25_ko0ej"]
 
@@ -29,13 +32,47 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_101a1"]
 shader = ExtResource("6_3s5hh")
-shader_parameter/dirX = 0.0
-shader_parameter/dirY = 0.0
-shader_parameter/scroll_speed = 0.0
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.05
 shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_4xmih"]
+offsets = PackedFloat32Array(0, 0.72973, 1)
+colors = PackedColorArray(0.00483017, 0.0663816, 0.143034, 1, 0.365302, 0.525406, 0.663487, 1, 0.583816, 0.761581, 0.969736, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yd7mj"]
+gradient = SubResource("Gradient_4xmih")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ko0ej"]
+shader = ExtResource("8_4xmih")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/optional_grad = true
+shader_parameter/gradient = SubResource("GradientTexture2D_yd7mj")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2k60w"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cqp54"]
+noise = SubResource("FastNoiseLite_2k60w")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tugvm"]
+shader = ExtResource("8_s1u5h")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 0.7
+shader_parameter/scroll_speed = 0.27
+shader_parameter/noise_strength = 0.165
+shader_parameter/noise_fwd = SubResource("NoiseTexture2D_cqp54")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kjkby"]
 particles_animation = true
@@ -131,61 +168,67 @@ size = Vector2(30, 15)
 
 [node name="upper_abyss" type="Node"]
 script = ExtResource("1_6knvu")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_h8r0l"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"is_active":false,"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_h8r0l"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_h8r0l"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"is_active":false,"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_h8r0l"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 load_transition = SubResource("ShaderMaterial_purwu")
 unload_transition = SubResource("ShaderMaterial_h8r0l")
 
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("23_fc2sj")
-stream = ExtResource("3_fpoo2")
-
-[node name="panorama" type="CanvasLayer" parent="."]
-layer = -84
-
-[node name="【関電64_2_】【24_9m】氏" type="Sprite2D" parent="panorama"]
+[node name="【関電64_2_】【24_9m】氏" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_101a1")
-texture = ExtResource("10_oxeah")
-centered = false
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("5_4xmih")
+script = ExtResource("6_h8r0l")
 
-[node name="small_jellifishies" type="GPUParticles2D" parent="panorama"]
+[node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("14_wlpfk")]
+position = Vector2(240, 144)
+initial_target = NodePath("../y_order/madotsuki")
+
+[node name="overlay_2" parent="camera_handler/marker/camera" index="1"]
+material = SubResource("ShaderMaterial_ko0ej")
+
+[node name="overlay_3" parent="camera_handler/marker/camera" index="2"]
+material = SubResource("ShaderMaterial_tugvm")
+
+[node name="bg_jellyfishies" type="GPUParticles2D" parent="camera_handler"]
+z_index = -20
 y_sort_enabled = true
 material = SubResource("CanvasItemMaterial_kjkby")
-position = Vector2(240, 288)
 texture = ExtResource("6_jboc0")
 lifetime = 8.0
 preprocess = 4.0
 visibility_rect = Rect2(-150, -100, 300, 200)
 process_material = SubResource("ParticleProcessMaterial_h6ajk")
 
-[node name="cam_layer" parent="." instance=ExtResource("14_wlpfk")]
-
-[node name="bigger_jellifishies" type="GPUParticles2D" parent="cam_layer"]
+[node name="fg_jellyfishies" type="GPUParticles2D" parent="camera_handler"]
+z_index = 5
 y_sort_enabled = true
 material = SubResource("CanvasItemMaterial_kjkby")
-position = Vector2(240, 288)
+position = Vector2(0, 232)
 amount = 6
 texture = ExtResource("6_jboc0")
 lifetime = 10.0
 preprocess = 5.0
 process_material = SubResource("ParticleProcessMaterial_cu50w")
 
-[node name="bigger_jellifishies2" type="GPUParticles2D" parent="cam_layer"]
+[node name="small_bubbles" type="GPUParticles2D" parent="camera_handler"]
+z_index = 5
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_yjqak")
-position = Vector2(224, 302)
+position = Vector2(0, 232)
 amount = 6
 texture = ExtResource("11_gap0c")
 lifetime = 6.0
 preprocess = 5.0
 process_material = SubResource("ParticleProcessMaterial_5ote5")
 
-[node name="bigger_jellifishies3" type="GPUParticles2D" parent="cam_layer"]
+[node name="big_bubbles" type="GPUParticles2D" parent="camera_handler"]
+z_index = 5
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_yjqak")
-position = Vector2(224, 302)
+position = Vector2(0, 232)
 amount = 3
 texture = ExtResource("6_nhhmy")
 lifetime = 6.0
@@ -317,7 +360,13 @@ parent_instead_of_self = NodePath("../..")
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("2_h8r0l")
 
+[node name="Event" type="Node" parent="scene_load_sequence"]
+script = ExtResource("24_4xmih")
+stream = ExtResource("3_fpoo2")
+pitch = 0.8
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("2_h8r0l")
 
-[editable path="cam_layer"]
+[editable path="camera_handler"]

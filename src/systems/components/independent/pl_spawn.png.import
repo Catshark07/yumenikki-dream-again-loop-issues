@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cinf0iw0i7rei"
-path="res://.godot/imported/spawn_point.png-f2ba89498b4630cac1931529c5726906.ctex"
+uid="uid://dhdh6revykdmx"
+path="res://.godot/imported/pl_spawn.png-38c784b9ab2f1b2c25ed40fd3cddf73f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/images/spawn_point.png"
-dest_files=["res://.godot/imported/spawn_point.png-f2ba89498b4630cac1931529c5726906.ctex"]
+source_file="res://src/systems/components/independent/pl_spawn.png"
+dest_files=["res://.godot/imported/pl_spawn.png-38c784b9ab2f1b2c25ed40fd3cddf73f.ctex"]
 
 [params]
 

@@ -1,6 +1,8 @@
 class_name PLActionManager 
 extends SBComponent
 
+const PINCH = null
+
 var emote: PLEmote
 var primary_action: PLAction
 var secondary_action: PLAction
@@ -15,8 +17,8 @@ var can_action: bool = true
 
 signal did_something
 
-func _setup(_pl: SentientBase) -> void:
-	super(_pl)
+func _setup(_sb: SentientBase = null) -> void:
+	super(_sb)
 	
 	cooldown_timer = $timer
 	cooldown_timer.wait_time = cooldown
@@ -35,12 +37,9 @@ func set_curr_action(_action: PLAction) -> void: curr_action = _action
 
 func perform_action(_action: PLAction, _pl: Player) -> void: 
 	if _action and can_action:
-		if (_pl.fsm.get_curr_state_name() in _action.supported_states and 
-			_action.supported_states[_pl.fsm.get_curr_state_name()]): 
-			
-			did_something.emit()
-			set_curr_action(_action)
-			_action._perform(_pl)
+		set_curr_action(_action)
+		if !_action._perform(_pl): return 
+		did_something.emit()
 func cancel_action(_action: PLAction, _pl: Player, _force: bool = false) -> void: 
 	if _action and (can_action or _force):
 		_action._cancel(_pl)
@@ -59,12 +58,12 @@ func handle_action_input(_input: InputEvent) -> void: if curr_action and can_act
 func handle_action_phys_update(_delta: float) -> void: if curr_action: curr_action._physics_update(sentient, _delta)
 func handle_action_update(_delta: float) -> void: if curr_action: curr_action._update(sentient, _delta)
 
-func _physics_update(_delta: float) -> void: handle_action_phys_update(_delta)
-func _update(_delta: float) -> void: handle_action_update(_delta)
 func input_pass(event: InputEvent) -> void:
 	super(event)
-	if Input.is_action_just_pressed("primary_action"): perform_action(primary_action, sentient)
-	elif Input.is_action_just_pressed("secondary_action"): perform_action(secondary_action, sentient)
+	if 		Input.is_action_just_pressed("pl_primary_action"): 		perform_action(primary_action, sentient)
+	elif 	Input.is_action_just_pressed("pl_secondary_action"): 	perform_action(secondary_action, sentient)
+	elif 	Input.is_action_just_pressed("pl_emote"): 				perform_action(emote, sentient)
+	elif 	Input.is_action_just_pressed("pl_pinch"): 				perform_action(secondary_action, sentient)
 
 # ---- action executes / cancels ----
 func flag_false_can_action() -> void: 

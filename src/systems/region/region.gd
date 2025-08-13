@@ -8,7 +8,7 @@ extends Area2D
 	set(_colour):
 		if Engine.is_editor_hint():
 			debug_colour = _colour
-			rect.debug_color = _colour
+			if rect: rect.debug_color = _colour
 
 var region_priority: int = 0
 var shape: Shape2D:

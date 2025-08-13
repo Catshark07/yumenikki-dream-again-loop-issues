@@ -101,13 +101,11 @@ var pos_right_mirror: Vector2
 @export_group("Loop render properties.")
 @export var viewport_container	: Node
 @export var render_container	: Node
-@export var cameras			: Array[Camera2D]
 @export var renders			: Array[Sprite2D]
 @export var viewport_renders: Array[SubViewport]
 
 @export_storage var player_detector: AreaRegion
 var player_in_region: Player
-var player_relative_pos: Vector2
 
 # TODO:
 	# the reason why this breaks is because this node alongside its parent is reparented
@@ -234,21 +232,12 @@ func loop_render_setup() -> void:
 		viewport_renders[v].set_canvas_cull_mask_bit(16, false)
 		
 	for r in range(viewport_renders.size()): # sprite 2D renders.
-		cameras[r].anchor_mode = Camera2D.ANCHOR_MODE_DRAG_CENTER
-		cameras[r].position = loop_viewports_size / 2
 		renders[r].texture = viewport_renders[r].get_texture()
 		renders[r].set_visibility_layer_bit(0, false)
 		renders[r].set_visibility_layer_bit(16, true)
 		
 func loop_render_update() -> void: 
-	if player_in_region != null:
-		player_relative_pos = player_in_region.global_position - global_position
-	for c in range(cameras.size()):
-		if c == 0:
-			if player_relative_pos.x > boundary_size.x: pass
-			else: 
-				cameras[c].position = Vector2(boundary_size.x, player_relative_pos.y)
-				renders[c].position = Vector2(0, player_relative_pos.y)
+	if player_in_region != null: pass
 		
 
 func player_looping_bounds_setup() -> void:

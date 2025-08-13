@@ -64,7 +64,7 @@ var sound_to_be_played: AudioStream
 
 @onready var multiple_floors := FootstepSet.new()
 
-func _setup(_sentient: SentientBase) -> void:
+func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	
 	footstep_se_player = $sound_player

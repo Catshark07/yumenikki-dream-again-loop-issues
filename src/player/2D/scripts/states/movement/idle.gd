@@ -1,9 +1,5 @@
 extends SentientState
 var library_path := "normal"
-var pinch: PLAction
-
-func _setup() -> void:
-	pinch = load("res://src/player/2D/madotsuki/effects/_none/_pinch.tres")
 
 func _enter_state() -> void: 
 	(sentient as Player_YN).set_texture_using_sprite_sheet("idle")
@@ -14,16 +10,14 @@ func _enter_state() -> void:
 
 func update(_delta: float) -> void:
 	if sentient.desired_speed > 0:
-		sentient.force_change_state("walk")
+		fsm.change_to_state("walk")
 
 func physics_update(_delta: float) -> void:
 	sentient.get_behaviour()._idle(sentient)
 	if sentient.stamina < sentient.MAX_STAMINA:
 		sentient.stamina += _delta * (sentient.stamina_regen)
 	
-func input(_event: InputEvent) -> void: 
-	if Input.is_action_just_pressed("emote"):
-			sentient.perform_action(sentient.components.get_component_by_name("action_manager").emote)
-	if Input.is_action_just_pressed("pinch"):
-			sentient.perform_action(pinch)
-	
+#func input(_event: InputEvent) -> void: 
+	#if Input.is_action_just_pressed("pl_emote"):
+			#sentient.perform_action(sentient.components.get_component_by_name("action_manager").emote)
+	#

@@ -35,8 +35,6 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 [node name="on_interact" type="Node" parent="."]
 process_mode = 4
 script = ExtResource("2_lea3f")
-remove_invalid_events = false
-halt_sequence = true
 
 [node name="request_cutscene" type="Node" parent="on_interact"]
 script = ExtResource("3_e2ltu")
@@ -68,7 +66,6 @@ metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 position = Vector2(0, 12)
 script = ExtResource("2_45h0u")
 parent_instead_of_self = NodePath("..")
-as_sibling = true
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="renderer" type="Sprite2D" parent="."]

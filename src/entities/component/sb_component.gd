@@ -1,8 +1,7 @@
 class_name SBComponent
-extends Node
+extends Component
 
 var sentient: SentientBase
-@export var active: bool = true
 
 func _ready() -> void:
 	set_process(false)
@@ -14,7 +13,7 @@ func _ready() -> void:
 	GlobalUtils.connect_to_signal(_on_bypass_enabled, sb_component_receiver.bypass_enabled)
 	GlobalUtils.connect_to_signal(_on_bypass_lifted, sb_component_receiver.bypass_lifted)
 
-func _setup(_sb: SentientBase) -> void: sentient = _sb
+func _setup(_sb: SentientBase = null) -> void: sentient = _sb
 func _update(_delta: float) -> void: pass
 func _physics_update(_delta: float) -> void: pass
 func _input_pass(_event: InputEvent) -> void: pass

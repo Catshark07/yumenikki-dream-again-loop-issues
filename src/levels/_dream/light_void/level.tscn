@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_kphg3"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_mi76w"]
 [ext_resource type="AudioStream" uid="uid://dxel6g1uub7r7" path="res://src/audio/bgm/silas_passing-tones.ogg" id="3_jwstn"]
-[ext_resource type="Script" uid="uid://buwx0x51eley6" path="res://src/panorama/panorama_placeholder.gd" id="4_0x8fy"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="5_lhts1"]
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="6_1yaby"]
 [ext_resource type="Texture2D" uid="uid://devrumewya5bv" path="res://src/images/panorama/blurred_glow.png" id="6_7iakk"]
@@ -11,6 +10,7 @@
 [ext_resource type="Shader" uid="uid://b0qym6r6rs7ns" path="res://src/shaders/panorama/linear_additive.gdshader" id="8_lk8vc"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="9_hvmbn"]
 [ext_resource type="Texture2D" uid="uid://cbvnq8kcolqfd" path="res://src/levels/_dream/light_void/sprites/wowie.png" id="12_vgmgu"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="13_0x8fy"]
 [ext_resource type="TileSet" uid="uid://b771j363m3vqt" path="res://src/levels/_dream/light_void/tilesets/light_void.tres" id="13_g7klr"]
 [ext_resource type="TileSet" uid="uid://7dng4ghwe3iu" path="res://src/levels/_dream/light_void/tilesets/pillars.tres" id="14_87p8m"]
 [ext_resource type="TileSet" uid="uid://fc40lcfxh2rr" path="res://src/levels/_dream/light_void/tilesets/trees.tres" id="16_tboo3"]
@@ -21,6 +21,19 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0x8fy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_85jal"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d4bgs"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Gradient" id="Gradient_yd63f"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_a54rf"]
+offsets = PackedFloat32Array(0, 0.492492, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gx4cu"]
 shader = ExtResource("5_lhts1")
@@ -42,24 +55,11 @@ shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d4bgs"]
-particles_animation = true
-particles_anim_h_frames = 4
-particles_anim_v_frames = 1
-particles_anim_loop = true
-
-[sub_resource type="Gradient" id="Gradient_yd63f"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="Gradient" id="Gradient_a54rf"]
-offsets = PackedFloat32Array(0, 0.492492, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
-
 [node name="light_void" type="Node2D"]
 script = ExtResource("1_kphg3")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"halt_invalid_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_8ac2k"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 load_transition = SubResource("ShaderMaterial_0x8fy")
 unload_transition = SubResource("ShaderMaterial_85jal")
@@ -67,25 +67,6 @@ unload_transition = SubResource("ShaderMaterial_85jal")
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("2_mi76w")
 stream = ExtResource("3_jwstn")
-
-[node name="panorama (top_layer)" type="SubViewport" parent="."]
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-canvas_item_default_texture_repeat = 2
-size = Vector2i(480, 270)
-script = ExtResource("4_0x8fy")
-
-[node name="normal" type="TextureRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_gx4cu")
-offset_right = 480.0
-offset_bottom = 270.0
-texture = ExtResource("6_1yaby")
-
-[node name="glow" type="TextureRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_ur078")
-offset_right = 480.0
-offset_bottom = 270.0
-texture = ExtResource("6_7iakk")
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("9_hvmbn")]
 position = Vector2(768, -80)
@@ -165,8 +146,29 @@ metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
 [node name="scene_load_sequence" type="Node" parent="."]
 script = ExtResource("20_8ac2k")
+skip_invalid_events = true
+
+[node name="panorama (top_layer)" type="SubViewport" parent="scene_load_sequence"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+script = ExtResource("13_0x8fy")
+
+[node name="normal" type="TextureRect" parent="scene_load_sequence/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_gx4cu")
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("6_1yaby")
+
+[node name="glow" type="TextureRect" parent="scene_load_sequence/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_ur078")
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("6_7iakk")
 
 [node name="scene_unload_sequence" type="Node" parent="."]
 script = ExtResource("20_8ac2k")
+skip_invalid_events = true
 
 [editable path="camera"]

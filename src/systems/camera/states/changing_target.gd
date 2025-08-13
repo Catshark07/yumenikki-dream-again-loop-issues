@@ -15,5 +15,5 @@ func physics_update(_delta: float) -> void:
 			Tween.EASE_OUT)
 			)
 	
-	if is_zero_approx(Vector2(target_position - context.global_position.round()).length()):
+	if (Vector2(target_position - context.global_position.round()).length()) <= 1:
 		fsm.change_to_state("following") 
