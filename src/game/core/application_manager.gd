@@ -22,7 +22,7 @@ static func quit():
 	Music.fade_out()
 	Ambience.fade_out()
 	Save.save_data()
-	await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
+	await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
 	Game.main_tree.quit.call_deferred()
 static func pause(): 
 	Game.is_paused = true

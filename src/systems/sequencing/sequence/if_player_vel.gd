@@ -1,6 +1,6 @@
 extends ConditionalSequence
 
-@export var heading_condition: Entity.compass_headings
+@export var heading_condition: SentientBase.compass_headings
 @export var speed_condition: float = 10
 @export var area_region: AreaRegion
 var pl: Player

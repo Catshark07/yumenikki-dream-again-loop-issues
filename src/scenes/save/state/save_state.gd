@@ -18,7 +18,6 @@ func _enter_state() -> void:
 	for save in save_buttons: 
 		GlobalUtils.connect_to_signal(_save.bind(int(save.name)), save.pressed)
 	
-
 	to_save_button.set_active(false)
 	
 	if tween != null: tween.kill()
@@ -33,7 +32,6 @@ func _exit_state() -> void:
 
 	to_save_button.set_active(true)
 
-func open_prompt() -> void: prompt.visible = true
 	
 func _save(_slot: int = 0) -> void: 
 	var save_slot = save_buttons[_slot - 1] if _slot > 0 else null
@@ -45,6 +43,6 @@ func _save(_slot: int = 0) -> void:
 		
 		if save_slot.abstract_button.unique_data == null: save.call()
 		else:
-			open_prompt()
+			prompt.visible = true
 			GlobalUtils.connect_to_signal(save.call, prompt_yes.pressed, Object.CONNECT_ONE_SHOT)
 			

@@ -11,7 +11,7 @@ const screen_size := Vector2i(480, 270)
 @export var expansion: Vector2i
 
 @export var loop_type: type = type.HORIZONTAL 
-@export var direction_trigger: Entity.compass_headings
+@export var direction_trigger: SentientBase.compass_headings
 
 # ---- loop components ---- 
 @onready var region: AreaRegion = $region
@@ -63,14 +63,14 @@ func _handle_player_warp(_pl: Player) -> void:
 			
 			type.HORIZONTAL: 
 				var target_region_direction: int = sign(target_region.global_position.x - self.global_position.x)
-				Player.Instance.handle_player_world_warp(
+				Player.Instance.teleport_player(
 					Vector2(
 						target_region.global_position.x + (1 * target_region_direction) * (tile_size.x * 3/2), _pl.global_position.y), 
 						_pl.direction)
 						
 			type.VERTICAL:
 				var target_region_direction: int = sign(target_region.global_position.y - self.global_position.y)
-				Player.Instance.handle_player_world_warp(
+				Player.Instance.teleport_player(
 					Vector2(_pl.global_position.x, target_region.global_position.y + 1 * target_region_direction), 
 					_pl.direction)
 					

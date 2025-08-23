@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://dl25joalnmaxt"]
+[gd_scene load_steps=39 format=4 uid="uid://dl25joalnmaxt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_0iw03"]
 [ext_resource type="Shader" uid="uid://dhykg54peq185" path="res://src/shaders/panorama/radial.gdshader" id="2_6vasg"]
@@ -21,13 +21,14 @@
 [ext_resource type="Texture2D" uid="uid://3i5qno0o7ib8" path="res://src/levels/__ignore/doors/door_forest.png" id="21_bqcf3"]
 [ext_resource type="Texture2D" uid="uid://dkxu0pw6gxo3f" path="res://src/levels/__ignore/doors/door_mural.png" id="22_0iw03"]
 [ext_resource type="Texture2D" uid="uid://dr7f1rsayw4om" path="res://src/levels/__ignore/doors/door_candle.png" id="23_jxym7"]
-[ext_resource type="AudioStream" uid="uid://blvfuo72u6lrh" path="res://src/audio/bgm/-1 - Drifting Thoughts.ogg" id="23_mah0q"]
 [ext_resource type="Texture2D" uid="uid://cycu3tgkj5mjl" path="res://src/levels/__ignore/doors/door_dark.png" id="24_25aso"]
 [ext_resource type="Texture2D" uid="uid://p030n5rywk1s" path="res://src/levels/__ignore/doors/door_grafitti.png" id="25_f8lfk"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="26_feke8"]
 [ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="26_ksvw7"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="27_1rd4d"]
 [ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="27_scjaa"]
+[ext_resource type="AudioStream" uid="uid://blvfuo72u6lrh" path="res://src/audio/bgm/-1 - Drifting Thoughts.ogg" id="28_jxym7"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="29_jxym7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1rd4d"]
 
@@ -73,15 +74,13 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_rtj6g"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[node name="nexus" type="Node"]
+[node name="nexus" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_0iw03")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"time_elapsed":0.0,"order":Array[Node]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://src/systems/sequencing/event/game/screen_transition.gd"),"fade_type":1,"fade_shader":null,"fade_colour":Color(0, 0, 0, 1),"fade_speed":1.0,"a":0.0,"b":1.0,"transition":0,"ease":1,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_limit":0,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
-]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"print_debug":true,"deferred":false,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
-
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("26_feke8"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":true,"print_debug":true,"deferred":false,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
-
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
 load_transition = SubResource("ShaderMaterial_1rd4d")
 unload_transition = SubResource("ShaderMaterial_jxym7")
+scene_objects = null
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="panorama_vp" type="SubViewport" parent="."]
@@ -361,21 +360,21 @@ end_frame = false
 fps = 5.0
 frame_h_count = 3
 
-[node name="scene_load_sequence" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="."]
 script = ExtResource("26_feke8")
-skip_invalid_events = true
-deferred = false
 
-[node name="play_music" type="Node" parent="scene_load_sequence"]
+[node name="bgm" type="Node" parent="on_initial"]
 script = ExtResource("27_1rd4d")
-stream = ExtResource("23_mah0q")
+stream = ExtResource("28_jxym7")
 pitch = 0.8
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="scene_unload_sequence" type="Node" parent="."]
+[node name="apply_panorama" type="Node" parent="on_initial"]
+script = ExtResource("29_jxym7")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="on_free" type="Node" parent="."]
 script = ExtResource("26_feke8")
-skip_invalid_events = true
-deferred = false
 
 [editable path="camera"]
 [editable path="y_order/numbers_world"]

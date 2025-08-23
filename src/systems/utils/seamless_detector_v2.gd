@@ -104,7 +104,7 @@ var pos_right_mirror: Vector2
 @export var renders			: Array[Sprite2D]
 @export var viewport_renders: Array[SubViewport]
 
-@export_storage var player_detector: AreaRegion
+@export var player_detector: AreaRegion
 var player_in_region: Player
 
 # TODO:

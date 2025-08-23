@@ -1,8 +1,15 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://dlytw3uf7vjuh"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://dlytw3uf7vjuh"]
 
+[ext_resource type="Texture2D" uid="uid://cu1esraxo4rnl" path="res://src/levels/_dream/colourful_irises/sprites/teeth.png" id="1_t8w3j"]
 [ext_resource type="Texture2D" uid="uid://hq1y7paxhmis" path="res://src/levels/_dream/colourful_irises/sprites/eye-big_1.png" id="2_2t8e0"]
 [ext_resource type="Texture2D" uid="uid://ddv8ptuvylhcp" path="res://src/levels/_dream/colourful_irises/sprites/eye-large_1.png" id="3_3gy28"]
 [ext_resource type="Texture2D" uid="uid://1aedbj4oic53" path="res://src/levels/_dream/colourful_irises/sprites/eye-small_1.png" id="4_l2ggd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w8gob"]
+texture = ExtResource("1_t8w3j")
+0:0/size_in_atlas = Vector2i(4, 3)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t8baa"]
 texture = ExtResource("2_2t8e0")
@@ -31,3 +38,4 @@ custom_data_layer_0/type = 2
 sources/1 = SubResource("TileSetAtlasSource_t8baa")
 sources/2 = SubResource("TileSetAtlasSource_nls5h")
 sources/3 = SubResource("TileSetAtlasSource_mfi67")
+sources/0 = SubResource("TileSetAtlasSource_w8gob")

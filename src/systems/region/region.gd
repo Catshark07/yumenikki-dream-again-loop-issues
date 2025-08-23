@@ -3,7 +3,7 @@
 class_name AreaRegion
 extends Area2D
 
-@export_storage var rect: CollisionShape2D
+@export var rect: CollisionShape2D
 @export var debug_colour: Color = Color(0, 0, 0, .3):
 	set(_colour):
 		if Engine.is_editor_hint():

@@ -1,8 +1,3 @@
-# ---- 	!!IMPORTANT !! 	----
-# - ensure that any object that uses this class is a... -
-# - ... derivative of CharacterBody2D ... 				-
-# ----					----
-
 class_name SentientBase
 extends Entity
 
@@ -36,23 +31,20 @@ enum compass_headings {
 	HORIZ = 2,
 	SOUTH_HORIZ = 3,
 	SOUTH = 4}
-
 var heading: compass_headings
+
 var direction: Vector2 = Vector2(0, 1):
 	set(dir): direction = clamp(dir, Vector2(-1, -1), Vector2(1, 1))
 var lerped_direction: Vector2 = Vector2.DOWN
 
 @export_category("Base Entity Behaviour")
-
-#region ---- mobility and velocity properties ----
 @export_group("Mobility Values")
 
-var speed: float = 0
 var speed_multiplier: float = 1
+var speed: float = 0
 
 @export_group("Auditorial")
 var noise_multi: float = 1
-#endregion
 
 func _ready() -> void:
 	sprite_renderer = get_node_or_null("sprite_renderer")
@@ -70,15 +62,15 @@ func _ready() -> void:
 func _enter_tree() -> void: add_to_group("actors")
 func _exit_tree() -> void:  remove_from_group("actors")
 	
-func freeze() -> void: 
+func _freeze() -> void: 
 	self.velocity = Vector2.ZERO
 	components.set_bypass(true)
-func unfreeze() -> void: 
+func _unfreeze() -> void: 
 	self.velocity = Vector2.ZERO
 	components.set_bypass(false)
 	
-func _exit() -> void: freeze()
-func _enter() -> void: unfreeze()
+func _exit() -> void: _freeze()
+func _enter() -> void: _unfreeze()
 	
 func dependency_components() -> void: pass 	
 func dependency_setup() -> void: pass 
@@ -95,10 +87,13 @@ func _physics_update(_delta: float) -> void:
 func _update(_delta: float) -> void:
 	is_moving = speed > 0	
 	components._update(_delta)
+func _sb_input(_event: InputEvent) -> void: 
+	pass
 
 func handle_noise() -> void:
 	noise = (self.speed / self.MAX_SPEED) * noise_multi
-func handle_velocity() -> void:
+func handle_velocity(_multi: float = 1) -> void:
+	speed_multiplier = _multi
 	self.velocity = Vector2(desired_vel * speed_multiplier).limit_length(MAX_SPEED) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
 		

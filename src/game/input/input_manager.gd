@@ -3,18 +3,13 @@ extends Game.GameSubClass
 
 # - WASD and Arrow Keys are going to be represented ina VECTOR 4.
 # Vector4(S | DOWN_ARROW, D | RIGHT_ARROW, W | UP_ARROW, A | LEFT_ARROW )
-# what the fuck
-# reverse the up and down with left and right
-
-static var hide_mouse_after_time := 300
-
 static var sb_input_controller	: SBInputController
 static var def_input_controller	: UIInputController
 static var curr_controller		: InputController
 
 static var keybind: Keybind
 
-static var direction_vector_2		: Vector2i
+static var dir_input				: Vector2i
 static var direction_vector_4		: Vector4i
 
 static func _setup() -> void:
@@ -34,12 +29,12 @@ static func _update(_delta: float) -> void:
 		int(Input.is_action_pressed("pl_move_up")) | int(Input.is_action_pressed("ui_up"))
 		)
 	
-	direction_vector_2 = Vector2i(
+	dir_input = Vector2i(
 		direction_vector_4.x - direction_vector_4.z,
 		direction_vector_4.y - direction_vector_4.w)
 
 	if curr_controller != null: 
-		curr_controller.dir_input = direction_vector_2
+		curr_controller.dir_input = dir_input
 		curr_controller._update(_delta)
 		
 	

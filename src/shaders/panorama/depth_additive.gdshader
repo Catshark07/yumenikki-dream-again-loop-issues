@@ -1,5 +1,5 @@
 shader_type canvas_item;
-render_mode world_vertex_coords, blend_add;
+render_mode blend_add;
 
 #include "res://src/shaders/_include/depth_base.gdshaderinc"
 

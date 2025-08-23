@@ -4,19 +4,20 @@ extends State
 
 func _enter_state() -> void: 
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
-	GameManager.set_control_visibility(GameManager.player_hud.indicators, false)
-	GameManager.set_control_visibility(pause_menu, true)
-	GameManager.set_control_visibility(GameManager.options, true)
-
+	
 	GameManager.set_cinematic_bars(true)
+	GameManager.player_hud.indicators.visible = false
+	GameManager.options.visible = true
+	pause_menu.visible = true
+
 	Application.pause()
 	Application.main_window.grab_focus()
 
 func _exit_state() -> void: 
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
 
-	GameManager.set_control_visibility(GameManager.options, false)
-	GameManager.set_control_visibility(pause_menu, false)
+	GameManager.options.visible = false
+	pause_menu.visible = false
 	
 	GameManager.set_cinematic_bars(false)
 	Application.resume()

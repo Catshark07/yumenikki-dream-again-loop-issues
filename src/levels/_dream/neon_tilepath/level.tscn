@@ -1,15 +1,12 @@
-[gd_scene load_steps=28 format=4 uid="uid://qe3q4hhevgdu"]
+[gd_scene load_steps=22 format=4 uid="uid://qe3q4hhevgdu"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_h75dg"]
 [ext_resource type="TileSet" uid="uid://cdwf1q5unkp6r" path="res://src/levels/__ignore/tile_set/neon_path.tres" id="2_cnnt0"]
-[ext_resource type="AudioStream" uid="uid://b8n3oeuudnpvm" path="res://src/audio/bgm/world_snow.ogg" id="6_a4nch"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_rs7jf"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="7_gbe6x"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="7_jfuuc"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="8_n43c4"]
-[ext_resource type="PackedScene" uid="uid://b4efdoikr5o84" path="res://src/entities/sentients/animated_sentient.tscn" id="9_8sdby"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="9_r4jb6"]
-[ext_resource type="Texture2D" uid="uid://duwjwe2dxrpyn" path="res://src/entities/sentients/hell/hell_3.png" id="10_8mj7h"]
 [ext_resource type="TileSet" uid="uid://b6b68ymed8ei7" path="res://src/levels/__ignore/tile_set/neon_world.tres" id="10_v18uj"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="11_flct8"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="11_ld25y"]
@@ -18,19 +15,14 @@
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="12_wof8k"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="13_rwgou"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="14_rwgou"]
-[ext_resource type="AudioStream" uid="uid://btc4tvdxrt213" path="res://src/audio/se/se_rpgmaker_teleport.wav" id="15_2kx1l"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="16_rwgou"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="20_n43c4"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="21_ku0yl"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="21_ku0yl"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v18uj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ecvcv"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ku0yl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4jb6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kk0yh"]
-size = Vector2(16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ecvcv"]
 size = Vector2(16, 16)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_dkxgw"]
@@ -40,15 +32,12 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(80, 64, 80, 96, 216, 96
 
 [node name="neon_tilepath" type="Node"]
 script = ExtResource("1_h75dg")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_n43c4"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":false,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+load_transition = SubResource("ShaderMaterial_ecvcv")
+unload_transition = SubResource("ShaderMaterial_r4jb6")
 
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("20_n43c4"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":false,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
-
-load_transition = SubResource("ShaderMaterial_v18uj")
-unload_transition = SubResource("ShaderMaterial_ku0yl")
-metadata/_custom_type_script = "uid://b1ofr4umso5jf"
-
-[node name="camera" parent="." instance=ExtResource("7_gbe6x")]
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("7_gbe6x")]
+position = Vector2(1208, 896)
+initial_target = NodePath("../y_order/Madotsuki")
 
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -126,70 +115,6 @@ tile_set = ExtResource("10_v18uj")
 [node name="Madotsuki" parent="y_order" instance=ExtResource("6_rs7jf")]
 position = Vector2(1208, 896)
 
-[node name="hellspawn" parent="y_order" instance=ExtResource("9_8sdby")]
-position = Vector2(120, 64)
-
-[node name="sprite_renderer" parent="y_order/hellspawn" index="3"]
-texture = ExtResource("10_8mj7h")
-hframes = 4
-autoplay = true
-loop = true
-fps = 5.0
-frame_dimensions = Vector2i(20, 30)
-frame_h_count = 4
-
-[node name="behaviour_fsm" parent="y_order/hellspawn" index="8" node_paths=PackedStringArray("initial_state")]
-initial_state = NodePath("WANDER")
-
-[node name="WANDER" parent="y_order/hellspawn/behaviour_fsm" index="2"]
-wander_radius = 10.0
-
-[node name="hell_interactable" type="Area2D" parent="y_order/hellspawn"]
-collision_layer = 1073741824
-collision_mask = 1073741824
-script = ExtResource("11_ld25y")
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_ecvcv"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
-debug_colour = Color(0.9, 0, 0.7, 0.3)
-metadata/_custom_type_script = "uid://bxh774473av7t"
-
-[node name="from_hell" type="Node2D" parent="y_order/hellspawn/hell_interactable" node_paths=PackedStringArray("parent_instead_of_self")]
-script = ExtResource("12_odkte")
-scene_path = "uid://m50bp6u4vgts"
-connection_id = "neon_tile"
-parent_instead_of_self = NodePath("../..")
-metadata/_custom_type_script = "uid://ofyfa3d6ql28"
-
-[node name="to_hell" type="Node" parent="y_order/hellspawn/hell_interactable" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("13_rwgou")
-scene_path = "uid://m50bp6u4vgts"
-connection_id = "neon_tile"
-spawn_point = NodePath("../from_hell")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
-
-[node name="Sequence" type="Node" parent="y_order/hellspawn/hell_interactable"]
-script = ExtResource("12_wof8k")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[node name="PlaySound" type="Node" parent="y_order/hellspawn/hell_interactable/Sequence"]
-script = ExtResource("14_rwgou")
-sound = ExtResource("15_2kx1l")
-pitch = 1.5
-metadata/_custom_type_script = "uid://vk574kc3l7av"
-
-[node name="Event" type="Node" parent="y_order/hellspawn/hell_interactable/Sequence" node_paths=PackedStringArray("scene_traversal")]
-script = ExtResource("16_rwgou")
-scene_traversal = NodePath("../../to_hell")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="spawn_point" type="Node2D" parent="y_order/hellspawn/hell_interactable" node_paths=PackedStringArray("parent_instead_of_self")]
-script = ExtResource("12_odkte")
-parent_instead_of_self = NodePath(".")
-
-[node name="rect" type="CollisionShape2D" parent="y_order/hellspawn/hell_interactable"]
-shape = SubResource("RectangleShape2D_ecvcv")
-debug_color = Color(0.2, 0, 0.7, 0.2)
-
 [node name="hell_spawn_wander_region" type="NavigationRegion2D" parent="y_order"]
 navigation_polygon = SubResource("NavigationPolygon_dkxgw")
 navigation_layers = 2
@@ -202,15 +127,9 @@ parent_instead_of_self = NodePath(".")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="scene_load_sequence" type="Node" parent="."]
-script = ExtResource("20_n43c4")
-
-[node name="play_music" type="Node" parent="scene_load_sequence"]
 script = ExtResource("21_ku0yl")
-stream = ExtResource("6_a4nch")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="scene_unload_sequence" type="Node" parent="."]
-script = ExtResource("20_n43c4")
+script = ExtResource("21_ku0yl")
 
 [editable path="camera"]
-[editable path="y_order/hellspawn"]

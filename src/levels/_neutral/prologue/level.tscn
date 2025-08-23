@@ -608,19 +608,21 @@ loop = true
 fps = 10.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
+progress = 5
 
 [node name="jellyfish_2" type="Sprite2D" parent="y_order"]
 use_parent_material = true
 position = Vector2(-224, 16)
 texture = ExtResource("29_uwvvk")
 hframes = 7
-frame = 1
+frame = 4
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 7.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
+progress = 4
 
 [node name="sigil" type="Sprite2D" parent="y_order"]
 position = Vector2(1128, 1248)

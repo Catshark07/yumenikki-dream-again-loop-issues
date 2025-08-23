@@ -1,6 +1,11 @@
 extends Component
 
 @export var game_state_fsm: FSM
+enum states {
+	PREGAME, 
+	ACTIVE
+	}
+	
 var non_playable_scenes: PackedStringArray = [
 	"res://src/levels/_neutral/menu/menu.tscn",
 	"res://src/scenes/pre_menu.tscn",
@@ -13,7 +18,7 @@ func _ready() -> void:
 	state_requests_listener.do_on_notify(["SCENE_PUSHED"], update_game_state)
 	
 func update_game_state() -> void: 
-	var curr_res_scene = Game.scene_manager.curr_scene_resource
+	var curr_res_scene = SceneManager.curr_scene_resource
 	var state_id: String = ""
 	
 	if curr_res_scene == null: return

@@ -11,13 +11,8 @@ func _enter_state() -> void:
 func update(_delta: float) -> void:
 	if sentient.desired_speed > 0:
 		fsm.change_to_state("walk")
-
+	
 func physics_update(_delta: float) -> void:
 	sentient.get_behaviour()._idle(sentient)
 	if sentient.stamina < sentient.MAX_STAMINA:
 		sentient.stamina += _delta * (sentient.stamina_regen)
-	
-#func input(_event: InputEvent) -> void: 
-	#if Input.is_action_just_pressed("pl_emote"):
-			#sentient.perform_action(sentient.components.get_component_by_name("action_manager").emote)
-	#

@@ -2,7 +2,7 @@ class_name Save
 extends Game.GameSubClass
 
 const TEMPLATE_DATA := {
-	"version" : "00",
+	"version" : "DEFAULT",
 	"game" : {
 		"completed" : false,
 		"read_warning" : false,
@@ -14,9 +14,9 @@ const TEMPLATE_DATA := {
 static var time_elapsed: float
 static var data = TEMPLATE_DATA
 static var curr_data: Dictionary
-static var curr_idx: int = 0
 
 const SAVE_DIR := "user://save/"
+static var save_files: Array
 
 static func _setup() -> void:
 	time_elapsed = 0

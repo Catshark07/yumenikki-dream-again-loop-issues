@@ -39,17 +39,17 @@ var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 @export var panel_display_shader: Shader = DEFAULT_PANEL_DISPLAY_SHADER
 
 # ---- inner button components ---- 
-@export_storage var display_bg: ColorRect
+@export var display_bg: ColorRect
 
-@export_storage var main_container: PanelContainer
-@export_storage var inner_main_container: CenterContainer
-@export_storage var icon_content_seperator: BoxContainer
+@export var main_container: PanelContainer
+@export var inner_main_container: CenterContainer
+@export var icon_content_seperator: BoxContainer
 
-@export_storage var margin_container: MarginContainer
-@export_storage var icon_display_container: CenterContainer
-@export_storage var icon_display: TextureRect
+@export var margin_container: MarginContainer
+@export var icon_display_container: CenterContainer
+@export var icon_display: TextureRect
 
-@export_storage var text_display: Label
+@export var text_display: Label
 
 func _children_components_setup() -> void:
 	main_container = GlobalUtils.get_child_node_or_null(self, "main_container")

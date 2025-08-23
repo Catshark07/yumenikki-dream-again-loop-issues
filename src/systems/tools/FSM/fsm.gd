@@ -15,11 +15,7 @@ var curr_state: State
 
 func _init(init_state: State = null) -> void: initial_state = init_state
 
-# --- HFSM exclusive
-func _enter() -> void: pass
-func _exit() -> void: pass
-
-# --- initial ---
+# - initial
 func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 	context = _owner
 	
@@ -34,6 +30,7 @@ func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 		curr_state._enter_state()
 func change_to_state(_new: StringName) -> void:
 	_new = _new.to_lower()
+	#print(">> %s has state [%s]?:: %s" % [self, _new, has_state(_new)])
 	if !_new.is_empty() and has_state(_new):
 		var new_state: State = state_dict.get(_new.to_lower())
 
@@ -49,7 +46,7 @@ func change_to_state(_new: StringName) -> void:
 			curr_state._enter_state()
 			curr_state.entered.emit()
 			
-# --- state checks + getter --- 
+# - state checks + getter
 func has_state(state_name: StringName) -> bool:
 	return state_name in state_dict
 func is_in_state(state_name: StringName) -> bool:
@@ -64,7 +61,7 @@ func get_curr_state_name() -> String:
 	if get_curr_state() == null: return str("%s:: no state bound" % self)
 	return state_dict.find_key(curr_state)
 
-# --- dependent update / process --- 
+# - dependent update / process
 func _update(_delta: float) -> void: 
 	if curr_state != null: curr_state.update(_delta)
 func _physics_update(_delta: float) -> void: 

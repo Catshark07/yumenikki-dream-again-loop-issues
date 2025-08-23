@@ -3,7 +3,7 @@
 class_name TeleportationDoor
 extends Interactable
 
-@export_storage var spawn_point: SpawnPoint
+@export var spawn_point: SpawnPoint
 @export var target_door: TeleportationDoor
 @export var parallel: bool = false
 
@@ -31,14 +31,11 @@ func _interact() -> void:
 		
 		EventManager.invoke_event("PLAYER_DOOR_TELEPORTATION")
 		EventManager.invoke_event("CUTSCENE_START_REQUEST")
-		Game.scene_manager.scene_node.on_unload_request()
-		await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
+		await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
 		
-		print(target_door.spawn_point)
 		Player.Instance.teleport_player(target_door.spawn_point.global_position, target_door.spawn_point.spawn_dir)
 		Player.Instance.get_pl().reparent(target_door.get_parent())
 		
-		Game.scene_manager.scene_node.on_load_request()
-		GameManager.request_transition(ScreenTransition.fade_type.FADE_OUT)
+		GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
 		EventManager.invoke_event("CUTSCENE_END_REQUEST")
 	

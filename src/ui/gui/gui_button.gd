@@ -25,7 +25,7 @@ var curr_colour = Color.WHITE
 @export var press_colour: Color = Color(1, 1, 0)
 
 # ---- misc ----
-@export_storage var abstract_button: AbstractButton
+@export var abstract_button: AbstractButton
 var modu_tw: Tween
 var disp_tw: Tween
 

@@ -13,6 +13,6 @@ skip_deequip_animation = false
 stats = ExtResource("3_daw3f")
 behaviour = ExtResource("1_ru6d1")
 sprite_override = "res://src/player/2D/madotsuki/display/no_effect.tres"
-emote = "res://src/player/2D/madotsuki/emotes/sit_down.tres"
+emote = ""
 player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

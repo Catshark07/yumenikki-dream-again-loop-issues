@@ -1,20 +1,11 @@
 class_name GameManager 
 extends Node
 
-const PRE_GAME_SCENES := [
-	"res://src/scenes/debug_preload.tscn",
-	"res://src/scenes/pre_menu.tscn",
-	"res://src/levels/menu/level.tscn"
-	]
-const MENU_SCENES := [
-	"res://src/levels/_neutral/menu/menu.tscn"
-]
-
-# ---- ----
 static var bloom: bool = false
 
 static var global_screen_effect: WorldEnvironment
-static var global_component: ComponentReceiver
+static var global_components: ComponentReceiver
+static var global_player_components: SBComponentReceiver
 
 static var instance: GameManager
 
@@ -50,7 +41,8 @@ func _setup() -> void:
 	game_fsm 				= get_node("game_fsm")
 	state_handle			= get_node("state_handle")
 	
-	global_component 		= get_node("global_component")
+	global_player_components= get_node("global_player_components")
+	global_components 		= get_node("global_components")
 	global_screen_effect 	= get_node("global_screen_effect")
 	pausable_parent 		= get_node("pausable")
 	always_parent 			= get_node("always")
@@ -71,14 +63,15 @@ func _setup() -> void:
 	global_screen_effect.environment.glow_enabled = bloom
 	game_fsm._setup(self)
 	
-	request_transition(ScreenTransition.fade_type.FADE_OUT)
+	screen_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
+	secondary_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
 	
 func update(_delta: float) -> void: 
 	game_fsm._update(_delta)
-	if global_component: global_component._update(_delta)
+	if global_components: global_components._update(_delta)
 func physics_update(_delta: float) -> void: 
 	game_fsm._physics_update(_delta)
-	if global_component: global_component._physics_update(_delta)
+	if global_components: global_components._physics_update(_delta)
 func input_pass(event: InputEvent) -> void: 
 	game_fsm._input_pass(event)
 	
@@ -90,13 +83,7 @@ static func pause(_pause: bool = true) -> void:
 	if _pause: Application.pause()
 	else: Application.resume()
 	
-# ---- secondary scene handling (instead of using scenemanager directly) ----
-
-					
 # ---- UI stuff ---- 
-static func set_control_visibility(_control: Control, _visible: bool) -> void:
-	_control.visible = _visible 
-
 static func set_cinematic_bars(_active: bool) -> void: 
 	if cb_tween != null: cb_tween.kill()
 	cb_tween = cinematic_bars.create_tween()
@@ -119,14 +106,3 @@ static func set_cinematic_bars(_active: bool) -> void:
 static func change_to_state(new_state: String) -> void:
 	game_fsm.change_to_state(new_state)
 static func is_in_state(state: String) -> bool: return game_fsm._is_in_state(state)
-static func request_transition(_fade_type: ScreenTransition.fade_type) -> void:
-	await Game.main_tree.physics_frame
-	await screen_transition.request_transition(_fade_type)
-
-# ---- events
-# the dictionary consists of the event name and a dictionary that contains: 1) id and 2) subscribers.
-# 1) is self explanatory.
-# 2) are going to contain callables itself to call them whenever needed.
-
-# the only downside however, is no matter what callable is subscribed to what event
-# the event will invoke and call all callables with no exceptions and conditions.

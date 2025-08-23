@@ -7,7 +7,7 @@ func _ready() -> void:
 	super()
 	quit_to_menu.pressed.connect(
 		func(): 
-			Game.change_scene_to(preload("res://src/levels/_neutral/menu/menu.tscn"))
+			SceneManager.change_scene_to(preload("res://src/levels/_neutral/menu/menu.tscn"))
 			GameManager.pause_options(false)
 			GameManager.pause(false)
 			)		

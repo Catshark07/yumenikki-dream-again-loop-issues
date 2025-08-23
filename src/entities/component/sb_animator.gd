@@ -32,8 +32,10 @@ func play_animation(_path: String, _speed: float = 1, _backwards: bool = false) 
 func play_animation_priority(_path: String, _speed: float = 1, _backwards: bool = false) -> void:
 	play_animation(_path, _speed, _backwards)
 	can_play = false
+	await animation_player.animation_finished
+	can_play = true
 func has_animation(_path: String) -> bool:
 	return animation_player.has_animation(_path)
 
 func _on_bypass_enabled() -> void: animation_player.pause()
-func _on_bypass_lifted() -> void: animation_player.play()
+func _on_bypass_lifted() -> void: animation_player.play(&"")

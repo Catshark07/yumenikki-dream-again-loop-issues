@@ -1,11 +1,9 @@
 extends Node
 
 var hud_fade: EventListener
-var on_invert: EventListener
 var game_save: EventListener
 
-@export var indicators: Control
-@export var hud: Control
+@export var hud: PLHUD
 @export var icon: TextureRect
 @export var icon_timer: Timer
 
@@ -13,10 +11,6 @@ func _setup() -> void:
 	hud_fade = EventListener.new(["SCENE_CHANGE_REQUEST", "SCENE_CHANGE_SUCCESS"], false, self)
 	hud_fade.do_on_notify(["SCENE_CHANGE_REQUEST",], func(): hud.show_ui(hud, false))
 	hud_fade.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): hud.show_ui(hud, true))
-
-	on_invert = EventListener.new(["SPECIAL_INVERT_CUTSCENE_BEGIN", "SPECIAL_INVERT_CUTSCENE_END"], false, self)
-	on_invert.do_on_notify(["SPECIAL_INVERT_CUTSCENE_BEGIN"], func(): if indicators: hud.show_ui(indicators, false))
-	on_invert.do_on_notify(["SPECIAL_INVERT_CUTSCENE_END"], func(): if indicators: hud.show_ui(indicators, true))
 	
 	game_save = EventListener.new(["GAME_FILE_SAVE", "GAME_CONFIG_SAVE"], false, self)
 	game_save.do_on_notify(

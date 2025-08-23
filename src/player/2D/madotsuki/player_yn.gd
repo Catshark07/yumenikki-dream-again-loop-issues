@@ -5,8 +5,7 @@ var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
 # ----> trait components
-
-var marker_look_at: Strategist
+var global_components: SBComponentReceiver
 
 var sprite_sheet: SerializableDict = preload("res://src/player/2D/madotsuki/display/no_effect.tres")
 var action: PLAction 
@@ -14,6 +13,11 @@ var action: PLAction
 func _ready() -> void:
 	super()
 	equip(Instance.equipment_pending, true)
+func _enter() -> void:
+	super()
+	if GameManager.global_player_components != null: 
+		global_components = GameManager.global_player_components
+		global_components._setup(self)
 
 func dependency_components() -> void:	
 	audio_listener = $audio_listener
@@ -25,10 +29,12 @@ func _update(_delta: float) -> void:
 	super(_delta)
 	handle_noise()
 	if fsm: fsm._update(_delta)
+	if global_components != null: global_components._update(_delta)
 func _physics_update(_delta: float) -> void:
 	super(_delta)
 	if fsm: fsm._physics_update(_delta)
-func _pl_input(event: InputEvent) -> void:
+	if global_components != null: global_components._physics_update(_delta)
+func _sb_input(event: InputEvent) -> void:
 	if components != null: 	components._input_pass(event)
 	if fsm != null: 		fsm._input_pass(event)
 	
@@ -48,8 +54,6 @@ func get_behaviour() -> PLBehaviour:
 #endregion
 
 #region STATES and ANIMATIONS
-func force_change_state(_new: String) -> void: fsm.change_to_state(_new)
-func get_state_name() -> String: return fsm.get_curr_state_name()
 
 func play_sound(_sound: AudioStreamWAV, _vol: float, _pitch: float) -> void:
 	if sound_player != null: sound_player.play_sound(_sound, _vol, _pitch)

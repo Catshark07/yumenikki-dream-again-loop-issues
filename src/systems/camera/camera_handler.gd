@@ -142,7 +142,7 @@ func set_target(_target: CanvasItem, _dur: float = .5) -> void:
 	curr_target = _target
 	fsm.change_to_state("changing_target")
 	
-	if _target is SentientBase: 
+	if (_target as Node) is SentientBase: 
 		set_follow_strategy(follow_player if !motion_reduction else default)
 	else: set_follow_strategy(follow_lerp if !motion_reduction else default)
 	

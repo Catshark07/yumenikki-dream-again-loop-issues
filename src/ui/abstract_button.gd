@@ -23,7 +23,7 @@ signal enabled
 
 signal unique_data_changed(_new_data: Resource)
 
-@export_storage var button: BaseButton # pretty much needed.
+@export var button: BaseButton # pretty much needed.
 var is_toggled: bool = false
 
 # ---- instantiation ----

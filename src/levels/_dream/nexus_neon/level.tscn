@@ -109,14 +109,13 @@ rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner
 
 [node name="renderer" parent="neon_floor/to_nexus" index="2"]
 texture = ExtResource("12_43bly")
-frame = 5
+frame = 2
 script = ExtResource("13_k18mo")
 autoplay = true
 loop = true
 reverse = false
 end_frame = false
 fps = 5.0
-progress = 5
 
 [node name="to_tile_path" type="Area2D" parent="neon_floor"]
 position = Vector2(888, 32)

@@ -1,6 +1,8 @@
 class_name PlEquipManager
 extends SBComponent
 
+var equipped: bool:
+	get: return effect_data != null and !(effect_data in IGNORE)
 var effect_prefab: PLEffectComponent = null
 var effect_data: PLEffect = null
 var behaviour: PLBehaviour:
@@ -48,7 +50,7 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 			effect_prefab.queue_free()
 
 		effect_data._unapply(_pl)
-		effect_data = null
+		effect_data = Player.Instance.DEFAULT_EQUIPMENT
 		Player.Instance.DEFAULT_EQUIPMENT._apply(_pl)
 	
 func accept(_effect: PLEffect) -> void:
@@ -63,3 +65,6 @@ func _input_pass(event: InputEvent) -> void:
 	if effect_prefab != null: 
 		effect_prefab.input(event, sentient)
 		
+	if Input.is_action_just_pressed("ui_favourite_effect"): 
+		if !equipped: 	equip(Player.Instance.equipment_favourite, sentient)
+		else:			deequip(sentient)

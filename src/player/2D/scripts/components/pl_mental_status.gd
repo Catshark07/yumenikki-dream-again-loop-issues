@@ -13,10 +13,9 @@ var tinnitus: float: 	# --- [0 - 100] induces tinnitus. affects music and ambien
 	get: return roundf(tinnitus) 	
 var tension: float: 	# --- [0 - 100] muffles music and ambience volumes.
 	get: return roundf(tension)		
-var fear: float: 		# --- [0 - 100] induces spiking BPP. affects music and ambience volumes and invokes distorted audio.
+var fear: float: 		# --- [0 - 100] induces spiking BPM. affects music and ambience volumes and invokes distorted audio.
 	get: return roundf(fear)			
 var exhaustion: float 	# --- [0 - 100] induces blurred outer visual. affects music and ambience volumes and invokes distorted audio.
-
 
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)

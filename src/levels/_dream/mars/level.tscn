@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://yp1tv6otq0nw"]
+[gd_scene load_steps=39 format=4 uid="uid://yp1tv6otq0nw"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_7o03b"]
 [ext_resource type="TileSet" uid="uid://du2wbc6fqtlpf" path="res://src/levels/__ignore/tile_set/mars.tres" id="2_i6rw4"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="3_63ps5"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="3_guxvn"]
 [ext_resource type="Shader" uid="uid://brem0ley6fcra" path="res://src/shaders/panorama/depth_additive.gdshader" id="3_r6gl7"]
-[ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="3_veq4x"]
 [ext_resource type="Texture2D" uid="uid://dbsfwb1x0053s" path="res://src/images/panorama/mars_hills.png" id="4_4lalb"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_34rio"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="4_ew0vm"]
@@ -14,48 +13,37 @@
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_34rio"]
 [ext_resource type="Texture2D" uid="uid://cviohk1byswuk" path="res://src/images/panorama/saturn.png" id="5_bjp8k"]
 [ext_resource type="Texture2D" uid="uid://bxwp8kdqooi3d" path="res://src/images/panorama/jupiter.png" id="5_ycx3f"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="7_7q5hc"]
 [ext_resource type="AudioStream" uid="uid://hrydgrm0n3r" path="res://src/audio/bgm/mars.WAV" id="8_4lalb"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="9_0lv1n"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="10_dc5l0"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="11_dc5l0"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="11_nkdco"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="15_lgpic"]
 
-[sub_resource type="Gradient" id="Gradient_giq7r"]
-offsets = PackedFloat32Array(0, 0.396429, 0.592857, 0.814286, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.458193, 0.0965373, 0.123935, 1, 0.68667, 0.286959, 0.14506, 1, 0.854901, 0.592251, 0.326545, 1, 0.997607, 0.884522, 0.609361, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwqwu"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ewe8c"]
-gradient = SubResource("Gradient_giq7r")
-fill_from = Vector2(1, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vde5"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_kox5l"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5tdu"]
+size = Vector2(2992, 487)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s3soc"]
-noise = SubResource("FastNoiseLite_kox5l")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_naegg"]
+size = Vector2(16, 16)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_63ps5"]
-shader = ExtResource("3_veq4x")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.065
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/opacity = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_s3soc")
-shader_parameter/scroll_speed = 0.005
-shader_parameter/gradient = SubResource("GradientTexture2D_ewe8c")
-shader_parameter/ray_strength = 1.225
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_775d2"]
+size = Vector2(480, 270)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_34rio"]
-shader = ExtResource("3_guxvn")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = -1.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.065
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tikx"]
+size = Vector2(16, 16)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_lgpic"]
-viewport_path = NodePath("crash_site/tilemap_parallax/viewpoer")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8mmu"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uhknf"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rc4d"]
+size = Vector2(16, 16)
 
 [sub_resource type="Gradient" id="Gradient_r6gl7"]
 colors = PackedColorArray(0.848666, 0.572075, 0.194836, 1, 1, 1, 1, 1)
@@ -75,11 +63,10 @@ shader = ExtResource("3_3p07t")
 shader_parameter/dirX = -1.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.05
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, -0.68)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/noise = SubResource("NoiseTexture2D_y6mui")
@@ -88,161 +75,59 @@ shader_parameter/color_overlay_intensity = 0.66
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0oebd"]
 shader = ExtResource("3_r6gl7")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.03
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 0.335
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3p07t"]
 shader = ExtResource("3_r6gl7")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.01
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 0.335
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_veq4x"]
 shader = ExtResource("3_guxvn")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.175
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 0.175
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.175
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_34rio"]
-size = Vector2(3000, 408)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34rio"]
+shader = ExtResource("3_guxvn")
+shader_parameter/initial_uv_offset = Vector2(0, -1.42)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.6
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0oebd"]
-size = Vector2(50, 100)
+[sub_resource type="ViewportTexture" id="ViewportTexture_lgpic"]
+viewport_path = NodePath("on_initial/panorama (top_layer)/tilemap_parallax/viewpoer")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_63ps5"]
-size = Vector2(1600, 1400)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lgpic"]
-size = Vector2(20, 100)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2o0ms"]
-size = Vector2(20, 100)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tprwa"]
-size = Vector2(1200, 800)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_byf7o"]
-size = Vector2(20, 100)
-
-[node name="mars" type="Node"]
+[node name="mars" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_7o03b")
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
+load_transition = SubResource("ShaderMaterial_qwqwu")
+unload_transition = SubResource("ShaderMaterial_2vde5")
+scene_objects = Array[Object]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("10_dc5l0"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+, Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("10_dc5l0"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+])
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="camera" parent="." instance=ExtResource("5_34rio")]
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("5_34rio")]
+initial_target = NodePath("../crash_site/madotsuki")
 
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../crash_site/madotsuki")
-
-[node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
+[node name="Wiggle" type="Node" parent="camera/marker/camera/components_receiver" index="0"]
 script = ExtResource("3_63ps5")
-wig_x_strn = 6.0
-wig_y_strn = 2.0
 metadata/_custom_type_script = "uid://bptlrkdn0tpua"
-
-[node name="overlay_1" parent="camera/camera_handler/camera_overlay" index="0"]
-material = SubResource("ShaderMaterial_63ps5")
 
 [node name="crash_site" type="Node2D" parent="."]
 position = Vector2(672, 0)
-
-[node name="tilemap_parallax" type="TextureRect" parent="crash_site"]
-material = SubResource("ShaderMaterial_34rio")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -656.0
-offset_right = 2064.0
-offset_bottom = 270.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_lgpic")
-stretch_mode = 1
-
-[node name="viewpoer" type="SubViewport" parent="crash_site/tilemap_parallax"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-canvas_item_default_texture_repeat = 1
-size = Vector2i(480, 270)
-render_target_update_mode = 4
-
-[node name="bg_1" type="TileMapLayer" parent="crash_site/tilemap_parallax/viewpoer"]
-modulate = Color(0.819799, 0.688011, 0.640998, 1)
-position = Vector2(0, 16)
-tile_map_data = PackedByteArray("AAAaAAsAAAADAAEAAAAbAAsAAAAAAAEAAAAcAAsAAAABAAEAAAAdAAsAAAACAAEAAAAaAAoAAAAFAA0AAAAbAAoAAAANAAYAABAcAAoAAAABAAAAAAAdAAoAAAACAAAAAAATAAoAAAABAAEAAAATAAsAAAADAAEAAAAUAAoAAAACAAEAAAAUAAsAAAAAAAEAAAAVAAoAAAANAAYAABAVAAsAAAACAAEAAAAWAAoAAAABAA0AAAAWAAsAAAADAAEAAAAXAAoAAAACAA0AAAAZAAoAAAAEAA0AAAAYAAkAAAADAAwAAAAYAAoAAAADAA0AAAAZAAkAAAAEAAwAAAAYAAsAAAADAA4AAAAZAAsAAAACAAEAAAAXAAsAAAACAA4AAAARAAsAAAAEAAMAAAASAAsAAAAFAAMAAAASAAoAAAAFAAIAAAARAAoAAAAEAAIAAAAQAAoAAAACAAEAAAAPAAoAAAABAAEAAAAOAAoAAAAAAAEAAAANAAoAAAADAAEAAAAMAAoAAAACAAEAAAAMAAsAAAAAAAEAAAANAAsAAAABAAEAAAAOAAsAAAAAAAQAAAAPAAsAAAABAAQAAAAQAAsAAAACAAQAAAAQAAkAAAACAAAAAAARAAkAAAADAAAAAAALAAoAAAABAAEAAAALAAsAAAADAAIAAAAKAAsAAAACAAQAAAAKAAoAAAAAAAEAAAAJAAoAAAADAAEAAAAIAAsAAAAEAAMAAAAJAAsAAAAFAAMAAAAGAAoAAAACAA4AAAAHAAoAAAADAA4AAAAIAAoAAAACAAEAAAAHAAsAAAAFAA4AAAAEAAoAAAACAAEAAAAEAAsAAAACAAIAAAAFAAoAAAADAAEAAAAFAAsAAAADAAIAAAAGAAsAAAAEAA4AAAAYAAwAAAABAAQAAAAZAAwAAAACAAQAAAAaAAwAAAADAAQAAAAbAAwAAAADAAQAAAAcAAwAAAADAAQAAAAdAAwAAAADAAQAAAAWAAwAAAACAAIAAAAXAAwAAAADAAIAAAAUAAwAAAAAAAIAAAAVAAwAAAABAAIAAAAQAAwAAAAAAAAAAAARAAwAAAABAAAAAAASAAwAAAACAAAAAAATAAwAAAADAAAAAAAPAAwAAAACAAIAAAANAAwAAAAAAAAAAAAOAAwAAAABAAAAAAAJAAwAAAAEAAIAAAAKAAwAAAADAAIAAAALAAwAAAAEAAIAAAAMAAwAAAAFAAIAAAAAAAoAAAAFAAMAAAAAAAsAAAADAAIAAAABAAoAAAACAAUAAAABAAsAAAAAAAEAAAACAAsAAAAAAAIAAAADAAoAAAABAAEAAAADAAsAAAABAAIAAAAEAAwAAAACAAMAAAAFAAwAAAADAAMAAAAGAAwAAAADAAIAAAABAAwAAAAEAAIAAAACAAwAAAAAAAMAAAADAAwAAAABAAMAAAAHAAwAAAACAAIAAAAIAAwAAAADAAIAAAD//wwAAAACAAIAAAAAAAwAAAADAAIAAAACAAoAAAAAAAEAAAAFAAkAAAABAA0AAAAGAAkAAAACAA0AAAAHAAkAAAADAA0AAAAEAAkAAAANAAYAABACAAkAAAAQAAsAAAADAAkAAAARAAsAAAAAAAkAAAAOAAsAAAABAAkAAAAPAAsAAAAIAAkAAAAEAA0AAAAJAAkAAAAFAA0AAAAKAAkAAAANAAYAABALAAkAAAABAAAAAAAMAAkAAAACAAAAAAANAAkAAAADAAAAAAAPAAkAAAABAAAAAAASAAkAAAABAA0AAAAOAAkAAAAAAAAAAAATAAkAAAANAAYAAAAHAAgAAAADAAwAAAAIAAgAAAAEAAwAAAAUAAkAAAAOAAYAAAA=")
-tile_set = ExtResource("2_i6rw4")
-
-[node name="panorama (top_layer)" type="CanvasLayer" parent="crash_site"]
-layer = -20
-
-[node name="sky" type="TextureRect" parent="crash_site/panorama (top_layer)"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_ycx3f")
-
-[node name="Clouds" type="Sprite2D" parent="crash_site/panorama (top_layer)"]
-material = SubResource("ShaderMaterial_lgpic")
-use_parent_material = true
-position = Vector2(240, 136)
-texture = ExtResource("4_veq4x")
-
-[node name="saturn" type="TextureRect" parent="crash_site/panorama (top_layer)"]
-material = SubResource("ShaderMaterial_0oebd")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 240.0
-offset_top = -48.0
-offset_right = 264.0
-offset_bottom = -118.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_bjp8k")
-stretch_mode = 2
-
-[node name="jupiter" type="TextureRect" parent="crash_site/panorama (top_layer)"]
-material = SubResource("ShaderMaterial_3p07t")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -192.0
-offset_top = -160.0
-offset_right = -32.0
-offset_bottom = -70.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_ycx3f")
-stretch_mode = 2
-
-[node name="mars_hills" type="TextureRect" parent="crash_site/panorama (top_layer)"]
-material = SubResource("ShaderMaterial_veq4x")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 96.0
-offset_right = 24.0
-offset_bottom = 26.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_4lalb")
-stretch_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="crash_site/panorama (top_layer)"]
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="ground" type="TileMapLayer" parent="crash_site"]
 z_index = -1
@@ -257,24 +142,41 @@ tile_set = ExtResource("2_i6rw4")
 position = Vector2(1968, 208)
 
 [node name="crashsite_deadzone" type="Area2D" parent="crash_site"]
-process_mode = 3
-position = Vector2(-944, -144)
+position = Vector2(-704, -96)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("4_34rio")
-size = Vector2i(3000, 408)
-shape = SubResource("RectangleShape2D_34rio")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(1256, 108.5),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_m5tdu"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="rect" type="CollisionShape2D" parent="crash_site/crashsite_deadzone"]
+position = Vector2(1256, 108.5)
+shape = SubResource("RectangleShape2D_m5tdu")
+debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="to_cliff" type="Area2D" parent="crash_site" node_paths=PackedStringArray("target_door")]
 position = Vector2(-928, -48)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("15_lgpic")
-spawn_point = Vector2(40, 0)
-spawn_dir = Vector2(1, 0)
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("9_0lv1n"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(672, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
+,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/systems/components/independent/pl_spawn.png"))
+
 target_door = NodePath("../../cliff/to_crash_site")
 area = true
-size = Vector2i(50, 100)
-shape = SubResource("RectangleShape2D_0oebd")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_naegg"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="crash_site/to_cliff"]
+shape = SubResource("RectangleShape2D_naegg")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="crash_site/to_cliff" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("9_0lv1n")
+parent_instead_of_self = NodePath("../..")
 
 [node name="cliff" type="Node2D" parent="."]
 position = Vector2(-2208, -272)
@@ -284,35 +186,62 @@ tile_map_data = PackedByteArray("AAA8AA0AAAAEAAIAAAA8AA4AAAAFAAIAAAA8AA8AAAAFAAM
 tile_set = ExtResource("2_i6rw4")
 
 [node name="cliff_deadzone" type="Area2D" parent="cliff"]
-process_mode = 3
 position = Vector2(272, -1136)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("4_34rio")
-size = Vector2i(1600, 1400)
-shape = SubResource("RectangleShape2D_63ps5")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_775d2"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
-[node name="to_crash_site" type="Area2D" parent="cliff" node_paths=PackedStringArray("target_door")]
+[node name="rect" type="CollisionShape2D" parent="cliff/cliff_deadzone"]
+shape = SubResource("RectangleShape2D_775d2")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="to_crash_site" type="Area2D" parent="cliff"]
 position = Vector2(1856, 224)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("15_lgpic")
-spawn_point = Vector2(-20, 0)
-spawn_dir = Vector2(-1, 0)
-target_door = NodePath("../../crash_site/to_cliff")
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("9_0lv1n"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-2208, -272),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
+,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/systems/components/independent/pl_spawn.png"))
+
 area = true
-size = Vector2i(20, 100)
-shape = SubResource("RectangleShape2D_lgpic")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_8tikx"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="cliff/to_crash_site"]
+shape = SubResource("RectangleShape2D_8tikx")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="cliff/to_crash_site" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("9_0lv1n")
+parent_instead_of_self = NodePath("../..")
 
 [node name="to_summit" type="Area2D" parent="cliff" node_paths=PackedStringArray("target_door")]
 position = Vector2(288, -800)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("15_lgpic")
-spawn_point = Vector2(20, 20)
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("9_0lv1n"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-2208, -272),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
+,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/systems/components/independent/pl_spawn.png"))
+
 target_door = NodePath("../../summit/to_cliff")
 parallel = true
-size = Vector2i(20, 100)
-shape = SubResource("RectangleShape2D_2o0ms")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_f8mmu"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="cliff/to_summit"]
+shape = SubResource("RectangleShape2D_f8mmu")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="cliff/to_summit" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("9_0lv1n")
+parent_instead_of_self = NodePath("../..")
 
 [node name="summit" type="Node2D" parent="."]
 position = Vector2(-2400, -1104)
@@ -322,27 +251,144 @@ tile_map_data = PackedByteArray("AAADAO3/AAACAAoAAAADAO7/AAACAAsAAAADAO//AAABAAs
 tile_set = ExtResource("2_i6rw4")
 
 [node name="summit_deadzone" type="Area2D" parent="summit"]
-process_mode = 3
 position = Vector2(-864, -816)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("4_34rio")
-size = Vector2i(1200, 800)
-shape = SubResource("RectangleShape2D_tprwa")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_uhknf"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="rect" type="CollisionShape2D" parent="summit/summit_deadzone"]
+shape = SubResource("RectangleShape2D_uhknf")
+debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="to_cliff" type="Area2D" parent="summit" node_paths=PackedStringArray("target_door")]
 position = Vector2(304, -48)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("15_lgpic")
-spawn_point = Vector2(-20, -20)
+spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("9_0lv1n"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-2400, -1104),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
+,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/systems/components/independent/pl_spawn.png"))
+
 target_door = NodePath("../../cliff/to_summit")
 parallel = true
-size = Vector2i(20, 100)
-shape = SubResource("RectangleShape2D_byf7o")
+rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_3rc4d"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
+
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("7_7q5hc")
+[node name="rect" type="CollisionShape2D" parent="summit/to_cliff"]
+shape = SubResource("RectangleShape2D_3rc4d")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="summit/to_cliff" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("9_0lv1n")
+parent_instead_of_self = NodePath("../..")
+
+[node name="on_initial" type="Node" parent="."]
+script = ExtResource("10_dc5l0")
+
+[node name="music" type="Node" parent="on_initial"]
+script = ExtResource("11_dc5l0")
 stream = ExtResource("8_4lalb")
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="panorama (top_layer)" type="SubViewport" parent="on_initial"]
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+script = ExtResource("11_nkdco")
+
+[node name="sky" type="TextureRect" parent="on_initial/panorama (top_layer)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_ycx3f")
+
+[node name="Clouds" type="Sprite2D" parent="on_initial/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_lgpic")
+use_parent_material = true
+position = Vector2(240, 136)
+texture = ExtResource("4_veq4x")
+
+[node name="saturn" type="TextureRect" parent="on_initial/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_0oebd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 240.0
+offset_top = -48.0
+offset_right = 264.0
+offset_bottom = -118.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_bjp8k")
+stretch_mode = 2
+
+[node name="jupiter" type="TextureRect" parent="on_initial/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_3p07t")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -160.0
+offset_right = -32.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_ycx3f")
+stretch_mode = 2
+
+[node name="mars_hills" type="TextureRect" parent="on_initial/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_veq4x")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 96.0
+offset_right = 24.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_4lalb")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="on_initial/panorama (top_layer)"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="tilemap_parallax" type="TextureRect" parent="on_initial/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_34rio")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 60.0
+offset_right = 2720.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_lgpic")
+stretch_mode = 1
+
+[node name="viewpoer" type="SubViewport" parent="on_initial/panorama (top_layer)/tilemap_parallax"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 1
+size = Vector2i(480, 270)
+render_target_update_mode = 4
+
+[node name="bg_1" type="TileMapLayer" parent="on_initial/panorama (top_layer)/tilemap_parallax/viewpoer"]
+modulate = Color(0.819799, 0.688011, 0.640998, 1)
+position = Vector2(0, 16)
+tile_map_data = PackedByteArray("AAAaAAsAAAADAAEAAAAbAAsAAAAAAAEAAAAcAAsAAAABAAEAAAAdAAsAAAACAAEAAAAaAAoAAAAFAA0AAAAbAAoAAAANAAYAABAcAAoAAAABAAAAAAAdAAoAAAACAAAAAAATAAoAAAABAAEAAAATAAsAAAADAAEAAAAUAAoAAAACAAEAAAAUAAsAAAAAAAEAAAAVAAoAAAANAAYAABAVAAsAAAACAAEAAAAWAAoAAAABAA0AAAAWAAsAAAADAAEAAAAXAAoAAAACAA0AAAAZAAoAAAAEAA0AAAAYAAkAAAADAAwAAAAYAAoAAAADAA0AAAAZAAkAAAAEAAwAAAAYAAsAAAADAA4AAAAZAAsAAAACAAEAAAAXAAsAAAACAA4AAAARAAsAAAAEAAMAAAASAAsAAAAFAAMAAAASAAoAAAAFAAIAAAARAAoAAAAEAAIAAAAQAAoAAAACAAEAAAAPAAoAAAABAAEAAAAOAAoAAAAAAAEAAAANAAoAAAADAAEAAAAMAAoAAAACAAEAAAAMAAsAAAAAAAEAAAANAAsAAAABAAEAAAAOAAsAAAAAAAQAAAAPAAsAAAABAAQAAAAQAAsAAAACAAQAAAAQAAkAAAACAAAAAAARAAkAAAADAAAAAAALAAoAAAABAAEAAAALAAsAAAADAAIAAAAKAAsAAAACAAQAAAAKAAoAAAAAAAEAAAAJAAoAAAADAAEAAAAIAAsAAAAEAAMAAAAJAAsAAAAFAAMAAAAGAAoAAAACAA4AAAAHAAoAAAADAA4AAAAIAAoAAAACAAEAAAAHAAsAAAAFAA4AAAAEAAoAAAACAAEAAAAEAAsAAAACAAIAAAAFAAoAAAADAAEAAAAFAAsAAAADAAIAAAAGAAsAAAAEAA4AAAAYAAwAAAABAAQAAAAZAAwAAAACAAQAAAAaAAwAAAADAAQAAAAbAAwAAAADAAQAAAAcAAwAAAADAAQAAAAdAAwAAAADAAQAAAAWAAwAAAACAAIAAAAXAAwAAAADAAIAAAAUAAwAAAAAAAIAAAAVAAwAAAABAAIAAAAQAAwAAAAAAAAAAAARAAwAAAABAAAAAAASAAwAAAACAAAAAAATAAwAAAADAAAAAAAPAAwAAAACAAIAAAANAAwAAAAAAAAAAAAOAAwAAAABAAAAAAAJAAwAAAAEAAIAAAAKAAwAAAADAAIAAAALAAwAAAAEAAIAAAAMAAwAAAAFAAIAAAAAAAoAAAAFAAMAAAAAAAsAAAADAAIAAAABAAoAAAACAAUAAAABAAsAAAAAAAEAAAACAAsAAAAAAAIAAAADAAoAAAABAAEAAAADAAsAAAABAAIAAAAEAAwAAAACAAMAAAAFAAwAAAADAAMAAAAGAAwAAAADAAIAAAABAAwAAAAEAAIAAAACAAwAAAAAAAMAAAADAAwAAAABAAMAAAAHAAwAAAACAAIAAAAIAAwAAAADAAIAAAD//wwAAAACAAIAAAAAAAwAAAADAAIAAAACAAoAAAAAAAEAAAAFAAkAAAABAA0AAAAGAAkAAAACAA0AAAAHAAkAAAADAA0AAAAEAAkAAAANAAYAABACAAkAAAAQAAsAAAADAAkAAAARAAsAAAAAAAkAAAAOAAsAAAABAAkAAAAPAAsAAAAIAAkAAAAEAA0AAAAJAAkAAAAFAA0AAAAKAAkAAAANAAYAABALAAkAAAABAAAAAAAMAAkAAAACAAAAAAANAAkAAAADAAAAAAAPAAkAAAABAAAAAAASAAkAAAABAA0AAAAOAAkAAAAAAAAAAAATAAkAAAANAAYAAAAHAAgAAAADAAwAAAAIAAgAAAAEAAwAAAAUAAkAAAAOAAYAAAA=")
+tile_set = ExtResource("2_i6rw4")
+
+[node name="on_free" type="Node" parent="."]
+script = ExtResource("10_dc5l0")
 
 [editable path="camera"]

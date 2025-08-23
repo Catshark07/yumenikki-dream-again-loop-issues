@@ -1,7 +1,8 @@
 class_name Entity
-extends Node2D
+extends Node
 
-var height: float = 0
+func _freeze() -> void: pass
+func _unfreeze() -> void: pass
 
-func freeze() -> void: process_mode = Node.PROCESS_MODE_DISABLED
-func unfreeze() -> void: process_mode = Node.PROCESS_MODE_INHERIT
+func _enter() -> void: pass
+func _exit() -> void: pass

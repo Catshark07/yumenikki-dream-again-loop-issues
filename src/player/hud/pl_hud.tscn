@@ -43,40 +43,41 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_ir6k4")
 effect_ind = NodePath("effect_indicator")
-stamina_bar = NodePath("stamina/w/value")
+stamina_bar = NodePath("stamina/stamina_fill/value")
 
 [node name="stamina" type="TextureRect" parent="indicators/icons"]
 y_sort_enabled = true
 layout_mode = 0
-offset_left = 48.0
+offset_left = 40.0
 offset_top = 240.0
-offset_right = 92.0
-offset_bottom = 249.0
+offset_right = 88.0
+offset_bottom = 256.0
 mouse_filter = 2
 texture = ExtResource("6_2qcr0")
 
-[node name="w" type="TextureRect" parent="indicators/icons/stamina"]
+[node name="stamina_fill" type="TextureRect" parent="indicators/icons/stamina"]
 show_behind_parent = true
-clip_children = 1
+clip_children = 2
 layout_mode = 0
-offset_right = 44.0
-offset_bottom = 9.0
+offset_right = 48.0
+offset_bottom = 16.0
 mouse_filter = 2
 texture = ExtResource("4_hogqo")
 
-[node name="value" type="ColorRect" parent="indicators/icons/stamina/w"]
+[node name="value" type="ColorRect" parent="indicators/icons/stamina/stamina_fill"]
 layout_mode = 0
-offset_left = 13.0
-offset_right = 42.0
-offset_bottom = 9.0
+offset_left = 9.0
+offset_right = 41.0
+offset_bottom = 16.0
+color = Color(0.896047, 0.888065, 0.609341, 1)
 
 [node name="effect_indicator" type="Sprite2D" parent="indicators/icons"]
-position = Vector2(24, 232)
+position = Vector2(24, 240)
 texture = ExtResource("9_a8b7g")
 centered = false
 hframes = 2
 script = ExtResource("10_a4iu7")
-frame_dimensions = Vector2i(17, 20)
+frame_dimensions = Vector2i(16, 16)
 frame_h_count = 2
 metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
 
@@ -103,27 +104,20 @@ offset_bottom = 270.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="deequip" parent="inventory/display/pink_petal_effects" index="4"]
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/inv_effect_indicator.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":2,"vframes":1,"frame":1,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("10_a4iu7"),"strip_style":0,"formatter":Callable(),"frame_dimensions":Vector2i(48, 48),"frame_h_count":2,"frame_v_count":1,"progress":1,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
+[node name="deequip" parent="inventory/display/pink_petal_effects" index="4" node_paths=PackedStringArray("texture_renderer", "button")]
+texture_renderer = NodePath("texture_renderer")
+button = NodePath("button")
 
-button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
+[node name="pink" parent="inventory/select/separator" index="0" node_paths=PackedStringArray("texture_renderer", "button")]
+texture_renderer = NodePath("texture_renderer")
+button = NodePath("button")
 
+[node name="white" parent="inventory/select/separator" index="1" node_paths=PackedStringArray("texture_renderer", "button")]
+texture_renderer = NodePath("texture_renderer")
+button = NodePath("button")
 
-[node name="pink" parent="inventory/select/separator" index="0"]
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_pink_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("10_a4iu7"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
-
-button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
-
-
-[node name="white" parent="inventory/select/separator" index="1"]
-texture_renderer = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://src/player/inventory/menu/select_white_petal.png"),"centered":false,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":3,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":ExtResource("10_a4iu7"),"strip_style":1,"formatter":Callable(),"frame_dimensions":Vector2i(27, 14),"frame_h_count":1,"frame_v_count":3,"progress":0,"column":0.0,"cached_column":0.0,"column_within_bounds":false,"row":0.0,"cached_row":0.0,"row_within_bounds":false)
-
-button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
-
-
-[node name="on_game_events" type="Node" parent="." node_paths=PackedStringArray("indicators", "hud", "icon", "icon_timer")]
+[node name="on_game_events" type="Node" parent="." node_paths=PackedStringArray("hud", "icon", "icon_timer")]
 script = ExtResource("9_ufr4o")
-indicators = NodePath("../indicators")
 hud = NodePath("..")
 icon = NodePath("../indicators/icon")
 icon_timer = NodePath("../indicators/icon/timer")

@@ -6,6 +6,8 @@ extends Node
 @export var enter_sequence: Sequence
 @export var exit_sequence: Sequence
 
+func _init() -> void:
+	self.name = "sequence_region"
 func _ready() -> void:
 	var area_region = get_parent()
 	

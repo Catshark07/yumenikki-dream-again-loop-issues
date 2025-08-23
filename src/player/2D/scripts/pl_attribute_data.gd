@@ -10,6 +10,8 @@ extends Resource
 @export_group("Stamina Modifers")
 @export var stamina_drain: float = Player.STAMINA_DRAIN
 @export var stamina_regen: float = Player.STAMINA_REGEN
+
+@export_group("Stats Flags.")
 @export var can_run: bool = Player.CAN_RUN
 @export var disable_drain: bool = false
 

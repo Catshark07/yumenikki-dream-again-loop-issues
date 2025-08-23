@@ -3,53 +3,73 @@
 class_name GameScene
 extends SceneNode
 
-@export_tool_button("Create On-Load Sequence") var create_load_seq = create_load_sequence
-@export_tool_button("Create On-Load Sequence") var create_unload_seq = create_unload_sequence
+@export_storage var test: NodePath
 
-@export_storage var scene_load_sequence: Sequence
-@export_storage var scene_unload_sequence: Sequence
+@export_group("On Load \\ Free Sequences.")
+@export_tool_button("Create On-Initial") var create_initial: Callable 	= create_on_initial
+@export_tool_button("Create On-Free") 	 var create_free: Callable 		= create_on_free
+@export var seq_initial: Sequence
+@export var seq_free: Sequence
 
-var save_invoker: EventListener
+@export_group("Scene Exclusive Objects.")
+@export var scene_objects: Array[Node]
+@export_tool_button("Clear All Objects")  var clear_all: Callable = clear_all_objects
+
+@export_group("Transitions.")
 @export var load_transition: ShaderMaterial = ShaderMaterial.new()
 @export var unload_transition: ShaderMaterial = ShaderMaterial.new()
 
+var save_invoker: EventListener
+	
 # - initial
 func _initialize() -> void: 
 	save_invoker = EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
 	
-	scene_load_sequence = GlobalUtils.get_child_node_or_null(self, "scene_load_sequence")
-	scene_unload_sequence = GlobalUtils.get_child_node_or_null(self, "scene_unload_sequence")
-
 	if load_transition == null: 
 		load_transition = ShaderMaterial.new()
 		load_transition.material = preload("res://src/shaders/transition/tr_fade.gdshader")
 	if unload_transition == null:
 		unload_transition = ShaderMaterial.new()
 		unload_transition.material = preload("res://src/shaders/transition/tr_fade.gdshader")
-		
-func create_load_sequence() -> void:
-	if !Engine.is_editor_hint(): return
-	if scene_load_sequence == null: 
-		scene_load_sequence = GlobalUtils.add_child_node(self, Sequence.new(), "scene_load_sequence")
-func create_unload_sequence() -> void:
-	if !Engine.is_editor_hint(): return	
-	if scene_unload_sequence == null: 
-		scene_unload_sequence = GlobalUtils.add_child_node(self, Sequence.new(), "scene_unload_sequence")
+
+# - scene exclusive objects.
+# sequences
+func create_on_initial() -> void:
+	seq_initial = GlobalUtils.get_child_node_or_null(self, "on_initial")
+	if !Engine.is_editor_hint() or seq_initial != null: return
 	
+	seq_initial = await GlobalUtils.add_child_node(self, Sequence.new(), "on_initial")
+	scene_objects.append(seq_initial)
+func create_on_free() -> void:
+	seq_free = GlobalUtils.get_child_node_or_null(self, "on_free")
+	if !Engine.is_editor_hint() or seq_free != null: return
+	
+	seq_free = await GlobalUtils.add_child_node(self, Sequence.new(), "on_free")
+	scene_objects.append(seq_free)
+
+# overall control
+	
+func clear_all_objects() -> void:
+	print(scene_objects)
+	for i in range(scene_objects.size()):
+		var obj = scene_objects[i]
+		if obj != null:
+			obj.free()
+			
+	scene_objects.clear()
+
 # - stack functions.	
 func _on_push() -> void: 
-	print("hei")
-	
 	for s in GlobalUtils.get_group_arr("actors"): 
 		if s != null: s._enter()
 
 	load_scene()
 	save_scene()
 	
-	if scene_load_sequence != null: await scene_load_sequence.execute()
+	SequencerManager.invoke(seq_initial)
 	process_mode = Node.PROCESS_MODE_INHERIT
 func _on_pre_pop() -> void: 
-	if scene_unload_sequence != null: await scene_unload_sequence.execute() 
+	SequencerManager.invoke(seq_free)
 	for s in GlobalUtils.get_group_arr("actors"): 
 		if s != null: s._exit()
 func _on_pop() -> void:
@@ -69,3 +89,9 @@ func _physics_update(_delta: float) -> void:
 	for s in GlobalUtils.get_group_arr("actors"):
 		if s != null:
 			if s.can_process(): s._physics_update(_delta)
+
+# -- internal.
+func _validate_property(property: Dictionary) -> void:
+	var properties_to_hide = ["seq_initial", "seq_free"]
+	if  property["name"] in properties_to_hide:
+		property["usage"] = PROPERTY_USAGE_STORAGE

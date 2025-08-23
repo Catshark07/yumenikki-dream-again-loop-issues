@@ -64,7 +64,10 @@ func _enter_tree() -> void:
 	super()
 	Instance._pl = self
 	EventManager.invoke_event("PLAYER_UPDATED")
-func _pl_input(event: InputEvent) -> void: pass
+
+func force_change_state(_new: String) -> void: fsm.change_to_state(_new)
+func get_state_name() -> String: return fsm.get_curr_state_name()
+
 
 class Data:
 	static var content: Dictionary = {		
@@ -85,9 +88,10 @@ class Data:
 		
 		return arr
 			
-	
 class Instance:
 	static var _pl: Player 
+	
+	static var is_setup: bool = false
 	
 	static var door_went_flag: bool = false
 	static var door_listener: EventListener
@@ -99,14 +103,17 @@ class Instance:
 	static var equipment_favourite	: PLEffect = null
 	static var effects_inventory: Array
 
-	static func setup() -> void: 	
+	static func setup() -> void: 
+		if is_setup: return
+		is_setup = true
+		
 		door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
 		door_listener.do_on_notify(["PLAYER_DOOR_USED"], func(): door_went_flag = true)
 		door_listener.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): 
 			
 			for points: SpawnPoint in GlobalUtils.get_group_arr("spawn_points"):
 				if (
-					load(points.scene_path) == Game.scene_manager.prev_scene_resource and 
+					load(points.scene_path) == SceneManager.prev_scene_resource and 
 					door_went_flag and
 					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
 						
@@ -136,12 +143,7 @@ class Instance:
 			get_pl().direction = (_dir)
 			if w_camera and CameraHolder.instance.initial_target == get_pl(): 
 				CameraHolder.instance.global_position = get_pl().global_position
-	static func handle_player_world_warp(_pos: Vector2, _dir: Vector2) -> void:
-		if get_pl():
-			get_pl().global_position = _pos
-			get_pl().direction = (_dir)
-			if CameraHolder.instance: 
-				CameraHolder.instance.global_position = get_pl().global_position
+
 	
 	static func pl_exists() -> bool: return (get_pl() != null)
 	static func get_pl() -> Player: return _pl

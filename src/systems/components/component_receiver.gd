@@ -16,6 +16,8 @@ func _validate_property(property: Dictionary) -> void:
 	if property.name == "affector" and independent:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 
+func _init(_affector: Node = null) -> void: 
+	affector = _affector
 func _ready() -> void: 
 	if !Engine.is_editor_hint():
 		components = get_children()

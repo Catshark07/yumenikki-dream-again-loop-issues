@@ -3,7 +3,7 @@
 class_name GUITextureButton
 extends AbstractButton
 
-@export_storage var texture_renderer: SpriteSheetFormatter
+@export var texture_renderer: SpriteSheetFormatter
 
 @export var unhover_cell: int
 @export var hover_cell: int

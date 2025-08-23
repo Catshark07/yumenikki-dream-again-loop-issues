@@ -29,10 +29,12 @@ func _setup(_sb: SentientBase = null) -> void:
 
 	did_something.connect(flag_false_can_action)
 	
-# ---- action setters ----
+# - primary actions
 func set_emote(_emote: PLEmote) -> void: emote = _emote
 func set_primary_action(_prim_action: PLAction) -> void: primary_action = _prim_action
 func set_secondary_action(_second_action: PLAction) -> void: secondary_action = _second_action
+
+# helper
 func set_curr_action(_action: PLAction) -> void: curr_action = _action
 
 func perform_action(_action: PLAction, _pl: Player) -> void: 

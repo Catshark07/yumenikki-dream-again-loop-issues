@@ -54,10 +54,13 @@ script = ExtResource("8_b70d5")
 transitions = [NodePath("../STATIC"), NodePath("../CHANGING_TARGET")]
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
-[node name="CHANGING_TARGET" type="Node" parent="cam_fsm" node_paths=PackedStringArray("transitions")]
+[node name="CHANGING_TARGET" type="Node" parent="cam_fsm" node_paths=PackedStringArray("switch_timer", "transitions")]
 script = ExtResource("7_yhg0v")
+switch_timer = NodePath("switch_timer")
 transitions = [NodePath("../FOLLOWING"), NodePath("../STATIC")]
 metadata/_custom_type_script = "uid://r0etyaq71dla"
+
+[node name="switch_timer" type="Timer" parent="cam_fsm/CHANGING_TARGET"]
 
 [node name="marker" type="Marker2D" parent="."]
 

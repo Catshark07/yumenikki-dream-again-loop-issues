@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cwrdtbix8nr0o"]
+[gd_scene load_steps=14 format=4 uid="uid://cwrdtbix8nr0o"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_r5evf"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_kjp3u"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="7_m3153"]
 [ext_resource type="Texture2D" uid="uid://c8k1sxkde80gi" path="res://src/images/panorama/clouds.png" id="7_os0pt"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="10_xfl1x"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="14_2hqby"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6t0p7"]
 
@@ -21,34 +20,22 @@ shader = ExtResource("6_y4mp6")
 shader_parameter/dirX = 0.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.0
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.9
 shader_parameter/world_texture = ExtResource("7_os0pt")
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_7gxy6"]
-vertices = PackedVector2Array(478, 230, 408.141, 230, 418, 220.141, 466, 186, 466, 156.141, 476.141, 146, 478, 146, 428.141, 186, 418, 196.141, -98, 58, -37.7422, 58, -74, 100.297, -110, 76.1406, -74, 134, -142, 134, -142, 108.141, -110, 10, -98, 10, 50, -154, 40.1406, -154, 68.1406, -182, 103.859, -182, 70, -148.141, 50, -115.859, 70, -58, 34, -99.8594, 34, -58, 406, -58, 354, -58, 354, -86, 394, -86, 406, -107.031, 394, -122, 422, -131.031, 370, -154, 372.141, -198, 422, -198, 370, -122, 330, -154, 330, -155.859)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 0, 3), PackedInt32Array(7, 3, 2, 8), PackedInt32Array(9, 10, 11, 12), PackedInt32Array(11, 13, 14, 15, 12), PackedInt32Array(9, 12, 16, 17), PackedInt32Array(18, 19, 20), PackedInt32Array(20, 21, 22, 18), PackedInt32Array(23, 18, 22, 24), PackedInt32Array(25, 23, 24, 26), PackedInt32Array(27, 28, 29, 30), PackedInt32Array(31, 27, 30, 32), PackedInt32Array(33, 31, 32, 34, 35, 36), PackedInt32Array(32, 37, 34), PackedInt32Array(34, 38, 39, 35)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-120, 0, -120, 72, -152, 104, -152, 144, -64, 144, -64, 104, -16, 48, -88, 48, -88, 0), PackedVector2Array(16, -144, 64, -192, 128, -192, 80, -144, 80, -48, 24, -48, 24, -104, 40, -120, 40, -144), PackedVector2Array(320, -160, 368, -208, 432, -208, 432, -128, 416, -104, 416, -48, 344, -48, 344, -96, 384, -96, 384, -112, 368, -112, 368, -104, 360, -104, 360, -144, 320, -144), PackedVector2Array(384, 240, 408, 216, 408, 192, 424, 176, 456, 176, 456, 152, 472, 136, 488, 136, 488, 240)])
-
 [node name="barracks_settlement" type="Node"]
 script = ExtResource("1_r5evf")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_2hqby"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_2hqby"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
 load_transition = SubResource("ShaderMaterial_6t0p7")
 unload_transition = SubResource("ShaderMaterial_a71sk")
+scene_objects = null
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." instance=ExtResource("4_eoce6")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../y_order/madotsuki")
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("2_kjp3u")
@@ -96,15 +83,5 @@ down_disabled = true
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("7_m3153")]
 position = Vector2(-112, 88)
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="y_order"]
-navigation_polygon = SubResource("NavigationPolygon_7gxy6")
-navigation_layers = 2
-
-[node name="scene_load_sequence" type="Node" parent="."]
-script = ExtResource("14_2hqby")
-
-[node name="scene_unload_sequence" type="Node" parent="."]
-script = ExtResource("14_2hqby")
 
 [editable path="camera"]

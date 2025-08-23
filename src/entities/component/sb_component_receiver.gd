@@ -5,11 +5,15 @@ extends ComponentReceiver
 
 var sentient: SentientBase
 
+func _init(_affector: Node = null) -> void: 
+	super(_affector)
+
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "affector":
+	if property.name in ["affector", "independent"]:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 func _ready() -> void:
-	self.name = "sb_components"
+	if get_parent() != null and get_parent() is SentientBase:
+		self.name = "sb_components"
 func _setup(_sb: SentientBase = null) -> void: 
 	components = self.get_children()
 	
@@ -47,3 +51,4 @@ func set_bypass(_bypass: bool) -> void:
 	if _bypass: bypass_enabled.emit()
 	else: 		bypass_lifted.emit()
 	
+# - 

@@ -1,5 +1,4 @@
 shader_type canvas_item;
-//render_mode world_vertex_coords;
 
 #include "res://src/shaders/_include/general_base.gdshaderinc"
 #include "res://src/shaders/_include/depth_base.gdshaderinc"

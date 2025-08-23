@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="3_tpl3m"]
 [ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="4_ctqsg"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="4_lviw6"]
-[ext_resource type="Script" uid="uid://chyunxyc0k0a3" path="res://src/scenes/save/save_state.gd" id="4_tbmd7"]
-[ext_resource type="Script" uid="uid://doidyfe8jy75n" path="res://src/scenes/save/load_state.gd" id="5_7lrnq"]
+[ext_resource type="Script" uid="uid://chyunxyc0k0a3" path="res://src/scenes/save/state/save_state.gd" id="4_tbmd7"]
+[ext_resource type="Script" uid="uid://doidyfe8jy75n" path="res://src/scenes/save/state/load_state.gd" id="5_7lrnq"]
 [ext_resource type="Texture2D" uid="uid://cgkm4gcpsetqk" path="res://src/scenes/save/sprites/mado_save.png" id="5_hgjum"]
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="5_i2l66"]
 [ext_resource type="Script" uid="uid://csbpxog45jj2s" path="res://src/systems/sequencing/event/audio/play_prev_music.gd" id="5_yn5r4"]
@@ -198,10 +198,10 @@ shader_parameter/angle = 0.0
 [node name="save" type="Node2D"]
 script = ExtResource("25_4d4yk")
 scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("18_rgmiv"),"time_elapsed":0.0,"order":Array[Node]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("3_tpl3m"),"music_bus":0,"stream":ExtResource("32_87wmh"),"vol":1.0,"pitch":1.0,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_limit":0,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
-]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("18_rgmiv"),"time_elapsed":0.0,"order":Array[Node]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("5_yn5r4"),"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_limit":0,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
-]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
+]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
 
 metadata/_custom_type_script = "uid://6cyovrsx8aob"
 

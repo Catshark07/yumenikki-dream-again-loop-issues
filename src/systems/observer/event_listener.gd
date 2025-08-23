@@ -1,13 +1,13 @@
 class_name EventListener
 extends RefCounted
 
-var events_listening_to: Array[String]
+var events_listening_to: PackedStringArray
 
 var is_static: bool
 var node_owner: Node
 var actions: Dictionary
 
-func _init(_id: Array[String] = [""], _static: bool = false, _owner: Node = null) -> void:
+func _init(_id: PackedStringArray = [""], _static: bool = false, _owner: Node = null) -> void:
 	is_static = _static
 	node_owner = _owner
 	for i in _id:
@@ -15,14 +15,13 @@ func _init(_id: Array[String] = [""], _static: bool = false, _owner: Node = null
 
 func on_notify(_id: String) -> void: # --- called from the event_manager.
 	_id = _id.to_upper()
-	if _id in EventManager.event_ids:
-		if _id in actions and actions[_id] and (is_instance_valid(node_owner) or is_static): 
-			actions[_id].call_deferred()
+	if _id in actions and actions[_id] and (node_owner != null or is_static): 
+		actions[_id].call_deferred()
 		
 func do_on_notify(_event_id: PackedStringArray = [""], _do := Callable()) -> void: 
 	for id in _event_id: 
 		id = id.to_upper()
-		if id in EventManager.event_ids and id in events_listening_to:
+		if id in events_listening_to:
 			actions[id] = Callable(_do)
 
 func listen_to_event(_event_id: String):

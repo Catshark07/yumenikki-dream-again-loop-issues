@@ -1,6 +1,5 @@
 extends Control
 
-var scene_manager: SceneManager
 const GAME_VER := "pre_alpha_002"
 
 # ---- windows
@@ -29,8 +28,6 @@ static var game_manager: GameManager
 # Upon scene change, remove the current child and queue load for the requested one.
 
 func singleton_setup() -> void: 
-	scene_manager = SceneManager.new()
-	
 	if GameManager.instance == null:
 		game_manager = preload("res://src/main/game.tscn").instantiate()
 		game_manager.name = "game_manager"
@@ -65,8 +62,8 @@ func _ready() -> void:
 	await main_tree.process_frame
 	
 	game_manager.					_setup()
-	game_manager.global_component.	_setup()
-	scene_manager.					_setup()
+	game_manager.global_components.	_setup()
+	SceneManager.					_setup()
 	game_manager.state_handle.		_setup()
 
 	set_process(true)
@@ -76,15 +73,15 @@ func _ready() -> void:
 	game_ready.emit()
 	
 func _process(delta: float) -> void: 
-	InputManager._update(delta)
-	SequencerManager._update(delta)
-	game_manager.update(delta)
-	scene_manager._update(delta)
+	InputManager.		_update(delta)
+	SequencerManager.	_update(delta)
+	SceneManager.		_update(delta)
+	game_manager.		update(delta)
 func _physics_process(delta: float) -> void:
-	InputManager._physics_update(delta)
-	SequencerManager._physics_update(delta)
-	game_manager.physics_update(delta)
-	scene_manager._physics_update(delta)
+	InputManager.		_physics_update(delta)
+	SequencerManager.	_physics_update(delta)
+	SceneManager.		_physics_update(delta)
+	game_manager.		physics_update(delta)
 func _input(_event: InputEvent) -> void:
 	game_manager.input_pass(_event)
 	InputManager._input_pass(_event)
@@ -106,8 +103,7 @@ func set_timescale(_new: float) -> void:
 	time_scale_changed.emit(_new)
 	
 static func change_scene_to(_new: PackedScene) -> void: 
-	if _new == null: return
-	Game.scene_manager.change_scene_to(_new)
+	SceneManager.change_scene_to(_new)
 # ---- game values ----	
 func get_real_delta() -> float: 
 	return (true_time_scale / Engine.max_fps)
@@ -117,7 +113,10 @@ func get_timescale() -> float: return Engine.time_scale
 
 class GameSubClass:
 	extends RefCounted
+
 	static func _setup() -> void: 							pass
+	
 	static func _update(_delta: float) -> void: 			pass
 	static func _physics_update(_delta: float) -> void:	 	pass
+
 	static func _input_pass(_event: InputEvent) -> void: 	pass

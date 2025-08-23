@@ -2,6 +2,14 @@ extends State
 
 var change_tween: Tween
 var target_position: Vector2
+@export var switch_timer: Timer
+
+func _enter_state() -> void: 
+	switch_timer.one_shot = true
+	switch_timer.autostart = false
+	switch_timer.wait_time = context.switch_duration
+	switch_timer.timeout.connect(func(): fsm.change_to_state("following"), ConnectFlags.CONNECT_ONE_SHOT) 
+	switch_timer.start()
 
 func physics_update(_delta: float) -> void: 
 	target_position = context.curr_target.global_position
