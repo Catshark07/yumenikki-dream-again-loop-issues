@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 
 func _enter_state() -> void: 
 	sentient.components.get_component_by_name("action_manager").handle_action_enter()

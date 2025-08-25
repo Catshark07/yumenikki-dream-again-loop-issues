@@ -51,7 +51,6 @@ signal quered_secondary_action
 signal quered_teritiary_action
 
 signal quered_interact
-signal quered_exhaust
 
 signal quered_sprint_start
 signal quered_sprint_end
@@ -65,9 +64,8 @@ func _enter_tree() -> void:
 	Instance._pl = self
 	EventManager.invoke_event("PLAYER_UPDATED")
 
-func force_change_state(_new: String) -> void: fsm.change_to_state(_new)
+func force_change_state(_new: String) -> void: fsm.get_curr_state().request_transition_to(_new)
 func get_state_name() -> String: return fsm.get_curr_state_name()
-
 
 class Data:
 	static var content: Dictionary = {		

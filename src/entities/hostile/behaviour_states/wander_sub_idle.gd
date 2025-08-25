@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 
 @export var idle_timer: Timer
 @export var repath_timer: Timer

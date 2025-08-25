@@ -55,6 +55,15 @@ unload_transition = SubResource("ShaderMaterial_85jal")
 position = Vector2(768, -80)
 initial_target = NodePath("../y_order/mado")
 
+[node name="STATIC" parent="camera/cam_fsm" index="0" node_paths=PackedStringArray("transitions")]
+transitions = []
+
+[node name="FOLLOWING" parent="camera/cam_fsm" index="1" node_paths=PackedStringArray("transitions")]
+transitions = []
+
+[node name="CHANGING_TARGET" parent="camera/cam_fsm" index="2" node_paths=PackedStringArray("transitions")]
+transitions = []
+
 [node name="leaves" type="CPUParticles2D" parent="camera"]
 material = SubResource("CanvasItemMaterial_d4bgs")
 position = Vector2(0, -144)

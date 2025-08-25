@@ -41,7 +41,6 @@ func _execute() -> void:
 func _validate_event_order() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
 	# checking for any missing dependencies, has the corect properties, etc.
-	
 	for i in range(order.size()):
 		var event = order[i] # - current event.
 		if event == null or !(event as Event)._validate():
@@ -50,7 +49,6 @@ func _validate_event_order() -> bool:
 			else: return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 			
 	return true
-
 
 func update(_delta: float) -> void: 
 	time_elapsed += _delta

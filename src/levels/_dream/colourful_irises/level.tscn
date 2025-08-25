@@ -61,8 +61,17 @@ load_transition = SubResource("ShaderMaterial_bsomg")
 unload_transition = SubResource("ShaderMaterial_rlt31")
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("5_jx2yo")]
-position = Vector2(72, -26)
+position = Vector2(80, -8)
 initial_target = NodePath("../world/mado")
+
+[node name="STATIC" parent="camera/cam_fsm" index="0" node_paths=PackedStringArray("transitions")]
+transitions = []
+
+[node name="FOLLOWING" parent="camera/cam_fsm" index="1" node_paths=PackedStringArray("transitions")]
+transitions = []
+
+[node name="CHANGING_TARGET" parent="camera/cam_fsm" index="2" node_paths=PackedStringArray("transitions")]
+transitions = []
 
 [node name="Wiggle" type="Node" parent="camera/marker/camera/components_receiver" index="0"]
 script = ExtResource("5_bsomg")
@@ -73,7 +82,7 @@ y_sort_enabled = true
 position = Vector2(72, -48)
 
 [node name="mado" parent="world" instance=ExtResource("5_u851k")]
-position = Vector2(0, 22)
+position = Vector2(8, 40)
 
 [node name="blood_tile" type="TileMapLayer" parent="world"]
 z_index = -1
@@ -124,6 +133,7 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="spawn_point" type="Node2D" parent="world/to_eyeball_world" node_paths=PackedStringArray("parent_instead_of_self")]
 script = ExtResource("12_4yua0")
+scene_path = "uid://b67q2b5hm6tsu"
 parent_instead_of_self = NodePath(".")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -142,8 +152,10 @@ script = ExtResource("15_s5ewf")
 scene_traversal = NodePath("traversal")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="traversal" type="Node" parent="world/to_eyeball_world/sequence_region/enter/travel_to"]
+[node name="traversal" type="Node" parent="world/to_eyeball_world/sequence_region/enter/travel_to" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("16_v680p")
+scene_path = "uid://b67q2b5hm6tsu"
+spawn_point = NodePath("../../../../spawn_point")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
 [node name="exit" type="Node" parent="world/to_eyeball_world/sequence_region"]

@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 
 var target: SentientBase
 

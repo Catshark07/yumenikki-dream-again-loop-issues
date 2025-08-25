@@ -1,9 +1,9 @@
-extends SentientState
+extends SBState
 var library_path := "normal"
 
 func _setup() -> void: 
-	(sentient as Player).quered_sneak_start.connect(func(): (sentient as Player_YN).force_change_state("sneak"))
-	(sentient as Player).quered_sneak_end.connect(func(): (sentient as Player_YN).force_change_state("walk"))
+	(sentient as Player).quered_sneak_start.connect(func(): request_transition_to("sneak"))
+	(sentient as Player).quered_sneak_end.connect(func(): request_transition_to("walk"))
 	
 func _enter_state() -> void: 
 	(sentient as Player_YN).set_texture_using_sprite_sheet("walk")

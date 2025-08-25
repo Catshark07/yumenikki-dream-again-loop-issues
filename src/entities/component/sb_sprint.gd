@@ -17,5 +17,4 @@ func _physics_update(_delta: float) -> void:
 	stamina_fsm._physics_update(_delta)
 	
 	if sentient.stamina < 0:
-		sentient.force_change_state("walk")
 		stamina_fsm.change_to_state("exhausted")

@@ -47,7 +47,7 @@ window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/canvas_layer_preset/plugin.cfg", "res://addons/global_utils/plugin.cfg", "res://addons/miscallenous/plugin.cfg")
+enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/global_utils/plugin.cfg", "res://addons/miscallenous/plugin.cfg")
 
 [file_customization]
 

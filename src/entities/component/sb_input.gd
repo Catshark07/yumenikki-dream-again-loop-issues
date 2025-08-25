@@ -1,8 +1,6 @@
 class_name SBInput
 extends SBComponent
 
-var 
-
 func _setup(_sb: SentientBase = null) -> void: 
 	super(_sb)
 	

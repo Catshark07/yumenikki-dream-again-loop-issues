@@ -8,7 +8,7 @@ signal setup
 
 var is_setup: bool = false
 
-var state_dict: Dictionary[String, State]
+var state_dict: Dictionary[StringName, State]
 var prev_state: State
 var curr_state: State
 @export var initial_state: State
@@ -30,11 +30,10 @@ func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 		curr_state._enter_state()
 func change_to_state(_new: StringName) -> void:
 	_new = _new.to_lower()
-	#print(">> %s has state [%s]?:: %s" % [self, _new, has_state(_new)])
 	if !_new.is_empty() and has_state(_new):
 		var new_state: State = state_dict.get(_new.to_lower())
 
-		if curr_state != new_state and curr_state.can_transition_to(new_state):
+		if curr_state != new_state:
 			state_changed.emit(new_state)	
 			
 			curr_state._exit_state()
@@ -47,17 +46,17 @@ func change_to_state(_new: StringName) -> void:
 			curr_state.entered.emit()
 			
 # - state checks + getter
-func has_state(state_name: StringName) -> bool:
-	return state_name in state_dict
-func is_in_state(state_name: StringName) -> bool:
-	return curr_state == state_dict.get(state_name.to_lower())
+func has_state(_state_id: StringName) -> bool:
+	return _state_id in state_dict
+func is_in_state(_state_id: StringName) -> bool:
+	return curr_state == state_dict.get(_state_id.to_lower())
 
-func get_state(state_name: StringName) -> State:
-	if has_state(state_name.to_lower()): return state_dict[state_name.to_lower()] 
+func get_state(_state_id: StringName) -> State:
+	if has_state(_state_id.to_lower()): return state_dict[_state_id.to_lower()] 
 	return
 func get_curr_state() -> State: 
 	return curr_state
-func get_curr_state_name() -> String: 
+func get_curr_state_name() -> StringName: 
 	if get_curr_state() == null: return str("%s:: no state bound" % self)
 	return state_dict.find_key(curr_state)
 

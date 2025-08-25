@@ -1,1 +1,1 @@
-extends SentientState
+extends SBState

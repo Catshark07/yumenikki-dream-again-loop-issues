@@ -9,7 +9,7 @@ func _setup(_sentient: Node = null, _skip_initial_state_setup: bool = false) -> 
 		sentient = _sentient
 		
 		for states in self.get_children():
-			if states is SentientState:
+			if states is SBState or states is SBNestedState:
 				states.fsm = self 
 				state_dict[states.name.to_lower()] = states 
 				states.sentient = sentient

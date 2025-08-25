@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 
 var progress: float
 var heading: float

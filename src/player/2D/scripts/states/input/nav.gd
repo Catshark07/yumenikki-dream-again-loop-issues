@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 @export var nav_agent: NavigationAgent2D
 
 func update(_delta: float) -> void:

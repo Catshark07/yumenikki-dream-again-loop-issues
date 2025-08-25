@@ -1,13 +1,9 @@
-extends SentientState
+extends SBState
 var library_path := "normal"
-
-func _setup() -> void: 
-	(sentient as Player).quered_sprint_start.connect(handle_to_run)
-	(sentient as Player).quered_sprint_end.connect(func(): (sentient as Player_YN).force_change_state("idle"))
 
 func _enter_state() -> void:
 	if sentient.get_behaviour().auto_run: 
-		fsm.change_to_state("run")
+		request_transition_to("run")
 		return
 		
 	(sentient as Player_YN).set_texture_using_sprite_sheet("walk")
@@ -15,13 +11,10 @@ func _enter_state() -> void:
 	sentient.noise_multi = sentient.walk_noise_mult
 	
 func update(_delta: float) -> void:
-	if sentient.desired_speed <= 0:
-		fsm.change_to_state("idle")
-	
 	if sentient.desired_speed >= (sentient.sprint_multiplier * sentient.BASE_SPEED) and sentient.can_run:
-		fsm.change_to_state("run")
+		request_transition_to("run")
 	if sentient.get_behaviour().auto_run: 
-		fsm.change_to_state("run")
+		request_transition_to("run")
 		return
 
 func physics_update(_delta: float) -> void:
@@ -32,7 +25,3 @@ func physics_update(_delta: float) -> void:
 
 	if sentient.stamina < sentient.MAX_STAMINA:
 		sentient.stamina += _delta * (sentient.stamina_regen / 2.3)
-
-func handle_to_run() -> void:
-	if (sentient as Player_YN).can_run: 
-		fsm.change_to_state("run")

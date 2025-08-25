@@ -486,11 +486,10 @@ initial_state = NodePath("PREGAME")
 
 [node name="PREGAME" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("6_tboue")
-transitions = [null, NodePath("../PAUSE")]
+transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE")]
 
-[node name="ACTIVE" type="Node" parent="game_fsm" node_paths=PackedStringArray("initial_state_fsm")]
+[node name="ACTIVE" type="Node" parent="game_fsm"]
 script = ExtResource("7_8fuah")
-initial_state_fsm = NodePath("PLAY")
 
 [node name="PLAY" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("dream_component", "transitions")]
 script = ExtResource("9_yapge")
@@ -523,12 +522,12 @@ transitions = [NodePath("../CUTSCENE"), NodePath("../PLAY")]
 
 [node name="CHANGING_SCENES" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("25_3apph")
-transitions = [null, NodePath("../PAUSE"), NodePath("../PREGAME")]
+transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE"), NodePath("../PREGAME")]
 
 [node name="PAUSE" type="Node" parent="game_fsm" node_paths=PackedStringArray("pause_menu", "transitions")]
 script = ExtResource("29_scyrd")
 pause_menu = NodePath("../../always/pause")
-transitions = [NodePath("../PREGAME"), null]
+transitions = [NodePath("../PREGAME"), NodePath("../ACTIVE")]
 
 [node name="BGM" type="Node" parent="game_fsm/PAUSE"]
 script = ExtResource("16_qe24a")

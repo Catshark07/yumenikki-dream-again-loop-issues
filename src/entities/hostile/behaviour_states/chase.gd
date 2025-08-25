@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 
 @export var stance_fsm: SentientFSM
 @export var sb_aggression: SBAggression

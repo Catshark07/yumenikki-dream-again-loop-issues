@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 
 @export var path_update_timer: Timer
 @export var stance_fsm: SentientFSM

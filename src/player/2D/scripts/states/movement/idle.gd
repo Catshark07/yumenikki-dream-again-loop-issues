@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 var library_path := "normal"
 
 func _enter_state() -> void: 
@@ -10,7 +10,7 @@ func _enter_state() -> void:
 
 func update(_delta: float) -> void:
 	if sentient.desired_speed > 0:
-		fsm.change_to_state("walk")
+		request_transition_to("move")
 	
 func physics_update(_delta: float) -> void:
 	sentient.get_behaviour()._idle(sentient)

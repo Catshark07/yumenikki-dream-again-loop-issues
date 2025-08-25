@@ -83,7 +83,6 @@ func _physics_update(_delta: float) -> void:
 	speed 			= abs(self.velocity).length()
 	
 	handle_desired_velocity(vel_input)
-	handle_heading()
 func _update(_delta: float) -> void:
 	is_moving = speed > 0	
 	components._update(_delta)

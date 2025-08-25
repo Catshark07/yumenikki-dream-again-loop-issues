@@ -1,4 +1,4 @@
-extends SentientState
+extends SBState
 
 func physics_update(_delta: float) -> void: 
 	if (!(sentient as NavSentient).nav_agent.is_target_reached() and 
