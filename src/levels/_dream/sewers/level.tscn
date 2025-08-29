@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://r3rxx4wwfpwt"]
+[gd_scene load_steps=28 format=4 uid="uid://r3rxx4wwfpwt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_wo4ti"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="2_a1gow"]
@@ -7,10 +7,15 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="3_jxt35"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="4_ik2yd"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="6_7oykn"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="8_6j8lh"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="8_45vsk"]
 [ext_resource type="Texture2D" uid="uid://c45p7grwfesnq" path="res://src/images/panorama/sewers_city_far.png" id="8_gmmal"]
 [ext_resource type="Texture2D" uid="uid://bv2oxc6tvadva" path="res://src/images/panorama/big_sky_stars.png" id="9_45vsk"]
 [ext_resource type="Texture2D" uid="uid://cxhu45vo0ohj6" path="res://src/images/panorama/sewers_city_close.png" id="9_qwh8a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ruje"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uv32y"]
 
 [sub_resource type="Gradient" id="Gradient_ic4fj"]
 
@@ -40,22 +45,20 @@ turbulence_noise_scale = 8.0
 turbulence_initial_displacement_min = 1.49012e-06
 turbulence_initial_displacement_max = 1.49012e-06
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_a1gow"]
-polygon = PackedVector2Array(-6, 10, -6, 15, 6, 15, 6, 10)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xo0nt"]
+size = Vector2(992, 304)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7oykn"]
-size = Vector2(1024, 286)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_flvif"]
-size = Vector2(0, 0)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ptsku"]
+size = Vector2(16, 16)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c3hoc"]
 shader = ExtResource("8_45vsk")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = -1.76
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = -1.76
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_a1gow"]
 gradient = SubResource("Gradient_ic4fj")
@@ -73,14 +76,16 @@ turbulence_noise_scale = 8.0
 turbulence_initial_displacement_min = 1.49012e-06
 turbulence_initial_displacement_max = 1.49012e-06
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_heb3f"]
-size = Vector2(1984, 270)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_61edl"]
+size = Vector2(1952, 256)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a421u"]
-size = Vector2(0, 0)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_es0u5"]
+size = Vector2(16, 16)
 
 [node name="sewers" type="Node"]
 script = ExtResource("1_wo4ti")
+load_transition = SubResource("ShaderMaterial_1ruje")
+unload_transition = SubResource("ShaderMaterial_uv32y")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="BGM" type="Node" parent="."]
@@ -88,9 +93,6 @@ script = ExtResource("2_e8fw0")
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="camera" parent="." instance=ExtResource("6_7oykn")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../sewers_dark/madotsuki")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.512852, 0.530666, 0.698748, 1)
@@ -125,29 +127,38 @@ process_material = SubResource("ParticleProcessMaterial_7oykn")
 [node name="madotsuki" parent="sewers_dark" instance=ExtResource("3_jxt35")]
 position = Vector2(272, 208)
 
-[node name="shadow" type="LightOccluder2D" parent="sewers_dark/madotsuki"]
-show_behind_parent = true
-light_mask = 2
-occluder = SubResource("OccluderPolygon2D_a1gow")
-occluder_light_mask = 2
-
-[node name="CamDeadzone" type="Area2D" parent="sewers_dark"]
-process_mode = 3
+[node name="deadzone" type="Area2D" parent="sewers_dark" node_paths=PackedStringArray("rect")]
 position = Vector2(320, 112)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("2_a1gow")
-size = Vector2i(1024, 286)
-shape = SubResource("RectangleShape2D_7oykn")
+rect = NodePath("rect")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
-[node name="to_city" type="Area2D" parent="sewers_dark" node_paths=PackedStringArray("target_door")]
+[node name="rect" type="CollisionShape2D" parent="sewers_dark/deadzone"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_xo0nt")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="to_city" type="Area2D" parent="sewers_dark" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
 position = Vector2(-176, 224)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("4_ik2yd")
-spawn_point = Vector2(20, 0)
+spawn_point = NodePath("spawn_point")
 target_door = NodePath("../../city_sewers/to_dark")
 parallel = true
-shape = SubResource("RectangleShape2D_flvif")
+rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="sewers_dark/to_city"]
+shape = SubResource("RectangleShape2D_ptsku")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="sewers_dark/to_city" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("8_6j8lh")
+parent_instead_of_self = NodePath("../..")
 
 [node name="city_sewers" type="Node2D" parent="."]
 position = Vector2(0, 592)
@@ -207,23 +218,37 @@ preprocess = 5.0
 visibility_rect = Rect2(-1000, -100, 2000, 200)
 process_material = SubResource("ParticleProcessMaterial_ik2yd")
 
-[node name="CamDeadzone" type="Area2D" parent="city_sewers"]
-process_mode = 3
+[node name="CamDeadzone" type="Area2D" parent="city_sewers" node_paths=PackedStringArray("rect")]
 position = Vector2(-16, 128)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("2_a1gow")
-size = Vector2i(1984, 270)
-shape = SubResource("RectangleShape2D_heb3f")
+rect = NodePath("rect")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
-[node name="to_dark" type="Area2D" parent="city_sewers" node_paths=PackedStringArray("target_door")]
-position = Vector2(960, 224)
+[node name="rect" type="CollisionShape2D" parent="city_sewers/CamDeadzone"]
+shape = SubResource("RectangleShape2D_61edl")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="to_dark" type="Area2D" parent="city_sewers" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
+position = Vector2(944, 224)
+collision_layer = 1073741824
+collision_mask = 1073741824
 script = ExtResource("4_ik2yd")
-spawn_point = Vector2(-20, 0)
+spawn_point = NodePath("spawn_point")
 target_door = NodePath("../../sewers_dark/to_city")
 parallel = true
-shape = SubResource("RectangleShape2D_a421u")
+rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="city_sewers/to_dark"]
+shape = SubResource("RectangleShape2D_es0u5")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="city_sewers/to_dark" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("8_6j8lh")
+parent_instead_of_self = NodePath("../..")
 
 [node name="power_plant_1" type="Node2D" parent="."]
 

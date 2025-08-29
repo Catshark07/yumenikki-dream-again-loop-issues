@@ -12,7 +12,7 @@ extends State
 var tween: Tween
 var pending_load_id: int = 0
 
-func _enter_state() -> void:
+func _state_enter() -> void:
 	prompt.get_node("prompt").text_display.text = "Are you sure you want to load data from this slot?"
 	
 	for load in load_buttons: 
@@ -28,7 +28,7 @@ func _enter_state() -> void:
 	tween.tween_property(path_follow_cam, "progress_ratio", 1, 2)
 	tween.tween_property(path_follow_ui, "progress_ratio", 1, 2)
 
-func _exit_state() -> void:
+func _state_exit() -> void:
 	for load in load_buttons:
 		GlobalUtils.disconnect_from_signal(open_prompt, load.pressed)
 	GlobalUtils.disconnect_from_signal(Save.load_data.bind(pending_load_id), prompt_yes.pressed)

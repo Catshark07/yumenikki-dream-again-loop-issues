@@ -25,7 +25,7 @@ func _setup() -> void:
 		
 	(sentient as NavSentient).nav_agent.target_reached.connect(hesitance_timer.start)
 
-func _enter_state() -> void:
+func _state_enter() -> void:
 	roll = randf()
 	 		
 	target = sb_aggression.target
@@ -38,7 +38,7 @@ func _enter_state() -> void:
 	hesitance_timer.start()
 	super()
 	
-func _exit_state() -> void: 
+func _state_exit() -> void: 
 	
 	sb_aggression.suspicion_indicator_status.visible = false
 	hesitance_timer.stop()

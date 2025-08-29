@@ -4,7 +4,7 @@ extends SBState
 @export var sb_aggression: SBAggression
 var target: SentientBase
 
-func _enter_state() -> void:
+func _state_enter() -> void:
 	if sb_aggression.emits_chase_sequence:
 		EventManager.invoke_event("CHASE_ACTIVE")
 		
@@ -15,7 +15,7 @@ func _enter_state() -> void:
 	sentient.handle_direction((sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
 	super()
 
-func _exit_state() -> void:
+func _state_exit() -> void:
 	if sb_aggression.emits_chase_sequence:
 		EventManager.invoke_event("CHASE_FINISH")
 

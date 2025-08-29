@@ -1,1 +1,5 @@
-extends Node
+extends Event
+
+func _execute() -> void:
+	PanoramaSystem.instance.remove_panorama()
+	print("FUCKCKKCKCKCKCKKCKC")

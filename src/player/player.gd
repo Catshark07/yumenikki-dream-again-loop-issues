@@ -69,11 +69,8 @@ func get_state_name() -> String: return fsm.get_curr_state_name()
 
 class Data:
 	static var content: Dictionary = {		
-		"data" : 
-			{
-			"innocent_killed" : 0,
-			"hostile_killed" : 0,
-			},
+		"innocent_killed" : 0,
+		"hostile_killed" : 0,
 		"effects" : [],
 		}
 	

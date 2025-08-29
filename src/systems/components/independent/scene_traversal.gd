@@ -24,4 +24,3 @@ func update_spawn_point_scene_path() -> void:
 func update_spawn_point_connection_id() -> void:
 	if spawn_point == null: return
 	spawn_point.connection_id = connection_id
-	

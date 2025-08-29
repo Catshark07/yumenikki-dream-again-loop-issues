@@ -5,10 +5,14 @@
 
 [node name="animated_sentient_template" instance=ExtResource("1_6gk1q")]
 
-[node name="sprite_renderer" parent="." index="2"]
+[node name="sprite_renderer" parent="." index="3"]
 script = ExtResource("2_ae50f")
 autoplay = false
 loop = false
 reverse = false
 end_frame = false
 fps = 1.0
+
+[node name="nav" parent="." index="6"]
+debug_enabled = true
+debug_use_custom = true

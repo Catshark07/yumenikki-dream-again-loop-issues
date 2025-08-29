@@ -5,15 +5,17 @@ var state: State
 @export var emit_mode: MODE
 
 func _ready() -> void:
-	order = get_children()
+	super()
 	state = get_parent()
 	
 	if state != null and state is State:
 		match emit_mode:
-			MODE.ENTER: state.entered.connect(_execute)
-			MODE.EXIT: state.exited.connect(_execute)
+			MODE.ENTER:
+				state.entered.connect(func(): SequencerManager.invoke(self))
+			MODE.EXIT: 
+				state.exited.connect(func(): SequencerManager.invoke(self))
 			_:
-				state.entered.connect(_execute)
-				state.exited.connect(_execute)
+				state.entered.connect(func(): SequencerManager.invoke(self))
+				state.exited.connect(func(): SequencerManager.invoke(self))
 				
 	process_mode = Node.PROCESS_MODE_DISABLED	

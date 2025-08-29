@@ -1,5 +1,7 @@
 class_name Event extends Node
+
 signal finished
+signal canceled
 
 # template pusherr line:
 # printerr("EVENT - {NAME} :: {WARNING}!")
@@ -30,9 +32,16 @@ func execute() -> void:
 	if call_limit > 0:
 		call_count += 1
 		if call_count > call_limit: return
-
+	
+	if !wait_til_finished: __call_finished() 
 	await _execute()
-	if deferred: finished.emit.call_deferred()
-	else:		 finished.emit()
+	if wait_til_finished: __call_finished()
+func cancel() -> void:
+	_cancel()
+	canceled.emit.call_deferred()
 func end() -> void: 
 	_end()
+
+func __call_finished() -> void:
+	if deferred: finished.emit.call_deferred()
+	else:		 finished.emit()

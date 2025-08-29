@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PLEmote" load_steps=2 format=3 uid="uid://c35efjd00td20"]
+
+[ext_resource type="Script" uid="uid://c4osvrkmothvx" path="res://src/player/2D/scripts/actions/pl_emote.gd" id="1_axnew"]
+
+[resource]
+script = ExtResource("1_axnew")
+enter_anim = &"sit_down"
+exit_anim = &"stand_up"
+speed = 1.0
+metadata/_custom_type_script = "uid://c4osvrkmothvx"

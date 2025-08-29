@@ -64,7 +64,6 @@ func _on_push() -> void:
 		if s != null: s._enter()
 
 	load_scene()
-	save_scene()
 	
 	SequencerManager.invoke(seq_initial)
 	process_mode = Node.PROCESS_MODE_INHERIT
@@ -73,6 +72,7 @@ func _on_pre_pop() -> void:
 	for s in GlobalUtils.get_group_arr("actors"): 
 		if s != null: s._exit()
 func _on_pop() -> void:
+	save_scene()
 	queue_free()
 	process_mode = Node.PROCESS_MODE_DISABLED
 	

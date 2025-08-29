@@ -2,7 +2,7 @@ extends State
 
 @export var pause_menu: Control
 
-func _enter_state() -> void: 
+func _state_enter() -> void: 
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
 	
 	GameManager.set_cinematic_bars(true)
@@ -13,7 +13,7 @@ func _enter_state() -> void:
 	Application.pause()
 	Application.main_window.grab_focus()
 
-func _exit_state() -> void: 
+func _state_exit() -> void: 
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
 
 	GameManager.options.visible = false
@@ -23,6 +23,6 @@ func _exit_state() -> void:
 	Application.resume()
 	Application.main_window.gui_release_focus()
 
-func input(event: InputEvent) -> void:
+func _state_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_esc_menu"):
 		GameManager.pause_options(false)

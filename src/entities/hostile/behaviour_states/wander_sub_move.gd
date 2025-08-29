@@ -1,11 +1,16 @@
 extends SBState
 
-func physics_update(_delta: float) -> void: 
+
+func _state_physics_update(_delta: float) -> void: 
 	if (!(sentient as NavSentient).nav_agent.is_target_reached() and 
 		(sentient as NavSentient).nav_agent.is_target_reachable()):
-			
+
 		sentient.handle_direction(
 			(sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
+		sentient.handle_velocity()
+		sentient.vel_input = sentient.direction
+	
+	
 	
 	else:
-		(fsm as SentientHFSM).change_to_state_or_fsm("wander_idle")
+		request_transition_to("wander_idle")

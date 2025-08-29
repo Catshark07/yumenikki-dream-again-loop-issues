@@ -141,10 +141,7 @@ wander_radius = 20.0
 
 [node name="effect_collectable" parent="." index="10" instance=ExtResource("8_d620m")]
 
-[node name="append_effect" parent="effect_collectable/on_interact" index="0"]
+[node name="append_effect" parent="effect_collectable/on_interact" index="1"]
 effect = ExtResource("9_4o1dq")
-
-[node name="notification" parent="effect_collectable/on_interact" index="2"]
-texts = Array[String](["Effect Collect!... Lamp!"])
 
 [editable path="effect_collectable"]

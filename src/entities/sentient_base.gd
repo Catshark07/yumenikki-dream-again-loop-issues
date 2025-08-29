@@ -1,12 +1,17 @@
 class_name SentientBase
 extends Entity
 
-var vel_input: Vector2i
-var dir_input: Vector2i
+var vel_input: Vector2i:
+	set(input): 
+		vel_input.x = clamp(input.x, -1, 1)
+		vel_input.y = clamp(input.y, -1, 1)
+var dir_input: Vector2i:
+	set(input): 
+		dir_input.x = clamp(input.x, -1, 1)
+		dir_input.y = clamp(input.y, -1, 1)
 
 var is_moving: bool = false
 
-var world_warp: Area2D
 var components: SBComponentReceiver
 
 var noise: 			float = 0
@@ -34,7 +39,9 @@ enum compass_headings {
 var heading: compass_headings
 
 var direction: Vector2 = Vector2(0, 1):
-	set(dir): direction = clamp(dir, Vector2(-1, -1), Vector2(1, 1))
+	set(dir): 
+		direction.x = clamp(dir.x, -1, 1)
+		direction.y = clamp(dir.y, -1, 1)
 var lerped_direction: Vector2 = Vector2.DOWN
 
 @export_category("Base Entity Behaviour")
@@ -50,7 +57,6 @@ func _ready() -> void:
 	sprite_renderer = get_node_or_null("sprite_renderer")
 	shadow_renderer = get_node_or_null("shadow_renderer")
 	
-	world_warp = get_node_or_null("world_warp")
 	components = $sb_components
 	components._setup(self)
 		

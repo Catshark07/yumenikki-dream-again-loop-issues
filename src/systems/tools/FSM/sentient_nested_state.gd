@@ -8,6 +8,6 @@ func _setup() -> void:
 		if states is SBState or states is SBNestedState:
 			states.sentient = sentient 
 			states.fsm = fsm
+			states.parent = self
 			sub_states[states.name.to_lower()] = states 
 			states.setup()
-			states.parent = self

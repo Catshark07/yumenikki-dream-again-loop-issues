@@ -5,7 +5,7 @@ extends State
 func _setup() -> void:
 	inventory._setup()
 
-func _enter_state() -> void: 
+func _state_enter() -> void: 
 	Ambience.mute()
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
 	
@@ -16,7 +16,7 @@ func _enter_state() -> void:
 	
 	inventory.visible = true
 	if inventory != null: inventory._enter()
-func _exit_state() -> void: 	
+func _state_exit() -> void: 	
 	Ambience.unmute()
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
 	
@@ -28,6 +28,6 @@ func _exit_state() -> void:
 	inventory.visible = false
 	if inventory != null: inventory._exit()
 
-func input(_event: InputEvent) -> void:
+func _state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pl_inventory"): 
 		EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST")

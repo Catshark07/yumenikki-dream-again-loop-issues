@@ -65,5 +65,4 @@ func set_texture_using_sprite_sheet(_sprite_id: String) -> void:
 		)
 func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 	sprite_sheet = _new_sheet
-	set_texture_using_sprite_sheet(get_state_name())
 #endregion

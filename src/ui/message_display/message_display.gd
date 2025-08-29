@@ -1,11 +1,13 @@
 class_name MessageDisplay
 extends PanelContainer
 
-const MIN_SIZE_X = 235
-const MIN_SIZE_Y = 100
+const MIN_SIZE := Vector2i(235, 70)
 
 const DEFAULT_PUNCTUATION_WAIT = 0.25
 const DEFAULT_LETTER_WAIT = 0.0275
+
+const DEFAULT_SOUND: AudioStreamWAV = preload("res://src/audio/se/se_talk_default.wav")
+const DEFAULT_PANEL_STULE := preload("res://src/ui/panel_default.tres")
 
 var initial_position: Vector2
 
@@ -14,8 +16,8 @@ var sub_container: VSplitContainer
 var text_container: RichTextLabel
 var typewriter_timer: Timer
 
+
 var sound_player: SoundPlayer
-var iterate_sound: AudioStreamWAV = preload("res://src/audio/se/se_talk_default.wav")
 
 var text: String = ""
 
@@ -32,8 +34,9 @@ signal finished
 
 func _ready() -> void:
 	self.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	self.custom_minimum_size = Vector2(MIN_SIZE_X, MIN_SIZE_Y)
+	self.custom_minimum_size = Vector2(MIN_SIZE.x, MIN_SIZE.y)
 	self.name = "message_display"
+	self.add_theme_stylebox_override("panel", DEFAULT_PANEL_STULE)
 	
 	container = MarginContainer.new()
 	sub_container = VSplitContainer.new()
@@ -82,7 +85,7 @@ func open(
 	_sound: AudioStream,
 	_speed: float = 1,
 	_font_colour: Color = Color.WHITE) -> void:
-		sound = _sound if _sound != null else sound
+		sound = _sound if _sound != null else null
 		speed = _speed if _speed != 1 else speed
 		colour = _font_colour 
 		

@@ -8,11 +8,14 @@ const TEMPLATE_DATA := {
 		"read_warning" : false,
 		"time_played" : 00,
 		},
+	"global" : {
+		"flags" : {}
+		},
 	"player" : {},
 	"scene" : {}}
 
 static var time_elapsed: float
-static var data = TEMPLATE_DATA
+static var data = Dictionary(TEMPLATE_DATA)
 static var curr_data: Dictionary
 
 const SAVE_DIR := "user://save/"
@@ -28,7 +31,7 @@ static func save_data(_number: int = 0) -> void:
 	
 	if curr_data.is_empty(): curr_data = Dictionary(data)
 	var save_data_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.WRITE)
-	var curr_data := Dictionary(data)
+	var curr_data: Dictionary = Dictionary(data)
 	
 	curr_data["version"] = Game.GAME_VER
 	curr_data["game"]["time_played"] = time_elapsed

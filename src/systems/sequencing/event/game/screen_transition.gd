@@ -15,7 +15,6 @@ extends Event
 @export var ease: Tween.EaseType = Tween.EASE_OUT
 
 func _execute() -> void:
-	if !wait_til_finished: super()
 		
 	GameManager.secondary_transition.set_transition(
 		fade_colour,
@@ -29,4 +28,3 @@ func _execute() -> void:
 		a,
 		b)
 		
-	if wait_til_finished: super()

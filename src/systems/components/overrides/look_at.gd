@@ -5,7 +5,7 @@ class_name LookAt extends Component
 var origin_pos: Vector2 # readonly
 var angle_rads: float 	# readonly
 @export var r: float = 1 # radius
-@export var look_at_target: Node2D
+@export var look_at_target: Node
 
 var target_vector: Vector2
 

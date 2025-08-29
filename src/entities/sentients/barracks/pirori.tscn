@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://3rcijpl4bfm4"]
+[gd_scene load_steps=19 format=3 uid="uid://3rcijpl4bfm4"]
 
 [ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_orc3b"]
 [ext_resource type="Texture2D" uid="uid://omtelqffkiig" path="res://src/entities/sentients/barracks/walk.png" id="2_orc3b"]
@@ -10,8 +10,10 @@
 [ext_resource type="AnimationLibrary" uid="uid://br0km4uq5dly" path="res://src/entities/sentients/animation_libs/pirori.tres" id="10_4v8pq"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="10_lpcqq"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="11_scd0i"]
-[ext_resource type="AudioStream" uid="uid://btc4tvdxrt213" path="res://src/audio/se/se_rpgmaker_teleport.wav" id="12_u4v1j"]
+[ext_resource type="Script" uid="uid://b2je1meyfnp7s" path="res://src/systems/sequencing/grouped_event_interface.gd" id="11_w3fjo"]
+[ext_resource type="AudioStream" uid="uid://bmx0hywuebj28" path="res://src/audio/se/se_soothe.wav" id="12_lpcqq"]
 [ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/sequencing/sequence/game/on_state.gd" id="13_4v8pq"]
+[ext_resource type="Script" uid="uid://ceoifexmpm3o5" path="res://src/systems/sequencing/event/node/call_function.gd" id="13_lpcqq"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m2dek"]
 
@@ -92,23 +94,74 @@ initial_state = NodePath("WANDER")
 [node name="WANDER" parent="behaviour_fsm" index="2"]
 wander_radius = 35.0
 
-[node name="interactable" type="Area2D" parent="." index="10"]
+[node name="interactable" type="Area2D" parent="." index="10" node_paths=PackedStringArray("rect")]
 collision_layer = 1073741824
 collision_mask = 1073741824
 script = ExtResource("9_u4v1j")
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_lpcqq"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
+rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
+presence_detect = true
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="Sequence" type="Node" parent="interactable" index="0"]
+[node name="on_interact" type="Node" parent="interactable" index="0"]
 script = ExtResource("10_lpcqq")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="PlaySound" type="Node" parent="interactable/Sequence" index="0"]
+[node name="grouped" type="Node" parent="interactable/on_interact" index="0"]
+script = ExtResource("11_w3fjo")
+metadata/_custom_type_script = "uid://b2je1meyfnp7s"
+
+[node name="play_sound" type="Node" parent="interactable/on_interact/grouped" index="0"]
 script = ExtResource("11_scd0i")
-sound = ExtResource("12_u4v1j")
+sound = ExtResource("12_lpcqq")
+pitch = 0.75
 metadata/_custom_type_script = "uid://vk574kc3l7av"
+
+[node name="force_to_idle" type="Node" parent="interactable/on_interact/grouped" index="1" node_paths=PackedStringArray("node")]
+script = ExtResource("13_lpcqq")
+node = NodePath("../../../../behaviour_fsm/WANDER/WANDER_MOVE")
+method_name = "request_transition"
+method_info = {
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_from",
+"type": 21,
+"usage": 0
+}, {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_to",
+"type": 21,
+"usage": 0
+}, {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_force_fsm_priority",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [false],
+"flags": 1,
+"id": 0,
+"name": "request_transition",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+}
+internal_args = Dictionary[String, Variant]({
+"_from": &"wander_move",
+"_to": &"wander_idle"
+})
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="rect" type="CollisionShape2D" parent="interactable" index="1"]
 shape = SubResource("RectangleShape2D_lpcqq")

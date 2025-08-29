@@ -1,4 +1,4 @@
 extends State
 
-func _enter_state() -> void: 
+func _state_enter() -> void: 
 	GameManager.player_hud.visible = false

@@ -8,10 +8,10 @@ extends UIStackNode
 func _ready() -> void:
 	super()
 	
-	borderless.button_pressed = Config.get_setting_data("graphics", "borderless", false)
-	full_screen.button_pressed = Config.get_setting_data("graphics", "fullscreen", false)
-	cam_reduction.button_pressed = Config.get_setting_data("graphics", "motion_reduce", false)
-	bloom.button_pressed = Config.get_setting_data("graphics", "bloom", false)
+	borderless.button_pressed = ConfigManager.get_setting_data("graphics", "borderless", false)
+	full_screen.button_pressed = ConfigManager.get_setting_data("graphics", "fullscreen", false)
+	cam_reduction.button_pressed = ConfigManager.get_setting_data("graphics", "motion_reduce", false)
+	bloom.button_pressed = ConfigManager.get_setting_data("graphics", "bloom", false)
 	
 	borderless.toggled.connect(func(_truth: bool): 
 		Application.set_window_borderless(_truth))

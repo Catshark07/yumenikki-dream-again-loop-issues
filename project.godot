@@ -11,13 +11,6 @@ config_version=5
 [application]
 
 config/name="YUME NIKKI - demake"
-config/description="In the depth of the abyss, where no sound can be heard..
-far down below, in the void of darkness, a light glows bright.
-When all thought hope was lost, amongst the creatures of the abyss arises the returned.
-the return of a legend, of a long-spoken myth... the return of the might.
-
-Dream Again, little one, for there are more days yet to come.
-For once the sun sleeps on the verge of your world, it will be all forever done."
 config/version="PREALPHA - 00"
 run/main_scene="uid://l5hlafq1udx4"
 config/features=PackedStringArray("4.4", "GL Compatibility")
@@ -32,7 +25,7 @@ general/3d_panning_strength=1.0
 
 [autoload]
 
-NodeSaveService="*res://src/systems/game/node_save_service.gd"
+NodeSaveService="*res://src/systems/save/node_save_service.gd"
 Game="*res://src/game/game.gd"
 Music="*res://src/autoloads/bgm_player_music.gd"
 Ambience="*res://src/autoloads/bgm_player_amb.gd"

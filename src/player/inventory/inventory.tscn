@@ -39,7 +39,7 @@ script/source = "extends State
 var tween: Tween
 
 
-func _enter_state() -> void: 
+func _state_enter() -> void: 
 	section.visible = true
 	
 	mado.position.x -= 10
@@ -62,7 +62,7 @@ func _enter_state() -> void:
 	
 	handle_animation_enter()
 	
-func _exit_state() -> void:
+func _state_exit() -> void:
 	if tween != null: tween.kill()
 	tween = self.create_tween()
 	
@@ -109,7 +109,7 @@ var player_stats_changed: EventListener
 
 func _ready() -> void:
 	pass
-func _enter_state() -> void: 
+func _state_enter() -> void: 
 	container.update_stats_display(EventManager.get_event_param(\"PLAYER_EQUIP\")[0])
 	
 	section.visible = true
@@ -134,7 +134,7 @@ func _enter_state() -> void:
 	
 	handle_animation_enter()
 	
-func _exit_state() -> void:
+func _state_exit() -> void:
 	if tween != null: tween.kill()
 	tween = self.create_tween()
 	

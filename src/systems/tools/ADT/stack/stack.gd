@@ -50,3 +50,7 @@ func push(_element: Variant) -> void:
 	if _element is StackNode: 
 		_element._on_push()
 	pushed.emit(_element)
+
+## Checks whether the stack is empty or not.
+func is_empty() -> bool:
+	return array.is_empty()

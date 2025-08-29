@@ -87,8 +87,9 @@ static func handle_scene_push(_scene_node: SceneNode) -> void:
 	EventManager.invoke_event("SCENE_PUSHED", [_scene_node])
 	
 static func handle_scene_pop() -> void:
+
 	var scene_to_pop = scene_stack.top
-	scene_stack.pop()
+	print_rich(str("[color=yellow]SceneManager // Scene Pop: %s [/color]" % scene_stack.pop()))
 
 static func change_scene_to(scene: PackedScene) -> void:
 	if scene == null or !ResourceLoader.exists(scene.resource_path): 

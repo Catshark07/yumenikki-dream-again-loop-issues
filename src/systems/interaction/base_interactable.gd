@@ -5,7 +5,6 @@ extends AreaRegion
 
 @export_group("Flags")
 @export var secret: bool = false
-@export var presence_detect: bool = true
 
 @export var area: bool = false
 @export var only_once: bool = false
@@ -32,12 +31,10 @@ func _ready() -> void:
 	if !Engine.is_editor_hint():
 		self.set_collision_layer_value(2, true)
 		self.set_collision_mask_value(3, true)
-
 func _setup() -> void:
 	set_physics_process(false)
 	set_process(false)
 
-func _interact() -> void: pass
 func interact() -> void:
 	if only_once and can_interact:
 		can_interact = false
@@ -47,6 +44,7 @@ func interact() -> void:
 	elif can_interact:
 		_interact()
 		interacted.emit()
+func _interact() -> void: pass
 
 
 func _handle_player_enter() -> void: 

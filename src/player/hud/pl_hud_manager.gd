@@ -1,4 +1,4 @@
-class_name PLHUD
+class_name PLHUDManager
 extends Control
 
 static var instance

@@ -1,8 +1,7 @@
-[gd_scene load_steps=47 format=3 uid="uid://he4hpqrfbk5w"]
+[gd_scene load_steps=33 format=3 uid="uid://he4hpqrfbk5w"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_v0g1x"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_f8of1"]
-[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="6_42e87"]
 [ext_resource type="Texture2D" uid="uid://lqin0be5aulg" path="res://src/levels/_dream/apartment_balcony/sprites/bg.png" id="7_465ow"]
 [ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="8_db0b4"]
 [ext_resource type="Texture2D" uid="uid://4t00djnyofcf" path="res://src/levels/_dream/apartment_balcony/sprites/bubble_l.png" id="9_yqlf5"]
@@ -13,69 +12,14 @@
 [ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="13_dtquc"]
 [ext_resource type="Texture2D" uid="uid://bciotfdo1sr7a" path="res://src/levels/_dream/apartment_balcony/sprites/bg_buildings_small.png" id="13_qupph"]
 [ext_resource type="Texture2D" uid="uid://do5gh2pld28x8" path="res://src/levels/_dream/apartment_balcony/sprites/bubble.png" id="14_2eafh"]
-[ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="15_6011g"]
-[ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="16_jqpo4"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="17_hdlsp"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="15_01ahr"]
 [ext_resource type="Texture2D" uid="uid://cihxg8l1s7n40" path="res://src/levels/_dream/apartment_balcony/sprites/balcony.png" id="17_n6npm"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/sequencing/sequence/game/sequence_region.gd" id="20_42e87"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="21_2vk4d"]
-[ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="23_8rvh6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_twfnl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_viai5"]
-
-[sub_resource type="Resource" id="Resource_mgo11"]
-metadata/__load_path__ = "res://src/audio/bgm/luff_yta_goldfish-march.ogg"
-
-[sub_resource type="Gradient" id="Gradient_ytbh7"]
-offsets = PackedFloat32Array(0, 0.582524, 0.834951, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.28797, 0.166815, 0.630079, 1, 0.673144, 0.466166, 0.826578, 1, 0.945335, 0.71513, 0.905508, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_42e87"]
-gradient = SubResource("Gradient_ytbh7")
-fill_from = Vector2(1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_sla7v"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7otd0"]
-noise = SubResource("FastNoiseLite_sla7v")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7uquv"]
-shader = ExtResource("15_6011g")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.05
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/opacity = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_7otd0")
-shader_parameter/scroll_speed = 0.05
-shader_parameter/gradient = SubResource("GradientTexture2D_42e87")
-shader_parameter/ray_strength = 1.225
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_tdu7n"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hi0md"]
-width = 480
-height = 270
-seamless = true
-noise = SubResource("FastNoiseLite_tdu7n")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wcub"]
-shader = ExtResource("16_jqpo4")
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/dirX = 1.0
-shader_parameter/dirY = 1.0
-shader_parameter/scroll_speed = 0.255
-shader_parameter/noise_strength = 0.165
-shader_parameter/noise_fwd = SubResource("NoiseTexture2D_hi0md")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6tu8p"]
 shader = ExtResource("8_db0b4")
@@ -97,11 +41,10 @@ shader = ExtResource("13_dtquc")
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.1
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 1.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/noise = SubResource("NoiseTexture2D_sxiqe")
@@ -172,40 +115,13 @@ turbulence_influence_max = 0.05
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5gtxv"]
 size = Vector2(30, 24)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ryio"]
-size = Vector2(20, 13)
-
 [node name="sane_balcony" type="Node"]
 script = ExtResource("1_v0g1x")
-scene_load_seq = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://src/systems/sequence/sequence_interface.gd"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
-scene_unload_seq = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://src/systems/sequence/sequence_interface.gd"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
 load_transition = SubResource("ShaderMaterial_twfnl")
 unload_transition = SubResource("ShaderMaterial_viai5")
 metadata/_edit_vertical_guides_ = [-341.0]
 
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("17_hdlsp")
-stream = SubResource("Resource_mgo11")
-
 [node name="cam_layer" parent="." instance=ExtResource("4_f8of1")]
-
-[node name="camera_handler" parent="cam_layer" index="0"]
-position = Vector2(217, 120)
-
-[node name="Wiggle" type="Node" parent="cam_layer/camera_handler/marker/camera/components_receiver" index="0"]
-script = ExtResource("6_42e87")
-wig_x_strn = 5.2
-wig_y_strn = 2.25
-wig_pos_speed = 2.5
-metadata/_custom_type_script = "uid://bptlrkdn0tpua"
-
-[node name="overlay_1" parent="cam_layer/camera_handler/camera_overlay" index="0"]
-material = SubResource("ShaderMaterial_7uquv")
-
-[node name="overlay_2" parent="cam_layer/camera_handler/camera_overlay" index="1"]
-material = SubResource("ShaderMaterial_8wcub")
 
 [node name="screen_overlay" type="CanvasLayer" parent="."]
 layer = 20
@@ -346,29 +262,25 @@ position = Vector2(51, -22)
 build_mode = 1
 polygon = PackedVector2Array(-99, -3, -67.9912, 12.2926, -63, 13, -39, 25, -39, 13, -19, 13, -19, 37, -7, 41, -7, 13, -99, -27, -155, -7, -155, 17, -7, 93, 5, 93, 5, 13, -7, 13, -7, 77, -135, 13)
 
-[node name="SequenceRegion" type="Area2D" parent="BalconyBase"]
+[node name="SequenceRegion" type="Area2D" parent="BalconyBase" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
+process_mode = 4
 position = Vector2(322, 201)
 script = ExtResource("20_42e87")
+enter_sequence = NodePath("enter")
+exit_sequence = NodePath("exit")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
 [node name="rect" type="CollisionShape2D" parent="BalconyBase/SequenceRegion"]
 position = Vector2(-5, 0)
 shape = SubResource("RectangleShape2D_5gtxv")
 
+[node name="enter" type="Node" parent="BalconyBase/SequenceRegion"]
+script = ExtResource("15_01ahr")
+
+[node name="exit" type="Node" parent="BalconyBase/SequenceRegion"]
+script = ExtResource("15_01ahr")
+
 [node name="Satsuki" parent="." instance=ExtResource("21_2vk4d")]
 position = Vector2(384, 160)
-
-[node name="door" type="Area2D" parent="."]
-position = Vector2(441, 169)
-collision_layer = 3
-script = ExtResource("23_8rvh6")
-connection_id = "nexus"
-scene_path = "uid://dx4lyv3rh8b5p"
-spawn_dir = Vector2(-1, 1)
-area = true
-
-[node name="field" type="CollisionShape2D" parent="door"]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_8ryio")
 
 [editable path="cam_layer"]

@@ -13,5 +13,6 @@ func _ready() -> void:
 			self.global_position = Vector2.ZERO
 			self.custom_minimum_size = Vector2(480, 270)
 			self.z_index = -25
+	
 func _execute() -> void:
 	PanoramaSystem.instance.apply_panorama(self)

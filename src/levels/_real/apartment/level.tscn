@@ -1,35 +1,34 @@
-[gd_scene load_steps=36 format=4 uid="uid://dwst4o7pf4ye7"]
+[gd_scene load_steps=23 format=3 uid="uid://dwst4o7pf4ye7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_gl3nc"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_jd4xj"]
 [ext_resource type="Texture2D" uid="uid://dbyvt12xvets3" path="res://src/levels/_real/apartment/background.png" id="4_kxofn"]
 [ext_resource type="Texture2D" uid="uid://cr3septns1m3e" path="res://src/images/panorama/sunset_city.png" id="4_n1yad"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="4_qaqf1"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="6_ev3dy"]
-[ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="6_rxu3j"]
 [ext_resource type="PackedScene" uid="uid://jioru3rh3jtn" path="res://src/levels/_real/apartment/balcony_real.tscn" id="7_33y2f"]
 [ext_resource type="PackedScene" uid="uid://dp6063trlnao1" path="res://src/levels/_real/apartment/room_real.tscn" id="8_kxofn"]
-[ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/sequencing/sequence/game/sequence_region.gd" id="9_rbx1l"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="9_xma33"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="10_p0cyb"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="10_rxu3j"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="13_160am"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="13_jd4xj"]
 [ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/__ignore/rain.tscn" id="13_l6oh8"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="14_8p0b5"]
-[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="15_3b43y"]
-[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="15_8p0b5"]
-[ext_resource type="AudioStream" uid="uid://b5flsa2lqe3h0" path="res://src/audio/se/door_rattle.mp3" id="16_1674n"]
-[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="17_jd4xj"]
-[ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="18_rbx1l"]
-[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="19_4kjpi"]
-[ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="20_fjdyw"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="23_1674n"]
-[ext_resource type="AudioStream" uid="uid://ciq7lkhql6pga" path="res://src/audio/bgm/may_yta_hmm.ogg" id="24_dr5gc"]
-[ext_resource type="AudioStream" uid="uid://dlfw10qwka7su" path="res://src/audio/amb/amb_rain.ogg" id="25_dr5gc"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="15_lejej"]
+[ext_resource type="AudioStream" uid="uid://ciq7lkhql6pga" path="res://src/audio/bgm/may_yta_hmm.ogg" id="16_sau16"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="18_jd4xj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p0cyb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l6oh8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6pphd"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8p0b5"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xma33"]
+size = Vector2(480, 270)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4gftm"]
 shader = ExtResource("4_qaqf1")
@@ -40,211 +39,99 @@ shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6pphd"]
-shader = ExtResource("6_rxu3j")
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
-shader_parameter/optional_grad = false
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6pphd"]
-size = Vector2(16, 16)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_45h0u"]
-blend_mode = 2
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
-size = Vector2(16, 8)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4eec8"]
-size = Vector2(16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6dwcq"]
-size = Vector2(16, 16)
-
-[node name="room" type="Node2D"]
+[node name="room" type="Node2D" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
 y_sort_enabled = true
 script = ExtResource("1_gl3nc")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_160am"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
-
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_160am"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
-
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
+scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_p0cyb")
 unload_transition = SubResource("ShaderMaterial_l6oh8")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="panorama (top_layer)" type="CanvasLayer" parent="."]
-layer = -20
-
-[node name="Dusk" type="Sprite2D" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_4gftm")
-position = Vector2(280, 88)
-texture = ExtResource("4_n1yad")
-
-[node name="Background" type="Sprite2D" parent="panorama (top_layer)"]
-position = Vector2(248, 128)
-texture = ExtResource("4_kxofn")
-
-[node name="camera" parent="." instance=ExtResource("6_ev3dy")]
-
-[node name="overlay_1" parent="camera/camera_handler/camera_overlay" index="0"]
-material = SubResource("ShaderMaterial_6pphd")
-color = Color(0.49616, 0.516021, 0.450909, 1)
-
-[node name="scene_load_sequence" type="Node" parent="."]
-script = ExtResource("13_160am")
-
-[node name="scene_unload_sequence" type="Node" parent="."]
-script = ExtResource("13_160am")
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("6_ev3dy")]
+position = Vector2(184, 144)
+initial_target = NodePath("../balcony/_/madotsuki")
 
 [node name="balcony" parent="." instance=ExtResource("7_33y2f")]
-layer = -1
+position = Vector2(80, -8)
 
-[node name="cam_deadzone" parent="balcony/y_order" index="1"]
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
-
-[node name="sequence" type="Node" parent="balcony/y_order/cam_deadzone" index="1" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
-process_mode = 4
-script = ExtResource("9_rbx1l")
-enter_sequence = NodePath("enter")
-exit_sequence = NodePath("exit")
-metadata/_custom_type_script = "uid://f4sb25g3gpic"
-
-[node name="enter" type="Node" parent="balcony/y_order/cam_deadzone/sequence"]
-script = ExtResource("13_160am")
-
-[node name="exit" type="Node" parent="balcony/y_order/cam_deadzone/sequence"]
-script = ExtResource("13_160am")
-
-[node name="madotsuki" parent="balcony/y_order" index="2" instance=ExtResource("10_p0cyb")]
-position = Vector2(272, 136)
-
-[node name="to_room" type="Area2D" parent="balcony/y_order" index="3" node_paths=PackedStringArray("target_door")]
-position = Vector2(256, 120)
-collision_layer = 1073741824
-collision_mask = 1073741824
-script = ExtResource("9_xma33")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 24),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_rxu3j"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":true,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(-16, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
-,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
-
-target_door = NodePath("../../../room/y_order/to_balcony")
-parallel = true
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_6pphd"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
+[node name="madotsuki" parent="balcony/_" index="4" instance=ExtResource("10_p0cyb")]
+position = Vector2(104, 152)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="rect" type="CollisionShape2D" parent="balcony/y_order/to_room"]
+[node name="to_room" type="Area2D" parent="balcony/_" index="5" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
+position = Vector2(104, 144)
+collision_layer = 2684354560
+collision_mask = 2684354560
+script = ExtResource("9_xma33")
+spawn_point = NodePath("spawn_point")
+target_door = NodePath("../../../room/to_balcony")
+parallel = true
+secret = true
+area = true
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="balcony/_/to_room"]
 shape = SubResource("RectangleShape2D_6pphd")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="spawn_point" type="Node2D" parent="balcony/y_order/to_room" node_paths=PackedStringArray("parent_instead_of_self")]
-position = Vector2(0, 24)
+[node name="spawn_point" type="Node2D" parent="balcony/_/to_room" node_paths=PackedStringArray("parent_instead_of_self")]
 script = ExtResource("10_rxu3j")
-parent_instead_of_self = NodePath("../..")
+parent_instead_of_self = NodePath("../../..")
 
-[node name="room" parent="." instance=ExtResource("8_kxofn")]
-
-[node name="y_order" parent="room" index="0"]
-position = Vector2(72, -312)
-
-[node name="modulate" parent="room/y_order" index="1"]
-color = Color(0.540229, 0.349295, 0.436211, 1)
-
-[node name="floor_misc" parent="room/y_order" index="6"]
-tile_map_data = PackedByteArray("AAADAAQAAQALAAEAAAAOAAYAAQALAAMAAAAFAAYAAQAFAAEAAAADAAgAAQAFAAEAABAPAAoAAQAFAAEAAAAQAAkAAQAFAAAAAAAJAAkAAQAFAAAAAAAJAAUAAQAFAAAAABAMAAMAAQAFAAAAABAGAAQAAQAFAAAAAAAKAAIAAQACAAEAAAALAAIAAQAEAAIAAAALAAMAAQAEAAMAAAA=")
-
-[node name="sun_light" parent="room/y_order" index="8"]
-position = Vector2(186, 45)
-color = Color(1, 0.944149, 0.677532, 1)
-texture_scale = 3.0
-
-[node name="door_interactable" type="Area2D" parent="room/y_order" index="9"]
-process_mode = 3
-position = Vector2(104, 32)
+[node name="deadzone" type="Area2D" parent="balcony/_" index="6" node_paths=PackedStringArray("rect")]
+position = Vector2(168, 144)
 collision_layer = 1073741824
 collision_mask = 1073741824
-script = ExtResource("13_jd4xj")
-secret = true
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_4eec8"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.9, 0, 0.7, 0.3),"script":null)
+script = ExtResource("4_jd4xj")
+rect = NodePath("rect")
+presence_detect = true
+metadata/_custom_type_script = "uid://btgm8okupfro7"
 
-debug_colour = Color(0.9, 0, 0.7, 0.3)
-metadata/_custom_type_script = "uid://bxh774473av7t"
-
-[node name="on_interact" type="Node" parent="room/y_order/door_interactable"]
-process_mode = 4
-script = ExtResource("14_8p0b5")
-halt_sequence = true
-
-[node name="request_cinematic_start" type="Node" parent="room/y_order/door_interactable/on_interact"]
-script = ExtResource("15_8p0b5")
-event_id = "CUTSCENE_START_REQUEST"
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="play_sound" type="Node" parent="room/y_order/door_interactable/on_interact"]
-script = ExtResource("15_3b43y")
-sound = ExtResource("16_1674n")
-pitch = 0.8
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message" type="Node" parent="room/y_order/door_interactable/on_interact"]
-script = ExtResource("17_jd4xj")
-texts = Array[String](["(door's locked shut, no one can come in)."])
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cinematic_end" type="Node" parent="room/y_order/door_interactable/on_interact"]
-script = ExtResource("15_8p0b5")
-event_id = "CUTSCENE_END_REQUEST"
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="renderer" type="Sprite2D" parent="room/y_order/door_interactable"]
-texture = ExtResource("18_rbx1l")
-hframes = 7
-script = ExtResource("19_4kjpi")
-frame_dimensions = Vector2i(17, 30)
-frame_h_count = 7
-
-[node name="shadow_renderer" type="Sprite2D" parent="room/y_order/door_interactable/renderer"]
-show_behind_parent = true
-material = SubResource("CanvasItemMaterial_45h0u")
-position = Vector2(0, -8)
-texture = ExtResource("20_fjdyw")
-
-[node name="coll" type="StaticBody2D" parent="room/y_order/door_interactable"]
-position = Vector2(0, 12)
-
-[node name="shape" type="CollisionShape2D" parent="room/y_order/door_interactable/coll"]
-shape = SubResource("RectangleShape2D_cv7t1")
-
-[node name="rect" type="CollisionShape2D" parent="room/y_order/door_interactable"]
-shape = SubResource("RectangleShape2D_4eec8")
-debug_color = Color(0.9, 0, 0.7, 0.3)
-
-[node name="deadzone" parent="room/y_order" index="10"]
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
-
-[node name="to_balcony" type="Area2D" parent="room/y_order" index="11" node_paths=PackedStringArray("target_door")]
-position = Vector2(160, 192)
-collision_layer = 1073741824
-collision_mask = 1073741824
-script = ExtResource("9_xma33")
-spawn_point = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, -32),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("10_rxu3j"),"scene_path":"","connection_id":"default","parent_instead_of_self":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":true,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(72, -312),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
-,"as_sibling":true,"spawn_dir":Vector2(0, 1),"spawn_texture":Resource("res://src/images/spawn_point.png"))
-
-target_door = NodePath("../../../balcony/y_order/to_room")
-parallel = true
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_6dwcq"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
-metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="rect" type="CollisionShape2D" parent="room/y_order/to_balcony"]
-shape = SubResource("RectangleShape2D_6dwcq")
+[node name="rect" type="CollisionShape2D" parent="balcony/_/deadzone"]
+shape = SubResource("RectangleShape2D_8p0b5")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="spawn_point" type="Node2D" parent="room/y_order/to_balcony" node_paths=PackedStringArray("parent_instead_of_self")]
-position = Vector2(0, -32)
+[node name="room" parent="." instance=ExtResource("8_kxofn")]
+position = Vector2(88, -280)
+
+[node name="deadzone" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
+position = Vector2(160, 104)
+collision_layer = 1610612736
+collision_mask = 1610612736
+script = ExtResource("4_jd4xj")
+rect = NodePath("rect")
+presence_detect = true
+metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="rect" type="CollisionShape2D" parent="room/deadzone"]
+shape = SubResource("RectangleShape2D_xma33")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="to_balcony" type="Area2D" parent="room" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
+position = Vector2(152, 184)
+collision_layer = 2684354560
+collision_mask = 2684354560
+script = ExtResource("9_xma33")
+spawn_point = NodePath("spawn_point")
+target_door = NodePath("../../balcony/_/to_room")
+parallel = true
+secret = true
+area = true
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="room/to_balcony"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_6pphd")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="room/to_balcony" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(0, -16)
 script = ExtResource("10_rxu3j")
-parent_instead_of_self = NodePath("../..")
+parent_instead_of_self = NodePath("../../../balcony")
 
 [node name="rain" parent="." instance=ExtResource("13_l6oh8")]
 position = Vector2(208, -16)
@@ -254,16 +141,37 @@ initial_velocity_min = 450.0
 initial_velocity_max = 450.0
 
 [node name="BGM" type="Node" parent="."]
-script = ExtResource("23_1674n")
-stream = ExtResource("24_dr5gc")
-pitch = 0.6
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="AMB" type="Node" parent="."]
-script = ExtResource("23_1674n")
-music_bus = 1
-stream = ExtResource("25_dr5gc")
-vol = 0.8
+
+[node name="on_initial" type="Node" parent="."]
+script = ExtResource("13_160am")
+
+[node name="panorama (top_layer)" type="SubViewport" parent="on_initial"]
+process_mode = 4
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+script = ExtResource("18_jd4xj")
+
+[node name="Dusk" type="Sprite2D" parent="on_initial/panorama (top_layer)"]
+material = SubResource("ShaderMaterial_4gftm")
+position = Vector2(280, 88)
+texture = ExtResource("4_n1yad")
+
+[node name="Background" type="Sprite2D" parent="on_initial/panorama (top_layer)"]
+position = Vector2(248, 128)
+texture = ExtResource("4_kxofn")
+
+[node name="BGM" type="Node" parent="on_initial"]
+script = ExtResource("15_lejej")
+stream = ExtResource("16_sau16")
+pitch = 0.7
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="on_free" type="Node" parent="."]
+script = ExtResource("13_160am")
 
 [editable path="camera"]
 [editable path="balcony"]

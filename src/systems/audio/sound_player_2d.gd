@@ -64,4 +64,4 @@ func _process(_delta: float) -> void:
 		self.global_position).length()
 	
 	pitch_distance_multiplier = clampf(Application.get_viewport_dimens().length() / distance_from_audio_listener, 0.1, 1)
-	pitch_scale *= pitch_distance_multiplier
+	pitch_scale = clamp(pitch_scale * pitch_distance_multiplier, 0.1, 3)

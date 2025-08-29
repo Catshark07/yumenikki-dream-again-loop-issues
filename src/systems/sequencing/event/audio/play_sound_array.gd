@@ -6,7 +6,5 @@ extends Event
 @export var pitch: float = 1
 
 func _execute() -> void:
-	if !wait_til_finished: super()
 	var sound = sound_arr.pick_random() 
 	await AudioService.play_sound(sound_arr.pick_random(), volume, pitch)
-	if wait_til_finished: super()

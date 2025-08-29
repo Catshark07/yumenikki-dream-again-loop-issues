@@ -27,7 +27,7 @@ func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 			
 	curr_state = initial_state
 	if curr_state != null and !_skip_initial_state_setup: 
-		curr_state._enter_state()
+		curr_state.state_enter()
 func change_to_state(_new: StringName) -> void:
 	_new = _new.to_lower()
 	if !_new.is_empty() and has_state(_new):
@@ -36,14 +36,12 @@ func change_to_state(_new: StringName) -> void:
 		if curr_state != new_state:
 			state_changed.emit(new_state)	
 			
-			curr_state._exit_state()
-			curr_state.exited.emit()
+			curr_state.state_exit()
 			
 			prev_state = curr_state
 			curr_state = new_state
 			
-			curr_state._enter_state()
-			curr_state.entered.emit()
+			curr_state.state_enter()
 			
 # - state checks + getter
 func has_state(_state_id: StringName) -> bool:
@@ -62,8 +60,8 @@ func get_curr_state_name() -> StringName:
 
 # - dependent update / process
 func _update(_delta: float) -> void: 
-	if curr_state != null: curr_state.update(_delta)
+	if curr_state != null: curr_state.state_update(_delta)
 func _physics_update(_delta: float) -> void: 
-	if curr_state != null: curr_state.physics_update(_delta)
+	if curr_state != null: curr_state.state_physics_update(_delta)
 func _input_pass(event: InputEvent) -> void: 
-	if curr_state != null: curr_state.input(event)
+	if curr_state != null: curr_state.state_input(event)

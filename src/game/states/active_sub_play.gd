@@ -8,7 +8,7 @@ var sentients: Array
 func _ready() -> void:
 	dream_component._setup()
 		
-func _enter_state() -> void:
+func _state_enter() -> void:
 	await Game.main_tree.process_frame
 	PhysicsServer2D.set_active(true)
 	InputManager.request_curr_controller_change(InputManager.sb_input_controller)
@@ -17,7 +17,7 @@ func _enter_state() -> void:
 		if s != null: s._unfreeze()
 
 	dream_component._enter()
-func _exit_state() -> void:
+func _state_exit() -> void:
 	await Game.main_tree.process_frame
 	PhysicsServer2D.set_active(false)
 	
@@ -26,7 +26,7 @@ func _exit_state() -> void:
 	
 	dream_component._exit()
 	
-func input(event: InputEvent) -> void:
+func _state_input(event: InputEvent) -> void:
 	dream_component._input_pass(event)
 	if Input.is_action_just_pressed("ui_esc_menu"):
 		GameManager.pause_options(true)

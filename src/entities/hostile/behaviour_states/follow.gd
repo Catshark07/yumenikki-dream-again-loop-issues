@@ -4,7 +4,7 @@ extends SBState
 @export var stance_fsm: SentientFSM
 var target: SentientBase
 
-func _enter_state() -> void: 
+func _state_enter() -> void: 
 	if target == null: return
 	(sentient as NavSentient).nav_agent.target_desired_distance = 32.5
 	(sentient as NavSentient).nav_agent.target_position = target.global_position

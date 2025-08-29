@@ -1,26 +1,19 @@
-[gd_scene load_steps=29 format=4 uid="uid://d4buml4tyobvm"]
+[gd_scene load_steps=25 format=4 uid="uid://d4buml4tyobvm"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_lnh22"]
-[ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/scene_rule.gd" id="2_60ane"]
-[ext_resource type="Script" uid="uid://5cuh5yuxk174" path="res://src/systems/scenes/rules/change_default_footstep.gd" id="2_f0ess"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_rb84o"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="3_31d28"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="3_f0ess"]
 [ext_resource type="Texture2D" uid="uid://tqehhyl167ty" path="res://src/images/panorama/mural_panorama.jpeg" id="4_60ane"]
 [ext_resource type="AudioStream" uid="uid://b01e5plqcruwi" path="res://src/audio/bgm/world_mural.WAV" id="4_g1xr1"]
 [ext_resource type="Shader" uid="uid://bau7jex01lc6n" path="res://src/shaders/masks/flat_water_reflec.gdshader" id="5_60ane"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_ewkx2"]
 [ext_resource type="TileSet" uid="uid://duslvgx5e3hdu" path="res://src/levels/__ignore/tile_set/mural.tres" id="8_ewkx2"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="11_81yia"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="11_8288n"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="12_csyr6"]
-[ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="12_su2j0"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="14_8288n"]
 [ext_resource type="Texture2D" uid="uid://dkxu0pw6gxo3f" path="res://src/levels/__ignore/doors/door_mural.png" id="15_81yia"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="16_2wuke"]
-
-[sub_resource type="Resource" id="Resource_60ane"]
-script = ExtResource("2_f0ess")
-default_footstep_override = 7
-metadata/_custom_type_script = "uid://5cuh5yuxk174"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_udnv8"]
 
@@ -28,11 +21,10 @@ metadata/_custom_type_script = "uid://5cuh5yuxk174"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yqjyt"]
 shader = ExtResource("3_f0ess")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
@@ -50,11 +42,10 @@ noise = SubResource("FastNoiseLite_yqjyt")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8d4q6"]
 shader = ExtResource("5_60ane")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/offSet = 0.0
 shader_parameter/YDistortion = 1.0
 shader_parameter/waterNoise = SubResource("NoiseTexture2D_0lgmp")
@@ -78,48 +69,18 @@ colors = PackedColorArray(0, 0, 0, 1, 0.148736, 0.148492, 0.17535, 1)
 gradient = SubResource("Gradient_sk800")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1eos"]
-size = Vector2(16, 16)
-
-[node name="mural_world" type="Node"]
+[node name="mural_world" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
 script = ExtResource("1_lnh22")
-rules = Array[ExtResource("2_60ane")]([SubResource("Resource_60ane")])
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("16_2wuke"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("16_2wuke"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
+scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_udnv8")
 unload_transition = SubResource("ShaderMaterial_2qtxv")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
-layer = -30
-
-[node name="galaxy" type="TextureRect" parent="panorama (bottom_layer)"]
-material = SubResource("ShaderMaterial_yqjyt")
-offset_right = 562.0
-offset_bottom = 375.0
-texture = ExtResource("4_60ane")
-
-[node name="waves" type="TextureRect" parent="panorama (bottom_layer)"]
-material = SubResource("ShaderMaterial_8d4q6")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 2.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_60ane")
-
-[node name="camera" parent="." instance=ExtResource("2_rb84o")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../y_order/madotsuki")
-
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("3_31d28")
-stream = ExtResource("4_g1xr1")
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_rb84o")]
+position = Vector2(-176, 64)
+initial_target = NodePath("../y_order/madotsuki")
 
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -139,64 +100,57 @@ tile_set = ExtResource("8_ewkx2")
 
 [node name="grass" type="TileMapLayer" parent="y_order"]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAfAA8AAAALAAUAAAAFABsAAAALAAUAAAAHABQAAAALAAUAAABJACAAAAALAAUAAAAyAB0AAAALAAUAAABDAAQAAAALAAUAAAAlAP3/AAALAAUAAAAlAAoAAAALAAUAAAAAAAIAAAALAAUAAAAJAAYAAAALAAUAAADz/wEAAAALAAUAAADw/xIAAAALAAUAAAD4/xwAAAALAAUAAAAMADEAAAALAAUAAAAdABsAAAALAAUAAABFADMAAAALAAUAAABeABcAAAALAAUAAABMAAwAAAALAAUAAAAxAP//AAALAAUAAAAuAPf/AAALAAUAAAArAAgAAAALAAUAAAA=")
+tile_map_data = PackedByteArray("AAAfAA8AAAALAAUAAAAFABsAAAALAAUAAAAHABQAAAALAAUAAABJACAAAAALAAUAAAAyAB0AAAALAAUAAABDAAQAAAALAAUAAAAlAAoAAAALAAUAAAAAAAIAAAALAAUAAAAJAAYAAAALAAUAAADz/wEAAAALAAUAAADw/xIAAAALAAUAAAD4/xwAAAALAAUAAAAMADEAAAALAAUAAAAdABsAAAALAAUAAABFADMAAAALAAUAAABeABcAAAALAAUAAABMAAwAAAALAAUAAAAxAP//AAALAAUAAAArAAgAAAALAAUAAAA=")
 tile_set = ExtResource("12_csyr6")
 
-[node name="signs" type="TileMapLayer" parent="y_order"]
-tile_map_data = PackedByteArray("AABAABoAAAAJAAYAAAA+ABgAAAAUAAYAAAA+ABoAAAAUAAYAAABAABsAAAAUAAYAAABCABoAAAAUAAYAAABCABgAAAAUAAYAAABAABcAAAAUAAYAAAA=")
+[node name="sewer" type="TileMapLayer" parent="y_order"]
+tile_map_data = PackedByteArray("AAAqACsAAAAJAAYAAAA=")
 tile_set = ExtResource("12_csyr6")
 
-[node name="door_interactable" parent="y_order" instance=ExtResource("14_8288n")]
+[node name="door_interactable" parent="y_order" node_paths=PackedStringArray("rect") instance=ExtResource("14_8288n")]
 position = Vector2(112, 80)
 scale = Vector2(0.995061, 1)
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_u1eos"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
+rect = NodePath("rect")
 
 [node name="renderer" parent="y_order/door_interactable" index="2"]
 texture = ExtResource("15_81yia")
 hframes = 1
 frame_h_count = 1
 
-[node name="rect" type="CollisionShape2D" parent="y_order/door_interactable"]
-shape = SubResource("RectangleShape2D_u1eos")
-debug_color = Color(0.2, 0, 0.7, 0.2)
-
-[node name="seamless_detector" parent="." instance=ExtResource("12_su2j0")]
-y_sort_enabled = true
-position = Vector2(-256, -176)
-expansion = Vector2i(90, 60)
-boundary_size = Vector2i(1920, 1216)
-
-[node name="up_loop" parent="seamless_detector" index="0"]
-position = Vector2(960, 1224)
-
-[node name="down_loop" parent="seamless_detector" index="1"]
-position = Vector2(960, -8)
-
-[node name="right_loop" parent="seamless_detector" index="2"]
-position = Vector2(1928, 608)
-
-[node name="left_loop" parent="seamless_detector" index="3"]
-position = Vector2(-8, 608)
-
-[node name="orange_murals" type="TileMapLayer" parent="seamless_detector"]
-y_sort_enabled = true
-tile_map_data = PackedByteArray("AAD3/ywAAAAAAAAAAAD3/y0AAAAAAAEAAAD3/y4AAAAAAAIAAAD3/y8AAAAAAAMAAAD4/ywAAAABAAAAAAD4/y0AAAABAAEAAAD4/y4AAAABAAIAAAD4/y8AAAABAAMAAAD5/ywAAAACAAAAAAD5/y0AAAACAAEAAAD5/y4AAAACAAIAAAD5/y8AAAACAAMAAAD6/ywAAAADAAAAAAD6/y0AAAADAAEAAAD6/y4AAAADAAIAAAD6/y8AAAADAAMAAAD7/ywAAAAEAAAAAAD7/y0AAAAEAAEAAAD7/y4AAAAEAAIAAAD7/y8AAAAEAAMAAAD3/zAAAAACAAAAAAD3/zEAAAACAAEAAAD4/zAAAAADAAAAAAD4/zEAAAADAAEAAAD5/zAAAAAEAAAAAAD5/zEAAAAEAAEAAAD6/zAAAAADAAQAAAD6/zEAAAADAAUAAAD7/zAAAAAEAAQAAAD7/zEAAAAEAAUAAAD1/zAAAAAAAAAAAAD1/zEAAAAAAAEAAAD1/zIAAAAAAAIAAAD1/zMAAAAAAAMAAAD1/zQAAAAAAAQAAAD1/zUAAAAAAAUAAAD2/zAAAAABAAAAAAD2/zEAAAABAAEAAAD2/zIAAAABAAIAAAD2/zMAAAABAAMAAAD2/zQAAAABAAQAAAD2/zUAAAABAAUAAAD3/zIAAAACAAIAAAD3/zMAAAACAAMAAAD3/zQAAAACAAQAAAD3/zUAAAACAAUAAAD4/zIAAAADAAIAAAD4/zMAAAADAAMAAAD4/zQAAAADAAQAAAD4/zUAAAADAAUAAAD5/zIAAAAEAAIAAAD5/zMAAAAEAAMAAAD5/zQAAAAEAAQAAAD5/zUAAAAEAAUAAAAMADAAAAAAAAAAAAAMADEAAAAAAAEAAAAMADIAAAAAAAIAAAAMADMAAAAAAAMAAAAMADQAAAAAAAQAAAAMADUAAAAAAAUAAAANADAAAAABAAAAAAANADEAAAABAAEAAAANADIAAAABAAIAAAANADMAAAABAAMAAAANADQAAAABAAQAAAANADUAAAABAAUAAAAOADAAAAACAAAAAAAOADEAAAACAAEAAAAOADIAAAACAAIAAAAOADMAAAACAAMAAAAOADQAAAACAAQAAAAOADUAAAACAAUAAAAPADAAAAADAAAAAAAPADEAAAADAAEAAAAPADIAAAADAAIAAAAPADMAAAADAAMAAAAPADQAAAADAAQAAAAPADUAAAADAAUAAAAQADAAAAAEAAAAAAAQADEAAAAEAAEAAAAQADIAAAAEAAIAAAAQADMAAAAEAAMAAAAQADQAAAAEAAQAAAAQADUAAAAEAAUAAAA=")
-tile_set = ExtResource("8_ewkx2")
-
-[node name="blue_murals" type="TileMapLayer" parent="seamless_detector"]
-y_sort_enabled = true
-tile_set = ExtResource("8_ewkx2")
-
-[node name="grass" type="TileMapLayer" parent="seamless_detector"]
-y_sort_enabled = true
-
-[node name="scene_load_sequence" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="."]
 script = ExtResource("16_2wuke")
 
-[node name="scene_unload_sequence" type="Node" parent="."]
+[node name="BGM" type="Node" parent="on_initial"]
+script = ExtResource("11_81yia")
+stream = ExtResource("4_g1xr1")
+vol = 0.7
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="apply_panorama" type="SubViewport" parent="on_initial"]
+process_mode = 4
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+script = ExtResource("11_8288n")
+
+[node name="galaxy" type="TextureRect" parent="on_initial/apply_panorama"]
+material = SubResource("ShaderMaterial_yqjyt")
+offset_right = 562.0
+offset_bottom = 375.0
+texture = ExtResource("4_60ane")
+
+[node name="waves" type="TextureRect" parent="on_initial/apply_panorama"]
+material = SubResource("ShaderMaterial_8d4q6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_60ane")
+
+[node name="on_free" type="Node" parent="."]
 script = ExtResource("16_2wuke")
 
-[editable path="camera"]
 [editable path="y_order/door_interactable"]
-[editable path="seamless_detector"]

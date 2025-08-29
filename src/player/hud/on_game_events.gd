@@ -3,7 +3,7 @@ extends Node
 var hud_fade: EventListener
 var game_save: EventListener
 
-@export var hud: PLHUD
+@export var hud: PLHUDManager
 @export var icon: TextureRect
 @export var icon_timer: Timer
 

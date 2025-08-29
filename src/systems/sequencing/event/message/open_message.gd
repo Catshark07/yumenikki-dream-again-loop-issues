@@ -6,7 +6,7 @@ enum type {MESSAGE, DIALOGUE, PROMPT}
 @export_multiline var texts: Array[String]
 
 @export_group("Overrides.")
-@export var sound_override: AudioStream = load("res://src/audio/se/se_talk_default.wav")
+@export var sound_override: AudioStream = MessageDisplay.DEFAULT_SOUND
 @export var font_override: Font
 @export var font_colour_override: Color = Color.WHITE
 @export var speed_override: float = 1

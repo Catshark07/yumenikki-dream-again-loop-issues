@@ -29,12 +29,6 @@ func add_custom_types() -> void:
 		preload("res://addons/miscallenous/editor/sentient_base.png")
 		)	
 	add_custom_type(
-		"TeleportationDoor", 
-		"Area2D", 
-		preload("res://src/systems/interaction/door_inscene.gd"), 
-		preload("res://addons/miscallenous/editor/inscene_door.png")
-		)
-	add_custom_type(
 		"Event", 
 		"Node", 
 		preload("res://src/systems/sequencing/event_interface.gd"), 
@@ -56,6 +50,5 @@ func remove_custom_types() -> void:
 	remove_custom_type("GameScene2D")
 	remove_custom_type("AdditiveGameScene2D")
 	remove_custom_type("SentientBase")
-	remove_custom_type("TeleportationDoor")
 	remove_custom_type("Event")
 	remove_custom_type("Sequence")

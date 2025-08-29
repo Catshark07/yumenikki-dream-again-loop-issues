@@ -3,312 +3,150 @@
 class_name SeamlessDetectorV2
 extends Node2D
 
-var loop_components: Node2D
-
-signal sb_warped_up(_sentient: SentientBase)
-signal sb_warped_down(_sentient: SentientBase)
-signal sb_warped_right(_sentient: SentientBase)
-signal sb_warped_left(_sentient: SentientBase)
-
 var loop_record  := {
 	bound_side.UP: 0,
 	bound_side.DOWN: 0,
 	bound_side.RIGHT: 0,
-	bound_side.LEFT: 0,
-	}
+	bound_side.LEFT: 0}
 var sentients_to_be_looped := {
 	bound_side.UP : [],
 	bound_side.DOWN : [],
 	bound_side.RIGHT : [],
-	bound_side.LEFT : [],
-	}
+	bound_side.LEFT : []}
+
+@export_category("Tools.")
+@export_tool_button("Setup Loop Objects.") var setup_objs = setup_loop_objects
+@export_tool_button("Reset Loop Objects.") var reset_objs = reset_loop_objects
 
 const screen_size := Vector2i(480, 270)
-@export var tile_size: Vector2i = Vector2i(16, 16)
-@export var expansion: Vector2i
 
-@export_group("READ-ONLY")
-@export var boundary_size: Vector2i:
+@export_category("Loop Region.")
+@export var tile_size: Vector2i = Vector2i(16, 16)
+@export var expansion: Vector2i:
+	set(exp): expansion = exp.abs()
+
+@export_group("Values [READ-ONLY].")
+@export var bound_size: Vector2i:
 	get:
 		return (min_bound_size_multiplier * tile_size) + (expansion * tile_size)
 @export var min_bound_size_multiplier: Vector2i:
 	get: return Vector2(screen_size / (tile_size))
-@export var min_boundary_size: Vector2i:
+@export var min_bound_size: Vector2i:
 	get: return round(min_bound_size_multiplier * tile_size)
 
 enum bound_side {UP, DOWN, RIGHT, LEFT}
 enum loop {LOOP, DISABLED}
 
-# ---- loop components ---- 
-@onready var up: Area2D = $up_loop
-@onready var down: Area2D = $down_loop
-@onready var right: Area2D = $right_loop
-@onready var left: Area2D = $left_loop
-
 # ---- collision components ----
+@export_group("Collision Components.")
 @onready var up_collision: StaticBody2D = $up_coll
 @onready var down_collision: StaticBody2D = $down_coll
 @onready var right_collision: StaticBody2D = $right_coll
 @onready var left_collision: StaticBody2D = $left_coll
 
-@onready var up_bound: CollisionShape2D = $up_loop/square
-@onready var down_bound: CollisionShape2D = $down_loop/square
-@onready var right_bound: CollisionShape2D = $right_loop/square
-@onready var left_bound: CollisionShape2D = $left_loop/square
+@onready var up_bound: CollisionShape2D = $up_coll/square
+@onready var down_bound: CollisionShape2D = $down_coll/square
+@onready var right_bound: CollisionShape2D = $right_coll/square
+@onready var left_bound: CollisionShape2D = $left_coll/square
 
 # ---- bound flags ----
-@export_group("Loop flags.")
-@export var up_disabled: bool:
-	set(dis): 
-		up_disabled = dis
-		set_bound_loop_mode(bound_side.UP)
-@export var down_disabled: bool:
-	set(dis): 
-		down_disabled = dis
-		set_bound_loop_mode(bound_side.DOWN)
-@export var right_disabled: bool:
-	set(dis): 
-		right_disabled = dis
-		set_bound_loop_mode(bound_side.RIGHT)
-@export var left_disabled: bool:
-	set(dis): 
-		left_disabled = dis
-		set_bound_loop_mode(bound_side.LEFT)
+@export var loop_region: AreaRegion
+@export var world_render: SubViewport
 
-@export var  horizontal_size: Vector2i
-@export var  vertical_size: Vector2i
+@export var renders_setup: bool = false
 
-# ---- read-only :: DRAW 
-var loop_viewports_size: Vector2 = Vector2i(510, 300)
+@export var up_active: bool = true: 
+	set(_active): 
+		up_active = _active
+		set_border_active(up_bound, _active)
+@export var down_active: bool = true:
+	set(_active): 
+		down_active = _active
+		set_border_active(down_bound, _active)
+@export var right_active: bool = true:
+	set(_active): 
+		right_active = _active
+		set_border_active(right_bound, _active)
+@export var left_active: bool = true:
+	set(_active): 
+		left_active = _active
+		set_border_active(left_bound, _active)
 
 var v_size: Vector2
 var h_size: Vector2
 
-var v_size_mirrored: Vector2
-var h_size_mirrored: Vector2
-
-var pos_up_overshoot: Vector2
-var pos_down_overshoot: Vector2
-var pos_left_overshoot: Vector2
-var pos_right_overshoot: Vector2
-
-var pos_up_mirrored: Vector2
-var pos_down_mirrored: Vector2
-var pos_left_mirror: Vector2
-var pos_right_mirror: Vector2
-
-# --- look ahead renders
-@export_group("Loop render properties.")
-@export var viewport_container	: Node
-@export var render_container	: Node
-@export var renders			: Array[Sprite2D]
-@export var viewport_renders: Array[SubViewport]
-
-@export var player_detector: AreaRegion
-var player_in_region: Player
-
-# TODO:
-	# the reason why this breaks is because this node alongside its parent is reparented
-	# under a canvaslayer (or has been reparented in general). make sure to call loop_render_setup()
-	# post reparenting.
+@export var viewports_arr	: Array[SubViewport]
+@export var loop_renders_arr: Array[Sprite2D]
 
 func _ready() -> void: 
-	loop_components = GlobalUtils.get_child_node_or_null(self, "loop_components")
-	player_detector = GlobalUtils.get_child_node_or_null(self, "player_detector")
-	loop_render_setup()
-	
+	if !Engine.is_editor_hint(): 
+		resize(bound_size)
+		queue_redraw()
+		set_process(false)
+func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): 
-		if player_detector == null: 
-			player_detector = await GlobalUtils.add_child_node(loop_components, AreaRegion.new(), "player_detector")
-	
-		player_looping_bounds_setup()
-	
-	else:
-		GlobalUtils.connect_to_signal(player_entered, player_detector.player_enter_handle)
-		GlobalUtils.connect_to_signal(player_exited, player_detector.player_exit_handle)
-		
-		
-	set_bound_active(bound_side.UP, up_disabled)
-	set_bound_active(bound_side.DOWN, down_disabled)
-	set_bound_active(bound_side.RIGHT, right_disabled)
-	set_bound_active(bound_side.LEFT, left_disabled)
-	
-		
-func player_entered(_pl: Player) -> void: 
-	if _pl is Player and _pl == Player.Instance.get_pl(): 
-		player_in_region = _pl
-func player_exited(_pl: Player) -> void: 
-	if _pl is Player and _pl == Player.Instance.get_pl():
-		player_in_region = null
-	
-func _process(_delta: float) -> void:
-	if Engine.is_editor_hint(): 
-		resize(boundary_size)
-	else:
-		loop_render_update()
+		resize(bound_size)
 
-func _draw() -> void:
-	if Engine.is_editor_hint():
-		# ---- outer warp bounds
-		
-		v_size = Vector2i(boundary_size.x + 480 , clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300))
-		h_size = Vector2i(clampf(min_boundary_size.x / 2 + tile_size.x * 2, 0, 500), min_boundary_size.y + clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300) * 7)
-		
-		v_size_mirrored = Vector2i(boundary_size.x, clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300))
-		h_size_mirrored = Vector2i(h_size.x, boundary_size.y)
-		
-		pos_up_overshoot = Vector2(up.position.x - v_size.x / 2, up.position.y - tile_size.y / 2)
-		pos_down_overshoot = Vector2(down.position.x - v_size.x / 2, down.position.y * 2 - v_size.y + tile_size.y)
-		
-		pos_up_mirrored = Vector2(0 , up.position.y - (tile_size.y * 3/2))
-		pos_down_mirrored = Vector2(0 , down.position.y + (tile_size.y * 3/2))
-		
-		# ---
-		
-		pos_left_overshoot = Vector2(left.position.x - min_boundary_size.x / 2 - (tile_size.x * 3/2) , left.position.y - h_size.y / 2 )
-		pos_right_overshoot = Vector2(right.position.x + min_boundary_size.x / 2 + (tile_size.x * 3/2) , right.position.y - h_size.y / 2 )
-		
-		pos_left_mirror = Vector2(right.position.x - (tile_size.x * 3/2), right.position.y - boundary_size.y / 2)
-		pos_right_mirror = Vector2(left.position.x + (tile_size.x * 3/2), left.position.y - boundary_size.y / 2)
-		
-		
-		# --- up and down
-		draw_rect(Rect2(pos_down_mirrored, v_size_mirrored), Color(Color.BLUE, .32))
-		draw_rect(Rect2(pos_up_mirrored, Vector2(v_size_mirrored.x, -v_size_mirrored.y)), Color(Color.AQUA, .32)) 
-		
-		draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(boundary_size.x / 2, up.position.y + tile_size.y / 2), "LOOK AHEAD, WARP UP", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )
-		draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(boundary_size.x / 2, down.position.y + tile_size.y * 2), "WARP UP", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )
-		
-		# --- right and left
-		draw_rect(Rect2(left.position.x + (tile_size.x * 3/2), left.position.y - boundary_size.y / 2, h_size_mirrored.x, h_size_mirrored.y), Color(Color.RED, .32)) # ---- right mirrored
-		draw_rect(Rect2(right.position.x - (tile_size.x * 3/2), right.position.y - boundary_size.y / 2, -h_size_mirrored.x , h_size_mirrored.y), Color(Color.CORNFLOWER_BLUE, .32)) # ---- left mirrored
-		
-		draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(right.position.x, boundary_size.y / 2), "LOOK AHEAD, WARP RIGHT", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )
-		draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(left.position.x, boundary_size.y / 2), "WARP RIGHT", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )
-		
 func resize(new_size: Vector2) -> void:
-	# --------------------------- size
-	
-	player_detector.rect.shape.size = boundary_size
-	player_detector.position = boundary_size / 2
+	world_render.size = new_size
 	
 	(up_bound.shape as RectangleShape2D).size.x = new_size.x
-	(down_bound.shape as RectangleShape2D).size.x = new_size.x
-	
 	(up_bound.shape as RectangleShape2D).size.y = tile_size.y
+	
+	(down_bound.shape as RectangleShape2D).size.x = new_size.x
 	(down_bound.shape as RectangleShape2D).size.y = tile_size.y
 	
-	(right_bound.shape as RectangleShape2D).size.y = new_size.y
+	(left_bound.shape as RectangleShape2D).size.x = tile_size.x
 	(left_bound.shape as RectangleShape2D).size.y = new_size.y
 	
 	(right_bound.shape as RectangleShape2D).size.x = tile_size.x
-	(left_bound.shape as RectangleShape2D).size.x = tile_size.x
+	(right_bound.shape as RectangleShape2D).size.y = new_size.y
 	
-	# --------------------------- pos
-	up.position = Vector2(
+	up_collision.position = Vector2(
 		(up_bound.shape as RectangleShape2D).size.x / 2, 
-		boundary_size.y + (up_bound.shape as RectangleShape2D).size.y / 2)
-	down.position = Vector2(
+		bound_size.y + (up_bound.shape as RectangleShape2D).size.y / 2)
+	down_collision.position = Vector2(
 		(down_bound.shape as RectangleShape2D).size.x / 2, 
 		-(down_bound.shape as RectangleShape2D).size.y / 2)
-	right.position = Vector2(
-		boundary_size.x + (right_bound.shape as RectangleShape2D).size.x / 2, 
+	right_collision.position = Vector2(
+		bound_size.x + (right_bound.shape as RectangleShape2D).size.x / 2, 
 		(right_bound.shape as RectangleShape2D).size.y / 2)
-	left.position = Vector2(
+	left_collision.position = Vector2(
 		-(left_bound.shape as RectangleShape2D).size.x / 2, 
 		(left_bound.shape as RectangleShape2D).size.y / 2)
-
-# system was done with the help of floofinator.
-# its stil flawed however, the viewports are not rendering the screen during runtime for some reason,
-# but its working pre-runtime. maybe it has to do with the world_2D?
-
-func loop_render_setup() -> void:	
-	for v in range(viewport_renders.size()):
-		viewport_renders[v].world_2d = get_world_2d()
-		viewport_renders[v].transparent_bg = true
-		viewport_renders[v].own_world_3d = true
-		viewport_renders[v].canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-		viewport_renders[v].size = loop_viewports_size
-		viewport_renders[v].set_canvas_cull_mask_bit(16, false)
-		
-	for r in range(viewport_renders.size()): # sprite 2D renders.
-		renders[r].texture = viewport_renders[r].get_texture()
-		renders[r].set_visibility_layer_bit(0, false)
-		renders[r].set_visibility_layer_bit(16, true)
-		
-func loop_render_update() -> void: 
-	if player_in_region != null: pass
-		
-
-func player_looping_bounds_setup() -> void:
-	up.area_entered.connect(func(_p): 
-		player_hit_border(_p, bound_side.UP)
-		sb_warped_up.emit())
-	down.area_entered.connect(func(_p): 
-		player_hit_border(_p, bound_side.DOWN)
-		sb_warped_down.emit())
-	right.area_entered.connect(func(_p): 
-		player_hit_border(_p, bound_side.RIGHT)
-		sb_warped_right.emit())
-	left.area_entered.connect(func(_p): 
-		player_hit_border(_p, bound_side.LEFT)
-		sb_warped_left.emit())	
 	
-	up.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.UP))
-	down.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.DOWN))
-	right.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.RIGHT))
-	left.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.LEFT))
-
-	up.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.UP))
-	down.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.DOWN))
-	right.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.RIGHT))
-	left.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.LEFT))
-func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void: 
-	if is_instance_valid(_pl) and Player.Instance.get_pl() != null:
-		if _pl == Player.Instance.get_pl().world_warp:
-			if CameraHolder.instance: 
-				CameraHolder.instance.global_position = Player.Instance.get_pl().global_position
-			
-			_handle_sentient_warp(Player.Instance.get_pl(), _bound_side)
-			loop_record[_bound_side] += 1
-			EventManager.invoke_event(
-				"WORLD_LOOP", [get_warp_vectors_of_sentient(Player.Instance.get_pl())[_bound_side]])
-
-func get_warp_vectors_of_sentient(_sentient: SentientBase) -> Dictionary:
-	var warp_vectors := {
-		bound_side.UP: Vector2(_sentient.global_position.x, down.global_position.y + (tile_size.y * 3/2)),
-		bound_side.DOWN: Vector2(_sentient.global_position.x, up.global_position.y - (tile_size.y * 3/2)),
-		bound_side.RIGHT: Vector2(left.global_position.x + (tile_size.x * 3/2), _sentient.global_position.y),
-		bound_side.LEFT: Vector2(right.global_position.x - (tile_size.x * 3/2), _sentient.global_position.y)
-	}
-	return warp_vectors
-
-func _handle_sentient_warp(_sentient: SentientBase, _side: bound_side) -> Vector2: 
-	var warp_vectors := get_warp_vectors_of_sentient(_sentient)
-	var warp_vector: Vector2 = warp_vectors[_side]
+	(loop_region.rect.shape as RectangleShape2D).size = new_size
+	loop_region.rect.position = (loop_region.rect.shape as RectangleShape2D).size / 2
 	
-	_sentient.global_position = warp_vector
-	_sentient.direction = (_sentient.direction)
+func set_all_borders_active(_active: bool = true) -> void: 
+	up_active 	= _active
+	down_active = _active
+	right_active = _active
+	left_active = _active
+func set_border_active(_border: CollisionShape2D, _active: bool = true) -> void:
+	if _border == null: return
+	_border.disabled = !_active
+
+# - loop renders.
+func setup_loop_objects() -> void:
+	if renders_setup: return
+	renders_setup = true
 	
-	return warp_vector
+	var renders = get_node_or_null("loop_renders")
+	
 
-func handle_sentient_enter(_wanderer: SentientBase, _side: bound_side) -> void:
-	if _wanderer is NavSentient:
-		sentients_to_be_looped[_side].append(_wanderer)
-func handle_sentient_exit(_wanderer: SentientBase, _side: bound_side) -> void:
-	if _wanderer is NavSentient:
-		if _wanderer in sentients_to_be_looped[_side]: 
-			(sentients_to_be_looped[_side] as Array).remove_at((sentients_to_be_looped[_side] as Array).find(_wanderer))
+func reset_loop_objects() -> void:
+	for i in viewports_arr:
+		if i == null: continue
+		i.free()
+	
+	for i in loop_renders_arr:
+		if i == null: continue
+		i.free()
+		
+	renders_setup = false
 
-func set_bound_active(_bound: bound_side, _active: bool = true) -> void:
-	match _bound:
-		bound_side.UP: up_disabled = _active		
-		bound_side.DOWN: down_disabled = _active
-		bound_side.RIGHT: right_disabled = _active
-		bound_side.LEFT: left_disabled = _active
-func set_bound_loop_mode(_bound: bound_side) -> void: 
-	match _bound:
-			bound_side.UP: if up_collision: up_bound.reparent(up_collision if up_disabled else up)
-			bound_side.DOWN: if down_collision: down_bound.reparent(down_collision if down_disabled else down)
-			bound_side.RIGHT: if right_collision: right_bound.reparent(right_collision if right_disabled else right)
-			bound_side.LEFT: if left_collision: left_bound.reparent(left_collision if left_disabled else left)
+func _validate_property(property: Dictionary) -> void:
+	var props_to_read_only: PackedStringArray = ["bound_size", "min_bound_size", "min_bound_size_multiplier"]
+	if property.name in props_to_read_only:
+		property.usage = PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_EDITOR

@@ -7,7 +7,7 @@ extends AreaRegion
 var in_deadzone: bool = false
 
 func _setup() -> void:
-	process_mode = Node.PROCESS_MODE_INHERIT
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	if rect.shape.size.x < 480: rect.shape.size.x = 480
 	if rect.shape.size.y < 270: rect.shape.size.y = 270
 	

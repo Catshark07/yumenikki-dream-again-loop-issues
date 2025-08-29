@@ -66,9 +66,10 @@ texture = ExtResource("4_hogqo")
 
 [node name="value" type="ColorRect" parent="indicators/icons/stamina/stamina_fill"]
 layout_mode = 0
-offset_left = 9.0
+offset_left = 8.0
+offset_top = 7.0
 offset_right = 41.0
-offset_bottom = 16.0
+offset_bottom = 12.0
 color = Color(0.896047, 0.888065, 0.609341, 1)
 
 [node name="effect_indicator" type="Sprite2D" parent="indicators/icons"]

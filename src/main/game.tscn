@@ -14,7 +14,6 @@
 [ext_resource type="Script" uid="uid://bss18y7yx0sjl" path="res://src/game/states/cutscene.gd" id="14_eb0fa"]
 [ext_resource type="Script" uid="uid://cwsl1s56sohmv" path="res://src/game/states/special_invert_cutscene.gd" id="15_x5cou"]
 [ext_resource type="Script" uid="uid://dt42f6rbv7tp" path="res://src/player/inventory/pl_inventory_manager.gd" id="16_ci86m"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="16_qe24a"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="18_sjocp"]
 [ext_resource type="Script" uid="uid://b5eh18jkduvjk" path="res://src/systems/game/heartbeat_manager.gd" id="19_j0kuk"]
 [ext_resource type="Shader" uid="uid://dhvgpadvrk0e2" path="res://src/shaders/screen_overlay/vignette_blur.gdshader" id="20_3itkt"]
@@ -385,6 +384,35 @@ _data = {
 &"effect_equip": SubResource("Animation_ylvyo")
 }
 
+[sub_resource type="GDScript" id="GDScript_3apph"]
+script/source = "class_name BGM extends Component
+
+enum MUSIC_BUS {MUSIC, AMBIENCE}
+
+@export var music_bus: MUSIC_BUS
+
+@export_group(\"Music Properties\")
+	
+@export var stream: AudioStream
+@export_range(0, 1, .1) var vol: float = 1
+@export_range(0.1 , 2, .01) var pitch: float = 1
+
+## -------- AUDIO CLIP CONTROL (E.G LOOP or smth) -------- ##	
+func _setup() -> void:	
+		play_music()
+
+func play_music() -> void:
+	match music_bus:
+		MUSIC_BUS.MUSIC: 
+			Music.fade_in()
+			Music.play_sound(stream, vol, pitch)
+		MUSIC_BUS.AMBIENCE: 
+			Ambience.fade_in()
+			Ambience.play_sound(stream, vol, pitch) 
+
+## -------- AUDIO CONTROL (E.G AUDIO FADE) -------- ##
+"
+
 [sub_resource type="Gradient" id="Gradient_ci86m"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(1, 1, 1, 1)
@@ -488,8 +516,9 @@ initial_state = NodePath("PREGAME")
 script = ExtResource("6_tboue")
 transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE")]
 
-[node name="ACTIVE" type="Node" parent="game_fsm"]
+[node name="ACTIVE" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("7_8fuah")
+transitions = [NodePath("../CHANGING_SCENES"), NodePath("../PAUSE")]
 
 [node name="PLAY" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("dream_component", "transitions")]
 script = ExtResource("9_yapge")
@@ -501,9 +530,10 @@ script = ExtResource("10_nupip")
 dream_mode = NodePath("DREAM")
 neutral_mode = NodePath("NEUTRAL")
 
-[node name="NEUTRAL" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" node_paths=PackedStringArray("transitions")]
+[node name="NEUTRAL" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" node_paths=PackedStringArray("hud", "transitions")]
 script = ExtResource("11_cjakg")
-transitions = [NodePath("../DREAM")]
+hud = NodePath("../../../../../always/ui/hud")
+transitions = [null]
 
 [node name="DREAM" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" node_paths=PackedStringArray("hud", "transitions")]
 script = ExtResource("12_qks74")
@@ -530,16 +560,15 @@ pause_menu = NodePath("../../always/pause")
 transitions = [NodePath("../PREGAME"), NodePath("../ACTIVE")]
 
 [node name="BGM" type="Node" parent="game_fsm/PAUSE"]
-script = ExtResource("16_qe24a")
+script = SubResource("GDScript_3apph")
 stream = ExtResource("30_fyoi4")
 pitch = 0.5
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="pausable" type="Node2D" parent="."]
 process_mode = 1
 
 [node name="panorama (top_layer)" type="CanvasLayer" parent="."]
-layer = -20
+layer = -25
 
 [node name="display" type="TextureRect" parent="panorama (top_layer)"]
 anchors_preset = 15
@@ -586,11 +615,6 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("30_i8erk")
 
-[node name="message_display_manager" type="Control" parent="always/ui"]
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("31_wfsxj")
-
 [node name="cinematic_bars" type="TextureRect" parent="always/ui"]
 layout_mode = 0
 offset_right = 480.0
@@ -598,6 +622,11 @@ offset_bottom = 270.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("34_nnm53")
+
+[node name="message_display_manager" type="Control" parent="always/ui"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("31_wfsxj")
 
 [node name="hud" parent="always/ui" instance=ExtResource("33_a0tkc")]
 layout_mode = 1

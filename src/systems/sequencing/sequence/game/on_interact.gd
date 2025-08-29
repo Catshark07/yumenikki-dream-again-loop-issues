@@ -2,17 +2,12 @@ class_name OnInteract
 extends Sequence
 
 var interactable: Interactable
-var count: int = 0
 
 func _ready() -> void: 
 	super()
-	interactable = get_parent()
-	
-	if interactable != null and interactable is Interactable:
-		interactable.interacted.connect(_execute)
-	
 	process_mode = Node.PROCESS_MODE_DISABLED	
 	
-func _execute() -> void:
-	super()
-	count += 1
+	interactable = get_parent()
+	if interactable == null or !(interactable is Interactable): return
+	
+	interactable.interacted.connect(func(): SequencerManager.invoke(self))

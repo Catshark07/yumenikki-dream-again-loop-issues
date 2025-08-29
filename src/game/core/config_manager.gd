@@ -1,4 +1,4 @@
-class_name Config
+class_name ConfigManager
 extends Game.GameSubClass
 
 static func _setup() -> void:
@@ -9,19 +9,7 @@ static var config_data := ConfigFile.new()
 
 static func instantiate_config() -> void:
 	if get_setting_data("misc", "instantiated", true): return
-	
-	config_data.set_value("misc", "instantiated", true)
-	
-	config_data.set_value("audio", "music", db_to_linear(Audio.get_bus_volume("Music")))
-	config_data.set_value("audio", "ambience", db_to_linear(Audio.get_bus_volume("Ambience")))
-	config_data.set_value("audio", "se", db_to_linear(Audio.get_bus_volume("Effects")))
-	
-	config_data.set_value("graphics", "borderless", Game.main_window.borderless)
-	config_data.set_value("graphics", "fullscreen", Game.main_window.mode == Window.MODE_FULLSCREEN)
-	config_data.set_value("graphics", "motion_reduce", CameraHolder.motion_reduction)
-	config_data.set_value("graphics", "bloom", GameManager.bloom)
-	
-	config_data.save("user://settings.cfg")
+	save_settings_data()
 
 static func save_settings_data() -> void: 
 	EventManager.invoke_event("GAME_CONFIG_SAVE")

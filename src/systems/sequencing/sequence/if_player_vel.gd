@@ -1,11 +1,10 @@
 extends ConditionalSequence
 
+
 @export var heading_condition: SentientBase.compass_headings
-@export var speed_condition: float = 10
-@export var area_region: AreaRegion
-var pl: Player
+@export var minimum_speed: float = 10
 
-
-func _ready() -> void:
-	area_region.player_enter_handle.connect(func(_pl: Player): print("WHT"))
-	super()
+func _predicate() -> bool:
+	var player = Player.Instance.get_pl()
+	if player == null: return false
+	return player.desired_speed >= minimum_speed and player.heading == heading_condition  

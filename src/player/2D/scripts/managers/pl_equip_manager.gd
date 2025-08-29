@@ -18,6 +18,9 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 		return
 		
 	if _effect:
+		_pl.components.get_component_by_name("action_manager").cancel_action(
+			_pl.components.get_component_by_name("action_manager").curr_action, _pl, true)
+			
 		await deequip(_pl)
 		effect_data = _effect
 		behaviour = effect_data.behaviour

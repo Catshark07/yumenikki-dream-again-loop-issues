@@ -59,7 +59,7 @@ func pop_page(_page: Control) -> void:
 		active_stack.top.visible = true
 	else:
 		GameManager.pause_options(false)
-		Config.save_settings_data()
+		ConfigManager.save_settings_data()
 		reset()
 
 func reset() -> void:

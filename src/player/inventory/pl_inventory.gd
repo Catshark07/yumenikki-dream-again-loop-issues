@@ -14,12 +14,13 @@ var effect_buttons: Array[GUIPanelButton]
 # - initializaiton (called from special invert state).
 func _setup() -> void:
 	fsm._setup(self)
+		
 func _enter() -> void: 
 	(self.visible) = true
-	fsm.curr_state._enter_state()
+	fsm.curr_state._state_enter()
 func _exit() -> void: 
 	(self.visible) = false
-	fsm.curr_state._exit_state()
+	fsm.curr_state._state_exit()
 
 # - adding items.
 func delete_buttons() -> void: 

@@ -1,54 +1,32 @@
-[gd_scene load_steps=7 format=4 uid="uid://jioru3rh3jtn"]
+[gd_scene load_steps=5 format=4 uid="uid://jioru3rh3jtn"]
 
 [ext_resource type="Texture2D" uid="uid://67cap7wkkset" path="res://src/levels/_real/apartment/balcony.png" id="1_2vceb"]
 [ext_resource type="Texture2D" uid="uid://chk8hbfa8jypl" path="res://src/levels/balcony/rails.png" id="3_4uf4j"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="4_htwi7"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="5_jmdcf"]
-[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="6_417hc"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fq43"]
-size = Vector2(480, 270)
-
-[node name="balcony" type="CanvasLayer"]
-layer = 0
-follow_viewport_enabled = true
-
-[node name="y_order" type="Node2D" parent="."]
-y_sort_enabled = true
-position = Vector2(-16, 0)
-
-[node name="_" type="CanvasGroup" parent="y_order"]
+[node name="balcony_real" type="Node2D"]
 y_sort_enabled = true
 
-[node name="collision" type="TileMapLayer" parent="y_order/_"]
-tile_map_data = PackedByteArray("AAAJAAcAAQAAAAEAAAAJAAgAAQAAAAEAAAAJAAkAAQAAAAEAAAAJAAoAAQAAAAEAAAAJAAsAAQAAAAEAAAAJAAwAAQAAAAEAAAAKAAwAAQAAAAEAAAALAAwAAQAAAAEAAAAMAAwAAQAAAAEAAAANAAwAAQAAAAEAAAAOAAwAAQAAAAEAAAAPAAwAAQAAAAEAAAAQAAwAAQAAAAEAAAARAAwAAQAAAAEAAAASAAwAAQAAAAEAAAATAAwAAQAAAAEAAAAUAAwAAQAAAAEAAAAVAAwAAQAAAAEAAAAVAAsAAQAAAAEAAAAVAAoAAQAAAAEAAAAVAAkAAQAAAAEAAAAVAAgAAQAAAAEAAAAVAAcAAQAAAAEAAAAUAAcAAQAAAAEAAAATAAcAAQAAAAEAAAASAAcAAQAAAAEAAAARAAcAAQAAAAEAAAAQAAcAAQAAAAEAAAAPAAcAAQAAAAEAAAAOAAcAAQAAAAEAAAANAAcAAQAAAAEAAAAMAAcAAQAAAAEAAAALAAcAAQAAAAEAAAAKAAcAAQAAAAEAAAALAAgAAQAAAAEAAAAKAAgAAQAAAAEAAAASAAgAAQACAAEAABATAAgAAQAAAAEAAAAUAAgAAQAAAAEAAAAMAAgAAQACAAEAAAAKAAsAAQAAAAEAAAALAAsAAQADAAIAACAMAAsAAQAAAAIAACANAAsAAQAAAAIAACAOAAsAAQAAAAIAACAPAAsAAQAAAAIAACAQAAsAAQAAAAIAACARAAsAAQAAAAIAACASAAsAAQAAAAIAACATAAsAAQAAAAEAAAAUAAsAAQAAAAEAAAALAAkAAQAAAAEAAAAMAAkAAQAAAAAAAAAMAAoAAQACAAAAACALAAoAAQADAAIAAAAKAAoAAQAAAAEAAAAKAAkAAQAAAAEAAAATAAkAAQAAAAEAAAAUAAkAAQAAAAEAAAAUAAoAAQAAAAEAAAATAAoAAQAAAAEAAAASAAkAAQAAAAAAABASAAoAAQACAAAAADA=")
+[node name="_" type="CanvasGroup" parent="."]
+y_sort_enabled = true
+
+[node name="collision" type="TileMapLayer" parent="_"]
+tile_map_data = PackedByteArray("AAAAAAgAAQAAAAEAAAAAAAkAAQAAAAEAAAAAAAoAAQAAAAEAAAAAAAsAAQAAAAEAAAAAAAwAAQAAAAEAAAAAAA0AAQAAAAEAAAABAAgAAQAAAAEAAAABAAkAAQAAAAEAAAABAAoAAQAAAAEAAAABAAsAAQAAAAEAAAABAAwAAQAAAAEAAAABAA0AAQAAAAEAAAACAAgAAQAAAAEAAAACAAkAAQAAAAEAAAACAAoAAQAAAAEAAAACAAsAAQADAAIAAAACAAwAAQADAAIAACACAA0AAQAAAAEAAAADAAgAAQAAAAEAAAADAAkAAQACAAEAAAADAAoAAQAAAAAAAAADAAsAAQACAAAAACADAAwAAQAAAAIAACADAA0AAQAAAAEAAAAEAAgAAQAAAAEAAAAEAAwAAQAAAAIAACAEAA0AAQAAAAEAAAAFAAgAAQAAAAEAAAAFAAwAAQAAAAIAACAFAA0AAQAAAAEAAAAGAAgAAQAAAAEAAAAGAAwAAQAAAAIAACAGAA0AAQAAAAEAAAAHAAgAAQAAAAEAAAAHAAwAAQAAAAIAACAHAA0AAQAAAAEAAAAIAAgAAQAAAAEAAAAIAAwAAQAAAAIAACAIAA0AAQAAAAEAAAAJAAgAAQAAAAEAAAAJAAkAAQACAAEAABAJAAoAAQAAAAAAABAJAAsAAQACAAAAADAJAAwAAQAAAAIAACAJAA0AAQAAAAEAAAAKAAgAAQAAAAEAAAAKAAkAAQAAAAEAAAAKAAoAAQAAAAEAAAAKAAsAAQAAAAEAAAAKAAwAAQAAAAEAAAAKAA0AAQAAAAEAAAALAAgAAQAAAAEAAAALAAkAAQAAAAEAAAALAAoAAQAAAAEAAAALAAsAAQAAAAEAAAALAAwAAQAAAAEAAAALAA0AAQAAAAEAAAA=")
 tile_set = ExtResource("4_htwi7")
 script = ExtResource("5_jmdcf")
 
-[node name="garbage" type="TileMapLayer" parent="y_order/_"]
+[node name="garbage" type="TileMapLayer" parent="_"]
 y_sort_enabled = true
-position = Vector2(-8, 0)
-tile_map_data = PackedByteArray("AAALAAoAAAAJAA0AAAAMAAkAAAAHAA0AAAALAAgAAAAHAAsAAAAUAAgAAAAJAA0AAAATAAkAAAAHAA0AAAA=")
+tile_map_data = PackedByteArray("AAABAAkAAAAHAAsAAAABAAsAAAAJAA0AAAACAAoAAAAHAA0AAAAJAAoAAAAHAA0AAAAKAAkAAAAJAA0AAAA=")
 tile_set = ExtResource("4_htwi7")
 
-[node name="balcony" type="Sprite2D" parent="y_order/_"]
+[node name="balcony" type="Sprite2D" parent="_"]
 z_index = -1
-position = Vector2(248, 128)
 texture = ExtResource("1_2vceb")
+centered = false
 
-[node name="rails" type="Sprite2D" parent="y_order/_"]
-position = Vector2(248, 180)
+[node name="rails" type="Sprite2D" parent="_"]
+position = Vector2(4, 192)
 texture = ExtResource("3_4uf4j")
-
-[node name="cam_deadzone" type="Area2D" parent="y_order"]
-position = Vector2(312, 120)
-collision_layer = 1073741824
-collision_mask = 1073741824
-script = ExtResource("6_417hc")
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_1fq43"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
-metadata/_custom_type_script = "uid://btgm8okupfro7"
-
-[node name="rect" type="CollisionShape2D" parent="y_order/cam_deadzone"]
-shape = SubResource("RectangleShape2D_1fq43")
-debug_color = Color(0.2, 0, 0.7, 0.2)
+centered = false

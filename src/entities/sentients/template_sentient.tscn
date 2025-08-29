@@ -34,7 +34,6 @@ script = ExtResource("1_l8d6l")
 nav_agent = NodePath("nav")
 stance_fsm = NodePath("stance_fsm")
 behaviour_fsm = NodePath("behaviour_fsm")
-initial_speed = 34.3
 
 [node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="."]
 rect = Rect2(-150, -125, 300, 250)
@@ -85,49 +84,51 @@ script = ExtResource("7_2w8np")
 initial_state = NodePath("IDLE")
 metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 
-[node name="IDLE" type="Node" parent="stance_fsm"]
+[node name="IDLE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("8_xd2xn")
+transitions = [NodePath("../WALK"), NodePath("../RUN")]
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="WALK" type="Node" parent="stance_fsm"]
+[node name="WALK" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("9_vfpfq")
+transitions = [NodePath("../IDLE"), NodePath("../RUN")]
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="RUN" type="Node" parent="stance_fsm"]
+[node name="RUN" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("8_0k3de")
-metadata/_custom_type_script = "uid://qdqcvtymsa3v"
-
-[node name="TAUNT" type="Node" parent="stance_fsm"]
-script = ExtResource("8_0k3de")
+transitions = [NodePath("../WALK"), NodePath("../IDLE")]
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="behaviour_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("7_2w8np")
-initial_state = NodePath("IDLE")
+initial_state = NodePath("STILL")
 metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 
 [node name="path_update" type="Timer" parent="behaviour_fsm"]
 
-[node name="IDLE" type="Node" parent="behaviour_fsm"]
+[node name="STILL" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("10_w825i")
+transitions = [NodePath("../WANDER"), NodePath("../OBSERVE"), NodePath("../CHASE"), NodePath("../STARE_AT"), NodePath("../FOLLOW")]
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("initial_state_fsm")]
+[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("11_iiqm4")
-initial_state_fsm = NodePath("WANDER_IDLE")
+transitions = [NodePath("../STILL"), NodePath("../OBSERVE"), NodePath("../CHASE")]
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="WANDER_IDLE" type="Node" parent="behaviour_fsm/WANDER" node_paths=PackedStringArray("idle_timer", "repath_timer")]
+[node name="WANDER_IDLE" type="Node" parent="behaviour_fsm/WANDER" node_paths=PackedStringArray("idle_timer", "repath_timer", "transitions")]
 script = ExtResource("13_33g5e")
 idle_timer = NodePath("idle_timer")
 repath_timer = NodePath("repath_timer")
+transitions = [NodePath("../WANDER_MOVE")]
 
 [node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER/WANDER_IDLE"]
 
 [node name="repath_timer" type="Timer" parent="behaviour_fsm/WANDER/WANDER_IDLE"]
 
-[node name="WANDER_MOVE" type="Node" parent="behaviour_fsm/WANDER"]
+[node name="WANDER_MOVE" type="Node" parent="behaviour_fsm/WANDER" node_paths=PackedStringArray("transitions")]
 script = ExtResource("14_yha0i")
+transitions = [NodePath("../WANDER_IDLE")]
 
 [node name="OBSERVE" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
 script = ExtResource("12_cbhm8")

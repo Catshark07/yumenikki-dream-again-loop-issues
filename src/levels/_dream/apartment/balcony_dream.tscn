@@ -51,14 +51,13 @@ tile_map_data = PackedByteArray("AAAJAAcAAQAAAAEAAAAJAAgAAQAAAAEAAAAJAAkAAQAAAAE
 tile_set = ExtResource("7_vgsl5")
 script = ExtResource("8_w5pro")
 
-[node name="CamDeadzone" type="Area2D" parent="."]
-process_mode = 3
+[node name="CamDeadzone" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
 position = Vector2(240, 136)
 collision_layer = 1073741824
 collision_mask = 1073741824
 script = ExtResource("4_vgsl5")
-rect = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":SubResource("RectangleShape2D_1fq43"),"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0.2, 0, 0.7, 0.2),"script":null)
-
+rect = NodePath("rect")
+presence_detect = true
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="rect" type="CollisionShape2D" parent="CamDeadzone"]

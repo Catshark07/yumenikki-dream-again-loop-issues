@@ -3,7 +3,7 @@ extends EditorPlugin
 
 
 func _enter_tree() -> void:
-	add_autoload_singleton("NodeSaveService", "res://src/systems/game/node_save_service.gd")
+	add_autoload_singleton("NodeSaveService", "res://src/systems/save/node_save_service.gd")
 	add_autoload_singleton("Game", "res://src/game/game.gd")
 	
 	add_autoload_singleton("Music", "res://src/autoloads/bgm_player_music.gd")

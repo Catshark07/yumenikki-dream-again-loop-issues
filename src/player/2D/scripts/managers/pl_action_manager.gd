@@ -40,7 +40,7 @@ func set_curr_action(_action: PLAction) -> void: curr_action = _action
 func perform_action(_action: PLAction, _pl: Player) -> void: 
 	if _action and can_action:
 		set_curr_action(_action)
-		if !_action._perform(_pl): return 
+		_action._perform(_pl) 
 		did_something.emit()
 func cancel_action(_action: PLAction, _pl: Player, _force: bool = false) -> void: 
 	if _action and (can_action or _force):
@@ -51,14 +51,17 @@ func get_curr_action() -> PLAction: return curr_action
 # ---- action handles ----
 func handle_action_enter() -> void: 
 	if curr_action: 
-		await curr_action._enter(sentient)
+		await curr_action._action_on_enter(sentient)
 func handle_action_exit() -> void: 
 	if curr_action: 
-		await curr_action._exit(sentient)
+		await curr_action._action_on_exit(sentient)
 
-func handle_action_input(_input: InputEvent) -> void: if curr_action and can_action: curr_action._input(sentient, _input)
-func handle_action_phys_update(_delta: float) -> void: if curr_action: curr_action._physics_update(sentient, _delta)
-func handle_action_update(_delta: float) -> void: if curr_action: curr_action._update(sentient, _delta)
+func handle_action_input(_input: InputEvent) -> void: 
+	if curr_action and can_action: curr_action._action_input(sentient, _input)
+func handle_action_phys_update(_delta: float) -> void: 
+	if curr_action: curr_action._action_physics_update(sentient, _delta)
+func handle_action_update(_delta: float) -> void: 
+	if curr_action: curr_action._action_update(sentient, _delta)
 
 func input_pass(event: InputEvent) -> void:
 	super(event)
