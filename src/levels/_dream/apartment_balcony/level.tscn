@@ -122,6 +122,7 @@ unload_transition = SubResource("ShaderMaterial_viai5")
 metadata/_edit_vertical_guides_ = [-341.0]
 
 [node name="cam_layer" parent="." instance=ExtResource("4_f8of1")]
+position = Vector2(220, 122)
 
 [node name="screen_overlay" type="CanvasLayer" parent="."]
 layer = 20
@@ -182,7 +183,6 @@ material = SubResource("ShaderMaterial_42e87")
 position = Vector2(188, 95)
 
 [node name="_2" type="Sprite2D" parent="panorama/bg"]
-visible = false
 material = SubResource("ShaderMaterial_54bv0")
 position = Vector2(-34, -24)
 texture = ExtResource("12_3mst5")
@@ -280,7 +280,7 @@ script = ExtResource("15_01ahr")
 [node name="exit" type="Node" parent="BalconyBase/SequenceRegion"]
 script = ExtResource("15_01ahr")
 
-[node name="Satsuki" parent="." instance=ExtResource("21_2vk4d")]
+[node name="madotsuki" parent="." instance=ExtResource("21_2vk4d")]
 position = Vector2(384, 160)
 
 [editable path="cam_layer"]

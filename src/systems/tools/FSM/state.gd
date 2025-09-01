@@ -72,9 +72,8 @@ func request_transition(_from: StringName, _to: StringName, _force_fsm_priority:
 	if !(_from in transitions_dict): 
 		if _from == self.name.to_lower(): 
 			request_transition_to(_to, _force_fsm_priority)
-			return
 		return
 	transitions_dict[_from].request_transition_to(_to, _force_fsm_priority)
-
+	
 func is_sub_state() -> bool:
 	return parent != null

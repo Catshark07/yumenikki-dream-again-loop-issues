@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://dp6063trlnao1"]
+[gd_scene load_steps=15 format=4 uid="uid://dp6063trlnao1"]
 
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="2_vslin"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="3_ctgje"]
@@ -6,6 +6,18 @@
 [ext_resource type="TileSet" uid="uid://bior84yl5ty0u" path="res://src/levels/__ignore/tile_set/apartment_real.tres" id="5_61pj8"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="5_q8kej"]
 [ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/2D/madotsuki/effects/earring/glow.png" id="6_vslin"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="7_vslin"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="8_78d3e"]
+[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="9_q8kej"]
+[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="10_q8kej"]
+[ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="11_qnweu"]
+[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="12_hio25"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qnweu"]
+blend_mode = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ctgje"]
+size = Vector2(16, 16)
 
 [node name="room" type="Node2D"]
 y_sort_enabled = true
@@ -18,12 +30,26 @@ offset_right = 408.0
 offset_bottom = 248.0
 color = Color(0, 0, 0, 1)
 
-[node name="modulate" type="CanvasModulate" parent="."]
-color = Color(0.765813, 0.568122, 0.654654, 1)
+[node name="modulate" type="ColorRect" parent="."]
+z_index = 5
+material = SubResource("CanvasItemMaterial_qnweu")
+offset_left = -88.0
+offset_top = -40.0
+offset_right = 408.0
+offset_bottom = 248.0
+color = Color(0.439171, 0.275187, 0.350255, 1)
+
+[node name="door" type="Sprite2D" parent="."]
+position = Vector2(176, 32)
+texture = ExtResource("11_qnweu")
+hframes = 7
+script = ExtResource("12_hio25")
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 7
 
 [node name="collision" type="TileMapLayer" parent="."]
 z_index = 1
-tile_map_data = PackedByteArray("AAAIAAsAAQAAAAEAAAAIAAwAAQAAAAEAAAAJAAwAAQAAAAEAAAAKAAwAAQAAAAEAAAALAAwAAQAAAAEAAAAQAAQAAQAAAAEAAAACAAQAAQAAAAEAAAADAAMAAQAAAAEAAAAEAAMAAQAAAAEAAAAFAAIAAQAAAAEAAAAGAAIAAQAAAAEAAAAHAAIAAQAAAAEAAAAIAAIAAQAAAAEAAAAJAAIAAQAAAAEAAAAKAAIAAQAAAAEAAAALAAIAAQAAAAEAAAALAAsAAQAAAAEAAAAMAAIAAQAAAAEAAAANAAIAAQAAAAEAAAAOAAMAAQAAAAEAAAAPAAMAAQAAAAEAAAABAAUAAQAAAAEAAAABAAYAAQAAAAEAAAABAAcAAQAAAAEAAAABAAgAAQAAAAEAAAABAAkAAQAAAAEAAAACAAsAAQAAAAEAAAADAAsAAQAAAAEAAAAEAAsAAQAAAAEAAAAFAAsAAQAAAAEAAAAGAAsAAQAAAAEAAAAHAAsAAQAAAAEAAAABAAoAAQAAAAEAAAARAAUAAQAAAAEAAAARAAYAAQAAAAEAAAARAAcAAQAAAAEAAAARAAgAAQAAAAEAAAARAAkAAQAAAAEAAAARAAoAAQAAAAEAAAAMAAsAAQAAAAEAAAANAAsAAQAAAAEAAAAOAAsAAQAAAAEAAAAPAAsAAQAAAAEAAAAQAAsAAQAAAAEAAAARAAsAAQAAAAEAAAA=")
+tile_map_data = PackedByteArray("AAAIAAsAAQAAAAEAAAAIAAwAAQAAAAEAAAAJAAwAAQAAAAEAAAAKAAwAAQAAAAEAAAALAAwAAQAAAAEAAAAQAAQAAQAAAAEAAAACAAQAAQAAAAEAAAADAAMAAQAAAAEAAAAEAAMAAQAAAAEAAAAFAAIAAQAAAAEAAAAGAAIAAQAAAAEAAAAHAAIAAQAAAAEAAAAIAAIAAQAAAAEAAAAJAAIAAQAAAAEAAAAKAAIAAQAAAAEAAAALAAIAAQAAAAEAAAALAAsAAQAAAAEAAAAMAAIAAQAAAAEAAAANAAIAAQAAAAEAAAAOAAMAAQAAAAEAAAAPAAMAAQAAAAEAAAABAAUAAQAAAAEAAAABAAYAAQAAAAEAAAABAAcAAQAAAAEAAAABAAgAAQAAAAEAAAABAAkAAQAAAAEAAAACAAsAAQAAAAEAAAADAAsAAQAAAAEAAAAEAAsAAQAAAAEAAAAFAAsAAQAAAAEAAAAGAAsAAQAAAAEAAAAHAAsAAQAAAAEAAAABAAoAAQAAAAEAAAARAAUAAQAAAAEAAAARAAYAAQAAAAEAAAARAAcAAQAAAAEAAAARAAgAAQAAAAEAAAARAAkAAQAAAAEAAAARAAoAAQAAAAEAAAAMAAsAAQAAAAEAAAANAAsAAQAAAAEAAAAOAAsAAQAAAAEAAAAPAAsAAQAAAAEAAAAQAAsAAQAAAAEAAAARAAsAAQAAAAEAAAADAAQAAQAAAAAAACACAAUAAQACAAEAAAAFAAMAAQACAAEAAAANAAMAAQACAAEAABAPAAQAAQACAAEAABAQAAUAAQACAAEAABA=")
 tile_set = ExtResource("2_vslin")
 script = ExtResource("3_ctgje")
 
@@ -57,3 +83,76 @@ position = Vector2(122, 47)
 scale = Vector2(1.5, 1.5)
 color = Color(0.972338, 0.841352, 0, 1)
 texture = ExtResource("6_vslin")
+
+[node name="illegible_note_1" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
+position = Vector2(88, 104)
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("7_vslin")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="rect" type="CollisionShape2D" parent="illegible_note_1"]
+shape = SubResource("RectangleShape2D_ctgje")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="OnInteract" type="Node" parent="illegible_note_1"]
+script = ExtResource("8_78d3e")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="read" type="Node" parent="illegible_note_1/OnInteract"]
+script = ExtResource("9_q8kej")
+texts = Array[String](["this note is barely legible."])
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="illegible_note_2" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
+position = Vector2(56, 136)
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("7_vslin")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="rect" type="CollisionShape2D" parent="illegible_note_2"]
+shape = SubResource("RectangleShape2D_ctgje")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="OnInteract" type="Node" parent="illegible_note_2"]
+script = ExtResource("8_78d3e")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="read" type="Node" parent="illegible_note_2/OnInteract"]
+script = ExtResource("9_q8kej")
+texts = Array[String](["this note is full of gibberish"])
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="note" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
+position = Vector2(248, 168)
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("7_vslin")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="rect" type="CollisionShape2D" parent="note"]
+shape = SubResource("RectangleShape2D_ctgje")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="OnInteract" type="Node" parent="note"]
+script = ExtResource("8_78d3e")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="request_cutscene_start" type="Node" parent="note/OnInteract"]
+script = ExtResource("10_q8kej")
+event_id = "CUTSCENE_START_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="read" type="Node" parent="note/OnInteract"]
+script = ExtResource("9_q8kej")
+texts = Array[String](["this note is readable. the note reads:", "\"the neighbours above have made it miserable living here\"", "\"the neighbours down below also messed up with the flooring\"", "\"to future potential tenants, please get out of this as soon as you get the opportunity.\"", "- lin"])
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="request_cutscene_end" type="Node" parent="note/OnInteract"]
+script = ExtResource("10_q8kej")
+event_id = "CUTSCENE_START_END"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"

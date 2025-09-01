@@ -16,7 +16,6 @@ var sentients_to_be_looped := {
 
 @export_category("Tools.")
 @export_tool_button("Setup Loop Objects.") var setup_objs = setup_loop_objects
-@export_tool_button("Reset Loop Objects.") var reset_objs = reset_loop_objects
 
 const screen_size := Vector2i(480, 270)
 
@@ -39,22 +38,23 @@ enum loop {LOOP, DISABLED}
 
 # ---- collision components ----
 @export_group("Collision Components.")
-@onready var up_collision: StaticBody2D = $up_coll
-@onready var down_collision: StaticBody2D = $down_coll
-@onready var right_collision: StaticBody2D = $right_coll
-@onready var left_collision: StaticBody2D = $left_coll
+@export_group("Collision Components./Static Bodies.")
+@export var up_collision: StaticBody2D 
+@export var down_collision: StaticBody2D 
+@export var right_collision: StaticBody2D 
+@export var left_collision: StaticBody2D 
 
-@onready var up_bound: CollisionShape2D = $up_coll/square
-@onready var down_bound: CollisionShape2D = $down_coll/square
-@onready var right_bound: CollisionShape2D = $right_coll/square
-@onready var left_bound: CollisionShape2D = $left_coll/square
+@export_group("Collision Components./Collision Shapes.")
+@export var up_bound: CollisionShape2D
+@export var down_bound: CollisionShape2D
+@export var right_bound: CollisionShape2D
+@export var left_bound: CollisionShape2D
 
 # ---- bound flags ----
 @export var loop_region: AreaRegion
-@export var world_render: SubViewport
-
 @export var renders_setup: bool = false
 
+@export_group("Collision Components./Active Collisions.")
 @export var up_active: bool = true: 
 	set(_active): 
 		up_active = _active
@@ -75,9 +75,6 @@ enum loop {LOOP, DISABLED}
 var v_size: Vector2
 var h_size: Vector2
 
-@export var viewports_arr	: Array[SubViewport]
-@export var loop_renders_arr: Array[Sprite2D]
-
 func _ready() -> void: 
 	if !Engine.is_editor_hint(): 
 		resize(bound_size)
@@ -88,7 +85,6 @@ func _process(delta: float) -> void:
 		resize(bound_size)
 
 func resize(new_size: Vector2) -> void:
-	world_render.size = new_size
 	
 	(up_bound.shape as RectangleShape2D).size.x = new_size.x
 	(up_bound.shape as RectangleShape2D).size.y = tile_size.y
@@ -102,21 +98,13 @@ func resize(new_size: Vector2) -> void:
 	(right_bound.shape as RectangleShape2D).size.x = tile_size.x
 	(right_bound.shape as RectangleShape2D).size.y = new_size.y
 	
-	up_collision.position = Vector2(
-		(up_bound.shape as RectangleShape2D).size.x / 2, 
-		bound_size.y + (up_bound.shape as RectangleShape2D).size.y / 2)
-	down_collision.position = Vector2(
-		(down_bound.shape as RectangleShape2D).size.x / 2, 
-		-(down_bound.shape as RectangleShape2D).size.y / 2)
-	right_collision.position = Vector2(
-		bound_size.x + (right_bound.shape as RectangleShape2D).size.x / 2, 
-		(right_bound.shape as RectangleShape2D).size.y / 2)
-	left_collision.position = Vector2(
-		-(left_bound.shape as RectangleShape2D).size.x / 2, 
-		(left_bound.shape as RectangleShape2D).size.y / 2)
+	up_collision	.position 	= Vector2(0, bound_size.y / 2 + (up_bound.shape as RectangleShape2D).size.y / 2)
+	down_collision	.position 	= Vector2(0, -(bound_size.y / 2 + (up_bound.shape as RectangleShape2D).size.y / 2))
+	right_collision	.position 	= Vector2(bound_size.x / 2 + (right_bound.shape as RectangleShape2D).size.x / 2, 0)
+	left_collision	.position 	= Vector2(-(bound_size.x / 2 + (left_bound.shape as RectangleShape2D).size.x), 0)
 	
 	(loop_region.rect.shape as RectangleShape2D).size = new_size
-	loop_region.rect.position = (loop_region.rect.shape as RectangleShape2D).size / 2
+	loop_region.rect.position = Vector2.ZERO
 	
 func set_all_borders_active(_active: bool = true) -> void: 
 	up_active 	= _active
@@ -133,18 +121,6 @@ func setup_loop_objects() -> void:
 	renders_setup = true
 	
 	var renders = get_node_or_null("loop_renders")
-	
-
-func reset_loop_objects() -> void:
-	for i in viewports_arr:
-		if i == null: continue
-		i.free()
-	
-	for i in loop_renders_arr:
-		if i == null: continue
-		i.free()
-		
-	renders_setup = false
 
 func _validate_property(property: Dictionary) -> void:
 	var props_to_read_only: PackedStringArray = ["bound_size", "min_bound_size", "min_bound_size_multiplier"]

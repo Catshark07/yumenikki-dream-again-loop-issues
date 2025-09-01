@@ -1,17 +1,18 @@
-[gd_scene load_steps=23 format=4 uid="uid://b67q2b5hm6tsu"]
+[gd_scene load_steps=24 format=4 uid="uid://b67q2b5hm6tsu"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_inoc5"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_odm8p"]
 [ext_resource type="Texture2D" uid="uid://cpsg4xvrbf3mo" path="res://src/images/panorama/eyeball_panorama.png" id="3_4j00j"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="3_07q2v"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="4_d5n0m"]
+[ext_resource type="Texture2D" uid="uid://cua8v3f5c3bwi" path="res://src/levels/__ignore/doors/door_eyeball.png" id="4_ey7sl"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_sthxv"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="5_fot1s"]
 [ext_resource type="TileSet" uid="uid://ucja6rk8c0dh" path="res://src/levels/__ignore/tile_set/eyeball.tres" id="5_pagnx"]
 [ext_resource type="AudioStream" uid="uid://dexpefjcufc0b" path="res://src/audio/bgm/world_eyeball.ogg" id="6_jutn4"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="8_kw8r0"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="9_4j00j"]
-[ext_resource type="Script" uid="uid://dysysg63gy1ce" path="res://src/systems/sequencing/sequence/if_player_vel.gd" id="9_fot1s"]
+[ext_resource type="Script" uid="uid://dysysg63gy1ce" path="res://src/systems/sequencing/sequence/conditional/if_player_vel.gd" id="9_fot1s"]
 [ext_resource type="TileSet" uid="uid://b7vdcqrtnh77e" path="res://src/levels/__ignore/tile_set/colourful_irises.tres" id="11_kw8r0"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="13_d5n0m"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="13_x4bpl"]
@@ -24,7 +25,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_04s3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ey7sl"]
-size = Vector2(32, 16)
+size = Vector2(32, 12)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sthxv"]
 shader = ExtResource("2_odm8p")
@@ -46,7 +47,7 @@ unload_transition = SubResource("ShaderMaterial_04s3o")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("4_sthxv")]
-position = Vector2(912, 1080)
+position = Vector2(64, 48)
 initial_target = NodePath("../y_order/madotsuki")
 
 [node name="y_order" type="Node2D" parent="."]
@@ -68,6 +69,11 @@ connection_id = "nexus"
 scene_path = "uid://dl25joalnmaxt"
 connection_id = "nexus"
 
+[node name="renderer" parent="y_order/nexus" index="2"]
+texture = ExtResource("4_ey7sl")
+hframes = 1
+frame_h_count = 1
+
 [node name="footprint_path_gate" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(920, 1016)
 collision_layer = 2147483648
@@ -77,6 +83,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="y_order/footprint_path_gate"]
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_ey7sl")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -97,7 +104,7 @@ spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
 [node name="spawn_point" type="Node2D" parent="y_order/footprint_path_gate" node_paths=PackedStringArray("parent_instead_of_self")]
-position = Vector2(0, 8)
+position = Vector2(0, 12)
 script = ExtResource("8_kw8r0")
 scene_path = "uid://bj5i2xd4ypqna"
 connection_id = "footprint"

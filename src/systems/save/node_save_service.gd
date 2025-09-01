@@ -12,16 +12,17 @@ var scene_data_template := {
 	}
 
 func save_scene_data(_scene: SceneNode) -> void: 
-	var node_saves = GlobalUtils.get_group_arr(NODE_SAVE_GROUP_ID) as Array[SaveRequest]
+	var node_saves: = GlobalUtils.get_group_arr(NODE_SAVE_GROUP_ID)
 	var scene_path: StringName = _scene.scene_file_path
 		
 	data[scene_path] = Dictionary(scene_data_template)
 	
-	for node in node_saves: 
+	for node: SaveRequest in node_saves: 
 		if node == null: continue
-		data[scene_path] = {"data" : {}}
-		data[scene_path]["data"]		
-			
+		var save_dict: Dictionary = node.save_data()
+		for key in save_dict.keys():
+			data[scene_path]["data"][key] = save_dict[key]
+				
 func load_scene_data(_scene: SceneNode) -> void:
 	var node_saves = GlobalUtils.get_group_arr(NODE_SAVE_GROUP_ID) as Array[SaveRequest]
 	var scene_path: StringName = _scene.scene_file_path

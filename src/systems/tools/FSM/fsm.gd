@@ -33,15 +33,15 @@ func change_to_state(_new: StringName) -> void:
 	if !_new.is_empty() and has_state(_new):
 		var new_state: State = state_dict.get(_new.to_lower())
 
-		if curr_state != new_state:
-			state_changed.emit(new_state)	
-			
-			curr_state.state_exit()
-			
-			prev_state = curr_state
-			curr_state = new_state
-			
-			curr_state.state_enter()
+		if curr_state == new_state: return
+		
+		state_changed.emit(new_state)	
+		curr_state.state_exit()
+		
+		prev_state = curr_state
+		curr_state = new_state
+		
+		curr_state.state_enter()
 			
 # - state checks + getter
 func has_state(_state_id: StringName) -> bool:

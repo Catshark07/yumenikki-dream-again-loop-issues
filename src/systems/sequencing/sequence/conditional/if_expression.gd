@@ -1,0 +1,23 @@
+@tool
+extends ConditionalSequence
+
+@export_custom(PROPERTY_HINT_EXPRESSION, "") var expression: String
+@export var input_objects: Dictionary[String, Node] = {}
+var expression_instance: Expression
+var autoload_references: Dictionary = Autoloads.CLASS_REFERENCES
+
+func _validate() -> bool:
+	expression_instance = Expression.new()
+	var err = expression_instance.parse(expression, input_objects.keys())
+	if err != OK: return false
+	
+	return true
+
+func _predicate() -> bool:
+	var res = expression_instance.execute(input_objects.values(), self)
+	if expression_instance.has_execute_failed(): return false
+	expression_instance = null
+	
+	return (res is bool) and res
+
+# - expression helpers.

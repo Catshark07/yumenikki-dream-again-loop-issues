@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjgdoon3l1443"
-path="res://.godot/imported/inscene_door.png-17f1dd2ab23eed2c703f5dd610b95b01.ctex"
+uid="uid://ceuj3ddjk1vk2"
+path="res://.godot/imported/digital_clock.png-2e73b6d46f43d13a09a864281a9f8111.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/miscallenous/editor/inscene_door.png"
-dest_files=["res://.godot/imported/inscene_door.png-17f1dd2ab23eed2c703f5dd610b95b01.ctex"]
+source_file="res://src/levels/_real/apartment/digital_clock.png"
+dest_files=["res://.godot/imported/digital_clock.png-2e73b6d46f43d13a09a864281a9f8111.ctex"]
 
 [params]
 

@@ -5,7 +5,7 @@ class_name Sequence extends Event
 var time_elapsed: float = 0 
 
 var order: Array
-var marked_for_skip: PackedInt32Array
+var marked_invalid: PackedInt32Array
 
 var priority: int = 0
 var bail_requested: bool = false
@@ -35,7 +35,7 @@ func _execute() -> void:
 		var event = order[e]
 		if event != null and event is Event:
 			
-			if e in marked_for_skip: continue # - we skip any events marked for skip / as invalid.
+			if e in marked_invalid or event.skip : continue # - we skip any events marked for skip / as invalid.
 			if print_debug: print("CURR EVENT HANDLED::: ", event)
 			
 			event.execute() 
@@ -51,7 +51,7 @@ func _validate_event_order() -> bool:
 		var event = order[i] # - current event.
 		if event == null or !(event as Event)._validate():
 			# - if event is invalid...
-			if skip_invalid_events: marked_for_skip.append(i) # - we mark invalid events to be skipped.
+			if skip_invalid_events: marked_invalid.append(i) # - we mark invalid events to be skipped.
 			else: return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 			
 	return true

@@ -50,6 +50,8 @@ libraries = {
 [node name="footstep_manager" type="Node2D" parent="sb_components" index="2"]
 material = SubResource("CanvasItemMaterial_jg6uj")
 script = ExtResource("6_cj8vh")
+transparent_surfaces = null
+active = null
 
 [node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager" index="0"]
 max_distance = 750.0
@@ -73,7 +75,6 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 [node name="play_animation" type="Node" parent="stance_fsm/IDLE/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
 script = ExtResource("8_u4v1j")
 animator = NodePath("../../../../sb_components/animation_manager/animation_player")
-animation_path = "pirori/idle"
 wait_til_finished = false
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -84,7 +85,6 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 [node name="play_animation" type="Node" parent="stance_fsm/WALK/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
 script = ExtResource("8_u4v1j")
 animator = NodePath("../../../../sb_components/animation_manager/animation_player")
-animation_path = "pirori/walk"
 wait_til_finished = false
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -108,6 +108,7 @@ script = ExtResource("10_lpcqq")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="grouped" type="Node" parent="interactable/on_interact" index="0"]
+process_mode = 4
 script = ExtResource("11_w3fjo")
 metadata/_custom_type_script = "uid://b2je1meyfnp7s"
 

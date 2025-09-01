@@ -23,6 +23,7 @@ var save_invoker: EventListener
 	
 # - initial
 func _initialize() -> void: 
+	process_mode = Node.PROCESS_MODE_DISABLED
 	save_invoker = EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
 	
 	if load_transition == null: 
@@ -60,10 +61,11 @@ func clear_all_objects() -> void:
 
 # - stack functions.	
 func _on_push() -> void: 
+	load_scene()
+	process_mode = Node.PROCESS_MODE_INHERIT
+	
 	for s in GlobalUtils.get_group_arr("actors"): 
 		if s != null: s._enter()
-
-	load_scene()
 	
 	SequencerManager.invoke(seq_initial)
 	process_mode = Node.PROCESS_MODE_INHERIT

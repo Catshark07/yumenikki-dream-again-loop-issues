@@ -55,7 +55,7 @@ static func window_setup() -> void:
 	Engine.max_fps = 60
 	ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_repeat", CanvasItem.TEXTURE_REPEAT_MIRROR)
 	
-	main_window.size = Vector2(960, 540)
+	main_window.size = Vector2(1440, 810)
 	
 	main_window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 	main_window.position = DisplayServer.screen_get_size(DisplayServer.get_primary_screen()) / 2 - main_window.size / 2 

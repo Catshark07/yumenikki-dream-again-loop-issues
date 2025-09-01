@@ -1,19 +1,24 @@
 @tool
+class_name Autoloads
 extends EditorPlugin
 
+const SCRIPT_REFERENCES: Dictionary[String, String] = {
+	"NodeSaveService" 	: "res://src/systems/save/node_save_service.gd",
+	"Game" 				: "res://src/game/game.gd",
+	"Music" 			: "res://src/autoloads/bgm_player_music.gd",
+	"Ambience" 			: "res://src/autoloads/bgm_player_amb.gd",
+	"AudioService" 		: "res://src/autoloads/audio_service.gd",
+}
+
+static var CLASS_REFERENCES: Dictionary[String, Node] = {
+	"NodeSaveService" 	: NodeSaveService,
+	"Game" 				: Game,
+	"Music" 			: Music,
+	"Ambience" 			: Ambience,
+	"AudioService" 		: AudioService,
+}
 
 func _enter_tree() -> void:
-	add_autoload_singleton("NodeSaveService", "res://src/systems/save/node_save_service.gd")
-	add_autoload_singleton("Game", "res://src/game/game.gd")
-	
-	add_autoload_singleton("Music", "res://src/autoloads/bgm_player_music.gd")
-	add_autoload_singleton("Ambience", "res://src/autoloads/bgm_player_amb.gd")
-	add_autoload_singleton("AudioService", "res://src/autoloads/audio_service.gd")
-	
+	for i in SCRIPT_REFERENCES: add_autoload_singleton(i, SCRIPT_REFERENCES[i])
 func _exit_tree() -> void:
-	remove_autoload_singleton("NodeSaveService")
-	remove_autoload_singleton("Game")
-	
-	remove_autoload_singleton("Music")
-	remove_autoload_singleton("Ambience")
-	remove_autoload_singleton("AudioService")
+	for i in SCRIPT_REFERENCES.keys(): remove_autoload_singleton(i)

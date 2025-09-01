@@ -132,6 +132,8 @@ script = ExtResource("10_rhwps")
 [node name="footstep_manager" type="Node2D" parent="sb_components"]
 material = SubResource("CanvasItemMaterial_mbimu")
 script = ExtResource("5_xe7mj")
+transparent_surfaces = null
+active = null
 
 [node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager"]
 max_distance = 750.0
@@ -195,10 +197,12 @@ initial_state = NodePath("IDLE")
 
 [node name="IDLE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("22_e8irh")
+transitionable = null
 transitions = [NodePath("../MOVE"), NodePath("../ACTION"), NodePath("../EMOTE")]
 
 [node name="MOVE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("24_t8l7d")
+transitionable = null
 transitions = [NodePath("../IDLE")]
 metadata/_custom_type_script = "uid://528ddyxm13yn"
 
@@ -226,6 +230,8 @@ transitions = [NodePath("../IDLE")]
 script = ExtResource("30_f263f")
 transitions = [NodePath("../IDLE")]
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="movement_fsm" type="Node" parent="."]
 
 [node name="nav" type="NavigationAgent2D" parent="."]
 path_desired_distance = 5.0

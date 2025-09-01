@@ -1,11 +1,6 @@
 extends SBState
 var library_path := "normal"
 
-func handle_to_run() -> void:
-	if (sentient as Player_YN).can_run: 
-		request_transition_to("run")
-
-
 
 func _state_enter() -> void:
 	if sentient.get_behaviour().auto_run: 

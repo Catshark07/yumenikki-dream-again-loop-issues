@@ -4,7 +4,9 @@ extends Sequence
 @export var else_conditional: Sequence
 
 func _execute() -> void:
-	if _predicate(): super()
+	if _predicate(): 
+		super()
+		return
 	elif else_conditional != null: else_conditional._execute()
 
 func _predicate() -> bool:

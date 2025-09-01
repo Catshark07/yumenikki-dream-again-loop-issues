@@ -9,7 +9,7 @@ signal canceled
 @export_category("Event Flags.")
 @export var deferred: bool = true
 @export var wait_til_finished: bool = true
-@export var skip_warning: bool = false
+@export var skip: bool = false
 
 var call_count: int = 0
 @export var call_limit: int = 0 # - inclusive.

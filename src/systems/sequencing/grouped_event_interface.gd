@@ -13,6 +13,7 @@ var is_active: bool = false
 
 func _ready() -> void:
 	# - get events.
+	super()
 	order = get_children()	
 
 func _execute() -> void:

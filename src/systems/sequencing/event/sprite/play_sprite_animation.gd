@@ -14,7 +14,6 @@ func _execute() -> void:
 		await animator.animation_finished
 
 func _validate() -> bool:
-	if skip_warning: return true
 	if animation_sheet == null:
 		printerr("EVENT - PLAY SPRITE ANIMATION :: Animation texture is null!!")
 		return false

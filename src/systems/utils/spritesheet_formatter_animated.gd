@@ -69,7 +69,6 @@ func play_one_shot(
 		reverse = _reverse
 	
 func _process(delta: float) -> void:
-	super(delta)
 	if playing:
 		time_elapsed += delta
 		

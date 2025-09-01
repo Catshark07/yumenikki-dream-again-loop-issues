@@ -37,6 +37,8 @@ func singleton_setup() -> void:
 		game_manager.reparent(self)
 
 func _ready() -> void:
+	PhysicsServer2D.set_active(false)
+	
 	ProjectSettings.set_setting("application/config/version", GAME_VER)
 	
 	set_process(false)
@@ -71,6 +73,8 @@ func _ready() -> void:
 	set_process_input(true)
 	
 	game_ready.emit()
+	PhysicsServer2D.set_active(true)
+	
 	
 func _process(delta: float) -> void: 
 	InputManager.		_update(delta)

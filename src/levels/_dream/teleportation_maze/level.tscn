@@ -179,7 +179,7 @@ collision_layer = 2147483648
 collision_mask = 2147483648
 script = ExtResource("13_bsaik")
 spawn_point = NodePath("spawn_point")
-target_door = NodePath("../a_2")
+target_door = NodePath("../../B/b_2")
 parallel = true
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
@@ -195,12 +195,12 @@ script = ExtResource("10_57bbv")
 parent_instead_of_self = NodePath("../..")
 
 [node name="a_2" type="Area2D" parent="y_order/teleports/A" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
-position = Vector2(472, 332)
+position = Vector2(472, 336)
 collision_layer = 2147483648
 collision_mask = 2147483648
 script = ExtResource("13_bsaik")
 spawn_point = NodePath("spawn_point")
-target_door = NodePath("../a_1")
+target_door = NodePath("../../B/b_1")
 parallel = true
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
@@ -216,6 +216,50 @@ script = ExtResource("10_57bbv")
 parent_instead_of_self = NodePath("../..")
 
 [node name="B" type="Node2D" parent="y_order/teleports"]
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="b_1" type="Area2D" parent="y_order/teleports/B" node_paths=PackedStringArray("spawn_point", "rect")]
+position = Vector2(136, 208)
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("13_bsaik")
+spawn_point = NodePath("spawn_point")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="y_order/teleports/B/b_1"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_mdna8")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="y_order/teleports/B/b_1" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(-20, 0)
+script = ExtResource("10_57bbv")
+parent_instead_of_self = NodePath("../../../A")
+
+[node name="b_2" type="Area2D" parent="y_order/teleports/B" node_paths=PackedStringArray("spawn_point", "rect")]
+position = Vector2(760, 16)
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("13_bsaik")
+spawn_point = NodePath("spawn_point")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="y_order/teleports/B/b_2"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_mdna8")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="y_order/teleports/B/b_2" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(20, -4)
+script = ExtResource("10_57bbv")
+parent_instead_of_self = NodePath("../../../A")
+
+[node name="C" type="Node2D" parent="y_order/teleports"]
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="D" type="Node2D" parent="y_order/teleports"]
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="dead_zones" type="Node2D" parent="y_order"]
