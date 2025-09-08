@@ -27,10 +27,10 @@ func _ready() -> void:
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
 
-	rect = GlobalUtils.get_child_node_or_null(self, "rect")
+	rect = Utils.get_child_node_or_null(self, "rect")
 	
 	if rect == null: 
-		rect = await GlobalUtils.add_child_node(self, CollisionShape2D.new(), "rect")
+		rect = await Utils.add_child_node(self, CollisionShape2D.new(), "rect")
 		rect.shape = RectangleShape2D.new()
 		rect.shape.size = Vector2(16, 16)	
 		rect.debug_color = Color(0.2 ,0, 0.7, 0.2)
@@ -38,13 +38,15 @@ func _ready() -> void:
 	if !Engine.is_editor_hint():
 		rect.disabled = !(self.visible and is_visible_in_tree())
 			
-		GlobalUtils.connect_to_signal(handle_player_enter, self.area_entered)
-		GlobalUtils.connect_to_signal(handle_player_exit, self.area_exited)
+	Utils.connect_to_signal(handle_player_enter, self.area_entered)
+	Utils.connect_to_signal(handle_player_exit, self.area_exited)
+	Utils.connect_to_signal(__disable_collision_if_invisible, self.visibility_changed)
 	
-	self.visibility_changed.connect(func(): rect.disabled = !(self.visible and is_visible_in_tree()))
-	
-	_setup()
 	process_mode = Node.PROCESS_MODE_INHERIT
+	_setup()
+
+func __disable_collision_if_invisible() -> void:
+	rect.disabled = !(self.visible and is_visible_in_tree())
 
 func _setup() -> void: pass
 func _handle_player_enter() -> void: pass

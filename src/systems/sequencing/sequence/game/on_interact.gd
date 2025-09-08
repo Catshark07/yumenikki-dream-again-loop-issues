@@ -1,7 +1,7 @@
 class_name OnInteract
 extends Sequence
 
-var interactable: Interactable
+var interactable: Node
 
 func _ready() -> void: 
 	super()
@@ -10,4 +10,4 @@ func _ready() -> void:
 	interactable = get_parent()
 	if interactable == null or !(interactable is Interactable): return
 	
-	interactable.interacted.connect(func(): SequencerManager.invoke(self))
+	(interactable as Interactable).interacted.connect(func(): SequencerManager.invoke(self))

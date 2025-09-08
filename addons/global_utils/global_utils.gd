@@ -1,5 +1,5 @@
 @tool
-class_name GlobalUtils
+class_name Utils
 extends EditorPlugin
 
 static var bottom_panel: HBoxContainer
@@ -29,7 +29,7 @@ static func add_child_node(
 		
 		if !_parent_node.has_node(_child_node_name):
 			
-			_parent_node.add_child(_child_node)
+			_parent_node.add_child(_child_node, true)
 			_child_node.name = _child_node_name
 			_child_node.owner = _owner
 			
@@ -56,7 +56,8 @@ static func connect_to_signal(
 	_signal: Signal, 
 	_flags: Object.ConnectFlags = 0, 
 	_allow_lambda: bool = true) -> void:
-		
+	if Engine.is_editor_hint(): return
+	
 	if _signal.is_connected(_conectee): 
 		push_warning("GLOBAL UTILS: Callable %s is already connected to signal." % [_conectee])
 		return
@@ -74,8 +75,6 @@ static func disconnect_from_signal(
 			push_warning("GLOBAL UTIL: Callable not connected to signal!")
 			return
 		_signal.disconnect(_conectee)
-static func is_connected_to_signal(_callee: Callable, _signal: Signal) -> bool:
-	return _signal.is_connected(_callee)
 
 static func get_group_arr(_name: String) -> Array: 
 	var tree: SceneTree
@@ -85,6 +84,3 @@ static func get_group_arr(_name: String) -> Array:
 	if tree.has_group(_name):
 		return tree.get_nodes_in_group(_name)
 	return []
-
-class Predicate:
-	static func evaluate(_expression: bool) -> bool: return _expression

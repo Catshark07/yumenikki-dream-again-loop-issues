@@ -65,14 +65,15 @@ func can_transition_to(_state_id: StringName) -> bool:
 func request_transition_to(_state_id: StringName, _force_fsm_priority: bool = false) -> void: 
 	if can_transition_to(_state_id):
 		if !is_sub_state() or _force_fsm_priority: 
-			fsm.change_to_state(_state_id)
+			if fsm.curr_state == self: fsm.change_to_state(_state_id)
 		else:				
-			parent.set_sub_state(_state_id)
+			if parent.active == self: parent.set_sub_state(_state_id)
 func request_transition(_from: StringName, _to: StringName, _force_fsm_priority: bool = false) -> void:
 	if !(_from in transitions_dict): 
 		if _from == self.name.to_lower(): 
 			request_transition_to(_to, _force_fsm_priority)
 		return
+	
 	transitions_dict[_from].request_transition_to(_to, _force_fsm_priority)
 	
 func is_sub_state() -> bool:

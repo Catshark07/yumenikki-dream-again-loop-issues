@@ -32,3 +32,4 @@ func remove_at(_index: int) -> void:
 	arr.remove_at(_index)
 func is_empty() -> bool:
 	return arr.is_empty()
+	

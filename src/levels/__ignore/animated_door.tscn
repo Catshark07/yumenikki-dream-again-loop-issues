@@ -1,0 +1,166 @@
+[gd_scene load_steps=21 format=3 uid="uid://brssxovackb8b"]
+
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_wnphj"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="2_efn85"]
+[ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="2_hs61y"]
+[ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="3_hs61y"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="4_t5c5s"]
+[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="6_186um"]
+[ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/sequencing/event/animation/play_yield_animation.gd" id="7_hs61y"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="7_l58dv"]
+[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="8_wedu1"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="9_h48nh"]
+[ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="10_0egi2"]
+[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="11_a8tey"]
+[ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="12_biroj"]
+[ext_resource type="AudioStream" uid="uid://u8dv45u7r3gh" path="res://src/audio/se/se_door_open.wav" id="14_hs61y"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_45h0u"]
+blend_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4eec8"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_csl0k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_t5c5s"]
+resource_name = "open"
+length = 0.8
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.225, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sound_player")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("14_hs61y")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_186um"]
+_data = {
+&"RESET": SubResource("Animation_csl0k"),
+&"open": SubResource("Animation_t5c5s")
+}
+
+[node name="animated_door" type="Area2D" node_paths=PackedStringArray("rect")]
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("1_wnphj")
+rect = NodePath("rect")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="sound_player" type="AudioStreamPlayer" parent="."]
+script = ExtResource("2_hs61y")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="on_interact" type="Node" parent="."]
+process_mode = 4
+script = ExtResource("2_efn85")
+
+[node name="request_cutscene_start" type="Node" parent="on_interact"]
+script = ExtResource("3_hs61y")
+event_id = "CUTSCENE_START_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="play_sound" type="Node" parent="on_interact"]
+script = ExtResource("4_t5c5s")
+sound = ExtResource("14_hs61y")
+pitch = 0.8
+wait_til_finished = false
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="play_animation" type="Node" parent="on_interact" node_paths=PackedStringArray("animator")]
+script = ExtResource("7_hs61y")
+animator = NodePath("../../animation")
+animation_path = &"open"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="wait" type="Node" parent="on_interact"]
+script = ExtResource("6_186um")
+seconds = 0.5
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("scene_traversal")]
+script = ExtResource("7_l58dv")
+scene_traversal = NodePath("scene_traversal")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="scene_traversal" type="Node" parent="on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("8_wedu1")
+spawn_point = NodePath("../../../spawn_point")
+metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+
+[node name="request_cutscene_end" type="Node" parent="on_interact"]
+script = ExtResource("3_hs61y")
+event_id = "CUTSCENE_END_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="spawn_point" type="Node2D" parent="." node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(0, 12)
+script = ExtResource("9_h48nh")
+parent_instead_of_self = NodePath("..")
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="renderer" type="Sprite2D" parent="."]
+texture = ExtResource("10_0egi2")
+hframes = 7
+script = ExtResource("11_a8tey")
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 7
+
+[node name="shadow_renderer" type="Sprite2D" parent="renderer"]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_45h0u")
+position = Vector2(0, -8)
+texture = ExtResource("12_biroj")
+
+[node name="coll" type="StaticBody2D" parent="."]
+position = Vector2(0, 12)
+
+[node name="shape" type="CollisionShape2D" parent="coll"]
+shape = SubResource("RectangleShape2D_cv7t1")
+
+[node name="rect" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4eec8")
+debug_color = Color(0.9, 0, 0.7, 0.3)
+
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_186um")
+}

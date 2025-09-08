@@ -1,6 +1,7 @@
 extends State
 
 @export var pause_menu: Control
+@export var hud: Control
 
 func _state_enter() -> void: 
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
@@ -8,7 +9,8 @@ func _state_enter() -> void:
 	GameManager.set_cinematic_bars(true)
 	GameManager.player_hud.indicators.visible = false
 	GameManager.options.visible = true
-	pause_menu.visible = true
+	pause_menu	.visible = true
+	hud			.visible = false
 
 	Application.pause()
 	Application.main_window.grab_focus()
@@ -17,7 +19,8 @@ func _state_exit() -> void:
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
 
 	GameManager.options.visible = false
-	pause_menu.visible = false
+	pause_menu	.visible = false
+	hud			.visible = true
 	
 	GameManager.set_cinematic_bars(false)
 	Application.resume()

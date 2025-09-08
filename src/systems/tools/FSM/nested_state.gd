@@ -53,13 +53,16 @@ func _input_sub_state(_event: InputEvent) -> void: pass
 
 # - internal
 func set_sub_state(_state_id: StringName) -> void:
+	_state_id = _state_id.to_lower()
+	
 	if !has_sub(_state_id): 
 		active = null
 		return
 		
 	# if same id, bail.
-	if active == sub_states[_state_id]: return
+	if active == sub_states[_state_id]: 
+		return
 	
 	if active != null: active.state_exit() 		# - previous state
-	active = sub_states.get(_state_id.to_lower())	# - new state
+	active = sub_states.get(_state_id)	# - new state
 	active.state_enter()							

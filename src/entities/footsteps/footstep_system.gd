@@ -64,11 +64,15 @@ var sound_to_be_played: AudioStream
 
 @onready var multiple_floors := FootstepSet.new()
 
+func _on_bypass_enabled() -> void:
+	multiple_floors.arr.clear()
+	floor_priority = null
+
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	
-	footstep_se_player = $sound_player
-	area = $terrain_detector
+	footstep_se_player 	= $sound_player
+	area 				= $terrain_detector
 	
 	area.monitorable	= true
 	area.monitoring 	= true
@@ -113,7 +117,6 @@ func _on_body_shape_entered(
 			multiple_floors.append(_body)
 								
 		scan_ground_material()				
-				
 		sentient.shadow_renderer.visible = !transparent_surfaces[curr_material]
 				
 func _on_body_shape_exited(

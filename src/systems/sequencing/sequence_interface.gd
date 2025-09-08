@@ -12,12 +12,14 @@ var bail_requested: bool = false
 
 @export_group("Sequence Flags.")
 @export var skip_invalid_events: bool = false
-@export var is_asynchronous: bool = false
-@export var print_debug: bool = false
+@export var async: bool = false
 
 func _ready() -> void:
 	# - get events.
 	order = get_children()	
+	for i in range(order.size()):
+		var event = order[i]
+		if !event is Event: continue
 
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
@@ -36,11 +38,14 @@ func _execute() -> void:
 		if event != null and event is Event:
 			
 			if e in marked_invalid or event.skip : continue # - we skip any events marked for skip / as invalid.
-			if print_debug: print("CURR EVENT HANDLED::: ", event)
 			
 			event.execute() 
 			if event.wait_til_finished: await event.finished
 			event.end()
+			
+			if bail_requested: 
+				bail_requested = false
+				return
 func _cancel() -> void:
 	bail_requested = true	
 			 
@@ -49,10 +54,12 @@ func _validate_event_order() -> bool:
 	# checking for any missing dependencies, has the corect properties, etc.
 	for i in range(order.size()):
 		var event = order[i] # - current event.
-		if event == null or !(event as Event)._validate():
+		if event == null or !event._validate():
 			# - if event is invalid...
 			if skip_invalid_events: marked_invalid.append(i) # - we mark invalid events to be skipped.
-			else: return false # - we halt the sequence if the sequence if we won't skip any invalid events.
+			else:
+				printerr("SEQUENCE %s :: Sequence halted due to invalid event: %s!" % [self.name, event.name]) 
+				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 			
 	return true
 

@@ -1,3 +1,5 @@
+@tool
+
 class_name MessageDisplayManager
 extends Control
 
@@ -6,36 +8,39 @@ static var instance: MessageDisplayManager
 var is_open: bool = false
 
 var active: MessageDisplay
-var message_display: MessageDisplay
-var prompt_display: MessageDisplay
-var dialogue_display: MessageDisplay
+@export var message_display: MessageDisplay
+@export var prompt_display: MessageDisplay
+@export var dialogue_display: MessageDisplay
 
 var current_index: int = 0
-var texts: Array[String]
+var texts: PackedStringArray
 
 func _ready() -> void:
 	instance = self
 	
-	message_display = MessageDisplay.new()
-	prompt_display = Prompt.new()
-	dialogue_display = Dialogue.new()
+	if Engine.is_editor_hint():
+		if Utils.get_child_node_or_null(self, "message_display") == null:
+			message_display = Utils.add_child_node(self, MessageDisplay.new(), "message_display")
+		if Utils.get_child_node_or_null(self, "prompt_display") == null:
+			prompt_display 	= Utils.add_child_node(self, Prompt.new(), "prompt_display")
+		if Utils.get_child_node_or_null(self, "dialogue_display") == null:
+			dialogue_display= Utils.add_child_node(self, Dialogue.new(), "dialogue_display")
 	
-	self.add_child(message_display)
-	self.add_child(prompt_display)
-	self.add_child(dialogue_display)
-	
-	message_display.visible = false
-	prompt_display.visible = false
-	dialogue_display.visible = false
+	if !Engine.is_editor_hint():
+		message_display._setup(self)
+		prompt_display._setup(self)
+		dialogue_display._setup(self)
 
 func open_message_display(
 	_display: MessageDisplay,
-	_texts: Array[String], 
+	_texts: PackedStringArray, 
 	_sound: AudioStream,
 	_speed: int = 1,
-	_reset: bool = true, 
 	_font_colour: Color = Color.WHITE, 
 	_pos: Vector2 = Vector2(Application.viewport_width / 2, Application.viewport_length - 110)) -> void: 
+		
+		if _display != active and active != null: 
+			active.close()
 		
 		if is_open == true: return
 		current_index = 0
@@ -45,26 +50,26 @@ func open_message_display(
 		active.visible = true 
 		
 		texts.clear()
-		for t in _texts: texts.append(t)
+		texts = PackedStringArray(_texts)
 		
-		message_display.open(_pos, _sound, _speed, _font_colour)
-		message_display.display_text(_texts[current_index])
+		active.open(_pos, _sound, _speed, _font_colour)
+		active.display_text(_texts[current_index])
 		
 func close_message_display(_display: MessageDisplay) -> void:
 	_display.close()
 	is_open = false
+	active = null
 
-func get_current() -> MessageDisplay: 
-	return message_display
-	
 func proceed_current_message_display() -> void:
-	if get_current().can_progress:
-		print("continue to next line")
-		if current_index < texts.size() - 1:
+	if active == null: return
+	
+	if active.can_progress:
+		if current_index < texts.size() - 1: # - if there's more text.
+			print("continue to next line")
 			
 			current_index += 1
-			message_display.display_text(
+			active.display_text(
 				texts[current_index])
 
-		else:
-			close_message_display(get_current())
+		else: # - if we are the very end of text.
+			close_message_display(active)

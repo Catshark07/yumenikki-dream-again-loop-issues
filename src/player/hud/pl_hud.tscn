@@ -105,22 +105,8 @@ offset_bottom = 270.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="deequip" parent="inventory/display/pink_petal_effects" index="4" node_paths=PackedStringArray("texture_renderer", "button")]
-texture_renderer = NodePath("texture_renderer")
-button = NodePath("button")
-
-[node name="pink" parent="inventory/select/separator" index="0" node_paths=PackedStringArray("texture_renderer", "button")]
-texture_renderer = NodePath("texture_renderer")
-button = NodePath("button")
-
-[node name="white" parent="inventory/select/separator" index="1" node_paths=PackedStringArray("texture_renderer", "button")]
-texture_renderer = NodePath("texture_renderer")
-button = NodePath("button")
-
 [node name="on_game_events" type="Node" parent="." node_paths=PackedStringArray("hud", "icon", "icon_timer")]
 script = ExtResource("9_ufr4o")
 hud = NodePath("..")
 icon = NodePath("../indicators/icon")
 icon_timer = NodePath("../indicators/icon/timer")
-
-[editable path="inventory"]

@@ -41,7 +41,7 @@ static func handle_scene_resource_load(scene: PackedScene) -> ResourceLoader.Thr
 	return scene_load_status
 static func _setup() -> void: 
 	scene_stack = Stack.new()
-	for i: SceneNode in GlobalUtils.get_group_arr("scene_node"):
+	for i: SceneNode in Utils.get_group_arr("scene_node"):
 		
 		if i.lonely: 
 			i.initialize()
@@ -87,8 +87,6 @@ static func handle_scene_push(_scene_node: SceneNode) -> void:
 	EventManager.invoke_event("SCENE_PUSHED", [_scene_node])
 	
 static func handle_scene_pop() -> void:
-
-	var scene_to_pop = scene_stack.top
 	print_rich(str("[color=yellow]SceneManager // Scene Pop: %s [/color]" % scene_stack.pop()))
 
 static func change_scene_to(scene: PackedScene) -> void:

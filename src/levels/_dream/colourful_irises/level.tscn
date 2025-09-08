@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://b5h2bldsnmdsb"]
+[gd_scene load_steps=44 format=4 uid="uid://b5h2bldsnmdsb"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_vndl4"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="3_4yua0"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="7_gg2wt"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="8_bwsrp"]
 [ext_resource type="TileSet" uid="uid://b7vdcqrtnh77e" path="res://src/levels/__ignore/tile_set/colourful_irises.tres" id="9_n1xg1"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="9_q6f27"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="9_q6f27"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="12_4yua0"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="13_3vpbd"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/sequencing/sequence/game/sequence_region.gd" id="13_bwsrp"]
@@ -31,9 +31,10 @@
 [ext_resource type="AudioStream" uid="uid://cdmrrvgctc6n8" path="res://src/audio/se/se_phase.wav" id="21_y6rev"]
 [ext_resource type="Script" uid="uid://d1ojbn5jneejv" path="res://src/systems/sequencing/event/node/set_property.gd" id="22_r2b8w"]
 [ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="26_uoh1u"]
-[ext_resource type="Script" uid="uid://f6yhotnmgmn0" path="res://src/systems/save/node/save_custom_values.gd" id="29_epmdn"]
 [ext_resource type="Script" uid="uid://b6ilkvabn22lp" path="res://src/systems/sequencing/sequence/conditional/if_expression.gd" id="32_l7mvp"]
 [ext_resource type="Script" uid="uid://cvb48ow8p04j8" path="res://src/systems/sequencing/event/call_external_event.gd" id="33_k1x66"]
+[ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/custom_properties.gd" id="34_k1x66"]
+[ext_resource type="Script" uid="uid://bdm7kig80eqqk" path="res://src/systems/save/node/save_properties.gd" id="35_0chjm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bsomg"]
 
@@ -154,7 +155,7 @@ position = Vector2(0, 16)
 script = ExtResource("12_4yua0")
 scene_path = "uid://b67q2b5hm6tsu"
 connection_id = "colourful_eyes"
-parent_instead_of_self = NodePath(".")
+parent_instead_of_self = NodePath("..")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="sequence_region" type="Node" parent="world/to_eyeball_world" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
@@ -183,7 +184,6 @@ metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 script = ExtResource("20_5siph")
 
 [node name="medamaude_effect" parent="world" instance=ExtResource("17_bwsrp")]
-process_mode = 0
 position = Vector2(696, 560)
 collision_layer = 1610612736
 collision_mask = 1610612736
@@ -192,8 +192,8 @@ presence_detect = true
 [node name="append_effect" parent="world/medamaude_effect/on_interact/effect_sequence" index="1"]
 effect = ExtResource("18_epmdn")
 
-[node name="set_interactable_inactive" parent="world/medamaude_effect/on_interact/effect_sequence" index="4"]
-process_mode = 4
+[node name="notification" parent="world/medamaude_effect/on_interact/effect_sequence" index="3"]
+texts = PackedStringArray()
 
 [node name="screen_flash" type="Node" parent="world/medamaude_effect/on_interact" index="1"]
 script = ExtResource("20_5siph")
@@ -203,20 +203,20 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 process_mode = 4
 script = ExtResource("22_r2b8w")
 node = NodePath("../../../../../scene_flag")
-property_name = "values"
+property_name = "properties"
 property_info = {
 "class_name": &"",
 "hint": 23,
-"hint_string": "21:;0:",
-"name": "values",
+"hint_string": "4:;0:",
+"name": "properties",
 "type": 27,
 "usage": 6
 }
-property_value = Dictionary[StringName, Variant]({
-&"medamaude_found": false
+property_value = Dictionary[String, Variant]({
+"medamaude_found": false
 })
-new_value = Dictionary[StringName, Variant]({
-&"medamaude_found": true
+new_value = Dictionary[String, Variant]({
+"medamaude_found": true
 })
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -303,8 +303,6 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="notification" type="Node" parent="world/medamaude_effect/on_interact/screen_flash"]
 script = ExtResource("26_uoh1u")
-texts = Array[String](["[shake]this place suddenly feels overwhelming..[/shake]"])
-sound_override = null
 font_colour_override = Color(0.786281, 0.154866, 0.357413, 1)
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -313,10 +311,29 @@ script = ExtResource("18_y6rev")
 event_id = "CUTSCENE_END_REQUEST"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
+[node name="save_node_data" parent="world/medamaude_effect" index="1"]
+properties = PackedStringArray("can_interact")
+
 [node name="on_initial" type="Node" parent="."]
 script = ExtResource("20_5siph")
 
-[node name="apply_panorama" type="TextureRect" parent="on_initial"]
+[node name="apply_panorama" type="SubViewportContainer" parent="on_initial" node_paths=PackedStringArray("subviewport")]
+z_index = -25
+custom_minimum_size = Vector2(480, 270)
+offset_right = 480.0
+offset_bottom = 270.0
+script = ExtResource("13_xm48m")
+subviewport = NodePath("subviewport")
+
+[node name="subviewport" type="SubViewport" parent="on_initial/apply_panorama"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+render_target_update_mode = 4
+
+[node name="face" type="TextureRect" parent="on_initial/apply_panorama/subviewport"]
 process_mode = 4
 z_index = -25
 material = SubResource("ShaderMaterial_ndxk6")
@@ -324,16 +341,16 @@ custom_minimum_size = Vector2(480, 270)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 395.305
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_hdfwf")
 expand_mode = 3
 stretch_mode = 6
-script = ExtResource("13_xm48m")
 
 [node name="if_medamaude_collected" type="Node" parent="on_initial" node_paths=PackedStringArray("input_objects", "else_conditional")]
 script = ExtResource("32_l7mvp")
-expression = "flag.values[\"medamaude_found\"]"
+expression = "flag.properties[\"medamaude_found\"]"
 input_objects = {
 "flag": NodePath("../../scene_flag")
 }
@@ -357,12 +374,17 @@ stream = ExtResource("3_qi1ih")
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("20_5siph")
 
-[node name="scene_flag" type="Node" parent="."]
-script = ExtResource("29_epmdn")
-values = Dictionary[StringName, Variant]({
-&"medamaude_found": false
+[node name="scene_flag" type="Node" parent="." node_paths=PackedStringArray("properties_saver")]
+script = ExtResource("34_k1x66")
+properties = Dictionary[String, Variant]({
+"medamaude_found": false
 })
+properties_saver = NodePath("save_properties")
 metadata/_custom_type_script = "uid://clajyplvoricf"
+
+[node name="save_properties" type="Node" parent="scene_flag"]
+script = ExtResource("35_0chjm")
+properties = PackedStringArray("properties")
 
 [editable path="camera"]
 [editable path="world/medamaude_effect"]

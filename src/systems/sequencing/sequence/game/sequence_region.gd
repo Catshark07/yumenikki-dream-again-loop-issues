@@ -11,11 +11,11 @@ func _init() -> void:
 func _ready() -> void:
 	var area_region = get_parent()
 	
-	enter_sequence = GlobalUtils.get_child_node_or_null(self, "enter")
-	exit_sequence = GlobalUtils.get_child_node_or_null(self, "exit")
+	enter_sequence = Utils.get_child_node_or_null(self, "enter")
+	exit_sequence = Utils.get_child_node_or_null(self, "exit")
 	
-	if enter_sequence == null: enter_sequence = GlobalUtils.add_child_node(self, Sequence.new(), "enter")
-	if exit_sequence == null: exit_sequence = GlobalUtils.add_child_node(self, Sequence.new(), "exit")
+	if enter_sequence == null: enter_sequence = Utils.add_child_node(self, Sequence.new(), "enter")
+	if exit_sequence == null: exit_sequence = Utils.add_child_node(self, Sequence.new(), "exit")
 	
 	if area_region != null and area_region is AreaRegion:
 		

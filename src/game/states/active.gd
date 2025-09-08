@@ -20,8 +20,8 @@ func _setup() -> void:
 	Player.Instance.setup()
 
 func _enter_sub_state() -> void: 
-	GameManager.player_hud.visible = true
 	set_sub_state("play")
+	GameManager.player_hud.visible = true
 func _exit_sub_state() -> void:
 	super()
 	InputManager.request_curr_controller_change(InputManager.def_input_controller)

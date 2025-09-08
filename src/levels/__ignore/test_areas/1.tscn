@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=4 uid="uid://dkpwf0m2skd6f"]
+[gd_scene load_steps=12 format=3 uid="uid://dkpwf0m2skd6f"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_lu1jh"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_6175u"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_xuv0w"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="4_4e31m"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="4_vga2u"]
-[ext_resource type="Texture2D" uid="uid://b4gjcclvhphd7" path="res://src/images/panorama/earth.png" id="5_a27ul"]
-[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_set/apartment_dream.tres" id="6_4e31m"]
+[ext_resource type="Texture2D" uid="uid://btmlle582uh62" path="res://src/images/panorama/panorama_maze.png" id="6_4e31m"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="8_a27ul"]
 [ext_resource type="Script" uid="uid://bcwpqg7yw0paw" path="res://src/systems/sequencing/event/world/set_world_state.gd" id="9_j3sd5"]
 
@@ -23,33 +22,13 @@ shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_a27ul"]
-vertices = PackedVector2Array(512.898, 144.32, 320, 322.391, 127.094, 144.32, 320, -18.8984)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(320, -32, 112, 144, 320, 336, 528, 144)])
-
-[node name="1" type="Node2D" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
+[node name="1" type="Node2D" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_lu1jh")
 test = NodePath(".")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_4e31m")
 unload_transition = SubResource("ShaderMaterial_a27ul")
-
-[node name="madotsuki" parent="." instance=ExtResource("2_6175u")]
-position = Vector2(352, 192)
-
-[node name="audio_listener" parent="madotsuki" index="4"]
-current = false
-
-[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("3_xuv0w")]
-position = Vector2(352, 192)
-initial_target = NodePath("../madotsuki")
-
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAyABIAAAABAAUAAAAyABMAAAABAAUAAAAyABQAAAABAAUAAAAyABUAAAABAAUAAAAxABYAAAABAAUAAAAxABcAAAABAAUAAAAxABgAAAABAAUAAAAxABkAAAABAAUAAAAxABoAAAABAAUAAAAxABsAAAABAAUAAAAxABwAAAABAAUAAAAxAB0AAAABAAUAAAAxAB4AAAABAAUAAAAwAB4AAAABAAUAAAAvAB4AAAABAAUAAAAvAB0AAAABAAUAAAAuAB0AAAABAAUAAAAuABwAAAABAAUAAAAuABsAAAABAAUAAAAuABoAAAABAAUAAAAuABkAAAABAAUAAAAuABgAAAABAAUAAAAuABcAAAABAAUAAAAuABYAAAABAAUAAAAvABUAAAABAAUAAAAwABUAAAABAAUAAAAxABQAAAABAAUAAAAxABUAAAABAAUAAAAwABcAAAABAAUAAAAwABgAAAABAAUAAAAwABYAAAABAAUAAAAwABQAAAABAAUAAAAxABMAAAABAAUAAAAxABIAAAABAAUAAAAxABEAAAABAAUAAAAxABAAAAABAAUAAAAxAA8AAAABAAUAAAAxAA4AAAABAAUAAAAxAA0AAAABAAUAAAAxAAwAAAABAAUAAAAwAAsAAAABAAUAAAAwAAoAAAABAAUAAAAwAAkAAAABAAUAAAAwAAgAAAABAAUAAAAwAAcAAAABAAUAAAAxAAcAAAABAAUAAAAxAAYAAAABAAUAAAAxAAgAAAABAAUAAAAxAAkAAAABAAUAAAAaABIAAAABAAQAAAAaABMAAAABAAQAAAAaABQAAAABAAQAAAAbABIAAAABAAQAAAAbABQAAAABAAQAAAAcABIAAAABAAQAAAAcABMAAAABAAQAAAAdABQAAAABAAQAAAAeABIAAAABAAQAAAAeABQAAAABAAQAAAA=")
-tile_set = ExtResource("6_4e31m")
 
 [node name="on_initial" type="Node" parent="."]
 script = ExtResource("4_vga2u")
@@ -59,9 +38,9 @@ print_debug = true
 z_index = -25
 material = SubResource("ShaderMaterial_j3sd5")
 custom_minimum_size = Vector2(480, 270)
-offset_right = 640.0
-offset_bottom = 360.0
-texture = ExtResource("5_a27ul")
+offset_right = 787.0
+offset_bottom = 525.0
+texture = ExtResource("6_4e31m")
 script = ExtResource("8_a27ul")
 
 [node name="Event" type="Node" parent="on_initial"]
@@ -72,9 +51,15 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("4_vga2u")
 print_debug = true
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-navigation_polygon = SubResource("NavigationPolygon_a27ul")
-navigation_layers = 2
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("3_xuv0w")]
+position = Vector2(352, 192)
+initial_target = NodePath("../madotsuki")
 
-[editable path="madotsuki"]
+[node name="madotsuki" parent="." instance=ExtResource("2_6175u")]
+position = Vector2(352, 192)
+
+[node name="audio_listener" parent="madotsuki" index="5"]
+current = false
+
 [editable path="camera"]
+[editable path="madotsuki"]

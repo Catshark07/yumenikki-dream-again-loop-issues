@@ -36,22 +36,22 @@ func _initialize() -> void:
 # - scene exclusive objects.
 # sequences
 func create_on_initial() -> void:
-	seq_initial = GlobalUtils.get_child_node_or_null(self, "on_initial")
+	seq_initial = Utils.get_child_node_or_null(self, "on_initial")
 	if !Engine.is_editor_hint() or seq_initial != null: return
 	
-	seq_initial = await GlobalUtils.add_child_node(self, Sequence.new(), "on_initial")
+	seq_initial = await Utils.add_child_node(self, Sequence.new(), "on_initial")
 	scene_objects.append(seq_initial)
 func create_on_free() -> void:
-	seq_free = GlobalUtils.get_child_node_or_null(self, "on_free")
+	seq_free = Utils.get_child_node_or_null(self, "on_free")
 	if !Engine.is_editor_hint() or seq_free != null: return
 	
-	seq_free = await GlobalUtils.add_child_node(self, Sequence.new(), "on_free")
+	seq_free = await Utils.add_child_node(self, Sequence.new(), "on_free")
 	scene_objects.append(seq_free)
 
 # overall control
 	
 func clear_all_objects() -> void:
-	print(scene_objects)
+	if Engine.is_editor_hint(): print(scene_objects)
 	for i in range(scene_objects.size()):
 		var obj = scene_objects[i]
 		if obj != null:
@@ -64,14 +64,14 @@ func _on_push() -> void:
 	load_scene()
 	process_mode = Node.PROCESS_MODE_INHERIT
 	
-	for s in GlobalUtils.get_group_arr("actors"): 
+	for s in Utils.get_group_arr("actors"): 
 		if s != null: s._enter()
 	
 	SequencerManager.invoke(seq_initial)
 	process_mode = Node.PROCESS_MODE_INHERIT
 func _on_pre_pop() -> void: 
 	SequencerManager.invoke(seq_free)
-	for s in GlobalUtils.get_group_arr("actors"): 
+	for s in Utils.get_group_arr("actors"): 
 		if s != null: s._exit()
 func _on_pop() -> void:
 	save_scene()
@@ -84,11 +84,11 @@ func load_scene() -> void: NodeSaveService.load_scene_data(self)
 
 # - update. 
 func _update(_delta: float) -> void:
-	for s in GlobalUtils.get_group_arr("actors"):
+	for s in Utils.get_group_arr("actors"):
 		if s != null:
 			if s.can_process(): s._update(_delta)
 func _physics_update(_delta: float) -> void:
-	for s in GlobalUtils.get_group_arr("actors"):
+	for s in Utils.get_group_arr("actors"):
 		if s != null:
 			if s.can_process(): s._physics_update(_delta)
 

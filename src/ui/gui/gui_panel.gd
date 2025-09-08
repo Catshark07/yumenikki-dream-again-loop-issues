@@ -21,6 +21,7 @@ var resize_tweener: Tween
 
 # ---- constants ----
 
+const MIN_SIZE := Vector2(60, 18)
 const DEFAULT_PANEL_DISPLAY_SHADER: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
 const DEFAULT_DISPLAY_BG_COLOR = Color(0,0,0,1)
 var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
@@ -52,44 +53,42 @@ var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 @export var text_display: Label
 
 func _children_components_setup() -> void:
-	main_container = GlobalUtils.get_child_node_or_null(self, "main_container")
+	main_container = Utils.get_child_node_or_null(self, "main_container")
 	
-	display_bg = GlobalUtils.get_child_node_or_null(self.main_container, "display_bg")
-	margin_container = GlobalUtils.get_child_node_or_null(self.main_container, "margin_container")
+	display_bg = Utils.get_child_node_or_null(self.main_container, "display_bg")
+	margin_container = Utils.get_child_node_or_null(self.main_container, "margin_container")
 	
-	icon_content_seperator = GlobalUtils.get_child_node_or_null(self.margin_container, "icon_content_seperator")
+	icon_content_seperator = Utils.get_child_node_or_null(self.margin_container, "icon_content_seperator")
 	
-	icon_display_container = GlobalUtils.get_child_node_or_null(self.icon_content_seperator, "icon_display_container")
-	inner_main_container = GlobalUtils.get_child_node_or_null(self.icon_content_seperator, "inner_main_container")
+	icon_display_container = Utils.get_child_node_or_null(self.icon_content_seperator, "icon_display_container")
+	inner_main_container = Utils.get_child_node_or_null(self.icon_content_seperator, "inner_main_container")
 	
-	icon_display = GlobalUtils.get_child_node_or_null(self.icon_display_container, "icon_display")
-	text_display = GlobalUtils.get_child_node_or_null(self.inner_main_container, "text_display")
+	icon_display = Utils.get_child_node_or_null(self.icon_display_container, "icon_display")
+	text_display = Utils.get_child_node_or_null(self.inner_main_container, "text_display")
 	
 	# --- 
 	
-	if main_container == null: main_container = GlobalUtils.add_child_node(self, PanelContainer.new(), "main_container")
+	if main_container == null: main_container = Utils.add_child_node(self, PanelContainer.new(), "main_container")
 	
-	if display_bg == null: display_bg = GlobalUtils.add_child_node(self.main_container, ColorRect.new(), "display_bg")
-	if margin_container == null: margin_container = GlobalUtils.add_child_node(self.main_container, MarginContainer.new(), "margin_container")
+	if display_bg == null: display_bg = Utils.add_child_node(self.main_container, ColorRect.new(), "display_bg")
+	if margin_container == null: margin_container = Utils.add_child_node(self.main_container, MarginContainer.new(), "margin_container")
 	
-	if icon_content_seperator == null: icon_content_seperator = GlobalUtils.add_child_node(self.margin_container, HBoxContainer.new(), "icon_content_seperator")
+	if icon_content_seperator == null: icon_content_seperator = Utils.add_child_node(self.margin_container, HBoxContainer.new(), "icon_content_seperator")
 	
-	if icon_display_container == null: icon_display_container = GlobalUtils.add_child_node(self.icon_content_seperator, CenterContainer.new(), "icon_display_container")
-	if inner_main_container == null: inner_main_container = GlobalUtils.add_child_node(self.icon_content_seperator, CenterContainer.new(), "inner_main_container")
+	if icon_display_container == null: icon_display_container = Utils.add_child_node(self.icon_content_seperator, CenterContainer.new(), "icon_display_container")
+	if inner_main_container == null: inner_main_container = Utils.add_child_node(self.icon_content_seperator, CenterContainer.new(), "inner_main_container")
 	
-	if icon_display == null: icon_display = GlobalUtils.add_child_node(self.icon_display_container, TextureRect.new(), "icon_display")
-	if text_display == null: text_display = GlobalUtils.add_child_node(self.inner_main_container, Label.new(), "text_display")
+	if icon_display == null: icon_display = Utils.add_child_node(self.icon_display_container, TextureRect.new(), "icon_display")
+	if text_display == null: text_display = Utils.add_child_node(self.inner_main_container, Label.new(), "text_display")
 
 func _ready() -> void:
 	_children_components_setup()
 	_core_setup()
 	_additional_setup()
 
-static func _create() -> GUIPanel:
-	return GUIPanel.new()
-	
 func _additional_setup() -> void: pass
 func _core_setup() -> void:
+	self.custom_minimum_size = MIN_SIZE
 	main_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 	main_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		

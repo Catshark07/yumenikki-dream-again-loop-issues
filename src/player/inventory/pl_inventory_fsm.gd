@@ -6,10 +6,10 @@ var special_invert_sequence_end: EventListener
 @export var white_petal: Control
 @export var pink_petal: Control
 
-@export var white_petal_button: AbstractButton
-@export var pink_petal_button: AbstractButton
+@export var white_petal_button: GUITextureButton
+@export var pink_petal_button: GUITextureButton
 
-@export var deequip_prompt: AbstractButton
+@export var deequip_prompt: GUITextureButton
 @export var effect_indicator: SpriteSheetFormatter
 
 var petal_tween: Tween
@@ -30,16 +30,16 @@ func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 	
 	player_equip_listener = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
 	player_equip_listener.do_on_notify(["PLAYER_DEEQUIP"], func(): 
-		deequip_prompt.set_active(false)
+		deequip_prompt.button.set_active(false)
 		effect_indicator.progress = 1
 		)
 	player_equip_listener.do_on_notify(["PLAYER_EQUIP"], func(): 
 		if EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.DEFAULT_EQUIPMENT: 
 			return
-		deequip_prompt.set_active(true)
+		deequip_prompt.button.set_active(true)
 		effect_indicator.progress = 0
 		)
 	
-	GlobalUtils.connect_to_signal(func():(Player.Instance.get_pl() as Player_YN).deequip_effect(), deequip_prompt.pressed)
-	GlobalUtils.connect_to_signal(func(): change_to_state("white_petal"), white_petal_button.pressed)
-	GlobalUtils.connect_to_signal(func(): change_to_state("pink_petal"), pink_petal_button.pressed)
+	Utils.connect_to_signal(func():(Player.Instance.get_pl() as Player_YN).deequip_effect(), deequip_prompt.button.pressed)
+	Utils.connect_to_signal(func(): change_to_state("white_petal"), white_petal_button.button.pressed)
+	Utils.connect_to_signal(func(): change_to_state("pink_petal"), pink_petal_button.button.pressed)

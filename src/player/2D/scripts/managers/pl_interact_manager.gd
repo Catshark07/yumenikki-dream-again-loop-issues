@@ -40,7 +40,7 @@ func _ready() -> void:
 		
 func _setup(_sb: SentientBase = null) -> void:
 	super(_sb)
-	GlobalUtils.connect_to_signal(handle_interaction, sentient.quered_interact)
+	Utils.connect_to_signal(handle_interaction, sentient.quered_interact)
 	
 func _update(delta: float) -> void:
 	handle_field()

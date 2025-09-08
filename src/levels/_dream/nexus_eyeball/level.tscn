@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="9_4j00j"]
 [ext_resource type="Script" uid="uid://dysysg63gy1ce" path="res://src/systems/sequencing/sequence/conditional/if_player_vel.gd" id="9_fot1s"]
 [ext_resource type="TileSet" uid="uid://b7vdcqrtnh77e" path="res://src/levels/__ignore/tile_set/colourful_irises.tres" id="11_kw8r0"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="13_d5n0m"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="13_d5n0m"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="13_x4bpl"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="14_d5n0m"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="16_fot1s"]

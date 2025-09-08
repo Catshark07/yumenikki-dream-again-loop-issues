@@ -16,7 +16,7 @@ func _state_enter() -> void:
 	prompt.get_node("prompt").text_display.text = "Are you sure you want to save in this slot?"
 	
 	for save in save_buttons: 
-		GlobalUtils.connect_to_signal(_save.bind(int(save.name)), save.pressed)
+		Utils.connect_to_signal(_save.bind(int(save.name)), save.pressed)
 	
 	to_save_button.set_active(false)
 	
@@ -28,7 +28,7 @@ func _state_enter() -> void:
 
 func _state_exit() -> void:
 	for save in save_buttons:
-		GlobalUtils.disconnect_from_signal(_save.bind(int(save.name)), save.pressed)
+		Utils.disconnect_from_signal(_save.bind(int(save.name)), save.pressed)
 
 	to_save_button.set_active(true)
 
@@ -44,5 +44,5 @@ func _save(_slot: int = 0) -> void:
 		if save_slot.abstract_button.unique_data == null: save.call()
 		else:
 			prompt.visible = true
-			GlobalUtils.connect_to_signal(save.call, prompt_yes.pressed, Object.CONNECT_ONE_SHOT)
+			Utils.connect_to_signal(save.call, prompt_yes.pressed, Object.CONNECT_ONE_SHOT)
 			

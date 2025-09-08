@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dso3pheqqk67s"]
+
+[ext_resource type="Texture2D" uid="uid://bhbrygxxfaqa3" path="res://src/entities/footsteps/water.png" id="1_yathk"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e7ss2"]
+particles_animation = true
+particles_anim_h_frames = 6
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_sigku"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 0.533333)
+
+[node name="splash" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_e7ss2")
+amount = 20
+texture = ExtResource("1_yathk")
+lifetime = 0.95
+preprocess = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(100, 100)
+spread = 3.7
+gravity = Vector2(0, 0)
+color_ramp = SubResource("Gradient_sigku")
+anim_speed_min = 1.0
+anim_speed_max = 1.0

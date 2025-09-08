@@ -10,8 +10,8 @@ func _ready() -> void:
 	var sb_component_receiver = get_parent()
 	if !sb_component_receiver is SBComponentReceiver: return
 	
-	GlobalUtils.connect_to_signal(_on_bypass_enabled, sb_component_receiver.bypass_enabled)
-	GlobalUtils.connect_to_signal(_on_bypass_lifted, sb_component_receiver.bypass_lifted)
+	Utils.connect_to_signal(_on_bypass_enabled, sb_component_receiver.bypass_enabled)
+	Utils.connect_to_signal(_on_bypass_lifted, sb_component_receiver.bypass_lifted)
 
 func _setup(_sb: SentientBase = null) -> void: sentient = _sb
 func _update(_delta: float) -> void: pass

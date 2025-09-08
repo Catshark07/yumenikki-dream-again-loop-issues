@@ -1,38 +1,46 @@
+@tool
+
 class_name MessageDisplay
 extends PanelContainer
 
-const MIN_SIZE := Vector2i(235, 70)
-
+# - constants.
+const MIN_SIZE := Vector2i(280, 80)
 const DEFAULT_PUNCTUATION_WAIT = 0.25
 const DEFAULT_LETTER_WAIT = 0.0275
-
 const DEFAULT_SOUND: AudioStreamWAV = preload("res://src/audio/se/se_talk_default.wav")
 const DEFAULT_PANEL_STULE := preload("res://src/ui/panel_default.tres")
+const SOUND_PER_LETTER := 3
 
+# - internal properties
 var initial_position: Vector2
-
-var container: MarginContainer
-var sub_container: VSplitContainer
-var text_container: RichTextLabel
-var typewriter_timer: Timer
-
-
-var sound_player: SoundPlayer
-
 var text: String = ""
+var letter_count_to_sound: int = 0
 
-var buttons_container: Container
-var can_progress: bool = false
-var animation_tween: Tween
-
-# -- internal properties
 var sound: AudioStream = load("res://src/audio/se/se_talk_default.wav")
 var speed: float = 1
 var colour: Color = Color.WHITE
 
+var manager: MessageDisplayManager
+
+# - components
+var container: MarginContainer
+var sub_container: VSplitContainer
+var text_container: RichTextLabel
+var typewriter_timer: Timer
+var buttons_container: Container
+var can_progress: bool = false
+var animation_tween: Tween
+
+# - signals
 signal finished
 
 func _ready() -> void:
+	set_process(false)
+	set_physics_process(false)
+func _setup(_manager: MessageDisplayManager) -> void:
+	manager = _manager
+	visible = false
+	
 	self.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	self.custom_minimum_size = Vector2(MIN_SIZE.x, MIN_SIZE.y)
 	self.name = "message_display"
@@ -41,15 +49,12 @@ func _ready() -> void:
 	container = MarginContainer.new()
 	sub_container = VSplitContainer.new()
 	
-	sound_player = SoundPlayer.new()
-	
 	typewriter_timer = Timer.new()
 	text_container = RichTextLabel.new()
 	buttons_container = VBoxContainer.new()
 	
 	self.add_child(container)
 	self.add_child(typewriter_timer)
-	self.add_child(sound_player)
 	
 	container.mouse_filter = Control.MOUSE_FILTER_IGNORE	
 
@@ -65,7 +70,10 @@ func _ready() -> void:
 	sub_container.dragger_visibility = SplitContainer.DRAGGER_HIDDEN_COLLAPSED 
 	sub_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 	
-	buttons_container.add_theme_constant_override("separation", 10)
+	buttons_container.add_theme_constant_override("separation", 1)
+	buttons_container.set_anchors_preset(PRESET_FULL_RECT)
+	buttons_container.custom_minimum_size.y = 24
+	buttons_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	
 	text_container.fit_content = true
 	text_container.bbcode_enabled = true
@@ -73,45 +81,37 @@ func _ready() -> void:
 	text_container.scroll_active = false
 	
 	sub_container.split_offset = 150
-
-func _additional() -> void: 
+func _on_finish() -> void: 
 	typewriter_timer.wait_time = 1.25 + text.length() / 1000
 	typewriter_timer.start()
 	await typewriter_timer.timeout
-	MessageDisplayManager.instance.proceed_current_message_display()
+	manager.proceed_current_message_display()
 
 func open(
 	_position: Vector2,
 	_sound: AudioStream,
 	_speed: float = 1,
 	_font_colour: Color = Color.WHITE) -> void:
-		sound = _sound if _sound != null else null
+		sound = _sound
 		speed = _speed if _speed != 1 else speed
 		colour = _font_colour 
 		
 		initial_position = _position
 		self.position = initial_position - self.size / 2
 		
-		open_animation()
+		__open_animation()
 		typewriter_timer.one_shot = true
 		typewriter_timer.autostart = false
-		
 		text_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-		
 func close() -> void:
 	text_container.text = ""
 	finished.emit()
-	close_animation()
+	__close_animation()
 	
-func display_text(
-		_text: String, 
-		append_to_current: bool = false
-		) -> void:
-			await iterate_text(_text, sound, speed, colour)
-			_additional()
-
-func return_parsed(_text: String, c: int = 0, j: int = c + 1) -> String: 
+func display_text	(_text: String) -> void:
+	await iterate_text(_text)
+	_on_finish()
+func return_parsed	(_text: String, c: int = 0, j: int = c + 1) -> String: 
 	var parsed_string: String
 	var in_tag: bool
 	j = c + 1
@@ -132,21 +132,14 @@ func return_parsed(_text: String, c: int = 0, j: int = c + 1) -> String:
 		if !in_tag: 
 			parsed_string += _text[ps]
 	return parsed_string ## outside of a tag
-func return_raw(_text: String, c: int = 0, j: int = c + 1) -> String: 
-	return _text
-
-func iterate_text(
-		_text: String, 
-		_sound: AudioStream = load("res://src/audio/se/se_talk_default.wav"),
-		_speed: float = 1,
-		_font_colour: Color = Color.WHITE) -> String:
-			text_container.modulate = _font_colour
+func iterate_text	(_text: String) -> void:
 			
-			var full_text: String
 			can_progress = false
+			text_container.modulate = colour
 			
 			text_container.clear()
 			text_container.visible_characters = 0
+			
 			text = return_parsed(_text)
 			text_container.text = _text
 
@@ -154,18 +147,24 @@ func iterate_text(
 				text_container.visible_characters += 1
 
 				match text[char]:
-					".", "!", "?", ",", ";", ":" : typewriter_timer.wait_time = DEFAULT_PUNCTUATION_WAIT * _speed
-					_: typewriter_timer.wait_time = DEFAULT_LETTER_WAIT * _speed
-				sound_player.play_sound(_sound, 1, randf_range(0.9, 1.1))
+					".", "!", "?", ",", ";", ":" : 
+						typewriter_timer.wait_time = DEFAULT_PUNCTUATION_WAIT * speed
+					_: 	
+						typewriter_timer.wait_time = DEFAULT_LETTER_WAIT * speed
+				letter_count_to_sound += 1
+			
+				if letter_count_to_sound > SOUND_PER_LETTER - 1:
+					letter_count_to_sound = 0
+					AudioService.play_sound(sound, 1, randf_range(0.9, 1.1))
 				
-				full_text += (text[char])
 				typewriter_timer.start()
 				await typewriter_timer.timeout
 				
 			can_progress = true
-			return full_text 
 
-func open_animation() -> void: 
+# - animations
+func __open_animation() -> void: 
+	visible = true
 	if animation_tween != null: animation_tween.kill()
 	animation_tween = self.create_tween()
 	
@@ -178,8 +177,7 @@ func open_animation() -> void:
 	
 	animation_tween.tween_property(self, "position:y", initial_position.y, 1)
 	animation_tween.tween_property(self, "modulate:a", 1, 1)
-	
-func close_animation() -> void: 
+func __close_animation() -> void: 
 	if animation_tween != null: animation_tween.kill()
 	animation_tween = self.create_tween()
 	
@@ -189,4 +187,7 @@ func close_animation() -> void:
 	
 	animation_tween.tween_property(self, "position:y", position.y + 50, 1)
 	animation_tween.tween_property(self, "modulate:a", 0, 1)
+	
+	await  animation_tween.finished
+	visible = false
 	

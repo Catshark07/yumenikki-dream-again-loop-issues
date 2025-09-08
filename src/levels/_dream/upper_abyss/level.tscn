@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://d3ne7k6ma2gud" path="res://src/audio/bgm/luff_yta_thalassophobia.ogg" id="3_fpoo2"]
 [ext_resource type="Texture2D" uid="uid://btlafmy6pq5vq" path="res://src/images/panorama/sea_galaxy.png" id="5_4xmih"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="6_3s5hh"]
-[ext_resource type="Script" uid="uid://buwx0x51eley6" path="res://src/panorama/panorama_placeholder.gd" id="6_h8r0l"]
+[ext_resource type="Script" path="res://src/panorama/panorama_placeholder.gd" id="6_h8r0l"]
 [ext_resource type="Texture2D" uid="uid://igeawgnb7dyk" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_small/transparent.png" id="6_jboc0"]
 [ext_resource type="Texture2D" uid="uid://cnv28x5lj43m6" path="res://src/levels/_dream/upper_abyss/sprites/bubble_big.png" id="6_nhhmy"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="8_4xmih"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="20_wwa0q"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="22_4xmih"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="22_purwu"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="24_4xmih"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="24_4xmih"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="24_yd7mj"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="25_ko0ej"]
 

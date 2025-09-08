@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dwst4o7pf4ye7"]
+[gd_scene load_steps=60 format=4 uid="uid://dwst4o7pf4ye7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_gl3nc"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_jd4xj"]
@@ -18,8 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/__ignore/rain.tscn" id="13_l6oh8"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="14_fjdyw"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="15_l7mt1"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="15_lejej"]
-[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/sequencing/event_interface.gd" id="16_ohce6"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="15_lejej"]
 [ext_resource type="AudioStream" uid="uid://ciq7lkhql6pga" path="res://src/audio/bgm/may_yta_hmm.ogg" id="16_sau16"]
 [ext_resource type="AudioStream" uid="uid://dlfw10qwka7su" path="res://src/audio/amb/amb_rain.ogg" id="17_sau16"]
 [ext_resource type="Script" uid="uid://d1ojbn5jneejv" path="res://src/systems/sequencing/event/node/set_property.gd" id="17_t2xer"]
@@ -27,6 +26,26 @@
 [ext_resource type="Script" uid="uid://dbqq6d85qilns" path="res://src/systems/sequencing/event/camera/change_target.gd" id="18_4kjpi"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="18_jd4xj"]
 [ext_resource type="AudioStream" uid="uid://daa4fj15uaf4j" path="res://src/audio/amb/amb_rain_muffle.ogg" id="18_vphfh"]
+[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="19_777kg"]
+[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="20_e3jfg"]
+[ext_resource type="PackedScene" uid="uid://dso3pheqqk67s" path="res://src/levels/__ignore/rain_splash.tscn" id="20_fjdyw"]
+[ext_resource type="Script" uid="uid://b6ilkvabn22lp" path="res://src/systems/sequencing/sequence/conditional/if_expression.gd" id="21_dx8di"]
+[ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/custom_properties.gd" id="21_mg10c"]
+[ext_resource type="AudioStream" uid="uid://du5x1lok1mk78" path="res://src/audio/se/se_cloth_foley_3.wav" id="21_rjleq"]
+[ext_resource type="Script" uid="uid://s0vrbpe4jy34" path="res://src/systems/sequencing/event/audio/fade_bgm.gd" id="22_hvore"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="23_fvhu0"]
+[ext_resource type="Texture2D" uid="uid://d14cycrq6wohm" path="res://src/images/panorama/sun_flare_2.jpg" id="24_777kg"]
+[ext_resource type="Script" uid="uid://ceoifexmpm3o5" path="res://src/systems/sequencing/event/node/call_function.gd" id="24_hvore"]
+[ext_resource type="Shader" uid="uid://hqppcc6e4xw2" path="res://src/shaders/panorama/lens_flare.gdshader" id="25_ohce6"]
+[ext_resource type="Texture2D" uid="uid://ceuj3ddjk1vk2" path="res://src/levels/_real/apartment/digital_clock.png" id="27_53vct"]
+[ext_resource type="AudioStream" uid="uid://bmx0hywuebj28" path="res://src/audio/se/se_soothe.wav" id="28_0pnw5"]
+[ext_resource type="Texture2D" uid="uid://cl7uo10edd52c" path="res://src/levels/_real/apartment/digital_clock_countdown.png" id="28_lkp4h"]
+[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="29_lkp4h"]
+[ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_t6xd2"]
+[ext_resource type="AudioStream" uid="uid://cxqdtr5pli1p5" path="res://src/audio/se/phone_beep.wav" id="31_4br25"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="31_103tn"]
+[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="32_rjleq"]
+[ext_resource type="Texture2D" uid="uid://cav1kw6450fm0" path="res://src/player/2D/madotsuki/display/default/sleep.png" id="36_0pnw5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p0cyb"]
 
@@ -38,11 +57,224 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8p0b5"]
 size = Vector2(480, 270)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_777kg"]
+shader = ExtResource("25_ohce6")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/uv_rotation_speed = 1.38
+shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
+shader_parameter/rotation = true
+shader_parameter/max_opacity = 1.0
+shader_parameter/min_opacity = 0.13
+shader_parameter/flicker_speed = 2.035
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6pphd"]
 size = Vector2(16, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_777kg"]
 size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ohce6"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_7st4g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("animation_ui/digital_clock:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(232, 88)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("animation_ui/digital_clock:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("animation_ui/digital_clock/count_down:progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("animation_ui/digital_clock:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("cutscene/maod_sleep_LOL:progress")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("cutscene/maod_sleep_LOL:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_lkp4h"]
+resource_name = "countdown"
+length = 5.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("animation_ui/digital_clock:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.297302, 1),
+"update": 0,
+"values": [Vector2(232, 120), Vector2(232, 188)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("animation_ui/digital_clock:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("animation_ui/digital_clock:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.5, 4.9),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("animation_ui/digital_clock/count_down:progress")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("animation_ui/digital_clock/alarm_beep")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("31_4br25")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("31_4br25")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("31_4br25")
+}],
+"times": PackedFloat32Array(2, 3, 4)
+}
+tracks/4/use_blend = true
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("cutscene/maod_sleep_LOL:progress")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2.05, 2.35, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("cutscene/maod_sleep_LOL:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("animation_ui/digital_clock/invoke_post_cutscene")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(4.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"execute"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t6xd2"]
+_data = {
+&"RESET": SubResource("Animation_7st4g"),
+&"countdown": SubResource("Animation_lkp4h")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xma33"]
 size = Vector2(480, 270)
@@ -67,11 +299,14 @@ unload_transition = SubResource("ShaderMaterial_l6oh8")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("6_ev3dy")]
-position = Vector2(184, 160)
+position = Vector2(184, 304)
 initial_target = NodePath("../balcony/_/madotsuki")
 
+[node name="deadzone_detector" parent="camera/components_receiver" index="1"]
+active = true
+
 [node name="balcony" parent="." instance=ExtResource("7_33y2f")]
-position = Vector2(80, -8)
+position = Vector2(80, 136)
 
 [node name="madotsuki" parent="balcony/_" index="4" instance=ExtResource("10_p0cyb")]
 position = Vector2(104, 168)
@@ -98,9 +333,10 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="spawn_point" type="Node2D" parent="balcony/_/to_room" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 8)
 script = ExtResource("10_rxu3j")
-parent_instead_of_self = NodePath("../../..")
+parent_instead_of_self = NodePath("..")
 
 [node name="deadzone" type="Area2D" parent="balcony/_" index="6" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(168, 144)
 collision_layer = 1073741824
 collision_mask = 1073741824
@@ -131,17 +367,21 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="exit" type="Node" parent="balcony/_/deadzone/in_balcony"]
 script = ExtResource("13_160am")
 
+[node name="lens_flare" type="TextureRect" parent="balcony"]
+material = SubResource("ShaderMaterial_777kg")
+offset_left = -64.0
+offset_top = -96.0
+offset_right = 536.0
+offset_bottom = 256.0
+texture = ExtResource("24_777kg")
+expand_mode = 1
+stretch_mode = 3
+
 [node name="room" parent="." instance=ExtResource("8_kxofn")]
 position = Vector2(88, -280)
 
-[node name="request_cutscene_end" parent="room/note/OnInteract" index="2"]
-event_id = "CUTSCENE_END_REQUEST"
-
-[node name="aniimation_ui" type="CanvasLayer" parent="room"]
-
-[node name="Sprite2D" type="Sprite2D" parent="room/aniimation_ui"]
-
-[node name="cutscene" type="AnimationPlayer" parent="room"]
+[node name="floor_misc" parent="room" index="7"]
+tile_map_data = PackedByteArray("AAAGAAIAAQACAAEAAAAHAAIAAQAEAAIAAAAHAAMAAQAEAAMAAAADAAQAAQALAAEAAAAOAAYAAQALAAMAAAAFAAYAAQAFAAEAAAADAAgAAQAFAAEAABAPAAoAAQAFAAEAAAAQAAkAAQAFAAAAAAAJAAkAAQAFAAAAAAAJAAUAAQAFAAAAABAGAAQAAQAFAAAAAAANAAMAAQAGAAAAAAA=")
 
 [node name="to_balcony" type="Area2D" parent="room" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
 position = Vector2(152, 184)
@@ -164,7 +404,7 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="spawn_point" type="Node2D" parent="room/to_balcony" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, -16)
 script = ExtResource("10_rxu3j")
-parent_instead_of_self = NodePath("../../../balcony")
+parent_instead_of_self = NodePath("..")
 
 [node name="bed" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
 position = Vector2(232, 96)
@@ -182,44 +422,376 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 script = ExtResource("13_4kjpi")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract"]
+[node name="if_melatonin_took" type="Node" parent="room/bed/OnInteract" node_paths=PackedStringArray("input_objects", "else_conditional")]
+script = ExtResource("21_dx8di")
+expression = "flag.properties[\"melatonin_took\"]"
+input_objects = {
+"flag": NodePath("../../../melatonin_pills/melatonin_took")
+}
+else_conditional = NodePath("../else")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_START_REQUEST"
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="fade_in" type="Node" parent="room/bed/OnInteract"]
-script = ExtResource("15_l7mt1")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="play_sound_foley" type="Node" parent="room/bed/OnInteract"]
-script = ExtResource("16_ohce6")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="set_player_inactive" type="Node" parent="room/bed/OnInteract"]
-process_mode = 4
-script = ExtResource("17_t2xer")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="set_player_invisible" type="Node" parent="room/bed/OnInteract"]
-process_mode = 4
-script = ExtResource("17_t2xer")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="change_cam_target" type="Node" parent="room/bed/OnInteract" node_paths=PackedStringArray("target")]
+[node name="change_cam_target" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("target")]
 script = ExtResource("18_4kjpi")
-target = NodePath("../..")
+target = NodePath("../../..")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="fade_out" type="Node" parent="room/bed/OnInteract"]
+[node name="fade_in" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
 script = ExtResource("15_l7mt1")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="room/bed/OnInteract"]
+[node name="music_fadeout" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+script = ExtResource("22_hvore")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="play_sound_foley" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+script = ExtResource("23_fvhu0")
+sound = ExtResource("21_rjleq")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="set_player_inactive" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+process_mode = 4
+script = ExtResource("17_t2xer")
+node = NodePath("../../../../../balcony/_/madotsuki")
+property_name = "process_mode"
+property_info = {
+"class_name": &"",
+"hint": 2,
+"hint_string": "Inherit,Pausable,When Paused,Always,Disabled",
+"name": "process_mode",
+"type": 2,
+"usage": 6
+}
+property_value = 0
+new_value = 4
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="set_player_invisible" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+process_mode = 4
+script = ExtResource("17_t2xer")
+node = NodePath("../../../../../balcony/_/madotsuki")
+property_name = "visible"
+property_info = {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "visible",
+"type": 1,
+"usage": 6
+}
+property_value = true
+new_value = false
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="play_animation" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+script = ExtResource("24_hvore")
+node = NodePath("../../../../cutscene")
+method_name = "play"
+method_info = {
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "name",
+"type": 21,
+"usage": 6
+}, {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "custom_blend",
+"type": 3,
+"usage": 6
+}, {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "custom_speed",
+"type": 3,
+"usage": 6
+}, {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "from_end",
+"type": 1,
+"usage": 6
+}]),
+"default_args": [&"", -1, 1.0, false],
+"flags": 1,
+"id": 6778,
+"name": "play",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+}
+internal_args = Dictionary[String, Variant]({
+"name": &"countdown"
+})
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="fade_out" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+script = ExtResource("15_l7mt1")
+fade_type = 1
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="else" type="Node" parent="room/bed/OnInteract"]
+script = ExtResource("13_160am")
+skip = true
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/else"]
 script = ExtResource("14_fjdyw")
-event_id = "CUTSCENE_START_END"
+event_id = "CUTSCENE_START_REQUEST"
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
+[node name="notif" type="Node" parent="room/bed/OnInteract/else"]
+script = ExtResource("19_777kg")
+texts = PackedStringArray("i need my pills.")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="request_cutscene_end" type="Node" parent="room/bed/OnInteract/else"]
+script = ExtResource("14_fjdyw")
+event_id = "CUTSCENE_END_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="melatonin_pills" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
+position = Vector2(216, 48)
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("12_rbx1l")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="rect" type="CollisionShape2D" parent="room/melatonin_pills"]
+shape = SubResource("RectangleShape2D_ohce6")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="melatonin_took" type="Node" parent="room/melatonin_pills"]
+script = ExtResource("21_mg10c")
+properties = Dictionary[String, Variant]({
+"melatonin_took": false
+})
+skip_save = true
+metadata/_custom_type_script = "uid://0li2ud4tbkf5"
+
+[node name="OnInteract" type="Node" parent="room/melatonin_pills"]
+script = ExtResource("13_4kjpi")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="if_didnt_take" type="Node" parent="room/melatonin_pills/OnInteract" node_paths=PackedStringArray("input_objects", "else_conditional")]
+script = ExtResource("21_dx8di")
+expression = "seq.call_count < 2"
+input_objects = {
+"seq": NodePath(".")
+}
+else_conditional = NodePath("../else")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
+script = ExtResource("14_fjdyw")
+event_id = "CUTSCENE_START_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="open_message" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
+script = ExtResource("19_777kg")
+texts = PackedStringArray("there\'s melatonin medication lying on the floor.")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="wait_1_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
+script = ExtResource("20_e3jfg")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="prompt" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prompt_options")]
+script = ExtResource("19_777kg")
+message_type = 2
+texts = PackedStringArray("take some?")
+prompt_options = {
+&"no": NodePath("no"),
+&"yes": NodePath("yes")
+}
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="yes" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt"]
+script = ExtResource("13_160am")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="melatonin_flag" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes" node_paths=PackedStringArray("node")]
+process_mode = 4
+script = ExtResource("17_t2xer")
+node = NodePath("../../../../../melatonin_took")
+property_name = "properties"
+property_info = {
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+}
+property_value = Dictionary[String, Variant]({
+"melatonin_took": false
+})
+new_value = Dictionary[String, Variant]({
+"melatonin_took": true
+})
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="wait_half_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
+script = ExtResource("20_e3jfg")
+seconds = 0.25
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="play_sound" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
+script = ExtResource("23_fvhu0")
+sound = ExtResource("28_0pnw5")
+wait_til_finished = false
+metadata/_custom_type_script = "uid://vk574kc3l7av"
+
+[node name="wait_1_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
+script = ExtResource("20_e3jfg")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="open_message" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
+script = ExtResource("19_777kg")
+texts = PackedStringArray("consumed melatonin pills!")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="end_cutscene" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes" node_paths=PackedStringArray("event")]
+script = ExtResource("17_vphfh")
+event = NodePath("../../../request_cutscene_end")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="no" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt"]
+script = ExtResource("13_160am")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="end_cutscene" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/no" node_paths=PackedStringArray("event")]
+script = ExtResource("17_vphfh")
+event = NodePath("../../../request_cutscene_end")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
+script = ExtResource("14_fjdyw")
+event_id = "CUTSCENE_END_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="else" type="Node" parent="room/melatonin_pills/OnInteract"]
+script = ExtResource("13_160am")
+skip = true
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/else"]
+script = ExtResource("14_fjdyw")
+event_id = "CUTSCENE_START_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="notif" type="Node" parent="room/melatonin_pills/OnInteract/else"]
+script = ExtResource("19_777kg")
+texts = PackedStringArray("i don\'t need more.")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/else"]
+script = ExtResource("14_fjdyw")
+event_id = "CUTSCENE_END_REQUEST"
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="animation_ui" type="CanvasLayer" parent="room"]
+
+[node name="digital_clock" type="Sprite2D" parent="room/animation_ui"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(232, 88)
+texture = ExtResource("27_53vct")
+
+[node name="0_1" type="Sprite2D" parent="room/animation_ui/digital_clock"]
+position = Vector2(-64, 0)
+texture = ExtResource("28_lkp4h")
+hframes = 4
+frame = 3
+script = ExtResource("29_lkp4h")
+frame_dimensions = Vector2i(48, 80)
+frame_h_count = 4
+progress = 3
+
+[node name="0_2" type="Sprite2D" parent="room/animation_ui/digital_clock"]
+position = Vector2(-24, 0)
+texture = ExtResource("28_lkp4h")
+hframes = 4
+frame = 3
+script = ExtResource("29_lkp4h")
+frame_dimensions = Vector2i(48, 80)
+frame_h_count = 4
+progress = 3
+
+[node name="0_3" type="Sprite2D" parent="room/animation_ui/digital_clock"]
+position = Vector2(32, 0)
+texture = ExtResource("28_lkp4h")
+hframes = 4
+frame = 3
+script = ExtResource("29_lkp4h")
+frame_dimensions = Vector2i(48, 80)
+frame_h_count = 4
+progress = 3
+
+[node name="count_down" type="Sprite2D" parent="room/animation_ui/digital_clock"]
+position = Vector2(72, 0)
+texture = ExtResource("28_lkp4h")
+hframes = 4
+script = ExtResource("29_lkp4h")
+frame_dimensions = Vector2i(48, 80)
+frame_h_count = 4
+
+[node name="alarm_beep" type="AudioStreamPlayer" parent="room/animation_ui/digital_clock"]
+script = ExtResource("30_t6xd2")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="invoke_post_cutscene" type="Node" parent="room/animation_ui/digital_clock" node_paths=PackedStringArray("event")]
+script = ExtResource("17_vphfh")
+event = NodePath("post_cutscene")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="post_cutscene" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene"]
+script = ExtResource("13_160am")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="travel_to_balcony" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene/post_cutscene" node_paths=PackedStringArray("scene_traversal")]
+script = ExtResource("31_103tn")
+scene_traversal = NodePath("to_balcony")
+skip_spawn_point = true
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="to_balcony" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene/post_cutscene/travel_to_balcony"]
+script = ExtResource("32_rjleq")
+scene_path = "uid://dl7sdjmo0vbkt"
+connection_id = "dreaming_enter"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="cutscene" type="AnimationPlayer" parent="room"]
+libraries = {
+&"": SubResource("AnimationLibrary_t6xd2")
+}
+
+[node name="maod_sleep_LOL" type="Sprite2D" parent="room/cutscene"]
+visible = false
+position = Vector2(320, -200)
+texture = ExtResource("36_0pnw5")
+hframes = 4
+script = ExtResource("29_lkp4h")
+frame_dimensions = Vector2i(48, 48)
+frame_h_count = 4
+
 [node name="deadzone" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(160, 104)
 collision_layer = 1610612736
 collision_mask = 1610612736
@@ -251,29 +823,37 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("13_160am")
 
 [node name="rain" parent="." instance=ExtResource("13_l6oh8")]
-position = Vector2(208, -16)
+position = Vector2(152, 88)
 amount = 25
 lifetime = 0.88
+direction = Vector2(0.5, 1)
 initial_velocity_min = 450.0
 initial_velocity_max = 450.0
+
+[node name="splash" parent="." instance=ExtResource("20_fjdyw")]
+z_index = -1
+position = Vector2(176, 304)
+amount = 5
+emission_rect_extents = Vector2(40, 24)
 
 [node name="on_initial" type="Node" parent="."]
 script = ExtResource("13_160am")
 
-[node name="panorama (top_layer)" type="SubViewport" parent="on_initial"]
-process_mode = 4
+[node name="panorama" type="SubViewport" parent="on_initial"]
+own_world_3d = true
+transparent_bg = true
 canvas_item_default_texture_filter = 0
 canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 script = ExtResource("18_jd4xj")
 
-[node name="Dusk" type="Sprite2D" parent="on_initial/panorama (top_layer)"]
+[node name="Dusk" type="Sprite2D" parent="on_initial/panorama"]
 material = SubResource("ShaderMaterial_4gftm")
 position = Vector2(280, 88)
 texture = ExtResource("4_n1yad")
 
-[node name="Background" type="Sprite2D" parent="on_initial/panorama (top_layer)"]
+[node name="Background" type="Sprite2D" parent="on_initial/panorama"]
 position = Vector2(248, 128)
 texture = ExtResource("4_kxofn")
 

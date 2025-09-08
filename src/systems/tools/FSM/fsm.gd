@@ -31,9 +31,10 @@ func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 func change_to_state(_new: StringName) -> void:
 	_new = _new.to_lower()
 	if !_new.is_empty() and has_state(_new):
-		var new_state: State = state_dict.get(_new.to_lower())
+		var new_state: State = state_dict.get(_new)
 
-		if curr_state == new_state: return
+		if curr_state == new_state: 
+			return
 		
 		state_changed.emit(new_state)	
 		curr_state.state_exit()

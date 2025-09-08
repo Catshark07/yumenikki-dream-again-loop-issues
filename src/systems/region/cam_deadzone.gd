@@ -5,6 +5,7 @@ extends AreaRegion
 
 # --- clamps the camera to the deadzone rect.
 var in_deadzone: bool = false
+@export var area: Area2D
 
 func _setup() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -18,13 +19,8 @@ func _setup() -> void:
 	else: 
 		set_physics_process(true)
 		set_process(false)
-		
-func _physics_process(delta: float) -> void:
-	if in_deadzone and CameraHolder.instance != null:
-		CameraHolder.instance.global_position = CameraHolder.instance.global_position.clamp(
-			(rect.global_position) - (rect.shape.size / 2) + Vector2(480, 270) * .5,
-			(rect.global_position) + (rect.shape.size / 2) - Vector2(480, 270) * .5
-			)
 			
-func _handle_player_enter() -> void: in_deadzone = true
-func _handle_player_exit() -> void: in_deadzone = false
+func get_min_clamp_pos() -> Vector2:
+	return (rect.global_position) - (rect.shape.size / 2) + Vector2(480, 270) * .5
+func get_max_clamp_pos() -> Vector2:
+	return (rect.global_position) + (rect.shape.size / 2) - Vector2(480, 270) * .5

@@ -16,9 +16,8 @@
 size = Vector2(16, 16)
 
 [node name="effect_collectable" type="Area2D" node_paths=PackedStringArray("rect")]
-process_mode = 3
-collision_layer = 1073741824
-collision_mask = 1073741824
+collision_layer = 2147483648
+collision_mask = 2147483648
 script = ExtResource("1_b3i0q")
 secret = true
 rect = NodePath("rect")
@@ -49,10 +48,11 @@ metadata/_custom_type_script = "uid://vk574kc3l7av"
 
 [node name="notification" type="Node" parent="on_interact/effect_sequence"]
 script = ExtResource("5_a8id6")
-texts = Array[String](["You found an effect! Press the ALT key to access the effect."])
+texts = PackedStringArray("[wave]you got an effect! access the inventory (ALT KEY) to use your effect.[/wave]")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="set_interactable_inactive" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("node")]
+process_mode = 4
 script = ExtResource("9_55c36")
 node = NodePath("../../..")
 property_name = "can_interact"
@@ -78,7 +78,6 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="save_node_data" type="Node" parent="."]
 script = ExtResource("7_55c36")
-properties = Array[String](["can_interact"])
 metadata/_custom_type_script = "uid://bdm7kig80eqqk"
 
 [node name="rect" type="CollisionShape2D" parent="."]

@@ -78,8 +78,8 @@ func input_pass(event: InputEvent) -> void:
 	
 # - game functionality
 static func pause_options(_pause: bool = true) -> void:
-	if _pause and !Game.is_paused: change_to_state("pause")
-	elif !_pause and Game.is_paused: change_to_state("active")
+	if _pause: change_to_state("pause")
+	elif !_pause: change_to_state("active")
 static func pause(_pause: bool = true) -> void:
 	if _pause: Application.pause()
 	else: Application.resume()

@@ -21,12 +21,13 @@ static func create_event(_id: String) -> void:
 		event_ids[_id]["params"] = []
 		
 static func invoke_event(_id: String, _params := []) -> void: 
+	_id = _id.to_upper()
 	create_event(_id)
 	event_ids[_id]["params"] = _params
 
 	for i in range((event_ids[_id]["subscribers"] as Array[EventListener]).size()):
 		if event_ids[_id]["subscribers"][i].is_valid_listener: 
-			event_ids[_id]["subscribers"][i].on_notify.call_deferred(_id)
+			event_ids[_id]["subscribers"][i].on_notify(_id)
 		else: 
 			remove_listener(event_ids[_id]["subscribers"][i], _id)
 static func get_event_param(_id: String) -> Array[Variant]:

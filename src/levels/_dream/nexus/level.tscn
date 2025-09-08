@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://dl25joalnmaxt"]
+[gd_scene load_steps=42 format=4 uid="uid://dl25joalnmaxt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_0iw03"]
 [ext_resource type="Shader" uid="uid://dhykg54peq185" path="res://src/shaders/panorama/radial.gdshader" id="2_6vasg"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="10_scjaa"]
 [ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_set/apartment_dream.tres" id="11_r2slo"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="14_25aso"]
+[ext_resource type="PackedScene" uid="uid://brssxovackb8b" path="res://src/levels/__ignore/animated_door.tscn" id="14_f8lfk"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="15_f8lfk"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="16_ksvw7"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="17_scjaa"]
@@ -22,10 +23,11 @@
 [ext_resource type="Texture2D" uid="uid://dkxu0pw6gxo3f" path="res://src/levels/__ignore/doors/door_mural.png" id="22_0iw03"]
 [ext_resource type="Texture2D" uid="uid://dr7f1rsayw4om" path="res://src/levels/__ignore/doors/door_candle.png" id="23_jxym7"]
 [ext_resource type="Texture2D" uid="uid://cycu3tgkj5mjl" path="res://src/levels/__ignore/doors/door_dark.png" id="24_25aso"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="24_f8lfk"]
 [ext_resource type="Texture2D" uid="uid://p030n5rywk1s" path="res://src/levels/__ignore/doors/door_grafitti.png" id="25_f8lfk"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="26_feke8"]
 [ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="26_ksvw7"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="27_1rd4d"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="27_1rd4d"]
 [ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="27_scjaa"]
 [ext_resource type="AudioStream" uid="uid://blvfuo72u6lrh" path="res://src/audio/bgm/-1 - Drifting Thoughts.ogg" id="28_jxym7"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="29_jxym7"]
@@ -71,7 +73,10 @@ shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rdda4"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_25aso"]
+viewport_path = NodePath("panorama_vp")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_f8lfk"]
 viewport_path = NodePath("panorama_vp")
 
 [node name="nexus" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
@@ -107,8 +112,11 @@ position = Vector2(240, 135)
 texture = ExtResource("5_1rd4d")
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("8_f8lfk")]
-position = Vector2(240, 124)
+position = Vector2(232, 128)
 initial_target = NodePath("../y_order/madotsuki")
+
+[node name="deadzone_detector" parent="camera/components_receiver" index="1"]
+active = true
 
 [node name="Wiggle" type="Node" parent="camera/marker/camera/components_receiver" index="0"]
 script = ExtResource("7_jxym7")
@@ -132,7 +140,7 @@ color_ramp = SubResource("Gradient_rtj6g")
 y_sort_enabled = true
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("10_scjaa")]
-position = Vector2(240, 124)
+position = Vector2(232, 128)
 
 [node name="walls" type="TileMapLayer" parent="y_order"]
 visible = false
@@ -157,8 +165,22 @@ script = ExtResource("17_scjaa")
 ground_material = 2
 metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
+[node name="apartment" parent="y_order" instance=ExtResource("14_f8lfk")]
+position = Vector2(232, 104)
+
+[node name="scene_traversal" parent="y_order/apartment/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://dl7sdjmo0vbkt"
+connection_id = "apartment"
+
+[node name="spawn_point" parent="y_order/apartment" index="2"]
+scene_path = "uid://dl7sdjmo0vbkt"
+connection_id = "apartment"
+
 [node name="numbers_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(216, -120)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/numbers_world/on_interact" index="2"]
 animation_sheet = null
@@ -175,7 +197,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="snow_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(0, -88)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/snow_world/on_interact" index="2"]
 animation_sheet = null
@@ -192,7 +217,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="forest_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(296, 72)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/forest_world/on_interact" index="2"]
 animation_sheet = null
@@ -209,7 +237,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="mural_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(232, 328)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/mural_world/on_interact" index="2"]
 animation_sheet = null
@@ -226,7 +257,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="candle_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(504, 248)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/candle_world/on_interact" index="2"]
 animation_sheet = null
@@ -243,7 +277,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="dark_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(56, 440)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/dark_world/on_interact" index="2"]
 animation_sheet = null
@@ -260,7 +297,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="graffiti_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(-264, 56)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/graffiti_world/on_interact" index="2"]
 animation_sheet = null
@@ -277,7 +317,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="puddle_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(440, -88)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/puddle_world/on_interact" index="2"]
 animation_sheet = null
@@ -294,7 +337,10 @@ hframes = 1
 frame_h_count = 1
 
 [node name="neon_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
 position = Vector2(720, 56)
+collision_layer = 2147483648
+collision_mask = 2147483648
 
 [node name="play_animation" parent="y_order/neon_world/on_interact" index="2"]
 animation_sheet = null
@@ -314,6 +360,14 @@ end_frame = false
 fps = 5.0
 frame_h_count = 3
 
+[node name="default" type="Node2D" parent="y_order" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(232, 128)
+script = ExtResource("24_f8lfk")
+scene_path = "uid://dwst4o7pf4ye7"
+connection_id = "dreaming_enter"
+parent_instead_of_self = NodePath(".")
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
 [node name="on_initial" type="Node" parent="."]
 script = ExtResource("26_feke8")
 
@@ -325,7 +379,8 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="apply_panorama" type="SubViewport" parent="on_initial"]
 process_mode = 4
-handle_input_locally = false
+own_world_3d = true
+transparent_bg = true
 canvas_item_default_texture_filter = 0
 canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
@@ -349,19 +404,20 @@ offset_left = -117.0
 offset_top = -66.0
 offset_right = 598.0
 offset_bottom = 336.0
-texture = SubResource("ViewportTexture_rdda4")
+texture = SubResource("ViewportTexture_25aso")
 flip_h = true
 
 [node name="panorama_f" type="TextureRect" parent="on_initial/apply_panorama"]
 material = SubResource("ShaderMaterial_xra6u")
 offset_right = 480.0
 offset_bottom = 270.0
-texture = SubResource("ViewportTexture_rdda4")
+texture = SubResource("ViewportTexture_f8lfk")
 
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("26_feke8")
 
 [editable path="camera"]
+[editable path="y_order/apartment"]
 [editable path="y_order/numbers_world"]
 [editable path="y_order/snow_world"]
 [editable path="y_order/forest_world"]

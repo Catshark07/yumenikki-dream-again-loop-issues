@@ -32,5 +32,14 @@ func show_ui(_control: Control, _show: bool) -> void:
 	ui_tween.set_parallel()
 	ui_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	
-	_control.visible = _show	
+	match _show:
+		true:
+			_control.visible = true	
+			ui_tween.tween_property(_control, "modulate:a", 1, 1)
+			
+		false:
+			ui_tween.tween_property(_control, "modulate:a", 0, 1)
+			await ui_tween.finished
+			_control.visible = false	
+	
 	

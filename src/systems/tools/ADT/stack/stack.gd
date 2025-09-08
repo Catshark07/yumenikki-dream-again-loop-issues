@@ -54,3 +54,6 @@ func push(_element: Variant) -> void:
 ## Checks whether the stack is empty or not.
 func is_empty() -> bool:
 	return array.is_empty()
+
+func _to_string() -> String:
+	return str("stak", " -- TOP : %s, STACK : %s " % [top, array])

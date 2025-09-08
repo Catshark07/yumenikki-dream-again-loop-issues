@@ -16,7 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://hrydgrm0n3r" path="res://src/audio/bgm/mars.WAV" id="8_4lalb"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="9_0lv1n"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="10_dc5l0"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="11_dc5l0"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="11_dc5l0"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="11_nkdco"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="15_lgpic"]
 

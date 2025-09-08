@@ -22,7 +22,7 @@
 [ext_resource type="AudioStream" uid="uid://cdmrrvgctc6n8" path="res://src/audio/se/se_phase.wav" id="29_iqp3p"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="30_linwd"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="31_aeeeg"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="32_iqp3p"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="32_iqp3p"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="32_ivw7k"]
 [ext_resource type="Script" uid="uid://fq66vvor2mcx" path="res://src/systems/sequencing/event/scene/remove_panorama.gd" id="34_iqp3p"]
 

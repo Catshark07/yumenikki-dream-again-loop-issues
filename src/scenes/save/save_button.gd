@@ -7,7 +7,7 @@ extends GUIPanelButton
 func _additional_setup() -> void:
 	super()
 	
-	GlobalUtils.connect_to_signal(
+	Utils.connect_to_signal(
 		func(_data): update_data_info(_data), 
 		abstract_button.unique_data_changed)
 

@@ -9,9 +9,9 @@ extends Interactable
 
 func _setup() -> void:
 	super()
-	spawn_point = GlobalUtils.get_child_node_or_null(self, "spawn_point")
+	spawn_point = Utils.get_child_node_or_null(self, "spawn_point")
 	if spawn_point == null:
-		spawn_point = await GlobalUtils.add_child_node(self, SpawnPoint.new(), "spawn_point")
+		spawn_point = await Utils.add_child_node(self, SpawnPoint.new(), "spawn_point")
 		spawn_point.parent_instead_of_self = self.get_parent()
 	if Engine.is_editor_hint(): set_process(true)		
 

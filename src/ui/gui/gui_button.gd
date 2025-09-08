@@ -5,6 +5,8 @@ extends GUIPanel
 
 @export_category("Button Properties")
 
+signal pressed
+
 # ---- constants ----
 const  button_display_texture_shader: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
 
@@ -30,56 +32,39 @@ var modu_tw: Tween
 var disp_tw: Tween
 
 # ---- signals ----
-signal pressed
-signal toggled(_truth)
-signal hover_entered
-signal hover_exited
-
 func _gui_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"): pressed.emit()
-
+	if event.is_action_pressed("ui_accept"): abstract_button.pressed.emit()
 func _children_components_setup() -> void:
 	super()
-	abstract_button = GlobalUtils.get_child_node_or_null(main_container, "abstract_button")
+	abstract_button = Utils.get_child_node_or_null(main_container, "abstract_button")
 	if abstract_button == null:
-		abstract_button = GlobalUtils.add_child_node(main_container, AbstractButton.new(), "abstract_button")
+		abstract_button = Utils.add_child_node(main_container, AbstractButton.new(), "abstract_button")
+
 func _additional_setup() -> void:	
-	mouse_filter = Control.MOUSE_FILTER_PASS
 	set_active(true)
-	
 	set_panel_modulate(curr_colour)
+	
+	mouse_filter = Control.MOUSE_FILTER_PASS
+	focus_mode = Control.FOCUS_ALL
 	
 	display_bg.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	display_bg.size_flags_vertical = Control.SIZE_FILL
 	
-	abstract_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	abstract_button.focus_mode = Control.FOCUS_NONE
-	self.focus_mode = Control.FOCUS_ALL
-	
 	if Engine.is_editor_hint():
 		set_button_modulate(curr_colour)
 		
-	else:
-		GlobalUtils.connect_to_signal(on_visibility_change, visibility_changed)
-		
-		GlobalUtils.connect_to_signal(pressed.emit, abstract_button.pressed)
-		GlobalUtils.connect_to_signal(hover_entered.emit, abstract_button.hover_entered)
-		GlobalUtils.connect_to_signal(hover_exited.emit, abstract_button.hover_exited)
-		
-		GlobalUtils.connect_to_signal(toggled.emit, abstract_button.toggled)
-		GlobalUtils.connect_to_signal(set_button_modulate.bind(normal_colour), abstract_button.enabled)
-		GlobalUtils.connect_to_signal(set_button_modulate.bind(disabled_colour), abstract_button.disabled)
-		
-		GlobalUtils.connect_to_signal(_on_press, pressed)
-		GlobalUtils.connect_to_signal(_on_hover, hover_entered)
-		GlobalUtils.connect_to_signal(_on_unhover, hover_exited)
-		
-		GlobalUtils.connect_to_signal(_on_focus_enter, focus_entered)
-		GlobalUtils.connect_to_signal(_on_focus_exit, focus_exited)
-		
-		toggled.connect(func(_toggle): 
-			if _toggle: _on_toggle()
-			else: 		_on_untoggle())
+	Utils.connect_to_signal(on_visibility_change, visibility_changed)
+	
+	Utils.connect_to_signal(_on_press, 		abstract_button.pressed)
+	Utils.connect_to_signal(_on_hover, 		abstract_button.hover_entered)
+	Utils.connect_to_signal(_on_unhover, 	abstract_button.hover_exited)
+	
+	Utils.connect_to_signal(_on_focus_enter, 	focus_entered)
+	Utils.connect_to_signal(_on_focus_exit, 	focus_exited)
+	
+	Utils.connect_to_signal(set_button_modulate.bind(normal_colour), 	abstract_button.enabled)
+	Utils.connect_to_signal(set_button_modulate.bind(disabled_colour), 	abstract_button.disabled)
+	
 
 func on_visibility_change() -> void: 
 	unhover_animation()
@@ -89,30 +74,21 @@ func on_visibility_change() -> void:
 func _on_hover() -> void: 
 	grab_focus()
 func _on_unhover() -> void: 
-	if has_focus(): release_focus()
+	release_focus()
 
 func _on_focus_enter() -> void:
-	if !abstract_button.button.disabled:
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)
-		hover_animation()
-		set_button_modulate(hover_colour)
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)
+	hover_animation()
+	set_button_modulate(hover_colour)
 func _on_focus_exit() -> void: 
-	if !abstract_button.button.disabled:
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"), .5)
-		unhover_animation()
-		set_button_modulate(normal_colour)
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"), .5)
+	unhover_animation()
+	set_button_modulate(normal_colour)
 
 func _on_press() -> void: 
-	if !abstract_button.button.disabled:
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"))
-		press_animation()
-	
-func _on_toggle() -> void: 
-	abstract_button.button.mouse_entered.disconnect(_on_hover)
-	abstract_button.button.mouse_exited.disconnect(_on_unhover)
-func _on_untoggle() -> void:
-	abstract_button.button.mouse_entered.connect(_on_hover)
-	abstract_button.button.mouse_exited.connect(_on_unhover)
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"))
+	press_animation()
+	pressed.emit()
 
 # --- animations ---
 func hover_animation() -> void:
@@ -147,19 +123,15 @@ func unhover_animation() -> void:
 	disp_tw.tween_property(icon_display, "modulate:v", 1, .35)
 
 func press_animation() -> void:
-	set_button_modulate(normal_colour, Tween.EASE_OUT, Tween.TRANS_CUBIC, 2)
-	set_button_modulate(press_colour, Tween.EASE_OUT, Tween.TRANS_LINEAR)
-func unpress_animation() -> void:
-	unhover_animation()
-	set_button_modulate(normal_colour)
+	modulate = normal_colour
+	set_button_modulate(press_colour, Tween.EASE_OUT, Tween.TRANS_LINEAR, .175)
 
 # --- setter functions ---
-
 func set_button_modulate(
 	_modu: Color, 
 	_ease: Tween.EaseType = Tween.EASE_OUT, 
 	_trans: Tween.TransitionType = Tween.TRANS_EXPO,
-	dur: float = 10) -> void:		
+	dur: float = .2) -> void:		
 	curr_colour = _modu
 	
 	if modu_tw != null: modu_tw.kill()
@@ -170,13 +142,9 @@ func set_button_modulate(
 	modu_tw.set_parallel()
 	modu_tw.set_ignore_time_scale()
 	
-	modu_tw.tween_method(set_modulate, modulate, _modu, dur * get_process_delta_time())
+	modu_tw.tween_method(set_modulate, modulate, _modu, dur)
 		
-	modu_tw.finished
-
 func set_active(_active: bool) -> void:
 	abstract_button.set_active(_active)
-
-# ---- exclusive ----
 func resize_display_bg_x(_new: float) -> void:
 	display_bg.custom_minimum_size.x = _new

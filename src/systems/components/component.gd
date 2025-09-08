@@ -28,8 +28,8 @@ func _ready() -> void:
 	if get_parent() is ComponentReceiver: 
 		receiver = get_parent()
 
-		GlobalUtils.connect_to_signal(_on_bypass_enabled, receiver.bypass_enabled)
-		GlobalUtils.connect_to_signal(_on_bypass_lifted, receiver.bypass_lifted)
+		Utils.connect_to_signal(_on_bypass_enabled, receiver.bypass_enabled)
+		Utils.connect_to_signal(_on_bypass_lifted, receiver.bypass_lifted)
 		
 # ---- component functions ----
 func set_active(_active: bool = true) -> void:

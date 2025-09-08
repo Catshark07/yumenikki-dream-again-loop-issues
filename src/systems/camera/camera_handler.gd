@@ -135,7 +135,9 @@ func set_offset(_offset: Vector2) -> void:
 	offset = _offset
 	marker.position = _offset
 func set_target(_target: CanvasItem, _dur: float = .5) -> void:
-	if _target == null: return
+	if _target == null: 
+		print("target is null")
+		return
 	
 	switch_duration = _dur
 	curr_target = _target

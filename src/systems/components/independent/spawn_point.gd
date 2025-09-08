@@ -21,11 +21,11 @@ func _ready() -> void:
 	if !Engine.is_editor_hint(): self.add_to_group("spawn_points")
 		
 func _draw() -> void:
-	if Engine.is_editor_hint() or OS.is_debug_build():
+	if Engine.is_editor_hint():
 		draw_texture(
 			spawn_texture, 
 			-spawn_texture.get_size() / 2 - Vector2(0, 8), Color(modulate, 0.5))
 
-func _validate_property(property: Dictionary) -> void:
-	if property.name in ["scene_path", "connection_id"]:
-		property.usage = PROPERTY_USAGE_NO_EDITOR
+#func _validate_property(property: Dictionary) -> void:
+	#if property.name in ["scene_path", "connection_id"]:
+		#property.usage = PROPERTY_USAGE_NO_EDITOR

@@ -8,7 +8,7 @@
 [ext_resource type="Shader" uid="uid://bau7jex01lc6n" path="res://src/shaders/masks/flat_water_reflec.gdshader" id="5_60ane"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_ewkx2"]
 [ext_resource type="TileSet" uid="uid://duslvgx5e3hdu" path="res://src/levels/__ignore/tile_set/mural.tres" id="8_ewkx2"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_music.gd" id="11_81yia"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="11_81yia"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="11_8288n"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="12_csyr6"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="14_8288n"]

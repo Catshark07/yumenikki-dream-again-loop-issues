@@ -1,6 +1,7 @@
 extends Event
 
 @export var scene_traversal: SceneTraversal
+@export var skip_spawn_point: bool = false
 var interactable: Node2D
 
 func _execute() -> void:
@@ -12,11 +13,14 @@ func _validate() -> bool:
 		printerr("EVENT - TRAVEL SCENE :: Scene traversal node is not found!")
 		return false
 		
-	if (scene_traversal.spawn_point == null or 
-		scene_traversal.scene_path.is_empty() or
+	if (scene_traversal.scene_path.is_empty() or
 		!ResourceLoader.exists(scene_traversal.scene_path)):
-		
+			
 		printerr("EVENT - TRAVEL SCENE :: Scene traversal node is missing some of its properties!")
+		return false
+
+	if (scene_traversal.spawn_point == null and !skip_spawn_point):
+		printerr("EVENT - TRAVEL SCENE :: Scene traversal node is missing the spawn point object!!")
 		return false
 		
 	return true

@@ -49,7 +49,7 @@ func fade_in(
 			set_fade_progress,
 			_start_progress, 
 			_end_progress, 
-			(1 / speed) if speed > 0 else 1).set_trans(transition_type).set_ease(ease_type)
+			(1.0 / speed) if speed > 0.0 else 1.0).set_trans(transition_type).set_ease(ease_type)
 			
 		await fade_tween.finished
 func fade_out(
@@ -66,7 +66,7 @@ func fade_out(
 			set_fade_progress,
 			_start_progress, 
 			_end_progress, 
-			(1 / speed) if speed > 0 else 1).set_trans(transition_type).set_ease(ease_type)
+			(1.0 / speed) if speed > 0.0 else 1.0).set_trans(transition_type).set_ease(ease_type)
 			
 		await fade_tween.finished
 		

@@ -45,13 +45,6 @@ func play_sound(
 		
 		fade_in()
 		self.play()
-	
-func play_music_dict(_music_dict: Dictionary) -> void:
-	if _music_dict.has("stream") and _music_dict.has("volume") and _music_dict.has("pitch"):
-		play_sound(
-			_music_dict["stream"],
-			_music_dict["volume"],
-			_music_dict["pitch"])
 
 func set_music_dict(
 	_target_dict: Dictionary, 
@@ -74,12 +67,13 @@ func tween_pitch(_pitch: float, _from: float = self.pitch_scale) -> void:
 	pitch_tween.tween_method(set_pitch, _from, _pitch, 1)
 func tween_volume(_vol: float, _from: float = self.volume_db) -> void:
 	if vol_tween != null: vol_tween.kill()
-	volume_db = _from
+	volume_db = db_to_linear(_from)
 	vol_tween = self.create_tween()	
 	vol_tween.tween_method(set_volume, _from, _vol, 1)
 
 # ---- music control ----
 func fade_in() -> void:
+	print(self, " tween_start")
 	tween_volume(get_bgm_volume(), 0)
 func fade_out() -> void:
 	await tween_volume(0, get_bgm_volume())

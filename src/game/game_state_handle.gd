@@ -25,6 +25,4 @@ func update_game_state() -> void:
 	if curr_res_scene.resource_path in non_playable_scenes: state_id = "pregame"
 	else: state_id = "active"
 	
-	print("GAME STATE SWITCHED FROM. TO (%s) --> (%s)" % [game_state_fsm.get_curr_state_name(), state_id])
-
 	game_state_fsm.change_to_state(state_id)

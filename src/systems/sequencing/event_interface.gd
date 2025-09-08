@@ -12,6 +12,8 @@ signal canceled
 @export var skip: bool = false
 
 var call_count: int = 0
+var next: Event
+var prev: Event
 @export var call_limit: int = 0 # - inclusive.
 
 # - unfortunately not all events are allowed to skip their warnings as most 
@@ -27,21 +29,26 @@ func _end() -> void: pass
 
 func _validate() -> bool: return true
 
-# -- concrete
+# -- concrete implementations
 func execute() -> void: 
 	if call_limit > 0:
 		call_count += 1
 		if call_count > call_limit: return
 	
-	if !wait_til_finished: __call_finished() 
+	# - first event call will have the "call_count" SET TO 1, NOT TO 0.
+	
+	if !wait_til_finished: 	__call_finished() 
 	await _execute()
-	if wait_til_finished: __call_finished()
+	if wait_til_finished: 	__call_finished()
 func cancel() -> void:
 	_cancel()
 	canceled.emit.call_deferred()
 func end() -> void: 
 	_end()
 
+# -- internal
 func __call_finished() -> void:
 	if deferred: finished.emit.call_deferred()
 	else:		 finished.emit()
+func __get_next() -> Event: return next 
+func __get_prev() -> Event: return prev

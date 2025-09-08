@@ -102,7 +102,7 @@ metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
 [node name="read" type="Node" parent="illegible_note_1/OnInteract"]
 script = ExtResource("9_q8kej")
-texts = Array[String](["this note is barely legible."])
+texts = PackedStringArray("this note is illegible.")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="illegible_note_2" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
@@ -123,7 +123,7 @@ metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
 [node name="read" type="Node" parent="illegible_note_2/OnInteract"]
 script = ExtResource("9_q8kej")
-texts = Array[String](["this note is full of gibberish"])
+texts = PackedStringArray("this note is full of gibberish.")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="note" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
@@ -149,10 +149,10 @@ metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="read" type="Node" parent="note/OnInteract"]
 script = ExtResource("9_q8kej")
-texts = Array[String](["this note is readable. the note reads:", "\"the neighbours above have made it miserable living here\"", "\"the neighbours down below also messed up with the flooring\"", "\"to future potential tenants, please get out of this as soon as you get the opportunity.\"", "- lin"])
+texts = PackedStringArray("this note is legible, it reads:", "\"the neighbours above have vandalized, or at least almost vandalized my balcony...", "the neighbours below have messed up with my apartment\'s flooring. i have contacted the landlord but it was to no avail.", "if you are reading this, i urge you to find a better place than whatever hell this is\"", "- lin.")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="request_cutscene_end" type="Node" parent="note/OnInteract"]
 script = ExtResource("10_q8kej")
-event_id = "CUTSCENE_START_END"
+event_id = "CUTSCENE_END_REQUEST"
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"

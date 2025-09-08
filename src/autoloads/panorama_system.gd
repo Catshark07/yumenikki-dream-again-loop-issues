@@ -49,27 +49,13 @@ func _physics_update(_delta: float) -> void:
 	RenderingServer.global_shader_parameter_set("uv_offset",  eqn)
 
 func apply_panorama(_panorama: Node) -> void:
-	if _panorama == null: return # - not needed.
-	
 	eqn = Vector2.ZERO
-	panorama_rect.visible = true
 	RenderingServer.global_shader_parameter_set("uv_offset",  Vector2.ZERO)
 	
-	if _panorama is Control:
-		_panorama.visible = false
-		panorama_rect.texture 				= default_panorama_texture
-		panorama_rect.material				= _panorama.material
+	panorama_rect.visible 				= true
+	panorama_rect.texture 				= _panorama.get_texture()
 		
-		if _panorama is TextureRect:
-			panorama_rect.texture 				= _panorama.texture
-			panorama_rect.expand_mode			= _panorama.expand_mode
-			panorama_rect.stretch_mode			= _panorama.stretch_mode
-		
-	elif _panorama is SubViewport:
-		panorama_rect.texture 				= _panorama.get_texture()
-		panorama_rect.material				= null
-		
-	panorama_rect.custom_minimum_size = MINIMUM_SIZE
-	panorama_rect.size = Vector2(480, 270)
+	panorama_rect.custom_minimum_size 	= MINIMUM_SIZE
+	panorama_rect.size 					= Vector2(480, 270)
 func remove_panorama() -> void:
 	panorama_rect.visible = false

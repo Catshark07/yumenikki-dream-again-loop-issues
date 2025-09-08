@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_7eh56"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_61b85"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_j13fa"]
+[ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="2_j13fa"]
 [ext_resource type="AudioStream" uid="uid://c73s1pvspdp5w" path="res://src/audio/bgm/world_puddle.ogg" id="4_0jnag"]
 [ext_resource type="Shader" uid="uid://bwrguqumtsyrq" path="res://src/shaders/masks/sprite.gdshader" id="4_61b85"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="4_a2suj"]
 [ext_resource type="Texture2D" uid="uid://d21ss1ocopvp0" path="res://src/images/panorama/puddle_panorama.png" id="4_d3qgj"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="5_3k7cl"]
 [ext_resource type="TileSet" uid="uid://t43wqgdupoji" path="res://src/levels/__ignore/tile_set/puddle.tres" id="7_61b85"]
-[ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="9_0jnag"]
+[ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="9_0jnag"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_qjk5i"]
 [ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="11_1bnqm"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="12_l01gf"]
@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="15_0q71x"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="16_gop38"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="18_qiu13"]
-[ext_resource type="PackedScene" uid="uid://d16fq6x3pv6mv" path="res://src/entities/sentients/effects/lantern.tscn" id="19_0q71x"]
+[ext_resource type="PackedScene" uid="uid://d16fq6x3pv6mv" path="res://src/entities/sentients/effects/lantern/lantern.tscn" id="19_0q71x"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0jnag"]
 shader = ExtResource("4_61b85")

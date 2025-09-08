@@ -12,8 +12,8 @@ extends FSM
 func _ready() -> void:
 	_setup(self)
 	
-	GlobalUtils.connect_to_signal(close_prompt, prompt_yes.pressed)
-	GlobalUtils.connect_to_signal(close_prompt, prompt_no.pressed)
+	Utils.connect_to_signal(close_prompt, prompt_yes.pressed)
+	Utils.connect_to_signal(close_prompt, prompt_no.pressed)
 	
 	to_load_section.pressed.connect(func(): change_to_state("LOAD_STATE"))
 	to_save_section.pressed.connect(func(): change_to_state("SAVE_STATE"))

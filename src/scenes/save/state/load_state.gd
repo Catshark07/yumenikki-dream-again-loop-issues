@@ -16,9 +16,9 @@ func _state_enter() -> void:
 	prompt.get_node("prompt").text_display.text = "Are you sure you want to load data from this slot?"
 	
 	for load in load_buttons: 
-		GlobalUtils.connect_to_signal(_load_data.bind(int(load.name)), load.pressed)
+		Utils.connect_to_signal(_load_data.bind(int(load.name)), load.pressed)
 		
-	GlobalUtils.connect_to_signal(Save.load_data.bind(pending_load_id), prompt_yes.pressed)
+	Utils.connect_to_signal(Save.load_data.bind(pending_load_id), prompt_yes.pressed)
 	
 	to_load_button.set_active(false)
 	
@@ -30,8 +30,8 @@ func _state_enter() -> void:
 
 func _state_exit() -> void:
 	for load in load_buttons:
-		GlobalUtils.disconnect_from_signal(open_prompt, load.pressed)
-	GlobalUtils.disconnect_from_signal(Save.load_data.bind(pending_load_id), prompt_yes.pressed)
+		Utils.disconnect_from_signal(open_prompt, load.pressed)
+	Utils.disconnect_from_signal(Save.load_data.bind(pending_load_id), prompt_yes.pressed)
 	to_load_button.set_active(true)
 
 func _load_data(_slot: int = 0) -> void: 

@@ -19,11 +19,11 @@ signal took_damage(_dmg: float)
 
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
-	blood_particles = GlobalUtils.get_child_node_or_null(self, "blood_particles")
+	blood_particles = Utils.get_child_node_or_null(self, "blood_particles")
 	if blood_particles == null: 
-		blood_particles = await GlobalUtils.add_child_node(self, CPUParticles2D.new(), "blood_particles")
+		blood_particles = await Utils.add_child_node(self, CPUParticles2D.new(), "blood_particles")
 	
 	blood_particles.emitting = false
 	blood_particles.one_shot = true
-	GlobalUtils.connect_to_signal(blood_particles.restart.bind(false), took_damage)
+	Utils.connect_to_signal(blood_particles.restart.bind(false), took_damage)
 func _take_damage() -> void: pass

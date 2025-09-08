@@ -106,7 +106,7 @@ class Instance:
 		door_listener.do_on_notify(["PLAYER_DOOR_USED"], func(): door_went_flag = true)
 		door_listener.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): 
 			
-			for points: SpawnPoint in GlobalUtils.get_group_arr("spawn_points"):
+			for points: SpawnPoint in Utils.get_group_arr("spawn_points"):
 				if (
 					load(points.scene_path) == SceneManager.prev_scene_resource and 
 					door_went_flag and

@@ -24,14 +24,15 @@ func _notification(what: int) -> void:
 func play_sound(
 	_stream: AudioStream, 
 	_vol: float = 1, 
-	_pitch: float = 1, 
-	_forget_after: bool = false) -> void:
+	_pitch: float = 1) -> void:
 	if _stream and not muted: 
 		if ResourceLoader.exists(_stream.resource_path):
 			if playing: stop()
+			
 			stream = _stream
 			volume_db = linear_to_db(_vol)
 			pitch_scale = _pitch
+			
 			play()
 			await finished
 func mute() -> void: 

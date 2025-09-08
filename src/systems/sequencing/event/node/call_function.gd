@@ -2,10 +2,11 @@
 extends Event
 
 signal method_changed
-
-@export var node: Node
-
 var method_exists_in_node: bool = false
+
+@export_category("Call Function Info")
+@export_group("Info.")
+@export var node: Node
 @export_placeholder("e.g.: func_name") var method_name: String = "":
 	set(_name):
 		method_name = _name
@@ -19,13 +20,23 @@ var method_exists_in_node: bool = false
 		"id"			: 0,
 		"return" 		: {}}
 
+@export_group("Additional.")
+@export var new_process_mode: ProcessMode = 0
+@export var change_process_mode: bool = false
+var old_process_mode: ProcessMode = 0
+
 var all_methods: Array[Dictionary] = [{}]
 var internal_args: Dictionary[String, Variant] = {}
 
 func _ready() -> void:
 	if node == null: return
-func _execute() -> void: node.callv(method_name, internal_args.values())
-
+func _execute() -> void: 
+	old_process_mode = node.process_mode
+	
+	if change_process_mode:	node.process_mode = new_process_mode
+	node.callv(method_name, internal_args.values())
+	if change_process_mode:	node.process_mode = old_process_mode
+	
 func _validate() -> bool:
 	if node == null: return false 
 	if !node.has_method(method_name): return false
@@ -43,6 +54,7 @@ func search_method(_node: Node, _name: String) -> Dictionary:
 				internal_args.clear()
 				return i
 	
+	new_process_mode = _node.process_mode
 	method_exists_in_node = false
 	return {}
 
@@ -78,7 +90,7 @@ func _get_property_list() -> Array[Dictionary]:
 				"type" : i["type"],
 				"usage" : PROPERTY_USAGE_EDITOR,
 			})
-			
+		
 	method_exists_in_node = true
 	return properties
 
