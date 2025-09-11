@@ -1,3 +1,5 @@
+@tool
+
 class_name SoundPlayer2D
 extends AudioStreamPlayer2D
 
@@ -47,6 +49,10 @@ func unmute() -> void:
 	volume_db = pre_mute_vol
 	pitch_scale = pre_mute_pit
 
+func _draw() -> void:
+	if Engine.is_editor_hint():
+		draw_circle(Vector2.ZERO, max_distance, Color(Color.RED, 0.05))
+
 # ---- setters ----
 func set_timescale_factor(_fac: float) -> void: self.timescale_factor = _fac
 
@@ -58,6 +64,9 @@ func get_pitch() -> float: return self.pitch_scale
 
 # --- ---- 
 func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		queue_redraw()
+	
 	if get_viewport().get_audio_listener_2d() == null: return
 	distance_from_audio_listener = (
 		get_viewport().get_audio_listener_2d().global_position - 

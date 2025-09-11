@@ -7,7 +7,7 @@ func _execute() -> void:
 	if _predicate(): 
 		super()
 		return
-	elif else_conditional != null: else_conditional._execute()
+	elif else_conditional != null: SequencerManager.invoke(else_conditional)
 
 func _predicate() -> bool:
 	return true

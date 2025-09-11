@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8bnpo28a373g"]
+[gd_scene load_steps=14 format=3 uid="uid://c8bnpo28a373g"]
 
 [ext_resource type="Script" uid="uid://dpjo72gyccf67" path="res://src/systems/camera/camera_handler.gd" id="1_0c5nr"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="2_rya0b"]
@@ -10,9 +10,6 @@
 [ext_resource type="Script" uid="uid://qxqnp1ku22in" path="res://src/systems/camera/states/static.gd" id="6_tyaiw"]
 [ext_resource type="Script" uid="uid://ctdqgwtms50u0" path="res://src/systems/camera/states/changing_target.gd" id="7_yhg0v"]
 [ext_resource type="Script" uid="uid://cclmy5xivtcvw" path="res://src/systems/camera/states/following.gd" id="8_b70d5"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b70d5"]
-size = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pypnu"]
 shader = ExtResource("3_mqlxo")
@@ -43,14 +40,8 @@ rot_curve = ExtResource("4_wxyky")
 receiver = NodePath("..")
 metadata/_custom_type_script = "uid://df3nc1vhukhur"
 
-[node name="deadzone_detector" type="Node2D" parent="components_receiver"]
+[node name="deadzone_manager" type="Node2D" parent="components_receiver"]
 script = ExtResource("5_yhg0v")
-active = null
-
-[node name="area" type="Area2D" parent="components_receiver/deadzone_detector"]
-
-[node name="shape" type="CollisionShape2D" parent="components_receiver/deadzone_detector/area"]
-shape = SubResource("RectangleShape2D_b70d5")
 
 [node name="cam_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_wxyky")

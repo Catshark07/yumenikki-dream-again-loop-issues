@@ -17,12 +17,8 @@ var shape: Shape2D:
 signal player_enter_handle(_pl: Player)
 signal player_exit_handle(_pl: Player)
 
-@export var presence_detect: bool = false: 
-	set = set_presence
-
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
-	set_presence(presence_detect)
 	
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
@@ -62,19 +58,3 @@ func handle_player_exit(_pl: Area2D) -> void:
 		print(self, "::   exit - ", _pl)
 		_handle_player_exit()
 		player_exit_handle.emit(Player.Instance.get_pl())
-
-func set_presence(_is_presence: bool) -> void:
-	presence_detect = _is_presence
-	match _is_presence: 
-		true:
-			set_collision_layer_value(31, true)
-			set_collision_mask_value(31, true)
-			
-			set_collision_layer_value(32, false)
-			set_collision_mask_value(32, false)
-		false:
-			set_collision_layer_value(32, true)
-			set_collision_mask_value(32, true)
-	
-			set_collision_layer_value(31, false)
-			set_collision_mask_value(31, false)

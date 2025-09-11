@@ -1,4 +1,3 @@
-class_name InvokeEventID
 extends Event
 
 @export var event_id: String

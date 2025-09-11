@@ -1,9 +1,7 @@
 extends Component
 
-var deadzone_detector: Area2D
 var curr_deadzone: CamDeadzone
 
-func _setup() -> void: pass
 func _update(delta: float) -> void:
 	if curr_deadzone != null:
 		receiver.affector.global_position = receiver.affector.global_position.clamp(

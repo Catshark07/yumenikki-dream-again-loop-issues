@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dl7sdjmo0vbkt"]
+[gd_scene load_steps=36 format=3 uid="uid://dl7sdjmo0vbkt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_5js63"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_flyuj"]
@@ -11,8 +11,10 @@
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="7_xa451"]
 [ext_resource type="Texture2D" uid="uid://c6glk4dy75gcg" path="res://src/images/panorama/dusk.png" id="8_0oore"]
 [ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="9_gfwn5"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="10_3ak1f"]
 [ext_resource type="Texture2D" uid="uid://c8k1sxkde80gi" path="res://src/images/panorama/clouds.png" id="10_bl3wm"]
 [ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="11_ai2lp"]
+[ext_resource type="AudioStream" uid="uid://drbxal7equ2eo" path="res://src/audio/bgm/balcony.WAV" id="11_rdrme"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="12_yglpt"]
 [ext_resource type="Texture2D" uid="uid://6hbdjnabl7un" path="res://src/images/panorama/hills.png" id="12_ykehj"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="13_37yy6"]
@@ -21,7 +23,6 @@
 [ext_resource type="Script" uid="uid://ceoifexmpm3o5" path="res://src/systems/sequencing/event/node/call_function.gd" id="14_hh4cm"]
 [ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="14_xnbkh"]
 [ext_resource type="Texture2D" uid="uid://dvmf5dneeyi23" path="res://src/player/2D/madotsuki/display/default/sit.png" id="15_xww4u"]
-[ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/sequencing/event/animation/play_yield_animation.gd" id="22_f4wrt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2004a"]
 
@@ -116,6 +117,8 @@ target_door = NodePath("../../balcony/to_room")
 parallel = true
 secret = true
 area = true
+only_once = true
+dir_min = Vector2(1, 0)
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
@@ -147,6 +150,8 @@ target_door = NodePath("../../room/to_balcony")
 parallel = true
 secret = true
 area = true
+only_once = true
+dir_min = Vector2(1, 0)
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
@@ -165,6 +170,12 @@ color = Color(0.724289, 0.618342, 0.602991, 1)
 
 [node name="on_initial" type="Node" parent="."]
 script = ExtResource("12_yglpt")
+
+[node name="bgm" type="Node" parent="on_initial"]
+script = ExtResource("10_3ak1f")
+stream = ExtResource("11_rdrme")
+pitch = 0.9
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="panorama (top_layer)" type="SubViewport" parent="on_initial"]
 own_world_3d = true
@@ -305,13 +316,6 @@ method_info = {
 internal_args = Dictionary[String, Variant]({
 "_bypass": false
 })
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="play_pl_stand_up" type="Node" parent="on_initial" node_paths=PackedStringArray("animator")]
-process_mode = 4
-script = ExtResource("22_f4wrt")
-animator = NodePath("../../balcony/madotsuki/sb_components/animation_manager/animation_player")
-animation_path = &"emote/stand_up"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="request_cutscene_end" type="Node" parent="on_initial"]

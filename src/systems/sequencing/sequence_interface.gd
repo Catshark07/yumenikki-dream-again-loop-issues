@@ -14,13 +14,27 @@ var bail_requested: bool = false
 @export var skip_invalid_events: bool = false
 @export var async: bool = false
 
-func _ready() -> void:
-	# - get events.
-	order = get_children()	
-	for i in range(order.size()):
-		var event = order[i]
-		if !event is Event: continue
+var front: Event
+var back: Event
 
+func _ready() -> void:
+	order = get_children()	
+	if order.is_empty(): return
+	
+	for i: int in range(order.size()):
+		var j := i + 1
+		var event: 	Event = order[i]
+		var next: 	Event  = null
+		
+		if event == null: continue 
+		if j < order.size():
+			next = order[j]
+			
+			event.next = next
+			next.prev = event
+	
+	front = order[0]
+	back = order[order.size() - 1]
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
 	if bail_requested: 

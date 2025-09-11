@@ -154,10 +154,21 @@ texture = ExtResource("1_6j2dm")
 18:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -8, 5.33333, -8, 5.33333, 8, -4, 8)
 7:11/size_in_atlas = Vector2i(2, 2)
 7:11/0 = 0
+7:11/0/y_sort_origin = 8
 7:13/size_in_atlas = Vector2i(2, 2)
 7:13/0 = 0
+7:13/0/y_sort_origin = 8
 9:13/size_in_atlas = Vector2i(2, 2)
 9:13/0 = 0
+9:13/0/y_sort_origin = 8
+9:12/0 = 0
+10:12/0 = 0
+10:12/0/z_index = -1
+9:11/size_in_atlas = Vector2i(2, 1)
+9:11/0 = 0
+9:11/0/z_index = -1
+11:11/0 = 0
+11:11/0/z_index = -1
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pf7do"]
 resource_name = "_collision"

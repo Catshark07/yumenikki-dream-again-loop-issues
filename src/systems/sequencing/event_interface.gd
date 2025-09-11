@@ -12,8 +12,10 @@ signal canceled
 @export var skip: bool = false
 
 var call_count: int = 0
-var next: Event
-var prev: Event
+var next: Node
+var prev: Node
+var is_finished: bool = false
+
 @export var call_limit: int = 0 # - inclusive.
 
 # - unfortunately not all events are allowed to skip their warnings as most 
@@ -50,5 +52,5 @@ func end() -> void:
 func __call_finished() -> void:
 	if deferred: finished.emit.call_deferred()
 	else:		 finished.emit()
-func __get_next() -> Event: return next 
-func __get_prev() -> Event: return prev
+func has_next() -> bool: return next != null
+func has_prev() -> bool: return prev != null

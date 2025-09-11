@@ -115,9 +115,6 @@ texture = ExtResource("5_1rd4d")
 position = Vector2(232, 128)
 initial_target = NodePath("../y_order/madotsuki")
 
-[node name="deadzone_detector" parent="camera/components_receiver" index="1"]
-active = true
-
 [node name="Wiggle" type="Node" parent="camera/marker/camera/components_receiver" index="0"]
 script = ExtResource("7_jxym7")
 wig_x_strn = 10.0

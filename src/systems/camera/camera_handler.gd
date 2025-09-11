@@ -24,7 +24,7 @@ var curr_follow_strat: STRAT_FOLLOW = default
 # ---- components
 var marker: Marker2D
 var cam_receiver: ComponentReceiver
-var instance_receiver: ComponentReceiver
+var components: ComponentReceiver
 
 var shake_comp: CamShake
 
@@ -46,12 +46,12 @@ static var motion_reduction: bool = false:
 			if _reduction: 
 				CameraHolder.instance.set_follow_strategy(default)
 				CameraHolder.instance.cam_receiver.bypass = true
-				CameraHolder.instance.instance_receiver.bypass = true
+				CameraHolder.instance.components.bypass = true
 				
 			else: 
 				CameraHolder.instance.set_follow_strategy(CameraHolder.instance.prev_follow_strat)
 				CameraHolder.instance.cam_receiver.bypass = false
-				CameraHolder.instance.instance_receiver.bypass = false
+				CameraHolder.instance.components.bypass = false
 
 var offset_tween: Tween
 var zoom_tween: Tween
@@ -75,7 +75,7 @@ func _ready() -> void:
 	cam = $marker/camera
 	
 	cam_receiver = $marker/camera/components_receiver
-	instance_receiver = $components_receiver
+	components = $components_receiver
 	
 	motion_reduction = motion_reduction
 	

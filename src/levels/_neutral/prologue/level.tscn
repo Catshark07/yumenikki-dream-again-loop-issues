@@ -372,9 +372,8 @@ script = ExtResource("14_qu046")
 call_limit = 1
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="switch_to_door" type="Node" parent="y_order/dialogue_2/on_enter" node_paths=PackedStringArray("target")]
+[node name="switch_to_door" type="Node" parent="y_order/dialogue_2/on_enter"]
 script = ExtResource("17_7rtwp")
-target = NodePath("")
 switch_dur = 1.5
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
