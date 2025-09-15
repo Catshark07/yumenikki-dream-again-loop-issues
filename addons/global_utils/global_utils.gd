@@ -50,7 +50,7 @@ static func get_child_node_or_null(
 			return null
 		return _parent_node.get_node_or_null(_child_node_name)
 
-# runtime exclusive
+# signals
 static func connect_to_signal(
 	_conectee: Callable, 
 	_signal: Signal, 
@@ -76,7 +76,15 @@ static func disconnect_from_signal(
 			return
 		_signal.disconnect(_conectee)
 
-static func get_group_arr(_name: String) -> Array: 
+# - groups
+static func u_add_to_group(_node: Node, _name: String) -> void: 
+	if _node.is_in_group(_name): return
+	_node.add_to_group(_name)
+static func u_remove_from_group(_node: Node, _name: String) -> void:
+	if 	_node.is_in_group(_name):
+		_node.remove_from_group(_name)
+
+static func get_group_arr(_name: String) -> Array[Node]: 
 	var tree: SceneTree
 	
 	if Engine.is_editor_hint(): tree = EditorInterface.get_edited_scene_root().get_tree()
@@ -84,7 +92,8 @@ static func get_group_arr(_name: String) -> Array:
 	
 	if tree.has_group(_name):
 		return tree.get_nodes_in_group(_name)
-	return []
+	return [null]
+	
 
 # refinements.
 static func u_load(_res_path: String) -> Resource:

@@ -2,9 +2,14 @@
 class_name LoopManager
 extends Node
 
+@export_tool_button("Update Loop Collection.") var update_collection := update_loopable_collection
 @export_tool_button("Update Loop Components.") var update_loop_objs := update_loopable_components
+
 @export_tool_button("Disable Process.") var disable_process := set_process.bind(false)
 @export_tool_button("Enable Process.") 	var enable_process := set_process.bind(true)
+
+@export_tool_button("Show All Duplicates") var show_dupes
+@export_tool_button("Hide All Duplicates") var hide_dupes
 
 const LOOP_UNIT_VECTOR := [
 	Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1),
@@ -34,14 +39,17 @@ func _ready() -> void:
 
 	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
 	
-func _process(delta: float) -> void:
+func _process(_detla: float) -> void:
 	if Engine.is_editor_hint():
 		(shape_detect.shape as RectangleShape2D).size = world_size
 	
+func _physics_process(delta: float) -> void:
 	for loopable: LoopableComponent in loop_objects:
 		if loopable == null: continue
+		
 		var node 		= loopable.parent
-
+		loopable.update_duplicates()
+		
 		if 	node is CanvasItem:
 			node.global_position.x = wrapf(
 				node.global_position.x, 
@@ -52,23 +60,20 @@ func _process(delta: float) -> void:
 				(-world_size.y / 2), 
 				(world_size.y / 2))
 									
-			for idx in range(loopable.dupe_nodes.size()):
-				var dupe_node = loopable.dupe_nodes[idx]
-				if dupe_node == null: continue
-				
-				if 	dupe_node is CanvasItem:
-					dupe_node.global_position = (node.global_position) + (world_size as Vector2) * LOOP_UNIT_VECTOR[idx]
-
 func set_world_size(_size: Vector2) -> void:
 	world_size = _size.round()
-	
 	for loopable: LoopableComponent in loop_objects:
 		if loopable == null: continue
 		loopable.world_size = world_size
 
-func update_loopable_components() -> void: 
+func update_loopable_collection() -> void: 
 	loop_objects = Utils.get_group_arr(LoopableComponent.LOOPABLE_ID)
 	for i: LoopableComponent in loop_objects:
+		if i == null: continue
+		i.world_size = world_size
+
+func update_loopable_components() -> void: 
+	for i: LoopableComponent in loop_objects:
 		i._setup()
-		if Engine.is_editor_hint(): i.setup_loop_nodes()
+		i.setup_loop_nodes()
 	
