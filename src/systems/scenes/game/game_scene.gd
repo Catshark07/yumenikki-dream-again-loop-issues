@@ -67,10 +67,10 @@ func _on_push() -> void:
 	for s in Utils.get_group_arr("actors"): 
 		if s != null: s._enter()
 	
-	SequencerManager.invoke(seq_initial)
+	if seq_initial != null: SequencerManager.invoke(seq_initial)
 	process_mode = Node.PROCESS_MODE_INHERIT
 func _on_pre_pop() -> void: 
-	SequencerManager.invoke(seq_free)
+	if seq_free != null: SequencerManager.invoke(seq_free)
 	for s in Utils.get_group_arr("actors"): 
 		if s != null: s._exit()
 func _on_pop() -> void:

@@ -1,0 +1,74 @@
+@tool
+class_name LoopManager
+extends Node
+
+@export_tool_button("Update Loop Components.") var update_loop_objs := update_loopable_components
+@export_tool_button("Disable Process.") var disable_process := set_process.bind(false)
+@export_tool_button("Enable Process.") 	var enable_process := set_process.bind(true)
+
+const LOOP_UNIT_VECTOR := [
+	Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1),
+	Vector2(-1, 0), Vector2(1, 0),
+	Vector2(-1, 1), Vector2(0, 1), Vector2(1, 1)
+]
+
+@export var loop_objects: Array[Node]
+@export var world_size: Vector2:
+	set = set_world_size
+
+# - detection nodes.
+@export var loop_objects_detect: Area2D
+@export var shape_detect: CollisionShape2D
+
+func _ready() -> void: 
+	loop_objects_detect	= Utils.get_child_node_or_null(self, "loop_objects_detect")
+	
+	if 	loop_objects_detect == null:
+		
+		loop_objects_detect = Utils.add_child_node(self, Area2D.new(), "loop_objects_detect")
+		shape_detect 		= Utils.add_child_node(loop_objects_detect, CollisionShape2D.new(), "detect_shape")
+		shape_detect.shape = RectangleShape2D.new()
+		
+		loop_objects_detect.set_collision_mask_value(1, false)
+		loop_objects_detect.set_collision_mask_value(7, true)
+
+	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
+	
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		(shape_detect.shape as RectangleShape2D).size = world_size
+	
+	for loopable: LoopableComponent in loop_objects:
+		if loopable == null: continue
+		var node 		= loopable.parent
+
+		if 	node is CanvasItem:
+			node.global_position.x = wrapf(
+				node.global_position.x, 
+				(-world_size.x / 2), 
+				(world_size.x / 2))
+			node.global_position.y = wrapf(
+				node.global_position.y, 
+				(-world_size.y / 2), 
+				(world_size.y / 2))
+									
+			for idx in range(loopable.dupe_nodes.size()):
+				var dupe_node = loopable.dupe_nodes[idx]
+				if dupe_node == null: continue
+				
+				if 	dupe_node is CanvasItem:
+					dupe_node.global_position = (node.global_position) + (world_size as Vector2) * LOOP_UNIT_VECTOR[idx]
+
+func set_world_size(_size: Vector2) -> void:
+	world_size = _size.round()
+	
+	for loopable: LoopableComponent in loop_objects:
+		if loopable == null: continue
+		loopable.world_size = world_size
+
+func update_loopable_components() -> void: 
+	loop_objects = Utils.get_group_arr(LoopableComponent.LOOPABLE_ID)
+	for i: LoopableComponent in loop_objects:
+		i._setup()
+		if Engine.is_editor_hint(): i.setup_loop_nodes()
+	

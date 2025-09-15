@@ -452,7 +452,6 @@ target_door = NodePath("../../balcony/to_room")
 parallel = true
 secret = true
 area = true
-dir_min = Vector2(1, 0)
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
@@ -893,7 +892,6 @@ target_door = NodePath("../../room/to_balcony")
 parallel = true
 secret = true
 area = true
-dir_min = Vector2(1, 0)
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 

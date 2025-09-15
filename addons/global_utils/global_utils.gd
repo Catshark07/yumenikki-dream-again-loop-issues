@@ -22,6 +22,7 @@ static func add_child_node(
 	_child_node_name: String) -> Node:
 		var _owner: Node
 		
+		# - bail if parent or child node are non-existent.
 		if _child_node == null or _parent_node == null: return
 		
 		if Engine.is_editor_hint(): _owner = EditorInterface.get_edited_scene_root()
@@ -35,14 +36,13 @@ static func add_child_node(
 			
 			return _child_node
 		else:
-			push_warning("Parent %s already has child... Freeing %s." % [_parent_node, _child_node])
+			push_warning("Parent %s already has child %s - Freeing queued %s." % [_parent_node, _child_node_name, _child_node])
 			_child_node.queue_free()
 			return _parent_node.get_node(_child_node_name)
 		return
 static func get_child_node_or_null(
 	_parent_node: Node, 
 	_child_node_name: String) -> Node: 
-		var _owner: Node
 		var _child_node: Node
 		
 		if _parent_node == null or _child_node_name.is_empty(): 
@@ -78,9 +78,15 @@ static func disconnect_from_signal(
 
 static func get_group_arr(_name: String) -> Array: 
 	var tree: SceneTree
+	
 	if Engine.is_editor_hint(): tree = EditorInterface.get_edited_scene_root().get_tree()
-	else: tree = Game.get_tree()
+	else: 						tree = Game.get_tree()
 	
 	if tree.has_group(_name):
 		return tree.get_nodes_in_group(_name)
 	return []
+
+# refinements.
+static func u_load(_res_path: String) -> Resource:
+	if !ResourceLoader.exists(_res_path): return
+	return load(_res_path)

@@ -8,7 +8,11 @@ func load_data(_scene: SceneNode) -> Error:
 	parent = get_parent()
 	if parent == null or properties.is_empty(): return ERR_UNAVAILABLE
 		
-	var saved_data = NodeSaveService.data[_scene.scene_file_path]["data"]
+	var saved_data
+	
+	if global: 	saved_data = NodeSaveService.data[NodeSaveService.GLOBAL_DIR]["data"]
+	else:		saved_data = NodeSaveService.data[NodeSaveService.LOCAL_SCENE_DIR]["data"]
+	
 	if !saved_data.has(parent.name): return ERR_DOES_NOT_EXIST
 	
 	var saved_properties = saved_data[parent.name]

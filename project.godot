@@ -69,6 +69,7 @@ folder_colors={
 2d_navigation/layer_4="Player"
 2d_physics/layer_5="Presence"
 2d_physics/layer_6="Damage"
+2d_physics/layer_7="Loopable"
 2d_physics/layer_10="Camera"
 2d_physics/layer_32="Warp Effectors"
 avoidance/layer_1="All"

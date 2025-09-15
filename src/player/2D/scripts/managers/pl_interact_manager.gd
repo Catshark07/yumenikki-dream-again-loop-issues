@@ -20,6 +20,10 @@ var prompt_tween: Tween
 var closest_interactable_threshold: float = 100
 var interactables: Array[Interactable] 
 
+const ERR_SOUNDS := [
+	preload("res://src/audio/se/voice_mado_no-1.WAV"), 
+	preload("res://src/audio/se/voice_mado_no-2.WAV")]
+
 func _ready() -> void:
 	prompt_icon = $prompt
 	field = $field
@@ -74,19 +78,15 @@ func handle_field() -> void:
 			else: curr_interactable = null
 			break
 func handle_interaction() -> void: 
-	if curr_interactable and !cooldown: 
-		if (
+	if 	curr_interactable and !cooldown: 
+		
+		Utils.connect_to_signal(
+			AudioService.play_sound.bind(ERR_SOUNDS.pick_random()), 
+			curr_interactable.fail, 
+			CONNECT_ONE_SHOT)
 			
-			sentient.direction.x >= curr_interactable.dir_min.x and 
-			sentient.direction.x <= curr_interactable.dir_max.x and
-			
-			-sentient.direction.y >= curr_interactable.dir_min.y and 
-			-sentient.direction.y <= curr_interactable.dir_max.y
-			
-			) or curr_interactable.omni_dir:
-				
-				curr_interactable.interact()
-				cooldown = true	
+		curr_interactable.interact()
+		cooldown = true	
 # ---- signals -----
 func interactable_entered(_inact: Area2D) -> void: 
 	if _inact is Interactable:

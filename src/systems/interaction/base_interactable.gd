@@ -11,19 +11,10 @@ extends AreaRegion
 @export var can_interact: bool = true
 
 @export_group("Direction Threshold")
-@export var dir_min: Vector2 = Vector2.LEFT: 
-	set(_dir): 
-		dir_min.x = clamp(_dir.x, -1, 1)
-		dir_min.y = clamp(_dir.y, -1, 1)
-@export var dir_max: Vector2 = Vector2.RIGHT: 
-	set(_dir): 
-		dir_max.x = clamp(_dir.x, -1, 1)
-		dir_max.y = clamp(_dir.y, -1, 1)
-@export var omni_dir: bool = true
 
-@export_group("Misc.")
 signal interacted
-signal interact_successful
+signal fail
+signal success
 
 func _ready() -> void:	
 	super() 

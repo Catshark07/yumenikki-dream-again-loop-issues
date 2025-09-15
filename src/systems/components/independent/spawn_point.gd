@@ -25,7 +25,3 @@ func _draw() -> void:
 		draw_texture(
 			spawn_texture, 
 			-spawn_texture.get_size() / 2 - Vector2(0, 8), Color(modulate, 0.5))
-
-#func _validate_property(property: Dictionary) -> void:
-	#if property.name in ["scene_path", "connection_id"]:
-		#property.usage = PROPERTY_USAGE_NO_EDITOR

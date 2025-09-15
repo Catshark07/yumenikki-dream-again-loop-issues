@@ -1,3 +1,4 @@
+@tool
 extends Event
 
 enum state {DREAM, NEUTRAL}

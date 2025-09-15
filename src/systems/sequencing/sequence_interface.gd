@@ -17,24 +17,26 @@ var bail_requested: bool = false
 var front: Event
 var back: Event
 
+signal success
+signal fail
+
 func _ready() -> void:
 	order = get_children()	
 	if order.is_empty(): return
 	
-	for i: int in range(order.size()):
-		var j := i + 1
-		var event: 	Event = order[i]
-		var next: 	Event  = null
-		
-		if event == null: continue 
-		if j < order.size():
-			next = order[j]
-			
-			event.next = next
-			next.prev = event
-	
 	front = order[0]
 	back = order[order.size() - 1]
+	
+	for i: int in range(order.size()):
+		var j := i + 1
+		var curr: 	Event = order[i]
+		var next: 	Event  = null
+		
+		if j < order.size():
+			next = order[j]
+			curr.next = next
+			next.prev = curr
+
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
 	if bail_requested: 
@@ -73,8 +75,10 @@ func _validate_event_order() -> bool:
 			if skip_invalid_events: marked_invalid.append(i) # - we mark invalid events to be skipped.
 			else:
 				printerr("SEQUENCE %s :: Sequence halted due to invalid event: %s!" % [self.name, event.name]) 
+				fail.emit()
 				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
-			
+		
+	success.emit()	
 	return true
 
 func update(_delta: float) -> void: 

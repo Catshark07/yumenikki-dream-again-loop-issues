@@ -10,13 +10,14 @@ signal canceled
 @export var deferred: bool = true
 @export var wait_til_finished: bool = true
 @export var skip: bool = false
+@export var call_limit: int = 0 # - inclusive.
 
 var call_count: int = 0
-var next: Node
-var prev: Node
+@export_category("Event Linked-Pointers.")
+@export var next: Node
+@export var prev: Node
 var is_finished: bool = false
 
-@export var call_limit: int = 0 # - inclusive.
 
 # - unfortunately not all events are allowed to skip their warnings as most 
 # of em are really needed at some scenarios.
@@ -54,3 +55,9 @@ func __call_finished() -> void:
 	else:		 finished.emit()
 func has_next() -> bool: return next != null
 func has_prev() -> bool: return prev != null
+
+
+func _validate_property(property: Dictionary) -> void:
+	var props_to_read_only := ["next", "prev"]
+	if  property.name in props_to_read_only:
+		property.usage = PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_EDITOR

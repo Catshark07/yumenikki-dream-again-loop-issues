@@ -1,3 +1,4 @@
+@icon("res://addons/miscallenous/editor/custom_properties.png")
 @tool
 
 class_name CustomNodeProperties
