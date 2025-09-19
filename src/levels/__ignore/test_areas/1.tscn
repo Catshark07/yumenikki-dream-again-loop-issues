@@ -1,0 +1,153 @@
+[gd_scene load_steps=19 format=3 uid="uid://brd2skoctkkxe"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ids3t"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="6_7pixw"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="7_hq78p"]
+[ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="8_54gce"]
+[ext_resource type="Texture2D" uid="uid://bi6eonsejp6ma" path="res://src/player/sigil.png" id="9_5mwt8"]
+[ext_resource type="Texture2D" uid="uid://23r5ntk6t2nl" path="res://src/images/panorama/aurora_galaxy_blur.png" id="9_wwmjk"]
+[ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="10_0n5dl"]
+[ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="11_5mwt8"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="11_44x1d"]
+[ext_resource type="AudioStream" uid="uid://b2e6121pglq8s" path="res://src/audio/bgm/may_yta_running-river.ogg" id="12_mc871"]
+[ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_manager.gd" id="16_syomr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kciqk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6176"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5uc4"]
+shader = ExtResource("8_54gce")
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = -1.0
+shader_parameter/scroll_speed = 0.04
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_31k7y"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_al0ur"]
+noise = SubResource("FastNoiseLite_31k7y")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s1p5v"]
+shader = ExtResource("10_0n5dl")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/dirX = -1.0
+shader_parameter/dirY = -1.0
+shader_parameter/scroll_speed = 0.10999999754128
+shader_parameter/noise_strength = 0.65499998256545
+shader_parameter/noise_fwd = SubResource("NoiseTexture2D_al0ur")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31k7y"]
+size = Vector2(500, 500)
+
+[node name="GameScene" type="Node" node_paths=PackedStringArray("seq_initial", "scene_objects")]
+script = ExtResource("1_ids3t")
+seq_initial = NodePath("on_initial")
+scene_objects = [NodePath("on_initial")]
+load_transition = SubResource("ShaderMaterial_kciqk")
+unload_transition = SubResource("ShaderMaterial_f6176")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="on_initial" type="Node" parent="."]
+script = ExtResource("6_7pixw")
+
+[node name="Event" type="SubViewport" parent="on_initial"]
+own_world_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+script = ExtResource("7_hq78p")
+
+[node name="Sprite2D" type="Sprite2D" parent="on_initial/Event"]
+material = SubResource("ShaderMaterial_x5uc4")
+texture = ExtResource("9_wwmjk")
+centered = false
+
+[node name="ColorRect" type="ColorRect" parent="on_initial/Event"]
+material = SubResource("ShaderMaterial_s1p5v")
+custom_minimum_size = Vector2(480, 270)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Event2" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
+script = ExtResource("11_44x1d")
+stream = ExtResource("12_mc871")
+vol = 0.5
+pitch = 0.49
+prev = NodePath("../Event")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Node" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D"]
+texture = ExtResource("9_5mwt8")
+
+[node name="LoopableComponent" type="Node2D" parent="Node/Node2D" node_paths=PackedStringArray("manager", "parent", "dupe_nodes")]
+script = ExtResource("11_5mwt8")
+manager = NodePath("../../../LoopManager")
+parent = NodePath("..")
+dupe_nodes = [NodePath("loop_Node2D_0"), NodePath("loop_Node2D_1"), NodePath("loop_Node2D_2"), NodePath("loop_Node2D_3"), NodePath("loop_Node2D_4"), NodePath("loop_Node2D_5"), NodePath("loop_Node2D_6"), NodePath("loop_Node2D_7")]
+metadata/_custom_type_script = "uid://bnajku7ggsr2q"
+
+[node name="loop_Node2D_0" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="loop_Node2D_1" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D/LoopableComponent/loop_Node2D_1"]
+texture = ExtResource("9_5mwt8")
+
+[node name="loop_Node2D_2" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D/LoopableComponent/loop_Node2D_2"]
+texture = ExtResource("9_5mwt8")
+
+[node name="loop_Node2D_3" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D/LoopableComponent/loop_Node2D_3"]
+texture = ExtResource("9_5mwt8")
+
+[node name="loop_Node2D_4" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D/LoopableComponent/loop_Node2D_4"]
+texture = ExtResource("9_5mwt8")
+
+[node name="loop_Node2D_5" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D/LoopableComponent/loop_Node2D_5"]
+texture = ExtResource("9_5mwt8")
+
+[node name="loop_Node2D_6" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D/LoopableComponent/loop_Node2D_6"]
+texture = ExtResource("9_5mwt8")
+
+[node name="loop_Node2D_7" type="Node2D" parent="Node/Node2D/LoopableComponent"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/Node2D/LoopableComponent/loop_Node2D_7"]
+texture = ExtResource("9_5mwt8")
+
+[node name="LoopManager" type="Node" parent="." node_paths=PackedStringArray("loop_objects", "loop_objects_detect", "shape_detect")]
+script = ExtResource("16_syomr")
+loop_objects = [null]
+world_size = Vector2(500, 500)
+loop_objects_detect = NodePath("loop_objects_detect")
+shape_detect = NodePath("loop_objects_detect/detect_shape")
+metadata/_custom_type_script = "uid://desxt7tbq37sf"
+
+[node name="loop_objects_detect" type="Area2D" parent="LoopManager"]
+collision_mask = 64
+
+[node name="detect_shape" type="CollisionShape2D" parent="LoopManager/loop_objects_detect"]
+shape = SubResource("RectangleShape2D_31k7y")

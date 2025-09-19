@@ -29,13 +29,13 @@ func _ready() -> void:
 	
 	for i: int in range(order.size()):
 		var j := i + 1
-		var curr: 	Event = order[i]
-		var next: 	Event  = null
+		var _curr: 	Event = order[i]
+		var _next: 	Event  = null
 		
 		if j < order.size():
-			next = order[j]
-			curr.next = next
-			next.prev = curr
+			_next = order[j]
+			_curr.next = next
+			_next.prev = _curr
 
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.

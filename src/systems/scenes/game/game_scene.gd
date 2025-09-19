@@ -39,13 +39,13 @@ func create_on_initial() -> void:
 	seq_initial = Utils.get_child_node_or_null(self, "on_initial")
 	if !Engine.is_editor_hint() or seq_initial != null: return
 	
-	seq_initial = await Utils.add_child_node(self, Sequence.new(), "on_initial")
+	seq_initial =  Utils.add_child_node(self, Sequence.new(), "on_initial")
 	scene_objects.append(seq_initial)
 func create_on_free() -> void:
 	seq_free = Utils.get_child_node_or_null(self, "on_free")
 	if !Engine.is_editor_hint() or seq_free != null: return
 	
-	seq_free = await Utils.add_child_node(self, Sequence.new(), "on_free")
+	seq_free =  Utils.add_child_node(self, Sequence.new(), "on_free")
 	scene_objects.append(seq_free)
 
 # overall control

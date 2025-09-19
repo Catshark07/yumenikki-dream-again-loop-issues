@@ -3,6 +3,7 @@ class_name Utils
 extends EditorPlugin
 
 static var bottom_panel: HBoxContainer
+static var ignore_warnings: bool = true
 
 func _exit_tree() -> void:
 	bottom_panel = null
@@ -36,7 +37,8 @@ static func add_child_node(
 			
 			return _child_node
 		else:
-			push_warning("Parent %s already has child %s - Freeing queued %s." % [_parent_node, _child_node_name, _child_node])
+			if !ignore_warnings: 
+				push_warning("Parent %s already has child %s - Freeing queued %s." % [_parent_node, _child_node_name, _child_node])
 			_child_node.queue_free()
 			return _parent_node.get_node(_child_node_name)
 		return
@@ -46,7 +48,8 @@ static func get_child_node_or_null(
 		var _child_node: Node
 		
 		if _parent_node == null or _child_node_name.is_empty(): 
-			push_warning("Parent is null or Child node could not be found.")
+			if !ignore_warnings:
+				push_warning("Parent is null or Child node could not be found.")
 			return null
 		return _parent_node.get_node_or_null(_child_node_name)
 
@@ -56,15 +59,16 @@ static func connect_to_signal(
 	_signal: Signal, 
 	_flags: Object.ConnectFlags = 0, 
 	_allow_lambda: bool = true) -> void:
-	if Engine.is_editor_hint(): return
 	
 	if _signal.is_connected(_conectee): 
-		push_warning("GLOBAL UTILS: Callable %s is already connected to signal." % [_conectee])
+		if !ignore_warnings:
+			push_warning("GLOBAL UTILS: Callable %s is already connected to signal %s." % [_conectee, _signal])
 		return
 	
 	if !_allow_lambda:
 		if 	_conectee.get_object() == null: 
-			push_warning("GLOBAL UTILS: Lambda callable %s restricted from connecting to signal." % [_conectee])
+			if !ignore_warnings:
+				push_warning("GLOBAL UTILS: Lambda callable %s restricted from connecting to signal." % [_conectee])
 			return
 			
 	_signal.connect(_conectee, _flags)
@@ -72,13 +76,17 @@ static func disconnect_from_signal(
 	_conectee: Callable,
 	_signal: Signal) -> void:
 		if !_signal.is_connected(_conectee): 
-			push_warning("GLOBAL UTIL: Callable not connected to signal!")
+			if !ignore_warnings:
+				push_warning("GLOBAL UTILS: Callable %s is not connected to signal %s!" % [_conectee, _signal])
 			return
 		_signal.disconnect(_conectee)
 
 # - groups
 static func u_add_to_group(_node: Node, _name: String) -> void: 
-	if _node.is_in_group(_name): return
+	if _node.is_in_group(_name): 
+		if !ignore_warnings:
+			push_warning("GLOBAL UTILS: Node %s is already in group %s!" % [_node, _name])
+			return
 	_node.add_to_group(_name)
 static func u_remove_from_group(_node: Node, _name: String) -> void:
 	if 	_node.is_in_group(_name):

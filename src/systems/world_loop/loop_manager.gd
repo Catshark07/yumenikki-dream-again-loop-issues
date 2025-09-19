@@ -2,12 +2,12 @@
 class_name LoopManager
 extends Node
 
-@export_tool_button("Update Loop Collection.") var update_collection := update_loopable_collection
-@export_tool_button("Update Loop Components.") var update_loop_objs := update_loopable_components
+@export_group("Loop Component Updates and Setups.")
+@export_tool_button("Update Collection and Info.") 	var update_collection := update_loopable_collection
+@export_tool_button("Update Loop Duplicates' Properties.") 	var update_loop_objs 	:= update_loopable_components
+@export_tool_button("Setup Components.") 	var setup_loop_objs 	:= setup_loopable_components
 
-@export_tool_button("Disable Process.") var disable_process := set_process.bind(false)
-@export_tool_button("Enable Process.") 	var enable_process := set_process.bind(true)
-
+@export_group("Loop Component Visibility.")
 @export_tool_button("Show All Duplicates") var show_dupes
 @export_tool_button("Hide All Duplicates") var hide_dupes
 
@@ -17,6 +17,7 @@ const LOOP_UNIT_VECTOR := [
 	Vector2(-1, 1), Vector2(0, 1), Vector2(1, 1)
 ]
 
+@export_group("Info.")
 @export var loop_objects: Array[Node]
 @export var world_size: Vector2:
 	set = set_world_size
@@ -24,6 +25,9 @@ const LOOP_UNIT_VECTOR := [
 # - detection nodes.
 @export var loop_objects_detect: Area2D
 @export var shape_detect: CollisionShape2D
+
+# - signals.
+signal update_dupe_nodes
 
 func _ready() -> void: 
 	loop_objects_detect	= Utils.get_child_node_or_null(self, "loop_objects_detect")
@@ -43,12 +47,12 @@ func _process(_detla: float) -> void:
 	if Engine.is_editor_hint():
 		(shape_detect.shape as RectangleShape2D).size = world_size
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	for loopable: LoopableComponent in loop_objects:
 		if loopable == null: continue
 		
 		var node 		= loopable.parent
-		loopable.update_duplicates()
+		update_dupe_nodes		.emit()
 		
 		if 	node is CanvasItem:
 			node.global_position.x = wrapf(
@@ -63,17 +67,22 @@ func _physics_process(delta: float) -> void:
 func set_world_size(_size: Vector2) -> void:
 	world_size = _size.round()
 	for loopable: LoopableComponent in loop_objects:
-		if loopable == null: continue
-		loopable.world_size = world_size
+		if 	loopable != null:
+			loopable.world_size = _size
 
+# - loop components exclusive.
 func update_loopable_collection() -> void: 
 	loop_objects = Utils.get_group_arr(LoopableComponent.LOOPABLE_ID)
-	for i: LoopableComponent in loop_objects:
-		if i == null: continue
-		i.world_size = world_size
-
+	for loopable: LoopableComponent in loop_objects:
+		if 	loopable != null: 
+			loopable.loopable_setup(self)
+			Utils.connect_to_signal(update_loopable_collection, loopable.tree_exiting)
 func update_loopable_components() -> void: 
 	for i: LoopableComponent in loop_objects:
-		i._setup()
+		i.update_duplicates()
+
+func setup_loopable_components() -> void: 
+	for i: LoopableComponent in loop_objects:
 		i.setup_loop_nodes()
+
 	

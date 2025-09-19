@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=44 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
@@ -33,13 +33,14 @@
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_cin7d"]
 [ext_resource type="Script" uid="uid://bmbahstk3j1x7" path="res://src/player/2D/scripts/states/misc/state_pl_emote.gd" id="30_f263f"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
+[ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="32_57bvo"]
 
 [sub_resource type="Animation" id="Animation_m68sj"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../../sprite_renderer:progress")
+tracks/0/path = NodePath("../../sprite_container/container/sprite_renderer:progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -51,7 +52,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../sprite_renderer:texture")
+tracks/1/path = NodePath("../../sprite_container/container/sprite_renderer:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -87,10 +88,12 @@ size = Vector2(2, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ylvyo"]
 size = Vector2(16, 26)
 
-[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
+[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm", "sprite_renderer", "shadow_renderer")]
 collision_layer = 5
 script = ExtResource("1_wub1p")
 fsm = NodePath("stance_fsm")
+sprite_renderer = NodePath("sprite_container/container/sprite_renderer")
+shadow_renderer = NodePath("sprite_container/container/shadow_renderer")
 
 [node name="sb_components" type="Node2D" parent="."]
 script = ExtResource("7_ps2wd")
@@ -239,13 +242,21 @@ avoidance_layers = 2
 [node name="audio_listener" type="AudioListener2D" parent="."]
 current = true
 
-[node name="shadow_renderer" type="Sprite2D" parent="."]
+[node name="sprite_container" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(0, 6)
+enable_node_path = NodePath("container/sprite_renderer")
+script = ExtResource("32_57bvo")
+
+[node name="container" type="Node2D" parent="sprite_container"]
+position = Vector2(0, -6)
+
+[node name="shadow_renderer" type="Sprite2D" parent="sprite_container/container"]
 material = SubResource("CanvasItemMaterial_qcosp")
 position = Vector2(0, 16)
 texture = ExtResource("29_1qwjo")
 offset = Vector2(0, -22)
 
-[node name="sprite_renderer" type="Sprite2D" parent="."]
+[node name="sprite_renderer" type="Sprite2D" parent="sprite_container/container"]
 clip_children = 2
 use_parent_material = true
 position = Vector2(0, 16)
@@ -254,10 +265,7 @@ offset = Vector2(0, -24)
 script = ExtResource("30_kknx7")
 frame_dimensions = Vector2i(48, 48)
 
-[node name="visible_on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="sprite_renderer"]
-position = Vector2(0, -10)
-
-[node name="shader" type="ColorRect" parent="sprite_renderer"]
+[node name="shader" type="ColorRect" parent="sprite_container/container/sprite_renderer"]
 offset_left = -24.0
 offset_top = -48.0
 offset_right = 24.0

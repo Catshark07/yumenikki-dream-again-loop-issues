@@ -9,6 +9,7 @@ var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	sprite_renderer = sentient.sprite_renderer
+	
 	(sentient.sprite_renderer as SpriteSheetFormatter).row = sentient.heading
 func _update(_delta: float) -> void:
 	handle_sprite_flip(sentient)

@@ -21,9 +21,9 @@ const TRANS_WEIGHT:	float = 0.225
 const BASE_SPEED: 	float = 27.5
 const MAX_SPEED: 	float = 95
 
-# - sprites
-var sprite_renderer: Sprite2D
-var shadow_renderer: Sprite2D 
+# - components (sprites).
+@export var sprite_renderer: Sprite2D
+@export var shadow_renderer: Sprite2D 
 
 # - vel and speed.
 var desired_vel: Vector2
@@ -54,9 +54,6 @@ var speed: float = 0
 var noise_multi: float = 1
 
 func _ready() -> void:
-	sprite_renderer = get_node_or_null("sprite_renderer")
-	shadow_renderer = get_node_or_null("shadow_renderer")
-	
 	components = $sb_components
 	components._setup(self)
 		
