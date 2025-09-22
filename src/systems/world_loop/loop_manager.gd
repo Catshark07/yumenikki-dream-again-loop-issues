@@ -44,25 +44,14 @@ func _ready() -> void:
 	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
 	
 func _process(_detla: float) -> void:
-	if Engine.is_editor_hint():
-		(shape_detect.shape as RectangleShape2D).size = world_size
-	
-func _physics_process(_delta: float) -> void:
-	for loopable: LoopableComponent in loop_objects:
-		if loopable == null: continue
+	if Engine.is_editor_hint(): (shape_detect.shape as RectangleShape2D).size = world_size
+	else: 						update_dupe_nodes.emit()
 		
-		var node 		= loopable.parent
-		update_dupe_nodes		.emit()
-		
-		if 	node is CanvasItem:
-			node.global_position.x = wrapf(
-				node.global_position.x, 
-				(-world_size.x / 2), 
-				(world_size.x / 2))
-			node.global_position.y = wrapf(
-				node.global_position.y, 
-				(-world_size.y / 2), 
-				(world_size.y / 2))
+	for loopable: LoopableComponent in loop_objects: 
+		if loopable.target is CanvasItem and !loopable.do_not_loop:
+			
+			loopable.target.global_position.x = wrap(loopable.target.global_position.x, -world_size.x / 2, world_size.x / 2)
+			loopable.target.global_position.y = wrap(loopable.target.global_position.y, -world_size.y / 2, world_size.y / 2)
 									
 func set_world_size(_size: Vector2) -> void:
 	world_size = _size.round()
