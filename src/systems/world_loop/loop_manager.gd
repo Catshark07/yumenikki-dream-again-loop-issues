@@ -43,7 +43,7 @@ func _ready() -> void:
 
 	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
 	
-func _process(_detla: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): (shape_detect.shape as RectangleShape2D).size = world_size
 	else: 						update_dupe_nodes.emit()
 		
