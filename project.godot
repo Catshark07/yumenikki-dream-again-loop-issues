@@ -12,8 +12,8 @@ config_version=5
 
 config/name="YUME NIKKI - demake"
 config/version="PREALPHA - 00"
-run/main_scene="uid://dq11omgyd2frp"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+run/main_scene="uid://l5hlafq1udx4"
+config/features=PackedStringArray("4.5", "GL Compatibility")
 run/max_fps=60
 config/icon="uid://bkfvddho8eetw"
 config/windows_native_icon="res://game_icon.ico"
