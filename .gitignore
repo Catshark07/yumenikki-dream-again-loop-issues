@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+src/levels/__ignore/.DS_Store

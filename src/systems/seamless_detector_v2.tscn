@@ -38,7 +38,6 @@ collision_layer = 1073741824
 collision_mask = 1073741824
 script = ExtResource("2_m7xc5")
 rect = NodePath("rect")
-presence_detect = true
 
 [node name="rect" type="CollisionShape2D" parent="loop_region"]
 shape = SubResource("RectangleShape2D_m7xc5")

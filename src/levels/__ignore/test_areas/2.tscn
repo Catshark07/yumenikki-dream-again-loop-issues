@@ -45,8 +45,8 @@ shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/dirX = -1.0
 shader_parameter/dirY = -1.0
-shader_parameter/scroll_speed = 0.10999999754128
-shader_parameter/noise_strength = 0.65499998256545
+shader_parameter/scroll_speed = 0.11
+shader_parameter/noise_strength = 0.655
 shader_parameter/noise_fwd = SubResource("NoiseTexture2D_al0ur")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31k7y"]
@@ -124,6 +124,7 @@ color = Color(1, 1, 1, 0)
 metadata/_edit_use_anchors_ = true
 
 [node name="loop_sprite_renderer_3" type="Sprite2D" parent="madotsuki/sprite_container/sprite_dupe"]
+self_modulate = Color(0, 0.625016, 0.874058, 1)
 clip_children = 2
 use_parent_material = true
 position = Vector2(-250, 10)
@@ -136,10 +137,11 @@ frame_dimensions = Vector2i(48, 48)
 offset_left = -24.0
 offset_top = -48.0
 offset_right = 24.0
-color = Color(1, 1, 1, 0)
+color = Color(1, 0, 1, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="loop_sprite_renderer_4" type="Sprite2D" parent="madotsuki/sprite_container/sprite_dupe"]
+self_modulate = Color(0.315987, 0.550959, 1, 1)
 clip_children = 2
 use_parent_material = true
 position = Vector2(250, 10)
@@ -152,7 +154,7 @@ frame_dimensions = Vector2i(48, 48)
 offset_left = -24.0
 offset_top = -48.0
 offset_right = 24.0
-color = Color(1, 1, 1, 0)
+color = Color(0, 1, 1, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="loop_sprite_renderer_5" type="Sprite2D" parent="madotsuki/sprite_container/sprite_dupe"]
@@ -254,10 +256,15 @@ metadata/_custom_type_script = "uid://desxt7tbq37sf"
 collision_mask = 64
 
 [node name="detect_shape" type="CollisionShape2D" parent="LoopManager/loop_objects_detect"]
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_31k7y")
 
 [node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("14_x5uc4")]
+position = Vector2(114, -16)
 initial_target = NodePath("../madotsuki")
+
+[node name="camera" parent="camera_handler/marker" index="0"]
+visible = false
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAD8//7/AAAEAAIAAAD9//7/AAAEAAIAAAD+//3/AAAEAAIAAAD///3/AAAEAAIAAAD///7/AAAEAAIAAAAAAP7/AAAEAAIAAAABAP7/AAAEAAIAAAAAAP//AAAEAAIAAAD/////AAAEAAIAAAD//wAAAAAEAAIAAAD+/wAAAAAEAAIAAAD+/wEAAAAEAAIAAAD9/wEAAAAEAAIAAAD9/wIAAAAEAAIAAAD9/wMAAAAEAAIAAAD+/wMAAAAEAAIAAAD//wMAAAAEAAIAAAAAAAMAAAAEAAIAAAABAAMAAAAEAAIAAAACAAMAAAAEAAIAAAACAAIAAAAEAAIAAAADAAIAAAAEAAIAAAADAAEAAAAEAAIAAAADAAAAAAAEAAIAAAADAP//AAAEAAIAAAAEAAAAAAAEAAIAAAAEAAEAAAAEAAIAAAAEAAIAAAAEAAIAAAAEAAMAAAAEAAIAAAADAAMAAAAEAAIAAAADAAQAAAAEAAIAAAAEAAQAAAAEAAIAAAD9//z/AAAEAAIAAAD8//z/AAAEAAIAAAD7//v/AAAEAAIAAAD8//v/AAAEAAIAAAD9//v/AAAEAAIAAAACAPv/AAAEAAIAAAADAPv/AAAEAAIAAAAEAPv/AAAEAAIAAAA=")
@@ -287,11 +294,13 @@ tile_map_data = PackedByteArray("AAD8//7/AAAEAAIAAAD9//7/AAAEAAIAAAD+//3/AAAEAAI
 tile_set = ExtResource("11_yxj6a")
 
 [node name="loop_TileMapLayer_3" type="TileMapLayer" parent="TileMapLayer/LoopableComponent"]
+self_modulate = Color(1, 0.394622, 0.885154, 1)
 position = Vector2(-250, 0)
 tile_map_data = PackedByteArray("AAD8//7/AAAEAAIAAAD9//7/AAAEAAIAAAD+//3/AAAEAAIAAAD///3/AAAEAAIAAAD///7/AAAEAAIAAAAAAP7/AAAEAAIAAAABAP7/AAAEAAIAAAAAAP//AAAEAAIAAAD/////AAAEAAIAAAD//wAAAAAEAAIAAAD+/wAAAAAEAAIAAAD+/wEAAAAEAAIAAAD9/wEAAAAEAAIAAAD9/wIAAAAEAAIAAAD9/wMAAAAEAAIAAAD+/wMAAAAEAAIAAAD//wMAAAAEAAIAAAAAAAMAAAAEAAIAAAABAAMAAAAEAAIAAAACAAMAAAAEAAIAAAACAAIAAAAEAAIAAAADAAIAAAAEAAIAAAADAAEAAAAEAAIAAAADAAAAAAAEAAIAAAADAP//AAAEAAIAAAAEAAAAAAAEAAIAAAAEAAEAAAAEAAIAAAAEAAIAAAAEAAIAAAAEAAMAAAAEAAIAAAADAAMAAAAEAAIAAAADAAQAAAAEAAIAAAAEAAQAAAAEAAIAAAD9//z/AAAEAAIAAAD8//z/AAAEAAIAAAD7//v/AAAEAAIAAAD8//v/AAAEAAIAAAD9//v/AAAEAAIAAAACAPv/AAAEAAIAAAADAPv/AAAEAAIAAAAEAPv/AAAEAAIAAAA=")
 tile_set = ExtResource("11_yxj6a")
 
 [node name="loop_TileMapLayer_4" type="TileMapLayer" parent="TileMapLayer/LoopableComponent"]
+self_modulate = Color(2.11775e-06, 0.766737, 0.918351, 1)
 position = Vector2(250, 0)
 tile_map_data = PackedByteArray("AAD8//7/AAAEAAIAAAD9//7/AAAEAAIAAAD+//3/AAAEAAIAAAD///3/AAAEAAIAAAD///7/AAAEAAIAAAAAAP7/AAAEAAIAAAABAP7/AAAEAAIAAAAAAP//AAAEAAIAAAD/////AAAEAAIAAAD//wAAAAAEAAIAAAD+/wAAAAAEAAIAAAD+/wEAAAAEAAIAAAD9/wEAAAAEAAIAAAD9/wIAAAAEAAIAAAD9/wMAAAAEAAIAAAD+/wMAAAAEAAIAAAD//wMAAAAEAAIAAAAAAAMAAAAEAAIAAAABAAMAAAAEAAIAAAACAAMAAAAEAAIAAAACAAIAAAAEAAIAAAADAAIAAAAEAAIAAAADAAEAAAAEAAIAAAADAAAAAAAEAAIAAAADAP//AAAEAAIAAAAEAAAAAAAEAAIAAAAEAAEAAAAEAAIAAAAEAAIAAAAEAAIAAAAEAAMAAAAEAAIAAAADAAMAAAAEAAIAAAADAAQAAAAEAAIAAAAEAAQAAAAEAAIAAAD9//z/AAAEAAIAAAD8//z/AAAEAAIAAAD7//v/AAAEAAIAAAD8//v/AAAEAAIAAAD9//v/AAAEAAIAAAACAPv/AAAEAAIAAAADAPv/AAAEAAIAAAAEAPv/AAAEAAIAAAA=")
 tile_set = ExtResource("11_yxj6a")
@@ -312,3 +321,4 @@ tile_map_data = PackedByteArray("AAD8//7/AAAEAAIAAAD9//7/AAAEAAIAAAD+//3/AAAEAAI
 tile_set = ExtResource("11_yxj6a")
 
 [editable path="madotsuki"]
+[editable path="camera_handler"]

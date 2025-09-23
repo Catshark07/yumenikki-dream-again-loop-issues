@@ -23,6 +23,8 @@ var save_invoker: EventListener
 	
 # - initial
 func _initialize() -> void: 
+	Engine.set_time_scale(0.05)
+
 	process_mode = Node.PROCESS_MODE_DISABLED
 	save_invoker = EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
 	
