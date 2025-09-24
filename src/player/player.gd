@@ -82,7 +82,6 @@ class Data:
 			arr.append(i.resource_path)
 		
 		return arr
-			
 class Instance:
 	static var _pl: Player 
 	

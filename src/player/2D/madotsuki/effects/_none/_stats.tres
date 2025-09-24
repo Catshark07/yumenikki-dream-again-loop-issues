@@ -4,15 +4,5 @@
 
 [resource]
 script = ExtResource("1_qckyx")
-walk_multi = 1.25
-sprint_multi = 2.9
-sneak_multi = 0.735
-exhaust_multi = 0.9
-stamina_drain = 0.78
 stamina_regen = 1.0
-can_run = true
-disable_drain = false
-walk_noise_mult = 1.0
-sneak_noise_mult = 0.5
-run_noise_mult = 2.2
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"

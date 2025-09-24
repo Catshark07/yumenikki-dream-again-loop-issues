@@ -3,13 +3,13 @@ class_name LoopManager
 extends Node
 
 @export_group("Loop Component Updates and Setups.")
-@export_tool_button("Update Collection and Info.") 	var update_collection := update_loopable_collection
-@export_tool_button("Update Loop Duplicates' Properties.") 	var update_loop_objs 	:= update_loopable_components
-@export_tool_button("Setup Components.") 	var setup_loop_objs 	:= setup_loopable_components
+@export_tool_button("Update Collection and Info.") 			var update_collection := update_loopable_collection
+@export_tool_button("Update Loop Duplicates' Properties.") 	var update_loop_objs  := update_loopable_components
+@export_tool_button("Setup Components.") 					var setup_loop_objs   := setup_loopable_components
 
-@export_group("Loop Component Visibility.")
-@export_tool_button("Show All Duplicates") var show_dupes
-@export_tool_button("Hide All Duplicates") var hide_dupes
+#@export_group("Loop Component Visibility.")
+#@export_tool_button("Show All Duplicates") var show_dupes
+#@export_tool_button("Hide All Duplicates") var hide_dupes
 
 const LOOP_UNIT_VECTOR := [
 	Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1),
@@ -19,7 +19,7 @@ const LOOP_UNIT_VECTOR := [
 
 @export_group("Info.")
 @export var loop_objects: Array[Node]
-@export var world_size: Vector2:
+@export var world_size: Vector2 = Vector2(100, 100):
 	set = set_world_size
 
 # - detection nodes.
@@ -42,12 +42,12 @@ func _ready() -> void:
 		loop_objects_detect.set_collision_mask_value(7, true)
 
 	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
-	
-func _process(_detla: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): (shape_detect.shape as RectangleShape2D).size = world_size
 	else: 						update_dupe_nodes.emit()
 		
 	for loopable: LoopableComponent in loop_objects: 
+		if loopable == null: continue
 		if loopable.target is CanvasItem and !loopable.do_not_loop:
 			
 			loopable.target.global_position.x = wrap(loopable.target.global_position.x, -world_size.x / 2, world_size.x / 2)

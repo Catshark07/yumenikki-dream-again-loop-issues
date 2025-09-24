@@ -6,13 +6,5 @@
 
 [resource]
 script = ExtResource("2_sqdc0")
-name = ""
-desc = ""
-skip_equip_animation = false
-skip_deequip_animation = false
-stats = ExtResource("3_twgcy")
-behaviour = ExtResource("1_kaic8")
-sprite_override = "res://src/player/2D/madotsuki/display/no_effect.tres"
-emote = "res://src/player/2D/madotsuki/emotes/sit_down.tres"
-player_component_prefab = ""
+name = "Running Shoes"
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

@@ -382,7 +382,7 @@ tile_set = ExtResource("12_csyr6")
 tile_set = ExtResource("12_csyr6")
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_rb84o")]
-position = Vector2(877, -9)
+position = Vector2(864, -16)
 initial_target = NodePath("../y_order/madotsuki")
 
 [node name="on_initial" type="Node" parent="."]

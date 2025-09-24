@@ -99,11 +99,11 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
+	fsm._update(_delta)
 	set_zoom(zoom)
 	set_offset(offset)
 	if shake_comp: shake_comp._handle(_delta)
 	
-	fsm._update(_delta)
 
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return

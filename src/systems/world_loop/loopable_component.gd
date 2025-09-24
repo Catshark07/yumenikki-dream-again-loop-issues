@@ -43,9 +43,9 @@ func loopable_setup(_manager: LoopManager) -> void:
 
 func _ready() -> void:
 	do_not_update = do_not_update
-	Utils.u_add_to_group(self, LOOPABLE_ID)
 
 func _enter_tree() -> void:	
+	Utils.u_add_to_group(self, LOOPABLE_ID)
 	if custom_target: return
 	target = self.get_parent()
 func _exit_tree() -> void: 	
