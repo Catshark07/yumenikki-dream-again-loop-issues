@@ -12,6 +12,7 @@ func _state_update(_delta: float) -> void:
 	if sentient.desired_speed > 0:
 		request_transition_to("move")
 	
+	sentient.handle_heading()
 func _state_physics_update(_delta: float) -> void:
 	sentient.get_behaviour()._idle(sentient)
 	if sentient.stamina < sentient.MAX_STAMINA:

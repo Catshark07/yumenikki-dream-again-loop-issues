@@ -16,7 +16,6 @@ class_name GUIPanel
 extends Control
 
 @export_category("Panel Properties")
-
 var resize_tweener: Tween
 
 # ---- constants ----
@@ -24,7 +23,6 @@ var resize_tweener: Tween
 const MIN_SIZE := Vector2(60, 18)
 const DEFAULT_PANEL_DISPLAY_SHADER: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
 const DEFAULT_DISPLAY_BG_COLOR = Color(0,0,0,1)
-var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 
 # ---- size control ----
 # ---- common vars ----
@@ -35,7 +33,6 @@ var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 		if main_container != null: 
 			if _ov: main_container.add_theme_stylebox_override("panel", _ov)
 			else: main_container.remove_theme_stylebox_override("panel")
-@export var panel_display_texture: Texture2D = DEFAULT_PANEL_DISPLAY_TEXTURE
 @export var panel_display_colour: Color = DEFAULT_DISPLAY_BG_COLOR
 @export var panel_display_shader: Shader = DEFAULT_PANEL_DISPLAY_SHADER
 

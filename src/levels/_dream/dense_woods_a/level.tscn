@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_fu6ox"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_7ddji"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_ajyrn"]
-[ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="3_cngr4"]
+[ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="2_ajyrn"]
+[ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="3_cngr4"]
 [ext_resource type="AudioStream" uid="uid://cha5o14ds0qw3" path="res://src/audio/bgm/world_dense-woods-a.ogg" id="3_lpvjp"]
-[ext_resource type="TileSet" uid="uid://fd37qogr0ale" path="res://src/levels/__ignore/tile_set/dense_woods.tres" id="4_0tk1k"]
+[ext_resource type="TileSet" uid="uid://fd37qogr0ale" path="res://src/levels/__ignore/tile_set/world_tile_sets/dense_woods.tres" id="4_0tk1k"]
 [ext_resource type="AudioStream" uid="uid://dlfw10qwka7su" path="res://src/audio/amb/amb_rain.ogg" id="4_lpvjp"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="5_0tk1k"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="5_jl4jg"]

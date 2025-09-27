@@ -1,7 +1,7 @@
 [gd_scene load_steps=39 format=4 uid="uid://yp1tv6otq0nw"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_7o03b"]
-[ext_resource type="TileSet" uid="uid://du2wbc6fqtlpf" path="res://src/levels/__ignore/tile_set/mars.tres" id="2_i6rw4"]
+[ext_resource type="TileSet" uid="uid://du2wbc6fqtlpf" path="res://src/levels/__ignore/tile_set/world_tile_sets/mars.tres" id="2_i6rw4"]
 [ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="3_3p07t"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="3_63ps5"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="3_guxvn"]

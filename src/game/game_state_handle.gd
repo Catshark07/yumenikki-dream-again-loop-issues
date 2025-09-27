@@ -14,8 +14,8 @@ var non_playable_scenes: PackedStringArray = [
 var state_requests_listener: EventListener
 
 func _ready() -> void:
-	state_requests_listener = EventListener.new(["SCENE_PUSHED"], false, self)
-	state_requests_listener.do_on_notify(["SCENE_PUSHED"], update_game_state)
+	state_requests_listener = EventListener.new(self, "SCENE_PUSHED")
+	state_requests_listener.do_on_notify(update_game_state, "SCENE_PUSHED")
 	
 func update_game_state() -> void: 
 	var curr_res_scene = SceneManager.curr_scene_resource

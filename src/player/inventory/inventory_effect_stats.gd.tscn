@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dgxld1rmdcf3y" path="res://src/player/inventory/effect_stats_window.gd" id="2_2csn3"]
 [ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="2_3c6xc"]
 [ext_resource type="Texture2D" uid="uid://641771i2v7id" path="res://src/player/hud/stats_mobility.png" id="3_2csn3"]
-[ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stam_mobility.png" id="4_m5a7d"]
+[ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stats_stamina.png" id="4_m5a7d"]
 [ext_resource type="Texture2D" uid="uid://bthea7xsvafa5" path="res://src/player/inventory/stats_neutral.png" id="5_2csn3"]
 
 [node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "exhaust_speed", "can_run", "stamina_regen", "stamina_decay")]

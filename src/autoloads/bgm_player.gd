@@ -16,13 +16,13 @@ const MUSIC_DICT := {
 var vol_tween: Tween
 var pitch_tween: Tween
 
-@onready var scene_change_request_listener := EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
+@onready var scene_change_request_listener := EventListener.new(self, "SCENE_CHANGE_REQUEST")
 
 func _ready() -> void:
 	self.autoplay = false
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	scene_change_request_listener.do_on_notify(["SCENE_CHANGE_REQUEST"] ,func(): fade_out())
+	scene_change_request_listener.do_on_notify(fade_out, "SCENE_CHANGE_REQUEST")
 
 func play_sound(
 	_stream: AudioStream, 

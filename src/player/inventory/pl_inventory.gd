@@ -41,9 +41,9 @@ func add_item(_item: PLEffect) -> void:
 	button.icon_display.texture = (_item.icon)
 	
 	button.name = (_item.name)
-	button.hover_exited.connect(func(): hovered_button = null)
-	button.hover_entered.connect(func(): hovered_button = button)	
-	button.pressed.connect(func():
+	button.on_hover.	connect(func(): hovered_button = button)	
+	button.on_unhover.	connect(func(): hovered_button = null)
+	button.pressed.		connect(func():
 		if button.abstract_button.unique_data:
 			EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST")
 			(Player.Instance.get_pl() as Player_YN).equip(button.abstract_button.unique_data))

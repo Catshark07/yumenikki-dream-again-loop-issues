@@ -21,24 +21,24 @@ func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
 	white_petal.visible = false
 	pink_petal.visible = false
 	
-	special_invert_sequence_end = EventListener.new(
-		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], 
-		false, self)
-	special_invert_sequence_end.do_on_notify(
-		["SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP"], 
-		EventManager.invoke_event.bind("SPECIAL_INVERT_END_REQUEST"))
+	special_invert_sequence_end = EventListener.new(self, "SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP")
+	special_invert_sequence_end.do_on_notify( 
+		EventManager.invoke_event.bind("SPECIAL_INVERT_END_REQUEST"),
+		"SCENE_CHANGE_REQUEST", "PLAYER_EQUIP", "PLAYER_DEEQUIP")
 	
-	player_equip_listener = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
-	player_equip_listener.do_on_notify(["PLAYER_DEEQUIP"], func(): 
-		deequip_prompt.button.set_active(false)
-		effect_indicator.progress = 1
-		)
-	player_equip_listener.do_on_notify(["PLAYER_EQUIP"], func(): 
-		if EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.DEFAULT_EQUIPMENT: 
-			return
-		deequip_prompt.button.set_active(true)
-		effect_indicator.progress = 0
-		)
+	player_equip_listener = EventListener.new(self, "PLAYER_EQUIP", "PLAYER_DEEQUIP")
+	player_equip_listener.do_on_notify(
+		func(): 
+			deequip_prompt.button.set_active(false)
+			effect_indicator.progress = 1,
+		"PLAYER_DEEQUIP")
+	player_equip_listener.do_on_notify( 
+		func(): 
+			if EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.DEFAULT_EQUIPMENT: 
+				return
+			deequip_prompt.button.set_active(true)
+			effect_indicator.progress = 0,
+		"PLAYER_EQUIP")
 	
 	Utils.connect_to_signal(func():(Player.Instance.get_pl() as Player_YN).deequip_effect(), deequip_prompt.button.pressed)
 	Utils.connect_to_signal(func(): change_to_state("white_petal"), white_petal_button.button.pressed)

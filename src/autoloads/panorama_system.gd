@@ -23,8 +23,8 @@ func _setup() -> void:
 	instance = self
 	panorama_rect.global_position = Vector2.ZERO
 	
-	panorama_update = EventListener.new(["WORLD_LOOP"], false, self)
-	panorama_update.do_on_notify(["WORLD_LOOP"], func(): warp_check = true)
+	panorama_update = EventListener.new(self, "WORLD_LOOP")
+	panorama_update.do_on_notify(func(): warp_check = true, "WORLD_LOOP")
 	
 	initial_screen_centre = (
 		Application.main_viewport.get_camera_2d().get_screen_center_position()

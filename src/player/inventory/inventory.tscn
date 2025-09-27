@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bl24ldxfxb508"]
+[gd_scene load_steps=31 format=3 uid="uid://bl24ldxfxb508"]
 
 [ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/menu/petal_pink.png" id="1_1btln"]
 [ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="1_hnmhd"]
@@ -173,7 +173,17 @@ shader_parameter/contrast = 0.5
 shader = ExtResource("2_f6805")
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
-shader_parameter/optional_grad = false
+shader_parameter/optional_gradient = false
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kisvh"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_3gg6c"]
+colors = PackedColorArray(0.30652142, 0.18194738, 0.40326485, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6jr1t"]
+gradient = SubResource("Gradient_3gg6c")
+fill_from = Vector2(1, 1)
 
 [node name="inventory" type="Control" node_paths=PackedStringArray("fsm", "display", "item_container", "favourite_icon")]
 clip_contents = true
@@ -360,8 +370,6 @@ progress = 1
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 36.0
-offset_bottom = 48.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")
@@ -422,9 +430,18 @@ focus_neighbor_bottom = NodePath("")
 focus_next = NodePath("")
 focus_previous = NodePath("")
 focus_mode = 1
+focus_behavior_recursive = 0
 mouse_filter = 0
+mouse_behavior_recursive = 0
 mouse_force_pass_scroll_events = true
 mouse_default_cursor_shape = 2
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
 theme = null
 theme_type_variation = &""
 disabled = false
@@ -489,6 +506,29 @@ position = Vector2(42, 32)
 texture = ExtResource("13_jwvlf")
 centered = false
 
+[node name="heads_up" type="TextureRect" parent="display"]
+material = SubResource("CanvasItemMaterial_kisvh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 206.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_6jr1t")
+
+[node name="Label" type="Label" parent="display/heads_up"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "press ALT to close inventory."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="select" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
@@ -525,8 +565,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 27.0
-offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -589,9 +627,18 @@ focus_neighbor_bottom = NodePath("")
 focus_next = NodePath("")
 focus_previous = NodePath("")
 focus_mode = 1
+focus_behavior_recursive = 0
 mouse_filter = 0
+mouse_behavior_recursive = 0
 mouse_force_pass_scroll_events = true
 mouse_default_cursor_shape = 2
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
 theme = null
 theme_type_variation = &""
 disabled = false
@@ -630,8 +677,6 @@ frame_v_count = 3
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 27.0
-offset_bottom = 14.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")
@@ -692,9 +737,18 @@ focus_neighbor_bottom = NodePath("")
 focus_next = NodePath("")
 focus_previous = NodePath("")
 focus_mode = 1
+focus_behavior_recursive = 0
 mouse_filter = 0
+mouse_behavior_recursive = 0
 mouse_force_pass_scroll_events = true
 mouse_default_cursor_shape = 2
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
 theme = null
 theme_type_variation = &""
 disabled = false

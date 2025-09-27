@@ -29,11 +29,13 @@ blend_mode = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18lqh"]
 size = Vector2(13, 4)
 
-[node name="template_neutral" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
+[node name="template_neutral" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm", "sprite_renderer", "shadow_renderer")]
 script = ExtResource("1_l8d6l")
 nav_agent = NodePath("nav")
 stance_fsm = NodePath("stance_fsm")
 behaviour_fsm = NodePath("behaviour_fsm")
+sprite_renderer = NodePath("sprite_renderer")
+shadow_renderer = NodePath("shadow_renderer")
 
 [node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="."]
 rect = Rect2(-150, -125, 300, 250)

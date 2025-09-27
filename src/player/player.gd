@@ -19,30 +19,23 @@ var data: PLAttributeData
 @export_storage var stamina: float = MAX_STAMINA:
 	set(_stam):
 		stamina = _stam
-		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", [_stam])
+		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", _stam)
 
 var is_exhausted: bool = false
-@export_storage var can_run: bool = CAN_RUN
 
 # ---- data constants ----
 const CAN_RUN: bool = true
 
-const WALK_MULTI: float = 1.25
-const SNEAK_MULTI: float = 0.735
-const SPRINT_MULTI: float = 2.9
-const EXHAUST_MULTI: float = 0.9
+const EXHAUST_MULTI: 		float = 0.9
 
-const MAX_STAMINA := 5
-const STAMINA_DRAIN: float = .78
-const STAMINA_REGEN: float = .8
+const MAX_STAMINA:	 		float =  5
+const STAMINA_DRAIN: 		float = .78
+const STAMINA_REGEN: 		float = .8
 
-const WALK_NOISE_MULTI: float = 1
-const RUN_NOISE_MULTI: float = 2.2
-const SNEAK_NOISE_MULTI: float = 0.5
+var walk_noise_mult: 	float = WALK_NOISE_MULTI
+var run_noise_mult: 	float = RUN_NOISE_MULTI
+var sneak_noise_mult: 	float =SNEAK_NOISE_MULTI
 
-var walk_noise_mult: float = WALK_NOISE_MULTI
-var run_noise_mult: float = RUN_NOISE_MULTI
-var sneak_noise_mult: float =SNEAK_NOISE_MULTI
 #endregion ---- data variables ----
 
 # ---- signals ----
@@ -62,7 +55,7 @@ signal quered_sneak_end
 func _enter_tree() -> void: 
 	super()
 	Instance._pl = self
-	EventManager.invoke_event("PLAYER_UPDATED")
+	EventManager.invoke_event("PLAYER_UPDATED", self)
 
 func force_change_state(_new: String) -> void: fsm.get_curr_state().request_transition_to(_new)
 func get_state_name() -> String: return fsm.get_curr_state_name()
@@ -101,9 +94,9 @@ class Instance:
 		if is_setup: return
 		is_setup = true
 		
-		door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
-		door_listener.do_on_notify(["PLAYER_DOOR_USED"], func(): door_went_flag = true)
-		door_listener.do_on_notify(["SCENE_CHANGE_SUCCESS"], func(): 
+		door_listener = EventListener.new(null, "PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS")
+		door_listener.do_on_notify(func(): door_went_flag = true, "PLAYER_DOOR_USED")
+		door_listener.do_on_notify(func(): 
 			
 			for points: SpawnPoint in Utils.get_group_arr("spawn_points"):
 				if (
@@ -121,14 +114,15 @@ class Instance:
 							else: _pl.reparent(points)
 						
 						door_went_flag = false
-						break)
+						break, 
+					
+			"SCENE_CHANGE_SUCCESS")
 
-		equipment_auto_apply = EventListener.new(["SCENE_CHANGE_SUCCESS"], true)
+		equipment_auto_apply = EventListener.new(null, "SCENE_CHANGE_SUCCESS")
 		
 		equipment_auto_apply.do_on_notify(
-			["SCENE_CHANGE_SUCCESS"],
 			func(): 
-				if get_pl(): (get_pl() as Player_YN).equip(equipment_pending)
+				if get_pl(): (get_pl() as Player_YN).equip(equipment_pending), "SCENE_CHANGE_SUCCESS"
 		)
 
 	static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:

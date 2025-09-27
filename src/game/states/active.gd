@@ -1,21 +1,19 @@
 extends NestedState
 
 var active_state_listener: EventListener
-var events: PackedStringArray = [
-	"CUTSCENE_START_REQUEST", "CUTSCENE_END_REQUEST",
-	"SPECIAL_INVERT_START_REQUEST", "SPECIAL_INVERT_END_REQUEST",
-	]
 
 func _setup() -> void:
 	super()
-	active_state_listener = EventListener.new(events, false, self)
+	active_state_listener = EventListener.new(self, 
+		"CUTSCENE_START_REQUEST", "CUTSCENE_END_REQUEST",
+		"SPECIAL_INVERT_START_REQUEST", "SPECIAL_INVERT_END_REQUEST")
 	
 	active_state_listener.do_on_notify( # - switch to PLAY
-		["CUTSCENE_END_REQUEST", "SPECIAL_INVERT_END_REQUEST"], func(): set_sub_state("play"))
+		func(): set_sub_state("play"), "CUTSCENE_END_REQUEST", "SPECIAL_INVERT_END_REQUEST")
 	active_state_listener.do_on_notify( # - switch to CUTSCENE
-		["CUTSCENE_START_REQUEST"], func(): set_sub_state("cutscene"))
+		func(): set_sub_state("cutscene"), "CUTSCENE_START_REQUEST")
 	active_state_listener.do_on_notify( # - switch to INVERT_SCENE
-		["SPECIAL_INVERT_START_REQUEST"], func(): set_sub_state("special_invert_scene"))
+		func(): set_sub_state("special_invert_scene"), "SPECIAL_INVERT_START_REQUEST")
 	  
 	Player.Instance.setup()
 

@@ -20,7 +20,7 @@ static func create_event(_id: String) -> void:
 	if !event_ids[_id].has("params"):
 		event_ids[_id]["params"] = []
 		
-static func invoke_event(_id: String, _params := []) -> void: 
+static func invoke_event(_id: String, ..._params: Array) -> void: 
 	_id = _id.to_upper()
 	create_event(_id)
 	event_ids[_id]["params"] = _params
@@ -30,7 +30,7 @@ static func invoke_event(_id: String, _params := []) -> void:
 			event_ids[_id]["subscribers"][i].on_notify(_id)
 		else: 
 			remove_listener(event_ids[_id]["subscribers"][i], _id)
-static func get_event_param(_id: String) -> Array[Variant]:
+static func get_event_param(_id: String) -> Array:
 	create_event(_id)
 	if (event_ids[_id]["params"] as Array).is_empty(): return [null]
 	return event_ids[_id]["params"]

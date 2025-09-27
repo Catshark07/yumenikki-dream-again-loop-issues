@@ -5,7 +5,7 @@ extends Event
 var interactable: Node2D
 
 func _execute() -> void:
-	EventManager.invoke_event("PLAYER_DOOR_USED", [scene_traversal.connection_id])
+	EventManager.invoke_event("PLAYER_DOOR_USED", scene_traversal.connection_id)
 	Game.change_scene_to(load(scene_traversal.scene_path))
 
 func _validate() -> bool:

@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://bjdwdwfoqtani" path="res://src/audio/bgm/luff_yta_calm.ogg" id="3_r2lfa"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="4_d2u0k"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="4_w4wdm"]
-[ext_resource type="TileSet" uid="uid://bior84yl5ty0u" path="res://src/levels/__ignore/tile_set/apartment_real.tres" id="5_2mqtp"]
+[ext_resource type="TileSet" uid="uid://bior84yl5ty0u" path="res://src/levels/__ignore/tile_set/world_tile_sets/apartment_real.tres" id="5_2mqtp"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="5_cgqcc"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="6_37x7p"]
 [ext_resource type="Shader" uid="uid://dve6sxb5g6bgj" path="res://src/shaders/transition/tr_dissolve.gdshader" id="7_7agr2"]

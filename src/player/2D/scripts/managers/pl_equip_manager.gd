@@ -18,8 +18,8 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 		return
 		
 	if _effect:
-		_pl.components.get_component_by_name("action_manager").cancel_action(
-			_pl.components.get_component_by_name("action_manager").curr_action, _pl, true)
+		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(
+			_pl.components.get_component_by_name(Player_YN.COMP_ACTION).curr_action, _pl, true)
 			
 		await deequip(_pl)
 		effect_data = _effect
@@ -34,19 +34,19 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 				_pl.add_child(effect_prefab)
 				effect_prefab._enter(_pl)
 
-		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", [_effect.skip_equip_animation or _skip])
-		EventManager.invoke_event("PLAYER_EQUIP", [_effect])
+		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", _effect.skip_equip_animation or _skip)
+		EventManager.invoke_event("PLAYER_EQUIP", _effect)
 		Player.Instance.equipment_pending = _effect
 		_effect._apply(_pl)
 func deequip(_pl: Player, _skip: bool = false) -> void:
 	if effect_data in IGNORE: return
 	if effect_data:
-		EventManager.invoke_event("PLAYER_DEEQUIP_SKIP_ANIM", [effect_data.skip_deequip_animation or _skip])
-		EventManager.invoke_event("PLAYER_DEEQUIP", [effect_data])
+		EventManager.invoke_event("PLAYER_DEEQUIP_SKIP_ANIM", effect_data.skip_deequip_animation or _skip)
+		EventManager.invoke_event("PLAYER_DEEQUIP", Player.Instance.DEFAULT_EQUIPMENT)
 		Player.Instance.equipment_pending = Player.Instance.DEFAULT_EQUIPMENT
 		
-		_pl.components.get_component_by_name("action_manager").cancel_action(
-			_pl.components.get_component_by_name("action_manager").curr_action, _pl, true)
+		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(
+			_pl.components.get_component_by_name(Player_YN.COMP_ACTION).curr_action, _pl, true)
 
 		if effect_prefab != null: 
 			effect_prefab._exit(_pl)

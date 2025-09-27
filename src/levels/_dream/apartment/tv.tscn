@@ -65,16 +65,19 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="tv" type="Sprite2D" parent="."]
 texture = ExtResource("2_fk1p2")
+offset = Vector2(0, 8)
 hframes = 3
 script = ExtResource("3_528yx")
 frame_dimensions = Vector2i(32, 32)
 frame_h_count = 3
 
 [node name="rect" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_a47do")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="coll" type="StaticBody2D" parent="."]
+position = Vector2(0, 8)
 
 [node name="shape" type="CollisionPolygon2D" parent="coll"]
 polygon = PackedVector2Array(-8, 8, 4, 4, 8, 8, -4, 12)
@@ -92,13 +95,14 @@ input_objects = {
 else_conditional = NodePath("../else")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="play_on" type="Node" parent="on_interact/if_tv_off"]
+[node name="play_on" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("next")]
 script = ExtResource("5_mta7w")
 sound = ExtResource("7_qvd66")
 wait_til_finished = false
+next = NodePath("../mark_as_on")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="mark_as_on" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node")]
+[node name="mark_as_on" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node", "next", "prev")]
 process_mode = 4
 script = ExtResource("8_imcer")
 node = NodePath("../../../properties")
@@ -117,9 +121,11 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "tv_on": true
 })
+next = NodePath("../show_eye")
+prev = NodePath("../play_on")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="show_eye" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node")]
+[node name="show_eye" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node", "next", "prev")]
 process_mode = 4
 script = ExtResource("8_imcer")
 node = NodePath("../../../tv")
@@ -134,11 +140,15 @@ property_info = {
 }
 property_value = 0
 new_value = 1
+next = NodePath("../wait_half_sec")
+prev = NodePath("../mark_as_on")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait_half_sec" type="Node" parent="on_interact/if_tv_off"]
+[node name="wait_half_sec" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("9_imcer")
 seconds = 0.5
+next = NodePath("../play_animation")
+prev = NodePath("../show_eye")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="play_animation" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node")]
@@ -227,7 +237,7 @@ method_info = {
 internal_args = Dictionary[String, Variant]({})
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="hide_eye" type="Node" parent="on_interact/else" node_paths=PackedStringArray("node")]
+[node name="hide_eye" type="Node" parent="on_interact/else" node_paths=PackedStringArray("node", "next", "prev")]
 process_mode = 4
 script = ExtResource("8_imcer")
 node = NodePath("../../../tv")
@@ -242,15 +252,19 @@ property_info = {
 }
 property_value = 0
 new_value = 0
+next = NodePath("../play_off")
+prev = NodePath("../stop")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_off" type="Node" parent="on_interact/else"]
+[node name="play_off" type="Node" parent="on_interact/else" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("5_mta7w")
 sound = ExtResource("12_xlbse")
 wait_til_finished = false
+next = NodePath("../mark_as_off")
+prev = NodePath("../hide_eye")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="mark_as_off" type="Node" parent="on_interact/else" node_paths=PackedStringArray("node")]
+[node name="mark_as_off" type="Node" parent="on_interact/else" node_paths=PackedStringArray("node", "prev")]
 process_mode = 4
 script = ExtResource("8_imcer")
 node = NodePath("../../../properties")
@@ -269,6 +283,7 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "tv_on": false
 })
+prev = NodePath("../play_off")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="properties" type="Node" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=46 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://dh7dintxcyffh" path="res://src/player/2D/scripts/managers/pl_interact_manager.gd" id="11_bof2k"]
 [ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/2D/madotsuki/animation_libs/reset.tres" id="11_wc1wu"]
 [ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="13_p5dbe"]
+[ext_resource type="Texture2D" uid="uid://b3ubvq54l072p" path="res://src/entities/footsteps/default.png" id="14_bfa5j"]
 [ext_resource type="Texture2D" uid="uid://cgt6yqo0ynnak" path="res://src/player/2D/scripts/behaviour/interaction_prompt.png" id="17_cin7d"]
 [ext_resource type="Script" uid="uid://ckdi4htcyco6l" path="res://src/entities/component/sb_sprint.gd" id="18_k7c3c"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/systems/tools/FSM/sentient_fsm.gd" id="18_rujao"]
@@ -73,6 +74,12 @@ blend_mode = 1
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4moul"]
 size = Vector2(6, 3)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kkxcg"]
+particles_animation = true
+particles_anim_h_frames = 6
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_riukl"]
 radius = 8.0
 
@@ -119,21 +126,18 @@ libraries = {
 }
 playback_auto_capture = false
 
-[node name="sprite_manager" type="Node" parent="sb_components"]
-script = ExtResource("13_p5dbe")
-metadata/_custom_type_script = "uid://bgisym1hdeqgt"
-
-[node name="equip_manager" type="Node" parent="sb_components"]
-script = ExtResource("9_y4vx3")
-
 [node name="action_manager" type="Node" parent="sb_components"]
 script = ExtResource("10_rhwps")
 
 [node name="timer" type="Timer" parent="sb_components/action_manager"]
 
-[node name="footstep_manager" type="Node2D" parent="sb_components"]
+[node name="equip_manager" type="Node" parent="sb_components"]
+script = ExtResource("9_y4vx3")
+
+[node name="footstep_manager" type="Node2D" parent="sb_components" node_paths=PackedStringArray("dust_particle")]
 material = SubResource("CanvasItemMaterial_mbimu")
 script = ExtResource("5_xe7mj")
+dust_particle = NodePath("particles")
 
 [node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager"]
 process_mode = 1
@@ -150,6 +154,15 @@ collision_mask = 9
 position = Vector2(0, 13.5)
 shape = SubResource("RectangleShape2D_4moul")
 debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
+
+[node name="particles" type="CPUParticles2D" parent="sb_components/footstep_manager"]
+material = SubResource("CanvasItemMaterial_kkxcg")
+position = Vector2(0, -8)
+amount = 1
+texture = ExtResource("14_bfa5j")
+gravity = Vector2(0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 1.0
 
 [node name="interaction_manager" type="Node2D" parent="sb_components" node_paths=PackedStringArray("field")]
 process_mode = 1
@@ -171,6 +184,10 @@ visible = false
 z_index = 5
 position = Vector2(0, -24)
 texture = ExtResource("17_cin7d")
+
+[node name="sprite_manager" type="Node" parent="sb_components"]
+script = ExtResource("13_p5dbe")
+metadata/_custom_type_script = "uid://bgisym1hdeqgt"
 
 [node name="input" type="Node" parent="sb_components"]
 script = ExtResource("19_57bvo")

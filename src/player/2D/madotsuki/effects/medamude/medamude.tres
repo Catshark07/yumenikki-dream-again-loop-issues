@@ -6,32 +6,17 @@
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/2D/scripts/pl_effect.gd" id="4_7u07o"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/2D/scripts/pl_attribute_data.gd" id="4_y478k"]
 
-[sub_resource type="Resource" id="Resource_jp5jo"]
+[sub_resource type="Resource" id="Resource_dfaah"]
 script = ExtResource("4_y478k")
-walk_multi = 1.25
-sprint_multi = 2.9
-sneak_multi = 0.735
-exhaust_multi = 0.9
-stamina_drain = 0.78
-stamina_regen = 1.0
 can_run = false
-disable_drain = false
-walk_noise_mult = 1.0
-sneak_noise_mult = 0.5
-run_noise_mult = 2.2
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [resource]
 script = ExtResource("4_7u07o")
 name = "Medamaude"
-desc = ""
 icon = ExtResource("2_dfaah")
-skip_equip_animation = false
-skip_deequip_animation = false
-stats = SubResource("Resource_jp5jo")
-behaviour = ExtResource("1_8fwxv")
+decorator = SubResource("Resource_dfaah")
 primary_action = ExtResource("2_vmmiy")
 sprite_override = "uid://jkp88c1g030d"
 emote = ""
-player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

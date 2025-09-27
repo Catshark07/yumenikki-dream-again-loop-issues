@@ -41,8 +41,8 @@ size = Vector2(16, 16)
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_5kgwf"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y6mui"]
-seamless = true
 noise = SubResource("FastNoiseLite_5kgwf")
+seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6a2ja"]
 shader = ExtResource("9_gfwn5")
@@ -55,6 +55,7 @@ shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.51
+shader_parameter/optional_gradient = false
 shader_parameter/noise = SubResource("NoiseTexture2D_y6mui")
 shader_parameter/color_overlay = Color(0.592351, 0.580878, 0.381491, 1)
 shader_parameter/color_overlay_intensity = 0.66
@@ -174,13 +175,27 @@ parent_instead_of_self = NodePath("../..")
 position = Vector2(0, 32)
 color = Color(0.724289, 0.618342, 0.602991, 1)
 
+[node name="set_dream_start_to_true" type="Node" parent="." node_paths=PackedStringArray("properties_saver")]
+script = ExtResource("24_3ak1f")
+properties = Dictionary[String, Variant]({
+"dream_start": false
+})
+properties_saver = NodePath("save_properties")
+metadata/_custom_type_script = "uid://0li2ud4tbkf5"
+
+[node name="save_properties" type="Node" parent="set_dream_start_to_true"]
+script = ExtResource("25_rdrme")
+properties = PackedStringArray("properties")
+global = true
+
 [node name="on_initial" type="Node" parent="."]
 script = ExtResource("12_yglpt")
 
-[node name="bgm" type="Node" parent="on_initial"]
+[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
 script = ExtResource("10_3ak1f")
 stream = ExtResource("11_rdrme")
 pitch = 0.9
+next = NodePath("../panorama (top_layer)")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="panorama (top_layer)" type="SubViewport" parent="on_initial"]
@@ -222,13 +237,14 @@ texture = ExtResource("12_ykehj")
 script = ExtResource("26_w758d")
 expression = "!flag.properties[\"dream_start\"]"
 input_objects = {
-"flag": NodePath("raise_flag/set_dream_start_to_true")
+"flag": NodePath("../../set_dream_start_to_true")
 }
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="request_cutscene_start" type="Node" parent="on_initial/if_dream_just_started"]
+[node name="request_cutscene_start" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("next")]
 script = ExtResource("13_37yy6")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../set_pl_bypass_active")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="set_pl_bypass_active" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node")]
@@ -262,10 +278,10 @@ internal_args = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_pl_sit_spr" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node")]
+[node name="set_pl_sit_spr" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node", "next", "prev")]
 process_mode = 4
 script = ExtResource("13_yglpt")
-node = NodePath("../../../balcony/madotsuki/sprite_renderer")
+node = NodePath("../../../balcony/madotsuki")
 property_name = "texture"
 property_info = {
 "class_name": &"Texture2D",
@@ -277,12 +293,14 @@ property_info = {
 }
 property_value = ExtResource("14_7gtoe")
 new_value = ExtResource("15_xww4u")
+next = NodePath("../set_pl_spr_idx")
+prev = NodePath("../set_pl_bypass_active")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_pl_spr_idx" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node")]
+[node name="set_pl_spr_idx" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node", "next", "prev")]
 process_mode = 4
 script = ExtResource("13_yglpt")
-node = NodePath("../../../balcony/madotsuki/sprite_renderer")
+node = NodePath("../../../balcony/madotsuki")
 property_name = "progress"
 property_info = {
 "class_name": &"",
@@ -293,12 +311,16 @@ property_info = {
 "usage": 4102
 }
 property_value = 0
-new_value = 8
+new_value = 6
+next = NodePath("../wait")
+prev = NodePath("../set_pl_sit_spr")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait" type="Node" parent="on_initial/if_dream_just_started"]
+[node name="wait" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("14_xnbkh")
 seconds = 5.0
+next = NodePath("../set_pl_bypass_inactive")
+prev = NodePath("../set_pl_spr_idx")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="set_pl_bypass_inactive" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node")]
@@ -332,15 +354,17 @@ internal_args = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="on_initial/if_dream_just_started"]
+[node name="request_cutscene_end" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("13_37yy6")
 event_id = "CUTSCENE_END_REQUEST"
+next = NodePath("../raise_flag")
+prev = NodePath("../set_pl_bypass_inactive")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="raise_flag" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node")]
+[node name="raise_flag" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("node", "prev")]
 process_mode = 4
 script = ExtResource("13_yglpt")
-node = NodePath("set_dream_start_to_true")
+node = NodePath("../../../set_dream_start_to_true")
 property_name = "properties"
 property_info = {
 "class_name": &"",
@@ -356,20 +380,8 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "dream_start": true
 })
+prev = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="set_dream_start_to_true" type="Node" parent="on_initial/if_dream_just_started/raise_flag" node_paths=PackedStringArray("properties_saver")]
-script = ExtResource("24_3ak1f")
-properties = Dictionary[String, Variant]({
-"dream_start": false
-})
-properties_saver = NodePath("save_properties")
-metadata/_custom_type_script = "uid://0li2ud4tbkf5"
-
-[node name="save_properties" type="Node" parent="on_initial/if_dream_just_started/raise_flag/set_dream_start_to_true"]
-script = ExtResource("25_rdrme")
-properties = PackedStringArray("properties")
-global = true
 
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("12_yglpt")

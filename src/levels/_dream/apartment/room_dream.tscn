@@ -5,7 +5,7 @@
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="8_hxisi"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="8_k8x4h"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="9_jh20n"]
-[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_set/apartment_dream.tres" id="13_ky1cf"]
+[ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tile_set/world_tile_sets/apartment_dream.tres" id="13_ky1cf"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="15_gud25"]
 
 [sub_resource type="Gradient" id="Gradient_1hvly"]
@@ -81,11 +81,10 @@ texture = SubResource("GradientTexture2D_44228")
 [node name="deadzone" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
 process_mode = 3
 position = Vector2(256, 136)
-collision_layer = 1073741824
+collision_layer = 0
 collision_mask = 1073741824
 script = ExtResource("15_gud25")
 rect = NodePath("rect")
-presence_detect = true
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="rect" type="CollisionShape2D" parent="deadzone"]

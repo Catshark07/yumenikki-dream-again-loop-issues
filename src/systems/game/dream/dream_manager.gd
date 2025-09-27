@@ -9,14 +9,14 @@ enum state {DREAM, NEUTRAL}
 const DREAM_LEVEL_DIR := "res://src/levels/_dream"
 const REAL_LEVEL_DIR := "res://src/levels/_real"
 
-@onready var scene_changed_listener := EventListener.new(["SCENE_PUSHED"], false, self)
-@onready var reality_override_listener := EventListener.new(["OVERRIDE_TO_DREAM_STATE", "OVERRIDE_TO_NEUTRAL_STATE"], false, self)
+@onready var scene_changed_listener := EventListener.new(self, "SCENE_PUSHED")
+@onready var reality_override_listener := EventListener.new(self, "OVERRIDE_TO_DREAM_STATE", "OVERRIDE_TO_NEUTRAL_STATE")
 
 func _setup() -> void:
 	scene_changed_listener.do_on_notify(
-		scene_changed_listener.events_listening_to, determine_world_state_by_path)
-	reality_override_listener.do_on_notify(["OVERRIDE_TO_DREAM_STATE"], func(): enforce_reality_state(state.DREAM))
-	reality_override_listener.do_on_notify(["OVERRIDE_TO_NEUTRAL_STATE"], func(): enforce_reality_state(state.NEUTRAL))
+		determine_world_state_by_path, "SCENE_PUSHED")
+	reality_override_listener.do_on_notify(func(): enforce_reality_state(state.DREAM), "OVERRIDE_TO_DREAM_STATE")
+	reality_override_listener.do_on_notify(func(): enforce_reality_state(state.NEUTRAL), "OVERRIDE_TO_NEUTRAL_STATE")
 
 func _enter() -> void:
 	if curr_reality_mode == null: return

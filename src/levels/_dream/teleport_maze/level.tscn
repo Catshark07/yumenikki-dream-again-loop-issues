@@ -1,7 +1,7 @@
 [gd_scene load_steps=48 format=4 uid="uid://dnuf6dan0x8o"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_egqpp"]
-[ext_resource type="TileSet" uid="uid://cpqq48f7d0ihq" path="res://src/levels/__ignore/tile_set/teleport_maze.tres" id="2_2rf7s"]
+[ext_resource type="TileSet" uid="uid://cpqq48f7d0ihq" path="res://src/levels/__ignore/tile_set/world_tile_sets/teleport_maze.tres" id="2_2rf7s"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_3iikp"]
 [ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="2_olcxh"]
 [ext_resource type="AudioStream" uid="uid://dcqheuccc0ijo" path="res://src/audio/bgm/aztec_rave.WAV" id="3_3iikp"]

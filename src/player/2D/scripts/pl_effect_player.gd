@@ -5,21 +5,24 @@ var on_player_effect: EventListener
 var flash_tween: Tween
 
 func _ready() -> void:
-	on_player_effect = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP", "PLAYER_EFFECT_FOUND"], false, self)
+	on_player_effect = EventListener.new(self, "PLAYER_EQUIP", "PLAYER_DEEQUIP", "PLAYER_EFFECT_FOUND")
 	
-	on_player_effect.do_on_notify(["PLAYER_EFFECT_FOUND"], flash_player_sprite)
-	on_player_effect.do_on_notify(["PLAYER_EQUIP"], func():
-		if (EventManager.get_event_param("PLAYER_EQUIP_SKIP_ANIM")[0] == true): return
-		flash_player_sprite()
-
-		self.global_position = Player.Instance.get_pl().global_position
-		animation_player.play("effect_equip"))
-	on_player_effect.do_on_notify(["PLAYER_DEEQUIP"], func(): 
-		if (EventManager.get_event_param("PLAYER_DEEQUIP_SKIP_ANIM")[0] == true): return
+	on_player_effect.do_on_notify(flash_player_sprite, "PLAYER_EFFECT_FOUND")
+	on_player_effect.do_on_notify( # - Equip
+		func():
+			if (EventManager.get_event_param("PLAYER_EQUIP_SKIP_ANIM")[0] == true): return
+			flash_player_sprite()
+			self.global_position = Player.Instance.get_pl().global_position
+			animation_player.play("effect_equip"), 
+		"PLAYER_EQUIP")		
+	on_player_effect.do_on_notify( # - Dequip
+		func(): 
+			if (EventManager.get_event_param("PLAYER_DEEQUIP_SKIP_ANIM")[0] == true): return
+			flash_player_sprite()
+			self.global_position = Player.Instance.get_pl().global_position
+			animation_player.play("effect_deequip"),
+		"PLAYER_DEEQUIP")
 			
-		flash_player_sprite()
-		self.global_position = Player.Instance.get_pl().global_position
-		animation_player.play("effect_deequip"))
 
 func flash_player_sprite() -> void:
 		(Player.Instance.get_pl().sprite_renderer.get_node("shader") as ColorRect).color.a = 1

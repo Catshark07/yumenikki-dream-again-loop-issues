@@ -63,7 +63,7 @@ static func load_scene(_scene: PackedScene) -> void:
 			scene_node = _scene.instantiate()
 			handle_scene_push(scene_node)
 			
-			EventManager.invoke_event("SCENE_LOADED", [_scene])
+			EventManager.invoke_event("SCENE_LOADED", _scene)
 					
 		load_requested = false
 		bg_load_finished = true
@@ -84,7 +84,7 @@ static func handle_scene_push(_scene_node: SceneNode) -> void:
 	scene_node.initialize()
 	scene_stack.push(_scene_node)
 	
-	EventManager.invoke_event("SCENE_PUSHED", [_scene_node])
+	EventManager.invoke_event("SCENE_PUSHED", _scene_node)
 	
 static func handle_scene_pop() -> void:
 	print_rich(str("[color=yellow]SceneManager // Scene Pop: %s [/color]" % scene_stack.pop()))
@@ -113,7 +113,7 @@ static func change_scene_to(scene: PackedScene) -> void:
 			GameManager.secondary_transition.fade_progress = 0
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
-			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
+			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", scene.resource_path)
 			GameManager.change_to_state(GameManager.game_fsm.prev_state.name)
 				
 			scene_change_pending = false

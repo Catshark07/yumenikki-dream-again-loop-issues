@@ -10,8 +10,6 @@ var dir_input: Vector2i:
 		dir_input.x = clamp(input.x, -1, 1)
 		dir_input.y = clamp(input.y, -1, 1)
 
-var is_moving: bool = false
-
 var components: SBComponentReceiver
 
 var noise: 			float = 0
@@ -21,13 +19,18 @@ const TRANS_WEIGHT:	float = 0.225
 const BASE_SPEED: 	float = 27.5
 const MAX_SPEED: 	float = 95
 
+const WALK_MULTI: 			float = 1.25
+const SNEAK_MULTI: 			float = 0.735
+const SPRINT_MULTI: 		float = 2.9
+
+const WALK_NOISE_MULTI: 	float = 1
+const RUN_NOISE_MULTI: 		float = 2.2
+const SNEAK_NOISE_MULTI: 	float = 0.5
+
+
 # - components (sprites).
 @export var sprite_renderer: Sprite2D
 @export var shadow_renderer: Sprite2D 
-
-# - vel and speed.
-var desired_vel: Vector2
-var desired_speed: float
 
 # - direction
 enum compass_headings {
@@ -49,10 +52,18 @@ var lerped_direction: Vector2 = Vector2.DOWN
 
 var speed_multiplier: float = 1
 var speed: float = 0
+var desired_vel: Vector2
+var desired_speed: float
 
 @export_group("Auditorial")
-var noise_multi: float = 1
+var noise_multi: 	float = 1
 
+# - flags
+var is_moving: 	bool = false
+var can_run: 	bool = true
+var can_sneak:	bool = true
+
+# - initial.
 func _ready() -> void:
 	components = $sb_components
 	components._setup(self)
@@ -61,10 +72,10 @@ func _ready() -> void:
 	
 	dependency_components()
 	dependency_setup()
-	
 func _enter_tree() -> void: add_to_group("actors")
 func _exit_tree() -> void:  remove_from_group("actors")
 	
+# - freeze and freeze.
 func _freeze() -> void: 
 	self.velocity = Vector2.ZERO
 	components.set_bypass(true)
@@ -72,6 +83,7 @@ func _unfreeze() -> void:
 	self.velocity = Vector2.ZERO
 	components.set_bypass(false)
 	
+# - enter and exit.
 func _exit() -> void: _freeze()
 func _enter() -> void: _unfreeze()
 	
@@ -92,13 +104,18 @@ func _update(_delta: float) -> void:
 func _sb_input(_event: InputEvent) -> void: 
 	pass
 
+# - speed handling.
 func handle_noise() -> void:
 	noise = (self.speed / self.MAX_SPEED) * noise_multi
 func handle_velocity(_multi: float = 1) -> void:
 	speed_multiplier = _multi
 	self.velocity = Vector2(desired_vel * speed_multiplier).limit_length(MAX_SPEED) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
-		
+func handle_desired_velocity(_dir: Vector2) -> void:
+	desired_vel = ((_dir.normalized() * BASE_SPEED))
+	desired_speed 	= desired_vel.length()
+
+# - direction handling.
 func handle_direction(_dir: Vector2) -> void: 
 	if _dir != Vector2.ZERO:
 		direction = _dir
@@ -112,7 +129,6 @@ func handle_heading() -> void:
 			if direction.y > .5: heading = compass_headings.SOUTH
 			elif direction.y < -.5: heading = compass_headings.NORTH
 
-func handle_desired_velocity(_dir: Vector2) -> void:
-	desired_vel = ((_dir.normalized() * BASE_SPEED))
-	desired_speed 	= desired_vel.length()
-	
+# - movement logic related.
+func handle_sneak() -> void: pass
+func handle_run() -> void: pass

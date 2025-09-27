@@ -63,6 +63,7 @@ var material_id: int = 0
 var sound_to_be_played: AudioStream
 
 @onready var multiple_floors := FootstepSet.new()
+@export var dust_particle: CPUParticles2D
 
 func _on_bypass_enabled() -> void:
 	multiple_floors.arr.clear()
@@ -129,6 +130,7 @@ func _on_body_shape_exited(
 			if !area.overlaps_body(_body):
 				multiple_floors.remove_at(multiple_floors.find(_body)) 
 				greatest_index = -50
+				scan_ground_material()
 				
 				if  multiple_floors.is_empty():
 					curr_material = default_footstep
@@ -157,7 +159,6 @@ class FootstepDust:
 		self.z_index = -1
 		self.offset.y = -10
 		self.top_level = true
-		
 		
 		set_sprite(_anim)	
 		

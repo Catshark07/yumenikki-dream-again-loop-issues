@@ -28,14 +28,15 @@ func _execute() -> void:
 	super()
 "
 
-[node name="red_jellyfish" instance=ExtResource("1_u0e4e")]
+[node name="red_jellyfish" node_paths=PackedStringArray("sprite_renderer", "shadow_renderer") instance=ExtResource("1_u0e4e")]
 position = Vector2(0, -16)
+sprite_renderer = NodePath("sprite_renderer")
+shadow_renderer = NodePath("shadow_renderer")
 
 [node name="sprite_renderer" parent="." index="3"]
 position = Vector2(0, -8)
 texture = ExtResource("2_ga86h")
 hframes = 6
-frame = 3
 script = ExtResource("3_ycocl")
 autoplay = true
 loop = true
@@ -59,6 +60,7 @@ material = SubResource("CanvasItemMaterial_jg6uj")
 script = ExtResource("5_djqh1")
 
 [node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager" index="0"]
+process_mode = 1
 max_distance = 750.0
 bus = &"Effects"
 script = ExtResource("6_e65x6")

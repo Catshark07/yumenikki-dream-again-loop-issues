@@ -9,7 +9,7 @@ var listener: EventListener
 
 func _ready() -> void: 
 	super()
-	listener = EventListener.new(event_id, false, self)
+	listener = EventListener.new(self, event_id)
 	
 	if !Engine.is_editor_hint():
-		listener.do_on_notify(event_id, execute)
+		listener.do_on_notify(execute, event_id)

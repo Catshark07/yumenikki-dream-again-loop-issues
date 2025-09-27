@@ -36,7 +36,7 @@ func _ready() -> void:
 	field.area_exited.connect(interactable_exited)
 	
 	interactable_found.connect(func(interactable):
-		AudioService.play_sound(load("res://src/audio/se/se_interaction_prompt.wav"), 0.3, 0.8)
+		AudioService.play_sound(load("res://src/audio/se/se_interaction_prompt.wav"), 0.1, 0.8)
 		prompt_icon.global_position = sentient.global_position - Vector2(0, 24)
 		show_prompt(true))
 	interactable_lost.connect(func():

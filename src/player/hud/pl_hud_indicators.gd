@@ -9,17 +9,18 @@ var pl_stamina_change: EventListener
 func _ready() -> void:
 	var stamina_bar_size_x := stamina_bar.size.x
 	
-	effect_equip = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
-	effect_equip.do_on_notify(["PLAYER_EQUIP"], func(): 
+	effect_equip = EventListener.new(self, "PLAYER_EQUIP", "PLAYER_DEEQUIP")
+	effect_equip.do_on_notify(func(): 
 		if EventManager.get_event_param("PLAYER_EQUIP")[0] != Player.Instance.DEFAULT_EQUIPMENT: 
-			effect_ind.progress = 1)
-	effect_equip.do_on_notify(["PLAYER_DEEQUIP"], func(): effect_ind.progress = 0)
+			effect_ind.progress = 1,
+			"PLAYER_EQUIP")
+	effect_equip.do_on_notify(func(): effect_ind.progress = 0, "PLAYER_DEEQUIP")
 	
-	# ----
-	pl_stamina_change = EventListener.new(["PLAYER_STAMINA_CHANGE"], false, self)
+	pl_stamina_change = EventListener.new(self, "PLAYER_STAMINA_CHANGE")
 	pl_stamina_change.do_on_notify(
-		["PLAYER_STAMINA_CHANGE"],
 		func():
-			stamina_bar.size.x = stamina_bar_size_x * EventManager.get_event_param("PLAYER_STAMINA_CHANGE")[0] / Player.MAX_STAMINA)
+			stamina_bar.size.x = stamina_bar_size_x * \
+			EventManager.get_event_param("PLAYER_STAMINA_CHANGE")[0] / Player.MAX_STAMINA,
+			"PLAYER_STAMINA_CHANGE")
 
 		

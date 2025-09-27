@@ -1,8 +1,6 @@
 class_name PLActionManager 
 extends SBComponent
 
-const PINCH = null
-
 var emote: PLEmote
 var primary_action: PLAction
 var secondary_action: PLAction
@@ -46,7 +44,6 @@ func cancel_action(_action: PLAction, _pl: Player, _force: bool = false) -> void
 	if _action and (can_action or _force):
 		_action._cancel(_pl)
 		set_curr_action(null)
-func get_curr_action() -> PLAction: return curr_action
 
 # ---- action handles ----
 func handle_action_enter() -> void: 

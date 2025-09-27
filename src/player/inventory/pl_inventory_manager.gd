@@ -7,10 +7,12 @@ var data: Dictionary
 var effect_acquired_listener: EventListener
 
 func _setup() -> void:
-	effect_acquired_listener = EventListener.new(["PLAYER_EFFECT_FOUND"], false, self)
-	effect_acquired_listener.do_on_notify(
-		["PLAYER_EFFECT_FOUND"], 
-		func(): add_item(EventManager.get_event_param("PLAYER_EFFECT_FOUND")[0]))
+	effect_acquired_listener = EventListener.new(self, "PLAYER_EFFECT_FOUND")
+	effect_acquired_listener.do_on_notify( 
+		func(): 
+			print("HAHAHAHA")
+			add_item(EventManager.get_event_param("PLAYER_EFFECT_FOUND")[0]),
+		"PLAYER_EFFECT_FOUND")
 
 func update_inventory_array(_effects: Array[PLEffect]) -> void:
 	for i in _effects:

@@ -6,7 +6,7 @@
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="4_oiy2o"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="5_jwq7s"]
 [ext_resource type="PackedScene" uid="uid://qiaa6liyh0gs" path="res://src/levels/_dream/footprint_path/thing_template.tscn" id="6_0neja"]
-[ext_resource type="TileSet" uid="uid://bna2nixax04g8" path="res://src/levels/__ignore/tile_set/footprint_path.tres" id="6_ivw7k"]
+[ext_resource type="TileSet" uid="uid://bna2nixax04g8" path="res://src/levels/__ignore/tile_set/world_tile_sets/footprint_path.tres" id="6_ivw7k"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_oiy2o"]
 [ext_resource type="Texture2D" uid="uid://bvltvxeerhk8r" path="res://src/levels/_dream/footprint_path/thing_gray.png" id="7_83tvd"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="7_jwq7s"]

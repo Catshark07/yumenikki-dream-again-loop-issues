@@ -36,7 +36,9 @@ func _validate() -> bool: return true
 func execute() -> void: 
 	if call_limit > 0:
 		call_count += 1
-		if call_count > call_limit: return
+		if call_count > call_limit: 
+			__call_finished()
+			return
 	
 	# - first event call will have the "call_count" SET TO 1, NOT TO 0.
 	

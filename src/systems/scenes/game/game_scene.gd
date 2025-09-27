@@ -3,13 +3,11 @@
 class_name GameScene
 extends SceneNode
 
-@export_storage var test: NodePath
-
 @export_group("On Load \\ Free Sequences.")
 @export_tool_button("Create On-Initial") var create_initial: Callable 	= create_on_initial
 @export_tool_button("Create On-Free") 	 var create_free: Callable 		= create_on_free
-@export var seq_initial: Sequence
-@export var seq_free: Sequence
+@export var seq_initial	: Sequence
+@export var seq_free	: Sequence
 
 @export_group("Scene Exclusive Objects.")
 @export var scene_objects: Array[Node]
@@ -23,8 +21,9 @@ var save_invoker: EventListener
 	
 # - initial
 func _initialize() -> void: 
+	
 	process_mode = Node.PROCESS_MODE_DISABLED
-	save_invoker = EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
+	save_invoker = EventListener.new(self, "SCENE_CHANGE_REQUEST")
 	
 	if load_transition == null: 
 		load_transition = ShaderMaterial.new()

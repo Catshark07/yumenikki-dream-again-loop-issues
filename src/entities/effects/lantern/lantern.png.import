@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://vn6paag4ef7l"
-path="res://.godot/imported/lantern.png-10470d241b28867432579897fd73556a.ctex"
+path="res://.godot/imported/lantern.png-6e6c876092b4ab47b13dbe36b6919509.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/entities/sentients/effects/lantern/lantern.png"
-dest_files=["res://.godot/imported/lantern.png-10470d241b28867432579897fd73556a.ctex"]
+source_file="res://src/entities/effects/lantern/lantern.png"
+dest_files=["res://.godot/imported/lantern.png-6e6c876092b4ab47b13dbe36b6919509.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

@@ -1,21 +1,23 @@
 class_name Save
 extends Game.GameSubClass
 
-const TEMPLATE_DATA := {
-	"version" : "DEFAULT",
-	"game" : {
-		"completed" : false,
-		"read_warning" : false,
-		"time_played" : 00,
+static var TEMPLATE_DATA := {
+	"version" 	: "DEFAULT",
+	"game" 		: 
+		{
+		"completed" 	: false,
+		"read_warning" 	: false,
+		"time_played" 	: 00,
 		},
-	"global" : {
+	"global" 	: 
+		{
 		"flags" : {}
 		},
-	"player" : {},
-	"scene" : {}}
+	"player" 	: {},
+	"scene" 	: {}}
 
 static var time_elapsed: float
-static var data = Dictionary(TEMPLATE_DATA)
+static var data		: Dictionary
 static var curr_data: Dictionary
 
 const SAVE_DIR := "user://save/"
@@ -23,15 +25,20 @@ static var save_files: Array
 
 static func _setup() -> void:
 	time_elapsed = 0
+	
+	print(TEMPLATE_DATA.duplicate())
+	print(Dictionary(TEMPLATE_DATA))
+	
+	data = TEMPLATE_DATA.duplicate()
 	if !DirAccess.dir_exists_absolute(SAVE_DIR): 
 		DirAccess.make_dir_absolute(SAVE_DIR)
 
 static func save_data(_number: int = 0) -> void:
-	DirAccess.make_dir_absolute(SAVE_DIR)
+	if !DirAccess.dir_exists_absolute(SAVE_DIR): 
+		DirAccess.make_dir_absolute(SAVE_DIR)
 	
-	if curr_data.is_empty(): curr_data = Dictionary(data)
+	if curr_data.is_empty(): curr_data = data.duplicate()
 	var save_data_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.WRITE)
-	var curr_data: Dictionary = Dictionary(data)
 	
 	curr_data["version"] = Game.GAME_VER
 	curr_data["game"]["time_played"] = time_elapsed
@@ -44,7 +51,7 @@ static func save_data(_number: int = 0) -> void:
 	save_data_file.close()
 	save_data_file = null
 
-	EventManager.invoke_event("GAME_FILE_SAVE", [curr_data])
+	EventManager.invoke_event("GAME_FILE_SAVE", curr_data)
 static func load_data(_number: int = 0) -> Error:
 	if FileAccess.file_exists(str(SAVE_DIR, "save_%s.json" % [_number])): 
 		var load_file := FileAccess.open(str(SAVE_DIR, "save_%s.json" % [_number]), FileAccess.READ)

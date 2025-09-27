@@ -6,6 +6,8 @@ extends GUIPanel
 @export_category("Button Properties")
 
 signal pressed
+signal on_hover
+signal on_unhover
 
 # ---- constants ----
 const  button_display_texture_shader: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
@@ -20,11 +22,11 @@ const  button_display_texture_shader: Shader = preload("res://src/shaders/ui/but
 @export var button_display_texture: Texture = CanvasTexture.new()
 
 @export_group("Color Visuals")
-var curr_colour = Color.WHITE
-@export var normal_colour = Color(1, 1, 1)
-@export var hover_colour: Color = Color(1, 0.0, 0.23)
-@export var disabled_colour: Color = Color(0.35, 0.35, 0.45) 
-@export var press_colour: Color = Color(1, 1, 0)
+var curr_colour: 				Color = Color.WHITE
+@export var normal_colour: 		Color = Color(1, 1, 1)
+@export var hover_colour: 		Color = Color(1, 0.0, 0.23)
+@export var disabled_colour: 	Color = Color(0.35, 0.35, 0.45) 
+@export var press_colour: 		Color = Color(1, 1, 0)
 
 # ---- misc ----
 @export var abstract_button: AbstractButton
@@ -37,7 +39,7 @@ func _gui_input(event: InputEvent) -> void:
 func _children_components_setup() -> void:
 	super()
 	abstract_button = Utils.get_child_node_or_null(main_container, "abstract_button")
-	if abstract_button == null:
+	if 	abstract_button == null:
 		abstract_button = Utils.add_child_node(main_container, AbstractButton.new(), "abstract_button")
 
 func _additional_setup() -> void:	
@@ -54,6 +56,9 @@ func _additional_setup() -> void:
 		set_button_modulate(curr_colour)
 		
 	Utils.connect_to_signal(on_visibility_change, visibility_changed)
+	
+	Utils.connect_to_signal(on_hover.emit, 		abstract_button.hover_entered)
+	Utils.connect_to_signal(on_unhover.emit, 	abstract_button.hover_exited)
 	
 	Utils.connect_to_signal(_on_press, 		abstract_button.pressed)
 	Utils.connect_to_signal(_on_hover, 		abstract_button.hover_entered)

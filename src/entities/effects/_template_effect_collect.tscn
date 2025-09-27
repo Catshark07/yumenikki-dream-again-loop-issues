@@ -32,26 +32,33 @@ metadata/_custom_type_script = "uid://bkadpjx8csm75"
 script = ExtResource("3_6xq3u")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="request_cutscene_start" type="Node" parent="on_interact/effect_sequence"]
+[node name="request_cutscene_start" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next")]
 script = ExtResource("3_a8id6")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../append_effect")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="append_effect" type="Node" parent="on_interact/effect_sequence"]
+[node name="append_effect" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("3_ksobs")
+next = NodePath("../play_sound")
+prev = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_sound" type="Node" parent="on_interact/effect_sequence"]
+[node name="play_sound" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("3_rhkvi")
 sound = ExtResource("4_a8id6")
+next = NodePath("../notification")
+prev = NodePath("../append_effect")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="notification" type="Node" parent="on_interact/effect_sequence"]
+[node name="notification" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("5_a8id6")
 texts = PackedStringArray("[wave]you got an effect! access the inventory (ALT KEY) to use your effect.[/wave]")
+next = NodePath("../set_interactable_inactive")
+prev = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_interactable_inactive" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("node")]
+[node name="set_interactable_inactive" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("node", "next", "prev")]
 process_mode = 4
 script = ExtResource("9_55c36")
 node = NodePath("../../..")
@@ -65,19 +72,26 @@ property_info = {
 "usage": 4102
 }
 property_value = true
+next = NodePath("../wait_seconds")
+prev = NodePath("../notification")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait_seconds" type="Node" parent="on_interact/effect_sequence"]
+[node name="wait_seconds" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("9_rhkvi")
+seconds = 0.25
+next = NodePath("../request_cutscene_end")
+prev = NodePath("../set_interactable_inactive")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="on_interact/effect_sequence"]
+[node name="request_cutscene_end" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("prev")]
 script = ExtResource("3_a8id6")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../wait_seconds")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="save_node_data" type="Node" parent="."]
 script = ExtResource("7_55c36")
+properties = PackedStringArray("can_interact")
 metadata/_custom_type_script = "uid://bdm7kig80eqqk"
 
 [node name="rect" type="CollisionShape2D" parent="."]

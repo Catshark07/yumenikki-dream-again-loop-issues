@@ -3,10 +3,6 @@ extends Resource
 
 @export var auto_run: bool = false
 
-# ---- behaviour enter - exit ----
-func _enter(_pl: Player) -> void: pass	
-func _exit(_pl: Player) -> void: pass
-
 # ---- behaviour apply - unapply ----
 func _apply(_pl: Player) -> void: pass
 func _unapply(_pl: Player) -> void: pass

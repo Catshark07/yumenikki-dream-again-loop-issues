@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_vfmhg"]
 [ext_resource type="Texture2D" uid="uid://bxogmhf0ohc1c" path="res://src/entities/sentients/neon/nasu.png" id="2_vfmhg"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="3_cofr7"]
-[ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/levels/__ignore/template_effect_collect.tscn" id="4_cofr7"]
+[ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/entities/effects/_template_effect_collect.tscn" id="4_cofr7"]
 [ext_resource type="Resource" uid="uid://ncax1yyo23go" path="res://src/player/2D/madotsuki/effects/neon/neon.tres" id="5_6m5s6"]
 
 [node name="nasu" instance=ExtResource("1_vfmhg")]
