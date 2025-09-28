@@ -2,8 +2,8 @@ class_name State
 extends Node
 
 @export var transitionable: bool = true
-@export var transitions: Array[State]
-var transitions_dict: Dictionary[StringName, State]
+@export var transitions: 	Array[State]
+var transitions_dict: 		Dictionary[StringName, State]
 
 var fsm: 		FSM 	# - FSM that owns this state.
 var context: 	Node 	# - context / object that this state (and FSM) manipulates.

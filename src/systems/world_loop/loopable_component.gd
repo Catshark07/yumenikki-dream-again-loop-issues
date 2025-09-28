@@ -76,11 +76,11 @@ func setup_loop_nodes() -> void:
 			
 		# - if it already exists, then skip it.
 		if 		potential_dupe != null and dupe_nodes.has(potential_dupe): 
-			continue
+			dupe_nodes[i] = (potential_dupe)
 		
 		# - if it does exist but not in the array, then delete it.	
 		elif 	potential_dupe != null: 
-			dupe_nodes[i] = (potential_dupe)
+			potential_dupe.queue_free()
 			continue
 		
 		if first_dupe != null:

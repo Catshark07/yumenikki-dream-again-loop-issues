@@ -1,12 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://bl24ldxfxb508"]
+[gd_scene load_steps=30 format=3 uid="uid://bl24ldxfxb508"]
 
-[ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/menu/petal_pink.png" id="1_1btln"]
+[ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/menu/petal_wheel.png" id="1_1btln"]
 [ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="1_hnmhd"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jwvlf"]
 [ext_resource type="Texture2D" uid="uid://cs08f133r86y2" path="res://src/player/inventory/menu/mado.png" id="2_3hyeo"]
 [ext_resource type="Script" uid="uid://c26ss6y7br14h" path="res://src/player/inventory/pl_inventory.gd" id="2_6jr1t"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="2_f6805"]
-[ext_resource type="Texture2D" uid="uid://m68cqpctvey4" path="res://src/player/inventory/menu/petal_white.png" id="2_q6odh"]
 [ext_resource type="Script" uid="uid://d1yh57n73ftwa" path="res://src/player/inventory/pl_inventory_fsm.gd" id="3_im28w"]
 [ext_resource type="Texture2D" uid="uid://c6ybhwpcy6a4b" path="res://src/player/inventory/menu/inv_eff.png" id="3_qqfc2"]
 [ext_resource type="Shader" uid="uid://hsx1wbnb1rif" path="res://src/shaders/screen_overlay/bw_invert_blur.gdshader" id="4_f6805"]
@@ -32,8 +31,7 @@ script/source = "extends State
 @export var effects: Sprite2D
 @export var container: Control
 
-@export var spr_white_petal: Sprite2D
-@export var spr_pink_petal: Sprite2D
+@export var spr_petal_wheel: Sprite2D
 
 @export var overlay_modulate: ColorRect
 
@@ -82,11 +80,11 @@ func _state_exit() -> void:
 	section.visible = false
 
 func handle_animation_enter() -> void:
-	spr_pink_petal.rotation_degrees = -90
+	spr_petal_wheel.rotation_degrees = -90
 	
-	tween.tween_property(spr_pink_petal, \"rotation_degrees\", 0, 0.5)
+	tween.tween_property(spr_petal_wheel, \"rotation_degrees\", 0, 0.5)
 func handle_animation_exit() -> void: 
-	tween.tween_property(spr_pink_petal, \"rotation_degrees\", 90, 0.5)
+	tween.tween_property(spr_petal_wheel, \"rotation_degrees\", 90, 0.5)
 	
 "
 
@@ -99,8 +97,7 @@ script/source = "extends State
 @export var stats: Sprite2D
 @export var container: Control
 
-@export var spr_white_petal: Sprite2D
-@export var spr_pink_petal: Sprite2D
+@export var spr_petal_wheel: Sprite2D
 
 var tween: Tween
 var player_stats_changed: EventListener
@@ -155,10 +152,10 @@ func _state_exit() -> void:
 	section.visible = false
 
 func handle_animation_enter() -> void:
-	spr_white_petal.rotation_degrees = -90
-	tween.tween_property(spr_white_petal, \"rotation_degrees\", 0, 0.5)
+	spr_petal_wheel.rotation_degrees = -90
+	tween.tween_property(spr_petal_wheel, \"rotation_degrees\", 0, 0.5)
 func handle_animation_exit() -> void: 
-	tween.tween_property(spr_white_petal, \"rotation_degrees\", 90, 0.5)
+	tween.tween_property(spr_petal_wheel, \"rotation_degrees\", 90, 0.5)
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8vhxa"]
@@ -213,26 +210,24 @@ effect_indicator = NodePath("../display/pink_petal_effects/deequip/texture_rende
 initial_state = NodePath("PINK_PETAL")
 metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 
-[node name="PINK_PETAL" type="Node" parent="inventory_fsm" node_paths=PackedStringArray("section", "mado", "effects", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate", "transitions")]
+[node name="PINK_PETAL" type="Node" parent="inventory_fsm" node_paths=PackedStringArray("section", "mado", "effects", "container", "spr_petal_wheel", "overlay_modulate", "transitions")]
 script = SubResource("GDScript_8vhxa")
 section = NodePath("../../display/pink_petal_effects")
 mado = NodePath("../../display/pink_petal_effects/mado")
 effects = NodePath("../../display/pink_petal_effects/effects")
 container = NodePath("../../display/pink_petal_effects/inv_container")
-spr_white_petal = NodePath("../../display/spr_white_petal")
-spr_pink_petal = NodePath("../../display/spr_pink_petal")
+spr_petal_wheel = NodePath("../../display/spr_petal_wheel")
 overlay_modulate = NodePath("../../display/multiply_modulate")
 transitions = [NodePath("../WHITE_PETAL")]
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
-[node name="WHITE_PETAL" type="Node" parent="inventory_fsm" node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate", "transitions")]
+[node name="WHITE_PETAL" type="Node" parent="inventory_fsm" node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_petal_wheel", "overlay_modulate", "transitions")]
 script = SubResource("GDScript_ssbrt")
 section = NodePath("../../display/white_petal_stats")
 mado = NodePath("../../display/white_petal_stats/mado")
 stats = NodePath("../../display/white_petal_stats/stats")
 container = NodePath("../../display/white_petal_stats/stats_container")
-spr_white_petal = NodePath("../../display/spr_white_petal")
-spr_pink_petal = NodePath("../../display/spr_pink_petal")
+spr_petal_wheel = NodePath("../../display/spr_petal_wheel")
 overlay_modulate = NodePath("../../display/multiply_modulate")
 transitions = [NodePath("../PINK_PETAL")]
 metadata/_custom_type_script = "uid://r0etyaq71dla"
@@ -269,22 +264,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.975233, 0.589056, 0.846138, 1)
 
-[node name="spr_white_petal" type="Sprite2D" parent="display"]
+[node name="spr_petal_wheel" type="Sprite2D" parent="display"]
 modulate = Color(1, 1, 1, 0.490196)
 clip_children = 2
-position = Vector2(0, 134)
-rotation = -1.5708
-texture = ExtResource("2_q6odh")
-centered = false
-offset = Vector2(-389, -130)
-
-[node name="spr_pink_petal" type="Sprite2D" parent="display"]
-modulate = Color(1, 1, 1, 0.490196)
-clip_children = 2
-position = Vector2(0, 134)
+position = Vector2(0, 135)
 texture = ExtResource("1_1btln")
-centered = false
-offset = Vector2(-389, -130)
 
 [node name="pink_petal_effects" type="Control" parent="display"]
 layout_mode = 1

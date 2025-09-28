@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://c7vdqqrvfrv78" path="res://src/player/2D/madotsuki/effects/earring/earring.tres" id="2_umyly"]
 [ext_resource type="Resource" uid="uid://w1ycqdwy7pk8" path="res://src/player/2D/madotsuki/effects/bike/bike.tres" id="3_whws0"]
 [ext_resource type="Resource" uid="uid://b3ej66fhp7a0e" path="res://src/player/2D/madotsuki/effects/cat/cat.tres" id="4_nqydv"]
-[ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/2D/madotsuki/effects/medamude/medamude.tres" id="5_857tm"]
+[ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/2D/madotsuki/effects/medamude/medamaude.tres" id="5_857tm"]
 [ext_resource type="Resource" uid="uid://dtb7ixtykb6a0" path="res://src/player/2D/madotsuki/effects/lamp/lamp.tres" id="7_n07s2"]
 [ext_resource type="Resource" uid="uid://ncax1yyo23go" path="res://src/player/2D/madotsuki/effects/neon/neon.tres" id="7_umyly"]
 [ext_resource type="Resource" uid="uid://dee3tybqqh0yj" path="res://src/player/2D/madotsuki/effects/nopperabou/nopperabou.tres" id="8_whws0"]

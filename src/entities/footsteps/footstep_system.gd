@@ -63,7 +63,6 @@ var material_id: int = 0
 var sound_to_be_played: AudioStream
 
 @onready var multiple_floors := FootstepSet.new()
-@export var dust_particle: CPUParticles2D
 
 func _on_bypass_enabled() -> void:
 	multiple_floors.arr.clear()
@@ -149,7 +148,7 @@ func scan_ground_material() -> void:
 class FootstepDust:
 	extends SpriteSheetFormatterAnimated
 
-	func _init(_anim: CompressedTexture2D) -> void:
+	func _init(_anim: CompressedTexture2D, ) -> void:
 		Optimization.footstep_instances += 1
 		
 		self.frame_dimensions = Vector2i(48, 48)

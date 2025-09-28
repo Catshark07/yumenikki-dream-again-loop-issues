@@ -12,40 +12,39 @@ extends Resource
 @export var stamina_regen: float = Player.STAMINA_REGEN
 
 @export_group("Stats Flags.")
-@export var can_run: bool = Player.CAN_RUN
+@export var can_sprint: bool = Player.CAN_RUN
 @export var disable_drain: bool = false
 
 @export_group("Noise Multipliers")
 @export var walk_noise_mult: float = Player.WALK_NOISE_MULTI
 @export var sneak_noise_mult: float = Player.SNEAK_NOISE_MULTI
-@export var run_noise_mult: float = Player.RUN_NOISE_MULTI
+@export var sprint_noise_mult: float = Player.SPRINT_NOISE_MULTI
 
 func _apply(_pl: Player) -> void: 
-	_pl.walk_multiplier = self.walk_multi
-	_pl.sprint_multiplier = self.sprint_multi
-	_pl.sneak_multiplier = self.sneak_multi
-	_pl.exhaust_multiplier = self.exhaust_multi
+	if !_pl.can_sprint: _pl.force_change_state("idle"
+	)
+	_pl.walk_multiplier 	= self.walk_multi
+	_pl.sprint_multiplier 	= self.sprint_multi
+	_pl.sneak_multiplier 	= self.sneak_multi
+	_pl.exhaust_multiplier 	= self.exhaust_multi
 	
-	_pl.stamina_drain = self.stamina_drain
-	_pl.stamina_regen = self.stamina_regen
-	_pl.can_run = self.can_run	
-	if !_pl.can_run: _pl.force_change_state("idle")
+	_pl.stamina_drain 		= self.stamina_drain
+	_pl.stamina_regen 		= self.stamina_regen
+	_pl.can_sprint 			= self.can_sprint	
 	
-	_pl.walk_noise_mult = walk_noise_mult
-	_pl.sneak_noise_mult = sneak_noise_mult
-	_pl.run_noise_mult = run_noise_mult
+	_pl.walk_noise_mult 	= self.walk_noise_mult
+	_pl.sneak_noise_mult 	= self.sneak_noise_mult
+	_pl.sprint_noise_mult 	= self.sprint_noise_mult
 func _unapply(_pl: Player) -> void: 
-	_pl.walk_multiplier = Player.WALK_MULTI
-	_pl.sprint_multiplier = Player.SPRINT_MULTI
-	_pl.sneak_multiplier = Player.SNEAK_MULTI
-	_pl.exhaust_multiplier = Player.EXHAUST_MULTI
+	_pl.walk_multiplier 	= Player.WALK_MULTI
+	_pl.sprint_multiplier 	= Player.SPRINT_MULTI
+	_pl.sneak_multiplier 	= Player.SNEAK_MULTI
+	_pl.exhaust_multiplier 	= Player.EXHAUST_MULTI
 	
-	_pl.stamina_drain = Player.STAMINA_DRAIN
-	_pl.stamina_regen = Player.STAMINA_REGEN
-	_pl.can_run = Player.CAN_RUN
+	_pl.stamina_drain 		= Player.STAMINA_DRAIN
+	_pl.stamina_regen		= Player.STAMINA_REGEN
+	_pl.can_sprint 			= Player.CAN_RUN
 
-	_pl.walk_noise_mult = Player.WALK_NOISE_MULTI
-	_pl.sneak_noise_mult = Player.SNEAK_NOISE_MULTI
-	_pl.run_noise_mult = Player.RUN_NOISE_MULTI
-	
-func _physics_update(_delta: float, _pl: Player) -> void: pass
+	_pl.walk_noise_mult 	= Player.WALK_NOISE_MULTI
+	_pl.sneak_noise_mult 	= Player.SNEAK_NOISE_MULTI
+	_pl.sprint_noise_mult 	= Player.SPRINT_NOISE_MULTI

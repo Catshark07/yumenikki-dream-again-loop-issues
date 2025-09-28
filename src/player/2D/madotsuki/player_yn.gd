@@ -26,6 +26,13 @@ var action: PLAction
 func _ready() -> void:
 	super()
 	equip(Instance.equipment_pending, true)
+	
+	Utils.connect_to_signal(handle_sprint, 	quered_sprint_start)
+	Utils.connect_to_signal(handle_sneak, 	quered_sneak_start)
+	
+	Utils.connect_to_signal(handle_walk, 	quered_sprint_end)
+	Utils.connect_to_signal(handle_walk, 	quered_sneak_end)
+	
 func _enter() -> void:
 	super()
 	if GameManager.global_player_components != null: 

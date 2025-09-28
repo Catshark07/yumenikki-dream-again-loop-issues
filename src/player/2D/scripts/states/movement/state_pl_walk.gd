@@ -3,8 +3,9 @@ var library_path := "normal"
 
 
 func _state_enter() -> void:
+	sentient.handle_walk()
 	if sentient.get_behaviour().auto_run: 
-		request_transition_to("run")
+		request_transition_to("sprint")
 		return
 		
 	(sentient as Player_YN).set_texture_using_sprite_sheet("walk")
@@ -12,15 +13,16 @@ func _state_enter() -> void:
 	sentient.noise_multi = sentient.walk_noise_mult
 	
 func _state_update(_delta: float) -> void:
-	if sentient.desired_speed >= (sentient.sprint_multiplier * sentient.BASE_SPEED) and sentient.can_run:
-		request_transition_to("run")
+	if 	sentient.desired_speed >= \
+		sentient.get_calculated_speed(sentient.sprint_multiplier) and sentient.can_sprint:
+			request_transition_to("sprint")
+	
 	if sentient.get_behaviour().auto_run: 
-		request_transition_to("run")
+		request_transition_to("sprint")
 		return
 
 func _state_physics_update(_delta: float) -> void:
-	
-	if sentient.is_exhausted:  	sentient.handle_velocity((sentient as Player).sneak_multiplier)
+	if sentient.is_exhausted:  	sentient.handle_velocity((sentient as Player).exhaust_multiplier)
 	else:						sentient.handle_velocity((sentient as Player).walk_multiplier)
 	
 	sentient.get_behaviour()._walk(sentient)

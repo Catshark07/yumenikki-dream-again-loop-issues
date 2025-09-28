@@ -26,8 +26,8 @@ func save_scene_data(_scene: SceneNode) -> void:
 		var save_dict: Dictionary = node.save_data()
 		for key in save_dict.keys():
 			
-			if node.global:		data[NodeSaveService.GLOBAL_DIR]["data"][key] = save_dict[key]
-			else:				data[scene_path]["data"][key] = save_dict[key]
+			if node.global:		data[NodeSaveService.GLOBAL_DIR]["data"][key] 	= save_dict[key]
+			else:				data[scene_path]["data"][key] 					= save_dict[key]
 				
 func load_scene_data(_scene: SceneNode) -> void:
 	var node_saves = Utils.get_group_arr(NODE_SAVE_GROUP_ID) as Array[SaveRequest]

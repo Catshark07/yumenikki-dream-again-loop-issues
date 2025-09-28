@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/entities/effects/_template_effect_collect.tscn" id="17_bwsrp"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="18_3pj81"]
 [ext_resource type="Script" uid="uid://b2je1meyfnp7s" path="res://src/systems/sequencing/grouped_event_interface.gd" id="18_chr53"]
-[ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/2D/madotsuki/effects/medamude/medamude.tres" id="18_epmdn"]
+[ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/2D/madotsuki/effects/medamude/medamaude.tres" id="18_epmdn"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="18_y6rev"]
 [ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="19_r2b8w"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="20_5siph"]

@@ -8,9 +8,6 @@ extends SentientBase
 var data: PLAttributeData
 
 @export_group("Mobility Multiplier")
-@export_storage var walk_multiplier: float = WALK_MULTI
-@export_storage var sneak_multiplier: float = SNEAK_MULTI
-@export_storage var sprint_multiplier: float = SPRINT_MULTI
 @export_storage var exhaust_multiplier: float = EXHAUST_MULTI
 
 @export_group("Stamina Modifier")
@@ -33,7 +30,7 @@ const STAMINA_DRAIN: 		float = .78
 const STAMINA_REGEN: 		float = .8
 
 var walk_noise_mult: 	float = WALK_NOISE_MULTI
-var run_noise_mult: 	float = RUN_NOISE_MULTI
+var sprint_noise_mult: 	float = SPRINT_NOISE_MULTI
 var sneak_noise_mult: 	float =SNEAK_NOISE_MULTI
 
 #endregion ---- data variables ----

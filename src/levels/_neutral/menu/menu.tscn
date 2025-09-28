@@ -79,6 +79,14 @@ shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
 shader_parameter/gradient = SubResource("GradientTexture1D_uj1l6")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7jyh"]
+shader = ExtResource("7_dwoed")
+shader_parameter/first_color = Color(0, 0, 0, 1)
+shader_parameter/second_color = Color(0, 0, 0, 0)
+shader_parameter/position = 0.0
+shader_parameter/size = 1.0
+shader_parameter/angle = 0.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vexp4"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
@@ -103,21 +111,13 @@ shader_parameter/position = 0.0
 shader_parameter/size = 1.0
 shader_parameter/angle = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
-shader = ExtResource("7_dwoed")
-shader_parameter/first_color = Color(0, 0, 0, 1)
-shader_parameter/second_color = Color(0, 0, 0, 0)
-shader_parameter/position = 0.0
-shader_parameter/size = 1.0
-shader_parameter/angle = 0.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jissf"]
 shader = ExtResource("9_omn5r")
 shader_parameter/blur_amount = 1.5
 shader_parameter/pixel_size = 400.0
 shader_parameter/contrast = 1.14
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7o6ls"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -196,7 +196,7 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/menu/new_game/main_container" index="0"]
-material = SubResource("ShaderMaterial_vexp4")
+material = SubResource("ShaderMaterial_d7jyh")
 
 [node name="text_display" parent="ui/menu/new_game/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
 text = "New Game"
@@ -230,7 +230,7 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/menu/load_game/main_container" index="0"]
-material = SubResource("ShaderMaterial_msekq")
+material = SubResource("ShaderMaterial_vexp4")
 
 [node name="text_display" parent="ui/menu/load_game/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
 text = "Load Game"
@@ -264,7 +264,7 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/menu/credits/main_container" index="0"]
-material = SubResource("ShaderMaterial_37vgk")
+material = SubResource("ShaderMaterial_msekq")
 
 [node name="text_display" parent="ui/menu/credits/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
 text = "Credits"
@@ -298,7 +298,7 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/menu/quit_to_desktop/main_container" index="0"]
-material = SubResource("ShaderMaterial_wx1ft")
+material = SubResource("ShaderMaterial_37vgk")
 
 [node name="text_display" parent="ui/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
 text = "Quit to Desktop"
@@ -344,7 +344,7 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton/main_container" index="0"]
-material = SubResource("ShaderMaterial_7o6ls")
+material = SubResource("ShaderMaterial_wx1ft")
 
 [node name="abstract_button" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton/main_container" index="2" node_paths=PackedStringArray("button")]
 button = NodePath("button")
@@ -379,9 +379,10 @@ offset_right = 565.0
 offset_bottom = 375.0
 texture = ExtResource("4_37vgk")
 
-[node name="bgm" type="Node" parent="on_initial"]
+[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
 script = ExtResource("17_ppdc2")
 stream = ExtResource("2_37vgk")
+prev = NodePath("../panorama")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="on_free" type="Node" parent="."]

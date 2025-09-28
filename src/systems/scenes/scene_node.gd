@@ -7,7 +7,7 @@ var lonely: bool = true
 func set_node_active(active: Node.ProcessMode) -> void:
 	self.set_process_mode.call_deferred(active)
 
-# -- concrete
+# - concrete
 func _ready() -> void:
 	self.add_to_group("scene_node")
 
@@ -17,7 +17,7 @@ func initialize() -> void:
 		initialized = true
 		_initialize()
 
-# -- virtual 
+# - virtual 
 func _initialize() -> void: pass
 
 func _on_pop() -> void:

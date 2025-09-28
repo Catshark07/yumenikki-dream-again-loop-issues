@@ -49,8 +49,7 @@ func _unapply(_pl: Player) -> void:
 	
 	(_pl as Player_YN).set_sprite_sheet(load(Player.Instance.DEFAULT_EQUIPMENT.sprite_override))
 	
-func _use(_pl: Player) -> void: 
-	use_times += 1
-	(_pl as Player_YN).perform_action(primary_action)
+func _primary_use(_pl: Player) 		-> void: pass
+func _secondary_use(_pl: Player) 	-> void: pass
 
 # ---- misc. getters.

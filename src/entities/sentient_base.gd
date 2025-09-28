@@ -24,9 +24,13 @@ const SNEAK_MULTI: 			float = 0.735
 const SPRINT_MULTI: 		float = 2.9
 
 const WALK_NOISE_MULTI: 	float = 1
-const RUN_NOISE_MULTI: 		float = 2.2
+const SPRINT_NOISE_MULTI: 	float = 2.2
 const SNEAK_NOISE_MULTI: 	float = 0.5
 
+# - move values.
+@export_storage var walk_multiplier: 	float = WALK_MULTI
+@export_storage var sneak_multiplier: 	float = SNEAK_MULTI
+@export_storage var sprint_multiplier: 	float = SPRINT_MULTI
 
 # - components (sprites).
 @export var sprite_renderer: Sprite2D
@@ -50,17 +54,17 @@ var lerped_direction: Vector2 = Vector2.DOWN
 @export_category("Base Entity Behaviour")
 @export_group("Mobility Values")
 
-var speed_multiplier: float = 1
-var speed: float = 0
+var speed_multiplier: 	float = 1
+var speed: 				float = 0
+var desired_speed: 		float
 var desired_vel: Vector2
-var desired_speed: float
 
 @export_group("Auditorial")
 var noise_multi: 	float = 1
 
 # - flags
 var is_moving: 	bool = false
-var can_run: 	bool = true
+var can_sprint: bool = true
 var can_sneak:	bool = true
 
 # - initial.
@@ -112,7 +116,7 @@ func handle_velocity(_multi: float = 1) -> void:
 	self.velocity = Vector2(desired_vel * speed_multiplier).limit_length(MAX_SPEED) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
 func handle_desired_velocity(_dir: Vector2) -> void:
-	desired_vel = ((_dir.normalized() * BASE_SPEED))
+	desired_vel 	= ((_dir.normalized() * BASE_SPEED)) * speed_multiplier
 	desired_speed 	= desired_vel.length()
 
 # - direction handling.
@@ -122,13 +126,17 @@ func handle_direction(_dir: Vector2) -> void:
 		lerped_direction = lerped_direction.lerp(_dir, 1)
 func handle_heading() -> void:
 		if abs(direction.x) > .5: 
-			if direction.y > .5: heading = compass_headings.SOUTH_HORIZ
-			elif direction.y < -.5: heading = compass_headings.NORTH_HORIZ
-			else: heading = compass_headings.HORIZ
+			if 		direction.y > .5: heading = compass_headings.SOUTH_HORIZ
+			elif 	direction.y < -.5: heading = compass_headings.NORTH_HORIZ
+			else: 	heading = compass_headings.HORIZ
 		else:
-			if direction.y > .5: heading = compass_headings.SOUTH
-			elif direction.y < -.5: heading = compass_headings.NORTH
+			if 		direction.y > .5	: heading = compass_headings.SOUTH
+			elif 	direction.y < -.5	: heading = compass_headings.NORTH
 
 # - movement logic related.
-func handle_sneak() -> void: pass
-func handle_run() -> void: pass
+func handle_walk() 		-> void:  speed_multiplier = walk_multiplier
+func handle_sneak() 	-> void: if can_sprint: speed_multiplier = sneak_multiplier
+func handle_sprint() 	-> void: if can_sneak: 	speed_multiplier = sprint_multiplier
+
+func get_calculated_speed(_speed_mult: float) -> float:
+	return (BASE_SPEED * _speed_mult)

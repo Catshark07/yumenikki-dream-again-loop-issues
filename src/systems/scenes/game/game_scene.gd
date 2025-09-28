@@ -55,12 +55,13 @@ func clear_all_objects() -> void:
 		var obj = scene_objects[i]
 		if obj != null:
 			obj.free()
-			
 	scene_objects.clear()
 
 # - stack functions.	
 func _on_push() -> void: 
 	load_scene()
+	save_scene()
+	
 	process_mode = Node.PROCESS_MODE_INHERIT
 	
 	for s in Utils.get_group_arr("actors"): 

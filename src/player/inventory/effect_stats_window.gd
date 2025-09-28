@@ -7,7 +7,7 @@ var player: Player
 @export var sneak_speed: Control
 @export var exhaust_speed: Control
 
-@export var can_run: Control
+@export var can_sprint: Control
 @export var stamina_regen: Control
 @export var stamina_decay: Control
 
@@ -35,7 +35,7 @@ func update_stats_display(_effect: PLEffect) -> void:
 	handle_stats_display_value(sneak_speed, "SNEAK SPEED: %.2f m/s" % 		(_effect.decorator.sneak_multi * SentientBase.BASE_SPEED / 16))
 	handle_stats_display_value(exhaust_speed, "EXHAUST SPEED: %.2f m/s" % 	(_effect.decorator.exhaust_multi * SentientBase.BASE_SPEED / 16))
 	
-	handle_stats_display_value(can_run, "CAN RUN?: %s" 						% _effect.decorator.can_run)
+	handle_stats_display_value(can_sprint, "CAN SPRINT?: %s" 					% _effect.decorator.can_sprint)
 	handle_stats_display_value(stamina_regen, "STAMINA REGEN: +%.2f stam/s" % _effect.decorator.stamina_regen)
 	handle_stats_display_value(stamina_decay, "STAMINA DRAIN: -%.2f stam/s" % _effect.decorator.stamina_drain)
 	
@@ -44,7 +44,7 @@ func update_stats_display(_effect: PLEffect) -> void:
 	handle_stats_display_improvement(sneak_speed, _effect.decorator.sneak_multi, default_player_stats.decorator.sneak_multi)
 	handle_stats_display_improvement(exhaust_speed, _effect.decorator.exhaust_multi, default_player_stats.decorator.exhaust_multi)
 			
-	handle_stats_display_improvement(can_run, _effect.decorator.can_run, default_player_stats.decorator.can_run)
+	handle_stats_display_improvement(can_sprint, _effect.decorator.can_sprint, default_player_stats.decorator.can_sprint)
 	handle_stats_display_improvement(stamina_regen, _effect.decorator.stamina_regen, default_player_stats.decorator.stamina_regen)
 	handle_stats_display_improvement(stamina_decay, -_effect.decorator.stamina_drain, -default_player_stats.decorator.stamina_drain)
 				

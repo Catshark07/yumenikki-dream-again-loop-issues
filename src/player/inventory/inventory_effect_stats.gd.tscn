@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stats_stamina.png" id="4_m5a7d"]
 [ext_resource type="Texture2D" uid="uid://bthea7xsvafa5" path="res://src/player/inventory/stats_neutral.png" id="5_2csn3"]
 
-[node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "exhaust_speed", "can_run", "stamina_regen", "stamina_decay")]
+[node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "exhaust_speed", "can_sprint", "stamina_regen", "stamina_decay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +22,7 @@ walk_speed = NodePath("stats_container/margin/vbox/walk_speed")
 sprint_speed = NodePath("stats_container/margin/vbox/sprint_speed")
 sneak_speed = NodePath("stats_container/margin/vbox/sneak_speed")
 exhaust_speed = NodePath("stats_container/margin/vbox/exhaust_speed")
-can_run = NodePath("stats_container/margin/vbox/can_run")
+can_sprint = NodePath("stats_container/margin/vbox/can_sprint")
 stamina_regen = NodePath("stats_container/margin/vbox/stamina_regen")
 stamina_decay = NodePath("stats_container/margin/vbox/stamina_decay")
 
@@ -117,15 +117,15 @@ layout_mode = 2
 texture = ExtResource("4_m5a7d")
 stretch_mode = 2
 
-[node name="can_run" type="HBoxContainer" parent="stats_container/margin/vbox"]
+[node name="can_sprint" type="HBoxContainer" parent="stats_container/margin/vbox"]
 layout_mode = 2
 
-[node name="text" type="Label" parent="stats_container/margin/vbox/can_run"]
+[node name="text" type="Label" parent="stats_container/margin/vbox/can_sprint"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "Can Run: xx"
+text = "Can Sprint: xx"
 
-[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/can_run"]
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/can_sprint"]
 layout_mode = 2
 texture = ExtResource("5_2csn3")
 
