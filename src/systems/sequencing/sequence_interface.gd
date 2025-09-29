@@ -3,24 +3,27 @@
 class_name Sequence extends Event
 
 var time_elapsed: float = 0 
+var priority: int = 0
 
 var order: Array
 var marked_invalid: PackedInt32Array
+var bail_requested: 				bool = false
 
-var priority: int = 0
-var bail_requested: bool = false
-
+@export_tool_button("Re-initialize Sequence Order") var reinitialize: Callable = initialize
 @export_group("Sequence Flags.")
-@export var skip_invalid_events: bool = false
-@export var async: bool = false
+
+@export var skip_invalid_events: 	bool = false
+@export var async: 					bool = false
+@export var initialized: 			bool = false
 
 var front: Event
 var back: Event
 
+# - signals
 signal success
 signal fail
 
-func _ready() -> void:
+func initialize() -> void:
 	order = get_children()	
 	if order.is_empty(): return
 	
@@ -36,6 +39,10 @@ func _ready() -> void:
 			_next = order[j]
 			_curr.next = _next
 			_next.prev = _curr
+func _ready() -> void:
+	if !initialized: 
+		initialized = true
+		initialize()
 
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.

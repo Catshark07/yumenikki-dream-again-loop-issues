@@ -12,29 +12,31 @@
 script = ExtResource("1_f1f8c")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-scene_objects = [NodePath("on_initial"), NodePath("on_free")]
+scene_objects = [NodePath(""), NodePath("on_free"), NodePath("on_initial")]
 load_transition = SubResource("ShaderMaterial_2gamr")
 unload_transition = SubResource("ShaderMaterial_ghjxp")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="on_initial" type="Node" parent="."]
+[node name="on_free" type="Node" parent="."]
 script = ExtResource("2_2gamr")
+initialized = true
 
-[node name="Event" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
+[node name="Event" type="Node" parent="on_free" node_paths=PackedStringArray("next")]
 script = ExtResource("3_ghjxp")
 next = NodePath("../Event2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="Event2" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
+[node name="Event2" type="Node" parent="on_free" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("3_ghjxp")
 next = NodePath("../Event3")
 prev = NodePath("../Event")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="Event3" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
+[node name="Event3" type="Node" parent="on_free" node_paths=PackedStringArray("prev")]
 script = ExtResource("3_ghjxp")
 prev = NodePath("../Event2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="on_free" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="."]
 script = ExtResource("2_2gamr")
+initialized = true
