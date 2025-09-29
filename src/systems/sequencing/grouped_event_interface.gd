@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _execute() -> void:
 	# - if the sequence is not valid, we halt and not run it.
-	if !_validate_event_order():
+	if !validate_event_order():
 		printerr("GROUPED EVENT %s :: G. EVENT halted due to invalid events!" % (self.name)) 
 		return
 	
@@ -34,7 +34,7 @@ func _execute() -> void:
 			event.end() 
 	
 
-func _validate_event_order() -> bool:
+func validate_event_order() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
 	# checking for any missing dependencies, has the corect properties, etc.
 	

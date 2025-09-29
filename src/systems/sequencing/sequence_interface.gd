@@ -10,9 +10,12 @@ var marked_invalid: PackedInt32Array
 var priority: int = 0
 var bail_requested: bool = false
 
+@export_tool_button("Re-initialize Sequence Order") var reinitialize := initialize
+
 @export_group("Sequence Flags.")
-@export var skip_invalid_events: bool = false
-@export var async: bool = false
+@export var skip_invalid_events	: bool = false
+@export var async				: bool = false
+@export_storage var initialized	: bool = false
 
 var front: Event
 var back: Event
@@ -27,6 +30,11 @@ func _ready() -> void:
 	front = order[0]
 	back = order[order.size() - 1]
 	
+	if !initialized:
+		initialized = true
+		initialize()
+		
+func initialize() -> void:
 	for i: int in range(order.size()):
 		var j := i + 1
 		var _curr: 	Event = order[i]
@@ -43,7 +51,7 @@ func _execute() -> void:
 		return
 	
 	# - if the sequence is not valid, we halt and not run it.
-	if !_validate_event_order():
+	if !validate_event_order():
 		printerr("SEQUENCE %s :: Sequence halted due to invalid events!" % (self.name)) 
 		return
 	
@@ -66,7 +74,7 @@ func _execute() -> void:
 func _cancel() -> void:
 	bail_requested = true	
 			 
-func _validate_event_order() -> bool:
+func validate_event_order() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
 	# checking for any missing dependencies, has the corect properties, etc.
 	for i in range(order.size()):
