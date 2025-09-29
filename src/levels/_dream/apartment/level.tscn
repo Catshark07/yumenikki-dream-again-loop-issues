@@ -190,6 +190,7 @@ global = true
 
 [node name="on_initial" type="Node" parent="."]
 script = ExtResource("12_yglpt")
+initialized = true
 
 [node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
 script = ExtResource("10_3ak1f")
@@ -233,12 +234,2183 @@ scroll_offset = Vector2(240, 260)
 [node name="Hills" type="Sprite2D" parent="on_initial/panorama (top_layer)/Parallax2D"]
 texture = ExtResource("12_ykehj")
 
-[node name="if_dream_just_started" type="Node" parent="on_initial" node_paths=PackedStringArray("input_objects")]
+[node name="if_dream_just_started" type="Node" parent="on_initial" node_paths=PackedStringArray("input_objects", "else_conditional")]
 script = ExtResource("26_w758d")
-expression = "!flag.properties[\"dream_start\"]"
+expression = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("25_rdrme"),"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_yglpt"),"node":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("24_3ak1f"),"properties":Dictionary[String, Variant]({
+"dream_start": false
+}),"properties_saver":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":null,"properties":PackedStringArray("properties"),"global":true)
+,"skip_save":false,"global_data":false,"metadata/_custom_type_script":"uid://0li2ud4tbkf5")
+,"property_name":"properties","property_info":{
+"class_name": &"",
+"hint": 23,
+"hint_string": "4:;0:",
+"name": "properties",
+"type": 27,
+"usage": 4102
+},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({
+"dream_start": false
+}),"new_value":Dictionary[String, Variant]({
+"dream_start": true
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("13_37yy6"),"event_id":"CUTSCENE_END_REQUEST","params":[],"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"next":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":null,"node":null,"property_name":"properties","property_info":{},"property_exists_in_node":true,"property_value":Dictionary[String, Variant]({}),"new_value":Dictionary[String, Variant]({}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"next":null,"prev":null,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":null,"method_exists_in_node":true,"node":null,"method_name":"set_bypass","method_info":{},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([]),"internal_args":Dictionary[String, Variant]({}),"internal_args":Dictionary[String, Variant]({}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"prev":Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("14_hh4cm"),"method_exists_in_node":true,"node":Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":Resource("res://src/entities/component/sb_component_receiver.gd"),"sentient":null,"components":[],"affector":null,"bypass":false,"independent":false)
+,"method_name":"set_bypass","method_info":{
+"args": Array[Dictionary]([{
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "_bypass",
+"type": 1,
+"usage": 0
+}]),
+"default_args": [],
+"flags": 1,
+"id": 0,
+"name": "set_bypass",
+"return": {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "",
+"type": 0,
+"usage": 6
+}
+},"new_process_mode":0,"change_process_mode":false,"old_process_mode":0,"all_methods":Array[Dictionary]([{}]),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"internal_args":Dictionary[String, Variant]({
+"_bypass": false
+}),"deferred":true,"wait_til_finished":true,"skip":false,"call_limit":0,"call_count":0,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+,"is_finished":false,"metadata/_custom_type_script":"uid://0v2nidb8jsha")
+
 input_objects = {
 "flag": NodePath("../../set_dream_start_to_true")
 }
+else_conditional = NodePath("request_cutscene_start")
+skip_invalid_events = null
+initialized = null
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
 [node name="request_cutscene_start" type="Node" parent="on_initial/if_dream_just_started" node_paths=PackedStringArray("next")]

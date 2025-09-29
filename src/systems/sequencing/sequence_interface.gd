@@ -55,36 +55,39 @@ func _execute() -> void:
 		printerr("SEQUENCE %s :: Sequence halted due to invalid events!" % (self.name)) 
 		return
 	
+	var event: Event = null
 	# - we iterate thru the events..
-	for e in range(order.size()):
-		# - make sure that the child is of type Event.
-		var event = order[e]
-		if event != null and event is Event:
-			
-			print(event.skip)
-			if e in marked_invalid or event.skip : continue # - we skip any events marked for skip / as invalid.
-			
-			event.execute() 
+	if 	front != null:
+		
+		event = front
+		while(event.has_next()):
+			if event.get_instance_id() in marked_invalid or event.skip: 
+				continue # - we skip any events marked for skip / as invalid.
+				
+			event.execute()
 			if event.wait_til_finished: await event.finished
 			event.end()
+
+			event = event.next
 			
 			if bail_requested: 
 				bail_requested = false
 				return
+
 func _cancel() -> void:
 	bail_requested = true	
 			 
 func validate_event_order() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
 	# checking for any missing dependencies, has the corect properties, etc.
-	for i in range(order.size()):
-		var event: Event = order[i] # - current event.
-		if event.skip: continue 
-		if event == null or !event._validate():
+	for i: Event in order:
+		if i.skip: continue 
+		if i == null or !i._validate():
 			# - if event is invalid...
-			if skip_invalid_events: marked_invalid.append(i) # - we mark invalid events to be skipped.
+			
+			if skip_invalid_events: marked_invalid.append(i.get_instance_id()) # - we mark invalid events to be skipped.
 			else:
-				printerr("SEQUENCE %s :: Sequence halted due to invalid event: %s!" % [self.name, event.name]) 
+				printerr("SEQUENCE %s :: Sequence halted due to invalid event: %s!" % [self.name, i.name]) 
 				fail.emit()
 				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 		
