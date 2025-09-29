@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dewrm6chyaasf"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_f1f8c"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="2_2gamr"]
+[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/sequencing/event_interface.gd" id="3_ghjxp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2gamr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ghjxp"]
+
+[node name="Ee" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
+script = ExtResource("1_f1f8c")
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
+scene_objects = [NodePath("on_initial"), NodePath("on_free")]
+load_transition = SubResource("ShaderMaterial_2gamr")
+unload_transition = SubResource("ShaderMaterial_ghjxp")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="on_initial" type="Node" parent="."]
+script = ExtResource("2_2gamr")
+
+[node name="Event" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
+script = ExtResource("3_ghjxp")
+next = NodePath("../Event2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Event2" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
+script = ExtResource("3_ghjxp")
+next = NodePath("../Event3")
+prev = NodePath("../Event")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Event3" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
+script = ExtResource("3_ghjxp")
+prev = NodePath("../Event2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="on_free" type="Node" parent="."]
+script = ExtResource("2_2gamr")

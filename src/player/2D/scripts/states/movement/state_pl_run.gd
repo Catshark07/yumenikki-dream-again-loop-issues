@@ -5,9 +5,6 @@ extends SBState
 var library_path := "normal"
 
 func _state_enter() -> void: 	
-	print(sentient.speed_multiplier)
-	print(sentient.get_calculated_speed(sentient.speed_multiplier))
-	
 	(sentient as Player_YN).set_texture_using_sprite_sheet("run")
 	sentient.components.get_component_by_name("animation_manager").play_animation(str(library_path, '/', "run"))
 	sentient.noise_multi = sentient.sprint_noise_mult
