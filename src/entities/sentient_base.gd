@@ -19,13 +19,13 @@ const TRANS_WEIGHT:	float = 0.225
 const BASE_SPEED: 	float = 27.5
 const MAX_SPEED: 	float = 95
 
-const WALK_MULTI: 			float = 1.25
-const SNEAK_MULTI: 			float = 0.735
+const WALK_MULTI: 			float = 1.12
+const SNEAK_MULTI: 			float = 0.835
 const SPRINT_MULTI: 		float = 2.9
 
 const WALK_NOISE_MULTI: 	float = 1
 const SPRINT_NOISE_MULTI: 	float = 2.2
-const SNEAK_NOISE_MULTI: 	float = 0.5
+const SNEAK_NOISE_MULTI: 	float = 0.3
 
 # - move values.
 @export_storage var walk_multiplier: 	float = WALK_MULTI
@@ -112,8 +112,7 @@ func _sb_input(_event: InputEvent) -> void:
 func handle_noise() -> void:
 	noise = (self.speed / self.MAX_SPEED) * noise_multi
 func handle_velocity(_multi: float = 1) -> void:
-	speed_multiplier = _multi
-	self.velocity = Vector2(desired_vel * speed_multiplier).limit_length(MAX_SPEED) 
+	self.velocity = Vector2(desired_vel * _multi).limit_length(MAX_SPEED) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
 func handle_desired_velocity(_dir: Vector2) -> void:
 	desired_vel 	= ((_dir.normalized() * BASE_SPEED)) * speed_multiplier
@@ -135,8 +134,8 @@ func handle_heading() -> void:
 
 # - movement logic related.
 func handle_walk() 		-> void:  speed_multiplier = walk_multiplier
-func handle_sneak() 	-> void: if can_sprint: speed_multiplier = sneak_multiplier
-func handle_sprint() 	-> void: if can_sneak: 	speed_multiplier = sprint_multiplier
+func handle_sprint() 	-> void: if can_sprint: 	speed_multiplier = sprint_multiplier
+func handle_sneak() 	-> void: if can_sneak: 		speed_multiplier = sneak_multiplier
 
 func get_calculated_speed(_speed_mult: float) -> float:
 	return (BASE_SPEED * _speed_mult)

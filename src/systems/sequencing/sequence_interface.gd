@@ -17,24 +17,25 @@ var bail_requested: bool = false
 @export var async				: bool = false
 @export_storage var initialized	: bool = false
 
-var front: Event
-var back: Event
+@export_group("Front and Back.")
+@export var front: Event
+@export var back: Event
 
 signal success
 signal fail
 
 func _ready() -> void:
-	order = get_children()	
-	if order.is_empty(): return
-	
-	front = order[0]
-	back = order[order.size() - 1]
-	
 	if !initialized:
 		initialized = true
 		initialize()
 		
 func initialize() -> void:
+	order = get_children()	
+	if order.is_empty(): return
+	
+	front = order[0]
+	back = order[order.size() - 1]
+		
 	for i: int in range(order.size()):
 		var j := i + 1
 		var _curr: 	Event = order[i]
@@ -58,12 +59,13 @@ func _execute() -> void:
 	var event: Event = null
 	# - we iterate thru the events..
 	if 	front != null:
-		
 		event = front
+		
 		while(event.has_next()):
 			if event.get_instance_id() in marked_invalid or event.skip: 
 				continue # - we skip any events marked for skip / as invalid.
 				
+			print(event)
 			event.execute()
 			if event.wait_til_finished: await event.finished
 			event.end()

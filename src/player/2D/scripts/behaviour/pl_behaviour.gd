@@ -1,7 +1,7 @@
 class_name PLBehaviour
 extends Resource
 
-@export var auto_run: bool = false
+@export var auto_sprint: bool = false
 
 # ---- behaviour apply - unapply ----
 func _apply		(_pl: Player) -> void: pass
@@ -10,9 +10,9 @@ func _unapply	(_pl: Player) -> void: pass
 # ---- movement ----
 func _idle	(_pl: Player) -> void:  pass
 func _walk	(_pl: Player) -> void:  _pl.handle_direction(_pl.dir_input)
-func _run	(_pl: Player) -> void:   _pl.handle_direction(_pl.vel_input)
+func _run	(_pl: Player) -> void:  _pl.handle_direction(_pl.vel_input)
 		
-func _sneak	(_pl: Player) -> void: _pl.handle_direction(_pl.dir_input)
+func _sneak	(_pl: Player) -> void: 	_pl.handle_direction(_pl.dir_input)
 
 func _climb	(_pl: Player) -> void: pass
 

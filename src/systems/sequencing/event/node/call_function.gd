@@ -97,12 +97,13 @@ func _get_property_list() -> Array[Dictionary]:
 	
 func _set(_property: StringName, _value: Variant) -> bool:
 	if !method_exists_in_node: return false
-	
+
 	for arg in method_info["args"]:
+
 		if _property == arg["name"]:
 			internal_args[_property] = _value
 			return true
-				
+
 	return false
 
 func _get(_property: StringName):

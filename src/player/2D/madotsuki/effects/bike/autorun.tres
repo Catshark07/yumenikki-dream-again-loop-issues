@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_6iq4v")
-auto_run = true
+auto_sprint = true
 metadata/_custom_type_script = "uid://bxqbtaovh6aka"

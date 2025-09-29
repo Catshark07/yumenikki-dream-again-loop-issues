@@ -3,9 +3,11 @@ extends State
 func _state_enter() -> void: 
 	EventManager.invoke_event("PLAYER_EXHAUST")
 	Player.Instance.get_pl().is_exhausted = true
+	Player.Instance.get_pl().can_sprint = false
 
 func _state_exit() -> void: 
 	Player.Instance.get_pl().is_exhausted = false
+	Player.Instance.get_pl().can_sprint = true
 	Player.Instance.get_pl().stamina = Player.MAX_STAMINA
 	Player.Instance.get_pl().sound_player.play_sound(preload("res://src/audio/se/se_breathe.wav"))
 	

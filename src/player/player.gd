@@ -23,7 +23,7 @@ var is_exhausted: bool = false
 # ---- data constants ----
 const CAN_RUN: bool = true
 
-const EXHAUST_MULTI: 		float = 0.9
+const EXHAUST_MULTI: 		float = 0.635
 
 const MAX_STAMINA:	 		float =  5
 const STAMINA_DRAIN: 		float = .78

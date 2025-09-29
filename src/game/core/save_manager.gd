@@ -26,9 +26,6 @@ static var save_files: Array
 static func _setup() -> void:
 	time_elapsed = 0
 	
-	print(TEMPLATE_DATA.duplicate())
-	print(Dictionary(TEMPLATE_DATA))
-	
 	data = TEMPLATE_DATA.duplicate()
 	if !DirAccess.dir_exists_absolute(SAVE_DIR): 
 		DirAccess.make_dir_absolute(SAVE_DIR)
