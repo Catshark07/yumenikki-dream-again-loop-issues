@@ -10,6 +10,7 @@ const COMP_MENTAL 		:= &"mental_status"
 const COMP_FOOTSTEP 	:= &"footstep_manager"
 
 # - dependencies.
+@export var stamina_fsm: FSM
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
@@ -33,6 +34,9 @@ func _ready() -> void:
 	Utils.connect_to_signal(handle_walk, 	quered_sprint_end)
 	Utils.connect_to_signal(handle_walk, 	quered_sneak_end)
 	
+	Utils.connect_to_signal(get_behaviour()._interact.bind(self), quered_interact)
+
+	
 func _enter() -> void:
 	super()
 	if GameManager.global_player_components != null: 
@@ -43,11 +47,11 @@ func dependency_components() -> void:
 	audio_listener = $audio_listener
 	sound_player = $sound_player
 func dependency_setup() -> void:
-	fsm._setup(self)			# --- fsm; not player dependency but required
+	fsm.		_setup(self)			# --- fsm; 
+	stamina_fsm._setup(self)			# --- stm fsm; 
 
 func _update(_delta: float) -> void:	
 	super(_delta)
-	handle_noise()
 	if fsm: fsm._update(_delta)
 	if global_components != null: global_components._update(_delta)
 func _physics_update(_delta: float) -> void:

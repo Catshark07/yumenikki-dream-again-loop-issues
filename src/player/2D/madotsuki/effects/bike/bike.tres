@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="PLEffect" load_steps=7 format=3 uid="uid://w1ycqdwy7pk8"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=6 format=3 uid="uid://w1ycqdwy7pk8"]
 
 [ext_resource type="Resource" uid="uid://drjlw4hwxccy8" path="res://src/player/2D/madotsuki/effects/bike/autorun.tres" id="2_3l3wi"]
 [ext_resource type="Texture2D" uid="uid://cxuiuvus52slt" path="res://src/player/inventory/menu/eff_cosmetic.png" id="2_61rg1"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/2D/scripts/pl_attribute_data.gd" id="3_8al8y"]
-[ext_resource type="Resource" uid="uid://q3h1rxmfopt5" path="res://src/player/2D/madotsuki/effects/bike/ding_bell.tres" id="3_jbu78"]
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/2D/scripts/pl_effect.gd" id="3_xkknp"]
 
 [sub_resource type="Resource" id="Resource_61rg1"]
@@ -19,7 +18,6 @@ name = "Bike"
 icon = ExtResource("2_61rg1")
 decorator = SubResource("Resource_61rg1")
 behaviour = ExtResource("2_3l3wi")
-primary_action = ExtResource("3_jbu78")
 sprite_override = "uid://fk0lvphi6mur"
 emote = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

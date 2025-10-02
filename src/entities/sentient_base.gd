@@ -1,6 +1,10 @@
 class_name SentientBase
 extends Entity
 
+# - input
+var desired_vel: Vector2
+var desired_speed: 		float = 0
+
 var vel_input: Vector2i:
 	set(input): 
 		vel_input.x = clamp(input.x, -1, 1)
@@ -11,15 +15,12 @@ var dir_input: Vector2i:
 		dir_input.y = clamp(input.y, -1, 1)
 
 var components: SBComponentReceiver
-
-var noise: 			float = 0
-
 # - consts
 const TRANS_WEIGHT:	float = 0.225
 const BASE_SPEED: 	float = 27.5
 const MAX_SPEED: 	float = 95
 
-const WALK_MULTI: 			float = 1.12
+const WALK_MULTI: 			float = 1.19
 const SNEAK_MULTI: 			float = 0.835
 const SPRINT_MULTI: 		float = 2.9
 
@@ -51,21 +52,23 @@ var direction: Vector2 = Vector2(0, 1):
 		direction.y = clamp(dir.y, -1, 1)
 var lerped_direction: Vector2 = Vector2.DOWN
 
+# - mobility
 @export_category("Base Entity Behaviour")
 @export_group("Mobility Values")
 
-var speed_multiplier: 	float = 1
+var max_speed:			float = MAX_SPEED
 var speed: 				float = 0
-var desired_speed: 		float
-var desired_vel: Vector2
+var speed_multiplier: 	float = 1
 
-@export_group("Auditorial")
+# - noise
+var noise: 			float = 0
 var noise_multi: 	float = 1
 
 # - flags
-var is_moving: 	bool = false
-var can_sprint: bool = true
-var can_sneak:	bool = true
+var is_moving: 		bool = false
+var can_sprint: 	bool = true
+var can_sneak:		bool = true
+var auto_sprint: 	bool = false
 
 # - initial.
 func _ready() -> void:
@@ -97,22 +100,22 @@ func dependency_setup() -> void: pass
 # ---- base processes ----
 func _physics_update(_delta: float) -> void:
 	(self as SentientBase).move_and_slide()
-	
 	components._physics_update(_delta)
-	speed 			= abs(self.velocity).length()
 	
-	handle_desired_velocity(vel_input)
 func _update(_delta: float) -> void:
-	is_moving = speed > 0	
+	speed 		= abs(self.velocity).length()
+	is_moving 	= speed > 0	
+	noise 		= (self.speed / self.MAX_SPEED) * noise_multi
+	
 	components._update(_delta)
+	handle_desired_velocity(vel_input)
+	
 func _sb_input(_event: InputEvent) -> void: 
 	pass
 
 # - speed handling.
-func handle_noise() -> void:
-	noise = (self.speed / self.MAX_SPEED) * noise_multi
-func handle_velocity(_multi: float = 1) -> void:
-	self.velocity = Vector2(desired_vel * _multi).limit_length(MAX_SPEED) 
+func handle_velocity() -> void:
+	self.velocity = Vector2(desired_vel).limit_length(max_speed) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
 func handle_desired_velocity(_dir: Vector2) -> void:
 	desired_vel 	= ((_dir.normalized() * BASE_SPEED)) * speed_multiplier
@@ -133,9 +136,13 @@ func handle_heading() -> void:
 			elif 	direction.y < -.5	: heading = compass_headings.NORTH
 
 # - movement logic related.
-func handle_walk() 		-> void:  speed_multiplier = walk_multiplier
-func handle_sprint() 	-> void: if can_sprint: 	speed_multiplier = sprint_multiplier
-func handle_sneak() 	-> void: if can_sneak: 		speed_multiplier = sneak_multiplier
+func handle_walk() 		-> void:  
+	if auto_sprint:  	handle_sprint()
+	else:				speed_multiplier = walk_multiplier
+func handle_sprint() 	-> void: 
+	if can_sprint: 		speed_multiplier = sprint_multiplier
+func handle_sneak() 	-> void: 
+	if can_sneak: 		speed_multiplier = sneak_multiplier
 
 func get_calculated_speed(_speed_mult: float) -> float:
 	return (BASE_SPEED * _speed_mult)

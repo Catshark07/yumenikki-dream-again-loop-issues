@@ -152,10 +152,9 @@ func _state_exit() -> void:
 	section.visible = false
 
 func handle_animation_enter() -> void:
-	spr_petal_wheel.rotation_degrees = -90
-	tween.tween_property(spr_petal_wheel, \"rotation_degrees\", 0, 0.5)
-func handle_animation_exit() -> void: 
-	tween.tween_property(spr_petal_wheel, \"rotation_degrees\", 90, 0.5)
+	spr_petal_wheel.rotation_degrees = 180
+	tween.tween_property(spr_petal_wheel, \"rotation_degrees\", 270, 0.5)
+func handle_animation_exit() -> void: pass
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8vhxa"]
@@ -354,6 +353,8 @@ progress = 1
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 36.0
+offset_bottom = 48.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")
@@ -549,6 +550,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 27.0
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -661,6 +664,8 @@ frame_v_count = 3
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 27.0
+offset_bottom = 14.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=43 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
@@ -19,7 +19,6 @@
 [ext_resource type="Script" uid="uid://ckdi4htcyco6l" path="res://src/entities/component/sb_sprint.gd" id="18_k7c3c"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/systems/tools/FSM/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://du8llo3s6lchk" path="res://src/entities/component/sb_input.gd" id="19_57bvo"]
-[ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/tools/FSM/fsm.gd" id="19_hy2th"]
 [ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/2D/scripts/states/stamina/normal.gd" id="20_fr82v"]
 [ext_resource type="Script" uid="uid://bk7ea81npilfk" path="res://src/player/2D/scripts/states/stamina/exhausted.gd" id="21_5r1vc"]
 [ext_resource type="Script" uid="uid://copf228upsgds" path="res://src/player/2D/scripts/states/movement/state_pl_idle.gd" id="22_e8irh"]
@@ -88,9 +87,10 @@ size = Vector2(2, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ylvyo"]
 size = Vector2(16, 26)
 
-[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm", "sprite_renderer", "shadow_renderer")]
+[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stamina_fsm", "fsm", "sprite_renderer", "shadow_renderer")]
 collision_layer = 5
 script = ExtResource("1_wub1p")
+stamina_fsm = NodePath("stamina_fsm")
 fsm = NodePath("stance_fsm")
 sprite_renderer = NodePath("sprite_container/container/sprite_renderer")
 shadow_renderer = NodePath("sprite_container/container/shadow_renderer")
@@ -124,7 +124,7 @@ script = ExtResource("10_rhwps")
 
 [node name="timer" type="Timer" parent="sb_components/action_manager"]
 
-[node name="equip_manager" type="Node" parent="sb_components"]
+[node name="equip_manager" type="Node2D" parent="sb_components"]
 script = ExtResource("9_y4vx3")
 
 [node name="footstep_manager" type="Node2D" parent="sb_components"]
@@ -182,7 +182,7 @@ stamina_fsm = NodePath("../../stamina_fsm")
 metadata/_custom_type_script = "uid://ckdi4htcyco6l"
 
 [node name="stamina_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("19_hy2th")
+script = ExtResource("18_rujao")
 initial_state = NodePath("NORMAL")
 
 [node name="NORMAL" type="Node" parent="stamina_fsm" node_paths=PackedStringArray("transitions")]

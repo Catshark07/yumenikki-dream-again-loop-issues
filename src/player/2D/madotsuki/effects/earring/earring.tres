@@ -8,12 +8,7 @@
 [resource]
 script = ExtResource("3_wddiv")
 name = "Sally's Earring"
-desc = ""
 icon = ExtResource("2_yugfs")
-skip_equip_animation = false
-skip_deequip_animation = false
-stats = ExtResource("4_44xlh")
-behaviour = ExtResource("1_yugfs")
 sprite_override = "res://src/player/madotsuki/sprite_sheets/no_effect.tres"
 emote = "res://src/player/madotsuki/emotes/sit_down.tres"
 player_component_prefab = "uid://cyclhtxv2hj8w"

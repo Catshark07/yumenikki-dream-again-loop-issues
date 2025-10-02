@@ -14,9 +14,6 @@ var use_times: int = 0
 @export_group("Attributes")
 @export var decorator: PLAttributeData 	= preload("res://src/player/2D/madotsuki/effects/_none/_stats.tres")
 @export var behaviour: PLBehaviour		= preload("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
-	
-@export var primary_action: PLAction 	= null
-@export var secondary_action: PLAction 	= null
 
 @export_group("Display")
 @export_file("*.tres") var sprite_override: String 	= ("res://src/player/2D/madotsuki/display/no_effect.tres")
@@ -26,10 +23,25 @@ var use_times: int = 0
 var player_component: Node
 
 func _apply(_pl: Player) -> void:
-	if primary_action: (_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_primary_action(primary_action)
-	if secondary_action: (_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_secondary_action(primary_action)
+	
 	if !emote.is_empty() and load(emote): 
 		(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_emote(load(emote))
+	
+	if 	( 
+		!player_component_prefab.is_empty() and
+		ResourceLoader.exists(player_component_prefab) and 
+		load(player_component_prefab).can_instantiate()):
+			
+			var prefab_instance: PLEffectComponent = load(player_component_prefab).instantiate()
+			
+			prefab_instance.name = "effect" + self.name
+			prefab_instance.effect_data = self
+			
+			_pl.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_prefab = prefab_instance 			
+			_pl.components.get_component_by_name(Player_YN.COMP_EQUIP).add_child(
+				_pl.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_prefab)
+			
+			prefab_instance._enter(_pl)
 	
 	decorator._apply(_pl)
 	behaviour._apply(_pl)
@@ -38,8 +50,8 @@ func _apply(_pl: Player) -> void:
 		(_pl as Player_YN).set_sprite_sheet(load(sprite_override))
 
 func _unapply(_pl: Player) -> void:
-	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(
-		(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).curr_action, _pl)
+	(_pl as Player_YN).cancel_action(
+		(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).curr_action)
 	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_primary_action(null)
 	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_secondary_action(null)
 	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_emote(null)

@@ -25,16 +25,7 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 		await deequip(_pl)
 		effect_data = _effect
 		behaviour 	= _effect.behaviour
-		if 	( 
-			!_effect.player_component_prefab.is_empty() and
-			ResourceLoader.exists(_effect.player_component_prefab) and 
-			load(_effect.player_component_prefab).can_instantiate() 
-			):
-				effect_prefab 				= load(_effect.player_component_prefab).instantiate()
-				effect_prefab.name 			= "effect" + _effect.name
-				effect_prefab.effect_data 	= _effect
-				_pl.add_child(effect_prefab)
-				effect_prefab._enter(_pl)
+
 
 		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", _effect.skip_equip_animation or _skip)
 		EventManager.invoke_event("PLAYER_EQUIP", _effect)
@@ -64,7 +55,6 @@ func accept(_effect: PLEffect) -> void:
 	
 func _physics_update(_delta: float) -> void:
 	if effect_prefab != null: 	effect_prefab._eff_physics_update	(_delta, sentient)
-	if behaviour: 				behaviour._physics_update			(_delta, sentient)
 func _update(_delta: float) -> void:
 	if effect_prefab != null: effect_prefab._eff_update(_delta, sentient)
 func _input_pass(event: InputEvent) -> void: 

@@ -5,7 +5,7 @@ class_name Sequence extends Event
 var time_elapsed: float = 0 
 var priority: int = 0
 
-var order: Array
+@export var order: Array[Node]
 var marked_invalid: PackedInt32Array
 var bail_requested: 				bool = false
 
@@ -16,8 +16,8 @@ var bail_requested: 				bool = false
 @export var async: 					bool = false
 @export var initialized: 			bool = false
 
-var front: Event
-var back: Event
+@export var front: Event
+@export var back: Event
 
 # - signals
 signal success

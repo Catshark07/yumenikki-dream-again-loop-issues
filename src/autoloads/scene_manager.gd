@@ -81,10 +81,11 @@ static func handle_scene_push(_scene_node: SceneNode) -> void:
 	if scene_node.get_parent() == null: GameManager.pausable_parent.add_child(scene_node)
 	else: scene_node.reparent(GameManager.pausable_parent)
 	
+	EventManager.invoke_event("SCENE_PUSHED", _scene_node)
+	
 	scene_node.initialize()
 	scene_stack.push(_scene_node)
 	
-	EventManager.invoke_event("SCENE_PUSHED", _scene_node)
 	
 static func handle_scene_pop() -> void:
 	print_rich(str("[color=yellow]SceneManager // Scene Pop: %s [/color]" % scene_stack.pop()))

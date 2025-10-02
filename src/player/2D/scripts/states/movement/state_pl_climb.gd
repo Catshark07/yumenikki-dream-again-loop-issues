@@ -15,4 +15,3 @@ func _state_update(_delta: float, ) -> void:
 	
 func _state_physics_update(_delta: float, ) -> void:
 	sentient.get_behaviour()._climb(sentient)
-	sentient.handle_velocity()

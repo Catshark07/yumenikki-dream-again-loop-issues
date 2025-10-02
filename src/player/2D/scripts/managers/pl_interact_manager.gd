@@ -41,10 +41,7 @@ func _ready() -> void:
 		show_prompt(true))
 	interactable_lost.connect(func():
 		show_prompt(false))
-		
-func _setup(_sb: SentientBase = null) -> void:
-	super(_sb)
-	Utils.connect_to_signal(handle_interaction, sentient.quered_interact)
+	
 	
 func _update(delta: float) -> void:
 	handle_field()

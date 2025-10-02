@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://drjlw4hwxccy8"]
 
-[ext_resource type="Script" uid="uid://dsxob3mx1taax" path="res://src/player/2D/madotsuki/effects/bike/auto_run.gd" id="1_6iq4v"]
+[ext_resource type="Script" uid="uid://dsxob3mx1taax" path="res://src/player/2D/madotsuki/effects/bike/pl_bh_auto_run.gd" id="1_6iq4v"]
 
 [resource]
 script = ExtResource("1_6iq4v")
