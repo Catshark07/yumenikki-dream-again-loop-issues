@@ -15,8 +15,7 @@ const IGNORE := [preload("res://src/player/2D/madotsuki/effects/_none/_default.t
 
 # ----> equip / de-equip.
 func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
-	if _effect == effect_data:
-		return
+	if _effect == effect_data: return
 		
 	if _effect:
 		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(
@@ -24,8 +23,6 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 			
 		await deequip(_pl)
 		effect_data = _effect
-		behaviour 	= _effect.behaviour
-
 
 		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", _effect.skip_equip_animation or _skip)
 		EventManager.invoke_event("PLAYER_EQUIP", _effect)
@@ -49,9 +46,6 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 		effect_data._unapply(_pl)
 		effect_data = Player.Instance.DEFAULT_EQUIPMENT
 		Player.Instance.DEFAULT_EQUIPMENT._apply(_pl)
-	
-func accept(_effect: PLEffect) -> void:
-	pass
 	
 func _physics_update(_delta: float) -> void:
 	if effect_prefab != null: 	effect_prefab._eff_physics_update	(_delta, sentient)

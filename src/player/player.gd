@@ -21,17 +21,12 @@ var data: PLAttributeData
 var is_exhausted: bool = false
 
 # ---- data constants ----
-const CAN_RUN: bool = true
-
+const CAN_SPRINT: bool = true
 const EXHAUST_MULTI: 		float = 0.635
 
 const MAX_STAMINA:	 		float =  5
 const STAMINA_DRAIN: 		float = .78
 const STAMINA_REGEN: 		float = .8
-
-var walk_noise_mult: 	float = WALK_NOISE_MULTI
-var sprint_noise_mult: 	float = SPRINT_NOISE_MULTI
-var sneak_noise_mult: 	float =SNEAK_NOISE_MULTI
 
 #endregion ---- data variables ----
 

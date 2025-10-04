@@ -12,7 +12,7 @@ extends Resource
 @export var stamina_regen: float = Player.STAMINA_REGEN
 
 @export_group("Stats Flags.")
-@export var can_sprint: bool = Player.CAN_RUN
+@export var can_sprint: bool = Player.CAN_SPRINT
 @export var auto_sprint: bool = false
 @export var disable_drain: bool = false
 
@@ -46,7 +46,7 @@ func _unapply(_pl: Player) -> void:
 	
 	_pl.stamina_drain 		= Player.STAMINA_DRAIN
 	_pl.stamina_regen		= Player.STAMINA_REGEN
-	_pl.can_sprint 			= Player.CAN_RUN
+	_pl.can_sprint 			= Player.CAN_SPRINT
 
 	_pl.walk_noise_mult 	= Player.WALK_NOISE_MULTI
 	_pl.sneak_noise_mult 	= Player.SNEAK_NOISE_MULTI

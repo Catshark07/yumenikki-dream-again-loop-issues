@@ -37,8 +37,8 @@ func initialize() -> void:
 		
 		if j < order.size():
 			_next = order[j]
-			_curr.next = _next
-			_next.prev = _curr
+			if !_curr.custom_linked_pointers: _curr.next = _next
+			if !_next.custom_linked_pointers: _next.prev = _curr
 func _ready() -> void:
 	if !initialized: 
 		initialized = true

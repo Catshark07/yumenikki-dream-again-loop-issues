@@ -2,8 +2,9 @@ class_name SentientBase
 extends Entity
 
 # - input
+signal input_vector(_input: Vector2)
 var desired_vel: Vector2
-var desired_speed: 		float = 0
+var desired_speed: 			float = 0
 
 var vel_input: Vector2i:
 	set(input): 
@@ -64,6 +65,10 @@ var speed_multiplier: 	float = 1
 var noise: 			float = 0
 var noise_multi: 	float = 1
 
+var walk_noise_mult: 	float = WALK_NOISE_MULTI
+var sprint_noise_mult: 	float = SPRINT_NOISE_MULTI
+var sneak_noise_mult: 	float =	SNEAK_NOISE_MULTI
+
 # - flags
 var is_moving: 		bool = false
 var can_sprint: 	bool = true
@@ -103,7 +108,7 @@ func _physics_update(_delta: float) -> void:
 	components._physics_update(_delta)
 	
 func _update(_delta: float) -> void:
-	speed 		= abs(self.velocity).length()
+	speed 		= self.velocity.length()
 	is_moving 	= speed > 0	
 	noise 		= (self.speed / self.MAX_SPEED) * noise_multi
 	
@@ -136,13 +141,5 @@ func handle_heading() -> void:
 			elif 	direction.y < -.5	: heading = compass_headings.NORTH
 
 # - movement logic related.
-func handle_walk() 		-> void:  
-	if auto_sprint:  	handle_sprint()
-	else:				speed_multiplier = walk_multiplier
-func handle_sprint() 	-> void: 
-	if can_sprint: 		speed_multiplier = sprint_multiplier
-func handle_sneak() 	-> void: 
-	if can_sneak: 		speed_multiplier = sneak_multiplier
-
 func get_calculated_speed(_speed_mult: float) -> float:
 	return (BASE_SPEED * _speed_mult)

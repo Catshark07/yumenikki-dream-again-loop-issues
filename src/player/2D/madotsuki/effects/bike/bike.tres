@@ -10,6 +10,7 @@ script = ExtResource("3_8al8y")
 sprint_multi = 3.5
 stamina_drain = 0.0
 stamina_regen = 1.0
+auto_sprint = true
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [resource]

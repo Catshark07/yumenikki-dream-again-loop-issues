@@ -8,11 +8,15 @@ const COMP_EQUIP 		:= &"equip_manager"
 const COMP_INTERACT 	:= &"interaction_manager"
 const COMP_MENTAL 		:= &"mental_status"
 const COMP_FOOTSTEP 	:= &"footstep_manager"
+const COMP_INPUT 		:= &"input"
 
 # - dependencies.
 @export var stamina_fsm: FSM
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
+
+var disable_stamina_drain: bool = false
+
 
 # - trait components
 var global_components: SBComponentReceiver
@@ -28,11 +32,11 @@ func _ready() -> void:
 	super()
 	equip(Instance.equipment_pending, true)
 	
-	Utils.connect_to_signal(handle_sprint, 	quered_sprint_start)
-	Utils.connect_to_signal(handle_sneak, 	quered_sneak_start)
-	
-	Utils.connect_to_signal(handle_walk, 	quered_sprint_end)
-	Utils.connect_to_signal(handle_walk, 	quered_sneak_end)
+	Utils.connect_to_signal(
+		func(_in):
+			vel_input = _in
+			dir_input = _in, 	
+		self.input_vector)
 	
 	Utils.connect_to_signal(get_behaviour()._interact.bind(self), quered_interact)
 
@@ -83,10 +87,8 @@ func play_sound(_sound: AudioStreamWAV, _vol: float, _pitch: float) -> void:
 	if sound_player != null: sound_player.play_sound(_sound, _vol, _pitch)
 func set_texture_using_sprite_sheet(_sprite_id: String) -> void:
 	sprite_id = _sprite_id
-	sprite_renderer.texture = (
-			(sprite_sheet.dict[_sprite_id] if 
-			sprite_sheet.dict.has(_sprite_id) else 
-			preload("res://src/images/missing.png")))
+	if 	sprite_sheet.dict.has(_sprite_id):
+		sprite_renderer.texture = (sprite_sheet.dict[_sprite_id])
 func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 	sprite_sheet = _new_sheet
 #endregion

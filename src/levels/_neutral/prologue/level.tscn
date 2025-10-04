@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=4 uid="uid://bv5x4rpikgrho"]
+[gd_scene load_steps=58 format=4 uid="uid://bv5x4rpikgrho"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_4ckat"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="1_28p51"]
@@ -37,6 +37,7 @@
 [ext_resource type="AudioStream" uid="uid://ctikfoswhp602" path="res://src/audio/se/se_talk_soft.ogg" id="33_oaq00"]
 [ext_resource type="Shader" uid="uid://cclrs1syfvcos" path="res://src/shaders/panorama/radial_additive.gdshader" id="36_37x7p"]
 [ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/2D/madotsuki/effects/earring/glow.png" id="37_7agr2"]
+[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/sequencing/event_interface.gd" id="38_7agr2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2mqtp"]
 
@@ -126,14 +127,19 @@ libraries = {
 &"": SubResource("AnimationLibrary_7rtwp")
 }
 
-[node name="on_player_exhaustion" type="Node" parent="."]
+[node name="on_player_exhaustion" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("11_516q3")
 event_id = PackedStringArray("PLAYER_EXHAUST")
+order = [NodePath("replenish_player_stam"), NodePath("request_cutscene_start"), NodePath("alert_player_1"), NodePath("alert_player_2"), NodePath("request_cutscene_end")]
 skip_invalid_events = true
+initialized = true
+front = NodePath("replenish_player_stam")
+back = NodePath("request_cutscene_end")
 call_limit = 1
+custom_linked_pointers = null
 metadata/_custom_type_script = "uid://br3wayftgqqpo"
 
-[node name="replenish_player_stam" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("node")]
+[node name="replenish_player_stam" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("node", "next")]
 process_mode = 4
 script = ExtResource("33_7rtwp")
 node = NodePath("../../y_order/madotsuki")
@@ -148,37 +154,51 @@ property_info = {
 }
 property_value = 5.0
 new_value = 5.0
+custom_linked_pointers = null
+next = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_start" type="Node" parent="on_player_exhaustion"]
+[node name="request_cutscene_start" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../alert_player_1")
+prev = NodePath("../replenish_player_stam")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="alert_player_1" type="Node" parent="on_player_exhaustion"]
+[node name="alert_player_1" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("should exhaustion befall you little one, stand still or walk slowly to regain your senses.")
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
 hide_panel = true
+next = NodePath("../alert_player_2")
+prev = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="alert_player_2" type="Node" parent="on_player_exhaustion"]
+[node name="alert_player_2" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("(standing still or sneaking improves stamina regeneration).")
 font_colour_override = Color(0, 0.690196, 0.392157, 1)
 hide_panel = true
+next = NodePath("../request_cutscene_end")
+prev = NodePath("../alert_player_1")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="on_player_exhaustion"]
+[node name="request_cutscene_end" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("prev")]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../alert_player_2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="on_initial" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("4_w4wdm")
+order = [NodePath("apply_panorama"), NodePath("request_cutscene_start"), NodePath("play_music"), NodePath("fade_initial"), NodePath("wait"), NodePath("fade_out_1"), NodePath("dialogue_1"), NodePath("fade_out_2"), NodePath("dialogue_2"), NodePath("play_hint"), NodePath("request_cutscene_end")]
+initialized = true
+front = NodePath("apply_panorama")
+back = NodePath("request_cutscene_end")
+custom_linked_pointers = null
 
-[node name="apply_panorama" type="SubViewport" parent="on_initial"]
+[node name="apply_panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("next")]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_filter = 0
@@ -186,6 +206,8 @@ canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 script = ExtResource("9_7agr2")
+custom_linked_pointers = null
+next = NodePath("../request_cutscene_start")
 
 [node name="apply_panorama" type="ColorRect" parent="on_initial/apply_panorama"]
 material = SubResource("ShaderMaterial_uwvvk")
@@ -198,32 +220,40 @@ offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="request_cutscene_start" type="Node" parent="on_initial"]
+[node name="request_cutscene_start" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../play_music")
+prev = NodePath("../apply_panorama")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_music" type="Node" parent="on_initial"]
+[node name="play_music" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("3_37x7p")
 stream = ExtResource("3_r2lfa")
 pitch = 0.5
+next = NodePath("../fade_initial")
+prev = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="fade_initial" type="Node" parent="on_initial"]
+[node name="fade_initial" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("6_37x7p")
 fade_type = 1
 fade_shader = SubResource("ShaderMaterial_y5y2e")
 a = 0.765
 transition = 2
 ease = 2
+next = NodePath("../wait")
+prev = NodePath("../play_music")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait" type="Node" parent="on_initial"]
+[node name="wait" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("18_b1kpc")
 seconds = 3.0
+next = NodePath("../fade_out_1")
+prev = NodePath("../fade_initial")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="fade_out_1" type="Node" parent="on_initial"]
+[node name="fade_out_1" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("6_37x7p")
 fade_type = 1
 fade_shader = SubResource("ShaderMaterial_y5y2e")
@@ -232,17 +262,21 @@ a = 0.425
 b = 0.765
 transition = 2
 ease = 2
+next = NodePath("../dialogue_1")
+prev = NodePath("../wait")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="dialogue_1" type="Node" parent="on_initial"]
+[node name="dialogue_1" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("wake up.")
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
 hide_panel = true
+next = NodePath("../fade_out_2")
+prev = NodePath("../fade_out_1")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="fade_out_2" type="Node" parent="on_initial"]
+[node name="fade_out_2" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("6_37x7p")
 fade_type = 1
 fade_shader = SubResource("ShaderMaterial_y5y2e")
@@ -250,30 +284,39 @@ fade_speed = 0.875
 b = 0.425
 transition = 2
 ease = 2
+next = NodePath("../dialogue_2")
+prev = NodePath("../dialogue_1")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="dialogue_2" type="Node" parent="on_initial"]
+[node name="dialogue_2" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("it is time for you to wake up, little one.", "it seems you succumbed to a deep sleep.", "i will offer you my guidance. little one, trail the path, should you accept my wisdom.")
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
 hide_panel = true
+next = NodePath("../play_hint")
+prev = NodePath("../fade_out_2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_hint" type="Node" parent="on_initial"]
+[node name="play_hint" type="Node" parent="on_initial" node_paths=PackedStringArray("next", "prev")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("(use WASD or ARROW KEYS to traverse).")
 font_colour_override = Color(0, 0.690196, 0.392157, 1)
 hide_panel = true
+next = NodePath("../request_cutscene_end")
+prev = NodePath("../dialogue_2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="on_initial"]
+[node name="request_cutscene_end" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../play_hint")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("4_w4wdm")
+initialized = true
+custom_linked_pointers = null
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("3_00xaa")]
 position = Vector2(-280, 104)
@@ -291,9 +334,6 @@ material = SubResource("ShaderMaterial_qmak8")
 use_parent_material = true
 position = Vector2(-280, 104)
 
-[node name="shader" parent="y_order/madotsuki/sprite_renderer" index="1"]
-color = Color(0, 0, 0, 1)
-
 [node name="dialogue_1" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(40, 120)
 collision_layer = 1073741824
@@ -302,7 +342,6 @@ script = ExtResource("32_2suwl")
 secret = true
 area = true
 rect = NodePath("rect")
-presence_detect = true
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="y_order/dialogue_1"]
@@ -331,6 +370,7 @@ property_info = {
 "usage": 6
 }
 new_value = true
+custom_linked_pointers = null
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="dialogue" type="Node" parent="y_order/dialogue_1/on_enter"]
@@ -360,7 +400,6 @@ script = ExtResource("32_2suwl")
 secret = true
 area = true
 rect = NodePath("rect")
-presence_detect = true
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="y_order/dialogue_2"]
@@ -677,7 +716,7 @@ fps = 7.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
 
-[node name="effect_and_key" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+[node name="key" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(1080, 840)
 collision_layer = 2147483648
 collision_mask = 2147483648
@@ -685,29 +724,29 @@ script = ExtResource("32_2suwl")
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="rect" type="CollisionShape2D" parent="y_order/effect_and_key"]
+[node name="rect" type="CollisionShape2D" parent="y_order/key"]
 shape = SubResource("RectangleShape2D_7agr2")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="Sprite2D" type="Sprite2D" parent="y_order/effect_and_key"]
+[node name="Sprite2D" type="Sprite2D" parent="y_order/key"]
 material = SubResource("ShaderMaterial_njn8l")
 texture = ExtResource("37_7agr2")
 
-[node name="OnInteract" type="Node" parent="y_order/effect_and_key"]
+[node name="OnInteract" type="Node" parent="y_order/key"]
 script = ExtResource("14_qu046")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="request_cutscene_start" type="Node" parent="y_order/effect_and_key/OnInteract"]
+[node name="request_cutscene_start" type="Node" parent="y_order/key/OnInteract"]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_START_REQUEST"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="message" type="Node" parent="y_order/effect_and_key/OnInteract"]
+[node name="message" type="Node" parent="y_order/key/OnInteract"]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("(there\'s something shiny lying here.)")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="prompt" type="Node" parent="y_order/effect_and_key/OnInteract" node_paths=PackedStringArray("prompt_options")]
+[node name="prompt" type="Node" parent="y_order/key/OnInteract" node_paths=PackedStringArray("prompt_options")]
 script = ExtResource("27_neteg")
 message_type = 2
 texts = PackedStringArray("(investigate further?)")
@@ -717,15 +756,23 @@ prompt_options = {
 }
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="yes" type="Node" parent="y_order/effect_and_key/OnInteract/prompt"]
+[node name="yes" type="Node" parent="y_order/key/OnInteract/prompt"]
 script = ExtResource("4_w4wdm")
+initialized = true
+custom_linked_pointers = null
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="no" type="Node" parent="y_order/effect_and_key/OnInteract/prompt"]
+[node name="pick_up_message" type="Node" parent="y_order/key/OnInteract/prompt/yes"]
+script = ExtResource("38_7agr2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="no" type="Node" parent="y_order/key/OnInteract/prompt"]
 script = ExtResource("4_w4wdm")
+initialized = true
+custom_linked_pointers = null
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="request_cutscene_end" type="Node" parent="y_order/effect_and_key/OnInteract/prompt"]
+[node name="request_cutscene_end" type="Node" parent="y_order/key/OnInteract/prompt"]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_START_REQUEST"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
