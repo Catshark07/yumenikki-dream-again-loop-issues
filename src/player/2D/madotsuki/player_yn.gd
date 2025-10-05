@@ -17,7 +17,6 @@ var sound_player: AudioStreamPlayer
 
 var disable_stamina_drain: bool = false
 
-
 # - trait components
 var global_components: SBComponentReceiver
 
@@ -30,7 +29,7 @@ var action: PLAction
 
 func _ready() -> void:
 	super()
-	equip(Instance.equipment_pending, true)
+
 	
 	Utils.connect_to_signal(
 		func(_in):
@@ -66,7 +65,6 @@ func _sb_input(event: InputEvent) -> void:
 	if components != null: 	components._input_pass(event)
 	if fsm != null: 		fsm._input_pass(event)
 	
-#region EMOTES, UNIQUE, BEHAVIOUR
 func perform_action(_action: PLAction) -> void: 
 	components.get_component_by_name(Player_YN.COMP_ACTION).perform_action(_action, self)
 func cancel_action(_action: PLAction = action) -> void: 
@@ -79,9 +77,6 @@ func deequip_effect() -> void:
 
 func get_behaviour() -> PLBehaviour: 
 	return components.get_component_by_name("equip_manager").behaviour
-#endregion
-
-#region STATES and ANIMATIONS
 
 func play_sound(_sound: AudioStreamWAV, _vol: float, _pitch: float) -> void:
 	if sound_player != null: sound_player.play_sound(_sound, _vol, _pitch)
@@ -91,4 +86,3 @@ func set_texture_using_sprite_sheet(_sprite_id: String) -> void:
 		sprite_renderer.texture = (sprite_sheet.dict[_sprite_id])
 func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 	sprite_sheet = _new_sheet
-#endregion

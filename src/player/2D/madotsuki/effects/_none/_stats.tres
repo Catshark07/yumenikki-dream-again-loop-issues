@@ -4,5 +4,4 @@
 
 [resource]
 script = ExtResource("1_qckyx")
-stamina_regen = 1.0
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"

@@ -11,3 +11,4 @@ func _setup() -> void:
 			states.parent = self
 			sub_states[states.name.to_lower()] = states 
 			states.setup()
+	_setup_sub_state()

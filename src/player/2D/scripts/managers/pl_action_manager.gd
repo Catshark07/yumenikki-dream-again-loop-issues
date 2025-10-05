@@ -1,7 +1,7 @@
 class_name PLActionManager 
 extends SBComponent
 
-var emote: PLEmote
+var emote: PLEmote = preload("res://src/player/2D/madotsuki/emotes/sit_down.tres")
 var primary_action: PLAction
 var secondary_action: PLAction
 

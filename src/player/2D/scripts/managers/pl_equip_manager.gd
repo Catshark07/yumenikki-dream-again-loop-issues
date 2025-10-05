@@ -13,15 +13,18 @@ var behaviour: PLBehaviour:
 
 const IGNORE := [preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")]
 
+func _setup(_sb: SentientBase = null) -> void:
+	equip(Player.Instance.equipment_pending, _sb, true)
+
 # ----> equip / de-equip.
 func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
-	if _effect == effect_data: return
+	if _effect == null or _effect == effect_data: return
 		
 	if _effect:
 		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(
 			_pl.components.get_component_by_name(Player_YN.COMP_ACTION).curr_action, _pl, true)
 			
-		await deequip(_pl)
+		deequip(_pl)
 		effect_data = _effect
 
 		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", _effect.skip_equip_animation or _skip)

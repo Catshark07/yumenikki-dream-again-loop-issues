@@ -10,8 +10,7 @@ func _state_enter() -> void:
 	(sentient as Player_YN).set_texture_using_sprite_sheet("run")
 
 func _state_update(_delta: float) -> void:
-	if (sentient.desired_speed < sentient.get_calculated_speed(sentient.sprint_multiplier / 1.12) \
-	and sentient.desired_speed > 0) or !sentient.can_sprint:
+	if !sentient.can_sprint:
 		request_transition_to("walk")
 
 func _state_physics_update(_delta: float) -> void:

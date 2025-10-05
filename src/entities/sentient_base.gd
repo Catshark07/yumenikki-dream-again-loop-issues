@@ -71,9 +71,10 @@ var sneak_noise_mult: 	float =	SNEAK_NOISE_MULTI
 
 # - flags
 var is_moving: 		bool = false
-var can_sprint: 	bool = true
-var can_sneak:		bool = true
-var auto_sprint: 	bool = false
+@export_group("Mobility Flags")
+@export var can_sprint: 	bool = true
+@export var can_sneak:		bool = true
+@export var auto_sprint: 	bool = false
 
 # - initial.
 func _ready() -> void:

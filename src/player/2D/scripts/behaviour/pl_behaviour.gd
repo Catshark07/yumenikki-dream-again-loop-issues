@@ -11,14 +11,9 @@ func _idle		(_pl: Player, _delta: float) -> void:
 		_pl.stamina += _delta * (_pl.stamina_regen)
 func _walk		(_pl: Player, _delta: float) -> void:  
 	_pl.handle_direction(_pl.dir_input)
-	_pl.speed_multiplier = _pl.walk_multiplier
-	
-	if _pl.is_exhausted:  	
-		_pl.speed_multiplier = Player.EXHAUST_MULTI
-		return
+	if _pl.is_exhausted:  	_pl.speed_multiplier = Player.EXHAUST_MULTI
+	else:					_pl.speed_multiplier = _pl.walk_multiplier
 		
-	if _pl.auto_sprint:  _pl.speed_multiplier = _pl.sprint_multiplier
-
 func _run		(_pl: Player, _delta: float) -> void:  
 	_pl.handle_direction(_pl.vel_input)
 	_pl.speed_multiplier = _pl.sprint_multiplier

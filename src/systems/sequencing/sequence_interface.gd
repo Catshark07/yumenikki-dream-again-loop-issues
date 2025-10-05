@@ -83,7 +83,6 @@ func _validate_event_order() -> bool:
 			# - if event is invalid...
 			if skip_invalid_events: marked_invalid.append(i) # - we mark invalid events to be skipped.
 			else:
-				printerr("SEQUENCE %s :: Sequence halted due to invalid event: %s!" % [self.name, event.name]) 
 				fail.emit()
 				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 		

@@ -53,6 +53,8 @@ func _input_sub_state(_event: InputEvent) -> void: pass
 
 # - internal
 func set_sub_state(_state_id: StringName) -> void:
+	if fsm.curr_state != self: return
+	
 	_state_id = _state_id.to_lower()
 	
 	if !has_sub(_state_id): 

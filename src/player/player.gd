@@ -11,9 +11,9 @@ var data: PLAttributeData
 @export_storage var exhaust_multiplier: float = EXHAUST_MULTI
 
 @export_group("Stamina Modifier")
-@export_storage var stamina_drain: float = STAMINA_DRAIN
-@export_storage var stamina_regen: float = STAMINA_REGEN
-@export_storage var stamina: float = MAX_STAMINA:
+@export_storage var stamina_drain: 	float = STAMINA_DRAIN
+@export_storage var stamina_regen: 	float = STAMINA_REGEN
+@export_storage var stamina: 		float = MAX_STAMINA:
 	set(_stam):
 		stamina = _stam
 		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", _stam)
@@ -78,7 +78,7 @@ class Instance:
 
 	const DEFAULT_EQUIPMENT = preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")
 	
-	static var equipment_pending	: PLEffect = DEFAULT_EQUIPMENT
+	static var equipment_pending	: PLEffect = null
 	static var equipment_favourite	: PLEffect = null
 	static var effects_inventory: Array
 
