@@ -29,7 +29,6 @@ var action: PLAction
 
 func _ready() -> void:
 	super()
-
 	
 	Utils.connect_to_signal(
 		func(_in):

@@ -107,7 +107,6 @@ func dependency_setup() -> void: pass
 func _physics_update(_delta: float) -> void:
 	(self as SentientBase).move_and_slide()
 	components._physics_update(_delta)
-	
 func _update(_delta: float) -> void:
 	speed 		= self.velocity.length()
 	is_moving 	= speed > 0	
@@ -115,7 +114,6 @@ func _update(_delta: float) -> void:
 	
 	components._update(_delta)
 	handle_desired_velocity(vel_input)
-	
 func _sb_input(_event: InputEvent) -> void: 
 	pass
 

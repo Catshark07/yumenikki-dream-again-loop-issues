@@ -9,7 +9,6 @@ var behaviour: PLBehaviour:
 		if effect_data == null: return load("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
 		else: return effect_data.behaviour
 
-
 var effect_prefab: 	PLEffectComponent = null
 var effect_data: 	PLEffect = null
 var recorded_effect_data: PLAttributeData = PLAttributeData.new()

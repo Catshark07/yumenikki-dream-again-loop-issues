@@ -43,7 +43,6 @@ func _apply(_pl: Player) -> void:
 			
 			prefab_instance._enter(_pl)
 	
-	decorator._apply(_pl)
 	behaviour._apply(_pl)
 	
 	if load(sprite_override): 
@@ -56,7 +55,6 @@ func _unapply(_pl: Player) -> void:
 	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_secondary_action(null)
 	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_emote(null)
 	
-	decorator._unapply(_pl)
 	behaviour._unapply(_pl)
 	
 	(_pl as Player_YN).set_sprite_sheet(load(Player.Instance.DEFAULT_EQUIPMENT.sprite_override))
