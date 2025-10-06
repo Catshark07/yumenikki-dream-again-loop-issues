@@ -108,7 +108,7 @@ var player_stats_changed: EventListener
 func _ready() -> void:
 	pass
 func _state_enter() -> void: 
-	container.update_stats_display(EventManager.get_event_param(\"PLAYER_EQUIP\")[0])
+	container.update_stats_display()
 	
 	section.visible = true
 	mado.position.x += 10
@@ -353,8 +353,6 @@ progress = 1
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 36.0
-offset_bottom = 48.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")
@@ -550,8 +548,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 27.0
-offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -664,8 +660,6 @@ frame_v_count = 3
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 27.0
-offset_bottom = 14.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")

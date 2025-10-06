@@ -16,37 +16,34 @@ var player: Player
 @onready var stats_positive_indicator 	:= load("res://src/player/inventory/stats_positive.png")
 @onready var stats_negative_indicator 	:= load("res://src/player/inventory/stats_negative.png")
 
-var player_stats_changed: EventListener
+var player_updated: 		EventListener
 
 func _ready() -> void:
-	player_stats_changed = EventListener.new(self, "PLAYER_EQUIP", "PLAYER_DEEQUIP")
-	player_stats_changed.do_on_notify(
-		func(): 
-			update_stats_display(EventManager.get_event_param("PLAYER_EQUIP")[0]),
-		"PLAYER_EQUIP")
-	player_stats_changed.do_on_notify(
-		func(): 
-			update_stats_display(default_player_stats),
-		"PLAYER_DEEQUIP") 
+	player_updated 			= EventListener.new(self, "PLAYER_UPDATED")
+	player_updated.do_on_notify(
+		func():
+			player = EventManager.get_event_param("PLAYER_UPDATED")[0]
+			update_stats_display, 
+		"PLAYER_UPDATED")
 
-func update_stats_display(_effect: PLEffect) -> void:
-	handle_stats_display_value(walk_speed, "WALK SPEED: %.2f m/s" % 		(_effect.decorator.walk_multi * SentientBase.BASE_SPEED / 16))
-	handle_stats_display_value(sprint_speed, "SPRINT SPEED: %.2f m/s" % 	(_effect.decorator.sprint_multi * SentientBase.BASE_SPEED / 16))
-	handle_stats_display_value(sneak_speed, "SNEAK SPEED: %.2f m/s" % 		(_effect.decorator.sneak_multi * SentientBase.BASE_SPEED / 16))
-	handle_stats_display_value(exhaust_speed, "EXHAUST SPEED: %.2f m/s" % 	(_effect.decorator.exhaust_multi * SentientBase.BASE_SPEED / 16))
+func update_stats_display() -> void:
+	handle_stats_display_value(walk_speed, "WALK SPEED: %.2f m/s" % 		(player.walk_multiplier * SentientBase.BASE_SPEED / 16))
+	handle_stats_display_value(sprint_speed, "SPRINT SPEED: %.2f m/s" % 	(player.sprint_multiplier * SentientBase.BASE_SPEED / 16))
+	handle_stats_display_value(sneak_speed, "SNEAK SPEED: %.2f m/s" % 		(player.sneak_multiplier * SentientBase.BASE_SPEED / 16))
+	handle_stats_display_value(exhaust_speed, "EXHAUST SPEED: %.2f m/s" % 	(player.exhaust_multiplier * SentientBase.BASE_SPEED / 16))
 	
-	handle_stats_display_value(can_sprint, "CAN SPRINT?: %s" 					% _effect.decorator.can_sprint)
-	handle_stats_display_value(stamina_regen, "STAMINA REGEN: +%.2f stam/s" % _effect.decorator.stamina_regen)
-	handle_stats_display_value(stamina_decay, "STAMINA DRAIN: -%.2f stam/s" % _effect.decorator.stamina_drain)
+	handle_stats_display_value(can_sprint, "CAN SPRINT?: %s" 				% player.can_sprint)
+	handle_stats_display_value(stamina_regen, "STAMINA REGEN: +%.2f stam/s" % player.stamina_regen)
+	handle_stats_display_value(stamina_decay, "STAMINA DRAIN: -%.2f stam/s" % player.stamina_drain)
 	
-	handle_stats_display_improvement(walk_speed, _effect.decorator.walk_multi, default_player_stats.decorator.walk_multi)
-	handle_stats_display_improvement(sprint_speed, _effect.decorator.sprint_multi, default_player_stats.decorator.sprint_multi)
-	handle_stats_display_improvement(sneak_speed, _effect.decorator.sneak_multi, default_player_stats.decorator.sneak_multi)
-	handle_stats_display_improvement(exhaust_speed, _effect.decorator.exhaust_multi, default_player_stats.decorator.exhaust_multi)
+	handle_stats_display_improvement(walk_speed, 	player.walk_multiplier, Player.WALK_MULTI)
+	handle_stats_display_improvement(sprint_speed, 	player.sprint_multiplier, Player.SPRINT_MULTI)
+	handle_stats_display_improvement(sneak_speed, 	player.sneak_multiplier, Player.SNEAK_MULTI)
+	handle_stats_display_improvement(exhaust_speed, player.exhaust_multiplier, Player.EXHAUST_MULTI)
 			
-	handle_stats_display_improvement(can_sprint, _effect.decorator.can_sprint, default_player_stats.decorator.can_sprint)
-	handle_stats_display_improvement(stamina_regen, _effect.decorator.stamina_regen, default_player_stats.decorator.stamina_regen)
-	handle_stats_display_improvement(stamina_decay, -_effect.decorator.stamina_drain, -default_player_stats.decorator.stamina_drain)
+	handle_stats_display_improvement(can_sprint, 	player.can_sprint, Player.CAN_SPRINT)
+	handle_stats_display_improvement(stamina_regen, player.stamina_regen, Player.STAMINA_REGEN)
+	handle_stats_display_improvement(stamina_decay, -player.stamina_drain, -Player.STAMINA_DRAIN)
 				
 
 func handle_stats_display_value(_stat: Control, _text: String) -> void:

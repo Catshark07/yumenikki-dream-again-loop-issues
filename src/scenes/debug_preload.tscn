@@ -55,8 +55,8 @@ func _ready() -> void:
 	await handle_shader_precompile()
 	await handle_scenes_precompile()
 	
-	if Save.read_data_value(\"read_warning\"): GameManager.change_scene_to(preload(\"res://src/levels/_neutral/menu/menu.tscn\"))
-	else: GameManager.change_scene_to(preload(\"res://src/scenes/pre_menu.tscn\"))
+	if Save.read_data_value(\"read_warning\"): SceneManager.change_scene_to(preload(\"res://src/levels/_neutral/menu/menu.tscn\"))
+	else: SceneManager.change_scene_to(preload(\"res://src/scenes/pre_menu.tscn\"))
 
 func compile_shader_material(_shader: Shader) -> void: 
 	garbage_placeholder.material.shader = _shader
@@ -146,7 +146,6 @@ color = Color(0, 0, 0, 1)
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
-frame = 1
 script = ExtResource("3_d62i2")
 autoplay = true
 loop = true

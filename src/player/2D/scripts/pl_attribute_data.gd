@@ -22,8 +22,6 @@ extends Resource
 @export var sprint_noise_mult: float = Player.SPRINT_NOISE_MULTI
 
 func _apply(_pl: Player) -> void: 
-	if !_pl.can_sprint: _pl.force_change_state("idle"
-	)
 	_pl.auto_sprint 		= self.auto_sprint
 	_pl.walk_multiplier 	= self.walk_multi
 	_pl.sprint_multiplier 	= self.sprint_multi

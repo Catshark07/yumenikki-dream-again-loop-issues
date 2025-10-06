@@ -15,8 +15,8 @@ signal canceled
 var call_count: int = 0
 @export_category("Event Linked-Pointers.")
 @export var custom_linked_pointers: bool = false
-@export var next: Node
 @export var prev: Node
+@export var next: Node
 var is_finished: bool = false
 
 
@@ -56,11 +56,6 @@ func end() -> void:
 func __call_finished() -> void:
 	if deferred: finished.emit.call_deferred()
 	else:		 finished.emit()
+
 func has_next() -> bool: return next != null
 func has_prev() -> bool: return prev != null
-
-
-func _validate_property(property: Dictionary) -> void:
-	var props_to_read_only := ["next", "prev"]
-	if  property.name in props_to_read_only and custom_linked_pointers == false:
-		property.usage = PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_EDITOR

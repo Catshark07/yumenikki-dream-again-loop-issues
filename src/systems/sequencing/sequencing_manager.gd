@@ -7,9 +7,7 @@ static var curr: Sequence
 static func invoke(_seq: Sequence) -> void:
 	if _seq == null: return
 	
-	print("seq invoked:: %s" % _seq.name)
-	
-	if is_handling and curr != null: 	# - cancel if sequence invoked is the same as current.
+	if is_handling and curr == _seq: 	# - cancel if sequence invoked is the same as current.
 		cancel(curr)
 		
 	curr 		= _seq 
@@ -20,7 +18,6 @@ static func cancel(_seq: Sequence) -> void:
 	
 	if _seq == null: return
 	print("cancelled:: %s" % _seq.name)
-	#print("SequenceManger :: Cancelling - ", _seq)
 	
 	is_handling = false
 		

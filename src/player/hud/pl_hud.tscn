@@ -70,7 +70,7 @@ offset_left = 8.0
 offset_top = 7.0
 offset_right = 41.0
 offset_bottom = 12.0
-color = Color(0.896047, 0.888065, 0.609341, 1)
+color = Color(0.99998015, 0.124565475, 0.4053996, 1)
 
 [node name="effect_indicator" type="Sprite2D" parent="indicators/icons"]
 position = Vector2(24, 240)

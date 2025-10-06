@@ -14,7 +14,6 @@ var bail_requested: 				bool = false
 
 @export var skip_invalid_events: 	bool = false
 @export var async: 					bool = false
-@export var initialized: 			bool = false
 
 @export var front: Event
 @export var back: Event
@@ -30,6 +29,12 @@ func initialize() -> void:
 	front = order[0]
 	back = order[order.size() - 1]
 	
+	for e in order:
+		if 	e != null and e is Event:
+			if !e.custom_linked_pointers:
+				e.next = null
+				e.prev = null
+
 	for i: int in range(order.size()):
 		var j := i + 1
 		var _curr: 	Event = order[i]
@@ -40,9 +45,7 @@ func initialize() -> void:
 			if !_curr.custom_linked_pointers: _curr.next = _next
 			if !_next.custom_linked_pointers: _next.prev = _curr
 func _ready() -> void:
-	if !initialized: 
-		initialized = true
-		initialize()
+	initialize()
 
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
@@ -55,13 +58,13 @@ func _execute() -> void:
 		return
 	
 	# - we iterate thru the events..
-	for e in range(order.size()):
+	var event = front
+	while event != null:
 		# - make sure that the child is of type Event.
-		var event = order[e]
-		if event != null and event is Event:
+		if event is Event:
 			
-			print(event.skip)
-			if e in marked_invalid or event.skip : continue # - we skip any events marked for skip / as invalid.
+			if event.get_instance_id() in marked_invalid or event.skip: 
+				continue # - we skip any events marked for skip / as invalid.
 			
 			event.execute() 
 			if event.wait_til_finished: await event.finished
@@ -70,22 +73,29 @@ func _execute() -> void:
 			if bail_requested: 
 				bail_requested = false
 				return
+		
+		if event.has_next(): 
+			event = event.next
+		else:				break
 func _cancel() -> void:
 	bail_requested = true	
 			 
 func _validate_event_order() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
 	# checking for any missing dependencies, has the corect properties, etc.
-	for i in range(order.size()):
-		var event: Event = order[i] # - current event.
+	var event = front
+	while event != null:
 		if event.skip: continue 
 		if event == null or !event._validate():
 			# - if event is invalid...
-			if skip_invalid_events: marked_invalid.append(i) # - we mark invalid events to be skipped.
+			if skip_invalid_events: marked_invalid.append(event.get_instance_id()) # - we mark invalid events to be skipped.
 			else:
 				fail.emit()
 				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
-		
+
+		if event.has_next(): event = event.next
+		else:				break
+	
 	success.emit()	
 	return true
 

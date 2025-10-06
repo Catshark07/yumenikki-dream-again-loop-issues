@@ -4,12 +4,15 @@ extends SBComponent
 var equipped: bool:
 	get: return effect_data != null and !(effect_data in IGNORE)
 
-var effect_prefab: PLEffectComponent = null
-var effect_data: PLEffect = null
 var behaviour: PLBehaviour:
 	get:
 		if effect_data == null: return load("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
 		else: return effect_data.behaviour
+
+
+var effect_prefab: 	PLEffectComponent = null
+var effect_data: 	PLEffect = null
+var recorded_effect_data: PLAttributeData = PLAttributeData.new()
 
 const IGNORE := [preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")]
 
