@@ -2,18 +2,16 @@ class_name PlEquipManager
 extends SBComponent
 
 var equipped: bool:
-	get: return effect_data != null and !(effect_data in IGNORE)
+	get: return effect_data != null
 
 var behaviour: PLBehaviour:
 	get:
 		if effect_data == null: return load("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
 		else: return effect_data.behaviour
 
-var effect_prefab: 	PLEffectComponent = null
-var effect_data: 	PLEffect = null
-var recorded_effect_data: PLAttributeData = PLAttributeData.new()
-
-const IGNORE := [preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")]
+var effect_prefab: 	PLEffectComponent 	= null
+var effect_data: 	PLEffect 			= null
+var effect_values: 	PLVariables 		= null
 
 func _setup(_sb: SentientBase = null) -> void:
 	equip(Player.Instance.equipment_pending, _sb, true)
@@ -28,6 +26,7 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 			
 		deequip(_pl)
 		effect_data = _effect
+		effect_values = _effect.variables
 
 		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", _effect.skip_equip_animation or _skip)
 		EventManager.invoke_event("PLAYER_EQUIP", _effect)
@@ -35,7 +34,6 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 		
 		_effect._apply(_pl)
 func deequip(_pl: Player, _skip: bool = false) -> void:
-	if effect_data in IGNORE: return
 	if effect_data:
 		EventManager.invoke_event("PLAYER_DEEQUIP_SKIP_ANIM", effect_data.skip_deequip_animation or _skip)
 		EventManager.invoke_event("PLAYER_DEEQUIP", Player.Instance.DEFAULT_EQUIPMENT)
@@ -48,10 +46,9 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 			effect_prefab._exit(_pl)
 			effect_prefab.queue_free()
 
+		effect_values = null
 		effect_data._unapply(_pl)
-		effect_data = Player.Instance.DEFAULT_EQUIPMENT
-		Player.Instance.DEFAULT_EQUIPMENT._apply(_pl)
-	
+
 func _physics_update(_delta: float) -> void:
 	if effect_prefab != null: 	effect_prefab._eff_physics_update	(_delta, sentient)
 func _update(_delta: float) -> void:

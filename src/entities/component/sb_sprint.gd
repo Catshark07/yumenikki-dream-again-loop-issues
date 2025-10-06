@@ -8,7 +8,7 @@ extends SBComponent
 
 func drain(_delta: float) -> void: 
 	if disable_drain: return
-	if sentient.stamina > 0: sentient.stamina -= (sentient.stamina_drain * sentient.get_process_delta_time()) 	
+	if sentient.stamina > 0: sentient.stamina -= (sentient.get_values().stamina_drain * _delta) 	
 
 func _setup(_sb: SentientBase = null) -> void:
 	super(_sb)

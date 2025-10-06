@@ -3,11 +3,9 @@ extends SBState
 func _state_enter() -> void: 
 	EventManager.invoke_event("PLAYER_EXHAUST")
 	sentient.is_exhausted = true
-	sentient.can_sprint = false
 
 func _state_exit() -> void: 
 	sentient.is_exhausted = false
-	sentient.can_sprint = true
 	sentient.stamina = Player.MAX_STAMINA
 	sentient.sound_player.play_sound(preload("res://src/audio/se/se_breathe.wav"))
 	

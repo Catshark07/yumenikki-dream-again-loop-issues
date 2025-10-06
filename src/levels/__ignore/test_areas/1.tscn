@@ -112,7 +112,6 @@ initial_target = NodePath("../madotsuki")
 
 [node name="madotsuki" parent="." instance=ExtResource("13_p2qgu")]
 position = Vector2(48, 240)
-can_sprint = false
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("6_7pixw")

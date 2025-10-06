@@ -18,7 +18,7 @@ func _physics_update_sub_state(_delta: float) -> void:
 	sentient.handle_heading()
 	sentient.handle_velocity()
 
-func handle_to_sprint() -> void:	if sentient.can_sprint: set_sub_state("sprint")
-func handle_to_sneak() -> void: 	if sentient.can_sneak:  set_sub_state("sneak")
+func handle_to_sprint() -> void:	if sentient.get_values().can_sprint: set_sub_state("sprint")
+func handle_to_sneak() -> void: 	if sentient.get_values().can_sneak:  set_sub_state("sneak")
 func handle_to_walk() -> void: 								set_sub_state("walk")
 	

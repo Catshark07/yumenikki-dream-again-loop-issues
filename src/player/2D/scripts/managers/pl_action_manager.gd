@@ -1,9 +1,11 @@
 class_name PLActionManager 
 extends SBComponent
 
-var emote: PLEmote = preload("res://src/player/2D/madotsuki/emotes/sit_down.tres")
-var primary_action: PLAction
-var secondary_action: PLAction
+var emote: PLAction:
+	get: 
+		if !sentient.get_values().emote.is_empty() and ResourceLoader.exists(sentient.get_values().emote):
+			return load(sentient.get_values().emote)
+		return emote
 
 var curr_action: PLAction
 
@@ -29,14 +31,11 @@ func _setup(_sb: SentientBase = null) -> void:
 	
 # - primary actions
 func set_emote(_emote: PLEmote) -> void: emote = _emote
-func set_primary_action(_prim_action: PLAction) -> void: primary_action = _prim_action
-func set_secondary_action(_second_action: PLAction) -> void: secondary_action = _second_action
-
 # helper
 func set_curr_action(_action: PLAction) -> void: curr_action = _action
 
 func perform_action(_action: PLAction, _pl: Player) -> void: 
-	if _action and can_action:
+	if can_action:
 		set_curr_action(_action)
 		_action._perform(_pl) 
 		did_something.emit()
@@ -62,10 +61,8 @@ func handle_action_update(_delta: float) -> void:
 
 func input_pass(event: InputEvent) -> void:
 	super(event)
-	if 		Input.is_action_just_pressed("pl_primary_action"): 		perform_action(primary_action, sentient)
-	elif 	Input.is_action_just_pressed("pl_secondary_action"): 	perform_action(secondary_action, sentient)
-	elif 	Input.is_action_just_pressed("pl_emote"): 				perform_action(emote, sentient)
-	elif 	Input.is_action_just_pressed("pl_pinch"): 				perform_action(secondary_action, sentient)
+	if 	Input.is_action_just_pressed("pl_emote"): 				
+		perform_action(emote, sentient)
 
 # ---- action executes / cancels ----
 func flag_false_can_action() -> void: 

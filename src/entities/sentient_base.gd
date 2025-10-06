@@ -1,6 +1,9 @@
 class_name SentientBase
 extends Entity
 
+@export var values: SBVariables = SBVariables.new():
+	get = get_values
+
 # - input
 signal input_vector(_input: Vector2)
 var desired_vel: Vector2
@@ -29,11 +32,6 @@ const WALK_NOISE_MULTI: 	float = 1
 const SPRINT_NOISE_MULTI: 	float = 2.2
 const SNEAK_NOISE_MULTI: 	float = 0.3
 
-# - move values.
-@export_storage var walk_multiplier: 	float = WALK_MULTI
-@export_storage var sneak_multiplier: 	float = SNEAK_MULTI
-@export_storage var sprint_multiplier: 	float = SPRINT_MULTI
-
 # - components (sprites).
 @export var sprite_renderer: Sprite2D
 @export var shadow_renderer: Sprite2D 
@@ -54,10 +52,6 @@ var direction: Vector2 = Vector2(0, 1):
 var lerped_direction: Vector2 = Vector2.DOWN
 
 # - mobility
-@export_category("Base Entity Behaviour")
-@export_group("Mobility Values")
-
-var max_speed:			float = MAX_SPEED
 var speed: 				float = 0
 var speed_multiplier: 	float = 1
 
@@ -65,16 +59,8 @@ var speed_multiplier: 	float = 1
 var noise: 			float = 0
 var noise_multi: 	float = 1
 
-var walk_noise_mult: 	float = WALK_NOISE_MULTI
-var sprint_noise_mult: 	float = SPRINT_NOISE_MULTI
-var sneak_noise_mult: 	float =	SNEAK_NOISE_MULTI
-
 # - flags
 var is_moving: 		bool = false
-@export_group("Mobility Flags")
-@export var can_sprint: 	bool = true
-@export var can_sneak:		bool = true
-@export var auto_sprint: 	bool = false
 
 # - initial.
 func _ready() -> void:
@@ -119,7 +105,7 @@ func _sb_input(_event: InputEvent) -> void:
 
 # - speed handling.
 func handle_velocity() -> void:
-	self.velocity = Vector2(desired_vel).limit_length(max_speed) 
+	self.velocity = Vector2(desired_vel).limit_length(MAX_SPEED) 
 	if (self.velocity.is_equal_approx(Vector2.ZERO)): self.position = self.position.round()
 func handle_desired_velocity(_dir: Vector2) -> void:
 	desired_vel 	= ((_dir.normalized() * BASE_SPEED)) * speed_multiplier
@@ -142,3 +128,6 @@ func handle_heading() -> void:
 # - movement logic related.
 func get_calculated_speed(_speed_mult: float) -> float:
 	return (BASE_SPEED * _speed_mult)
+
+# - misc.
+func get_values() -> SBVariables: return values

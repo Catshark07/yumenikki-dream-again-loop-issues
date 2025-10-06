@@ -85,3 +85,11 @@ func set_texture_using_sprite_sheet(_sprite_id: String) -> void:
 		sprite_renderer.texture = (sprite_sheet.dict[_sprite_id])
 func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 	sprite_sheet = _new_sheet
+
+# - misc.
+func get_values() -> SBVariables:
+	if  components.has_component_by_name(COMP_EQUIP) and \
+		components.get_component_by_name(COMP_EQUIP).effect_values != null:
+			return components.get_component_by_name(COMP_EQUIP).effect_values
+	else:
+		return super()

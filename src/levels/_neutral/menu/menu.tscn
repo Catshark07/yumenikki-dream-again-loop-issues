@@ -331,40 +331,16 @@ visible = false
 [node name="ColorRect" parent="ui/credtis_panel" index="0"]
 material = SubResource("ShaderMaterial_jissf")
 
-[node name="GUIPanelButton" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer" index="4" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display")]
-custom_minimum_size = Vector2(60, 18)
-abstract_button = NodePath("main_container/abstract_button")
-display_bg = NodePath("main_container/display_bg")
-main_container = NodePath("main_container")
-inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
-icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
-margin_container = NodePath("main_container/margin_container")
-icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
-icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
-text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
-
 [node name="display_bg" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton/main_container" index="0"]
 material = SubResource("ShaderMaterial_wx1ft")
 
-[node name="abstract_button" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton/main_container" index="2" node_paths=PackedStringArray("button")]
-button = NodePath("button")
-
-[node name="button" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton/main_container/abstract_button" index="0"]
-focus_mode = 1
-focus_behavior_recursive = 0
-mouse_behavior_recursive = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-
-[node name="on_initial" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("16_ppdc2")
+order = [NodePath("panorama"), NodePath("bgm")]
+front = NodePath("panorama")
+back = NodePath("bgm")
 
-[node name="panorama" type="SubViewport" parent="on_initial"]
+[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("next")]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_filter = 0
@@ -372,6 +348,7 @@ canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 script = ExtResource("18_37vgk")
+next = NodePath("../bgm")
 
 [node name="bg" type="TextureRect" parent="on_initial/panorama"]
 custom_minimum_size = Vector2(480, 270)

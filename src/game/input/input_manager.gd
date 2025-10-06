@@ -100,12 +100,12 @@ class Keybind:
 
 		"pl_pinch" 			: [ KEY_Q ],
 		"pl_interact" 		: [ KEY_E ],
-		"pl_emote" 			: [ KEY_G ],
+		"pl_emote" 			: [ KEY_C ],
 		
 		"pl_primary_action"		: [ KEY_Z ],
 		"pl_secondary_action" 	: [ KEY_X ],
 		
-		"pl_inventory" 		: [ KEY_ALT ],
+		"pl_inventory" 		: [ KEY_ALT, KEY_SPACE ],
 		}
 	
 	func _init() -> void:

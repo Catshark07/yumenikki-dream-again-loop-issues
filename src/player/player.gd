@@ -5,14 +5,6 @@ extends SentientBase
 
 #region ---- data variables ----
 
-var data: PLAttributeData
-
-@export_group("Mobility Multiplier")
-@export_storage var exhaust_multiplier: float = EXHAUST_MULTI
-
-@export_group("Stamina Modifier")
-@export_storage var stamina_drain: 	float = STAMINA_DRAIN
-@export_storage var stamina_regen: 	float = STAMINA_REGEN
 @export_storage var stamina: 		float = MAX_STAMINA:
 	set(_stam):
 		stamina = _stam

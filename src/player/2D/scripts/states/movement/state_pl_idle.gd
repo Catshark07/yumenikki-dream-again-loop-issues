@@ -2,7 +2,7 @@ extends SBState
 var library_path := "normal"
 
 func _state_enter() -> void: 
-	sentient.noise_multi = sentient.walk_noise_mult
+	sentient.noise_multi = 0
 	sentient.velocity = Vector2.ZERO
 	sentient.speed_multiplier = 1
 	

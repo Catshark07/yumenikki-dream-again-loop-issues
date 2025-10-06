@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://demusraqmvy5s"]
+[gd_scene load_steps=8 format=3 uid="uid://demusraqmvy5s"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_cjy1q"]
 [ext_resource type="Script" uid="uid://dgxld1rmdcf3y" path="res://src/player/inventory/effect_stats_window.gd" id="2_2csn3"]
@@ -6,14 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://641771i2v7id" path="res://src/player/hud/stats_mobility.png" id="3_2csn3"]
 [ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stats_stamina.png" id="4_m5a7d"]
 [ext_resource type="Texture2D" uid="uid://bthea7xsvafa5" path="res://src/player/inventory/stats_neutral.png" id="5_2csn3"]
+[ext_resource type="Texture2D" uid="uid://baxoxweqyowud" path="res://src/player/hud/stats_noise.png" id="7_m5a7d"]
 
-[node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "exhaust_speed", "can_sprint", "stamina_regen", "stamina_decay")]
+[node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "exhaust_speed", "can_sprint", "stamina_regen", "stamina_decay", "walk_noise", "sprint_noise", "sneak_noise")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -336.0
-offset_bottom = -158.0
+offset_right = -320.0
+offset_bottom = -78.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_cjy1q")
@@ -25,6 +26,9 @@ exhaust_speed = NodePath("stats_container/margin/vbox/exhaust_speed")
 can_sprint = NodePath("stats_container/margin/vbox/can_sprint")
 stamina_regen = NodePath("stats_container/margin/vbox/stamina_regen")
 stamina_decay = NodePath("stats_container/margin/vbox/stamina_decay")
+walk_noise = NodePath("stats_container/margin/vbox/walk_noise")
+sprint_noise = NodePath("stats_container/margin/vbox/sprint_noise")
+sneak_noise = NodePath("stats_container/margin/vbox/sneak_noise")
 
 [node name="stats_container" type="NinePatchRect" parent="."]
 layout_mode = 1
@@ -150,5 +154,46 @@ layout_mode = 2
 text = "Stamina Decay: xx"
 
 [node name="icon" type="TextureRect" parent="stats_container/margin/vbox/stamina_decay"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="stats_noise" type="TextureRect" parent="stats_container/margin/vbox"]
+layout_mode = 2
+texture = ExtResource("7_m5a7d")
+stretch_mode = 2
+
+[node name="walk_noise" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/walk_noise"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Walk Noise: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/walk_noise"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="sprint_noise" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/sprint_noise"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Sprint Noise: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/sprint_noise"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="sneak_noise" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/sneak_noise"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Sneak Noise: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/sneak_noise"]
 layout_mode = 2
 texture = ExtResource("5_2csn3")
