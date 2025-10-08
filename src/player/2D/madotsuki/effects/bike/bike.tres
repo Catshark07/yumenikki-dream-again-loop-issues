@@ -7,6 +7,9 @@
 
 [sub_resource type="Resource" id="Resource_61rg1"]
 script = ExtResource("4_xkknp")
+disable_drain = true
+sprite_override = "uid://fk0lvphi6mur"
+emote = "uid://q3h1rxmfopt5"
 sprint_multi = 3.5
 can_sneak = false
 auto_sprint = true
@@ -19,6 +22,4 @@ name = "Bike"
 icon = ExtResource("2_61rg1")
 variables = SubResource("Resource_61rg1")
 behaviour = ExtResource("2_3l3wi")
-sprite_override = "uid://fk0lvphi6mur"
-emote = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

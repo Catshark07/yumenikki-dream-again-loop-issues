@@ -26,7 +26,7 @@ func _ready() -> void:
 		if independent: _setup()
 
 # -- if component receiver is independent.
-func _process(delta: float) -> void: _update(delta)
+func _process(delta: float) 		-> void: _update(delta)
 func _physics_process(delta: float) -> void: _physics_update(delta)
 
 # -- if component receiver is not independent.

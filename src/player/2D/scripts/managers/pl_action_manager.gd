@@ -3,8 +3,8 @@ extends SBComponent
 
 var emote: PLAction:
 	get: 
-		if !sentient.get_values().emote.is_empty() and ResourceLoader.exists(sentient.get_values().emote):
-			return load(sentient.get_values().emote)
+		if !sentient.values.emote.is_empty() and ResourceLoader.exists(sentient.values.emote):
+			return load(sentient.values.emote)
 		return emote
 
 var curr_action: PLAction
@@ -35,6 +35,7 @@ func set_emote(_emote: PLEmote) -> void: emote = _emote
 func set_curr_action(_action: PLAction) -> void: curr_action = _action
 
 func perform_action(_action: PLAction, _pl: Player) -> void: 
+	if _action == null: return 
 	if can_action:
 		set_curr_action(_action)
 		_action._perform(_pl) 
@@ -46,11 +47,11 @@ func cancel_action(_action: PLAction, _pl: Player, _force: bool = false) -> void
 
 # ---- action handles ----
 func handle_action_enter() -> void: 
-	if curr_action: 
-		await curr_action._action_on_enter(sentient)
+	if 	curr_action: 
+		curr_action._action_on_enter(sentient)
 func handle_action_exit() -> void: 
-	if curr_action: 
-		await curr_action._action_on_exit(sentient)
+	if 	curr_action: 
+		curr_action._action_on_exit(sentient)
 
 func handle_action_input(_input: InputEvent) -> void: 
 	if curr_action and can_action: curr_action._action_input(sentient, _input)
@@ -59,8 +60,7 @@ func handle_action_phys_update(_delta: float) -> void:
 func handle_action_update(_delta: float) -> void: 
 	if curr_action: curr_action._action_update(sentient, _delta)
 
-func input_pass(event: InputEvent) -> void:
-	super(event)
+func _input_pass(event: InputEvent) -> void:
 	if 	Input.is_action_just_pressed("pl_emote"): 				
 		perform_action(emote, sentient)
 

@@ -1,5 +1,3 @@
-@icon("res://src/images/editor/components/comp_look-at.png")
-
 class_name LookAt extends Component
 
 var origin_pos: Vector2 # readonly

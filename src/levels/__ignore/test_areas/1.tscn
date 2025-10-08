@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://brd2skoctkkxe"]
+[gd_scene load_steps=22 format=3 uid="uid://brd2skoctkkxe"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ids3t"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="6_7pixw"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="13_p2qgu"]
 [ext_resource type="PackedScene" uid="uid://dwrwwsgxt4qhm" path="res://src/entities/effects/bike_collect.tscn" id="14_p2qgu"]
 [ext_resource type="PackedScene" uid="uid://cpe6q6ba5agcg" path="res://src/entities/effects/medamaude_alt_collect.tscn" id="15_7ahcf"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="16_7j243"]
 [ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_manager.gd" id="16_syomr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kciqk"]
@@ -32,6 +33,13 @@ shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.12
 shader_parameter/offset_strength_influence = Vector2(1, 1)
+
+[sub_resource type="Resource" id="Resource_7j243"]
+resource_local_to_scene = true
+resource_name = "default"
+script = ExtResource("16_7j243")
+can_sprint = false
+metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [node name="GameScene" type="Node" node_paths=PackedStringArray("seq_initial", "scene_objects")]
 script = ExtResource("1_ids3t")
@@ -107,11 +115,8 @@ collision_mask = 64
 shape = SubResource("RectangleShape2D_31k7y")
 
 [node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("12_d0p7m")]
-position = Vector2(48, 240)
-initial_target = NodePath("../madotsuki")
-
-[node name="madotsuki" parent="." instance=ExtResource("13_p2qgu")]
-position = Vector2(48, 240)
+position = Vector2(48, -48)
+initial_target = NodePath("")
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("6_7pixw")
@@ -153,3 +158,7 @@ position = Vector2(80, 96)
 
 [node name="medamaude_alt_collect" parent="." instance=ExtResource("15_7ahcf")]
 position = Vector2(128, 80)
+
+[node name="madotsuki" parent="." instance=ExtResource("13_p2qgu")]
+position = Vector2(16, 32)
+values = SubResource("Resource_7j243")

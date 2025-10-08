@@ -37,7 +37,6 @@ func _apply(_pl: Player) -> void:
 			prefab_instance._enter(_pl)
 	
 	behaviour._apply(_pl)
-
 func _unapply(_pl: Player) -> void:
 	(_pl as Player_YN).cancel_action(
 		(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).curr_action)
@@ -45,7 +44,6 @@ func _unapply(_pl: Player) -> void:
 	
 	behaviour._unapply(_pl)
 	
-func _primary_use(_pl: Player) 		-> void: pass
-func _secondary_use(_pl: Player) 	-> void: pass
-
 # ---- misc. getters.
+func _primary_action	(_pl: Player) -> void: pass
+func _secondary_action	(_pl: Player) -> void: pass

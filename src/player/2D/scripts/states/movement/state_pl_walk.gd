@@ -6,9 +6,10 @@ func _state_enter() -> void:
 	sentient.components.get_component_by_name("animation_manager").play_animation(str(library_path, '/', "walk"))
 
 func _state_update(_delta: float) -> void:
-	if sentient.get_values().auto_sprint: request_transition_to("sprint")
+	if sentient.values.auto_sprint and !sentient.is_exhausted: 
+		request_transition_to("sprint")
 
 func _state_physics_update(_delta: float) -> void:
 	sentient.get_behaviour()._walk(sentient, _delta)
 	if 	sentient.stamina < sentient.MAX_STAMINA:
-		sentient.stamina += _delta * (sentient.get_values().stamina_regen / 2.3)
+		sentient.stamina += _delta * (sentient.values.stamina_regen / 2.3)

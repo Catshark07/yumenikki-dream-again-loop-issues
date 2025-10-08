@@ -1,14 +1,13 @@
 class_name SBSprint
 extends SBComponent
 
-@export var disable_drain: bool = false
 @export var stamina_fsm: FSM
 
 # - this component must be called in the RUN state instead.
 
 func drain(_delta: float) -> void: 
-	if disable_drain: return
-	if sentient.stamina > 0: sentient.stamina -= (sentient.get_values().stamina_drain * _delta) 	
+	if sentient.values.disable_drain: return
+	if sentient.stamina > 0: sentient.stamina -= (sentient.values.stamina_drain * _delta) 	
 
 func _setup(_sb: SentientBase = null) -> void:
 	super(_sb)

@@ -152,7 +152,7 @@ class FootstepDust:
 		Optimization.footstep_instances += 1
 		
 		self.frame_dimensions = Vector2i(48, 48)
-		self.fps = 10
+		self.fps = 18
 		self.loop = false
 		
 		self.z_index = -1

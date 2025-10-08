@@ -23,7 +23,5 @@ func _action_update(_pl: Player, _delta: float) -> void:
 	if _pl.desired_speed > 0 or Input.is_action_just_pressed("pl_emote"):
 		request_exit(_pl)
 
-func _perform(_pl: Player) -> void: 
-	_pl.force_change_state("emote")
-func _cancel(_pl: Player) -> void: 
-	_pl.force_change_state("idle")
+func _perform(_pl: Player) -> void: _pl.force_change_state("action")
+func _cancel(_pl: Player) -> void: 	_pl.force_change_state("idle")

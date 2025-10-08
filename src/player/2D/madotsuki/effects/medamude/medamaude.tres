@@ -1,14 +1,17 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://bi65brqjolfb"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=6 format=3 uid="uid://bi65brqjolfb"]
 
 [ext_resource type="Resource" uid="uid://fbyv4ifpj1q5" path="res://src/player/2D/madotsuki/effects/_none/_behaviour.tres" id="1_1ineo"]
+[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/2D/scripts/pl_effect.gd" id="3_f8tqf"]
 [ext_resource type="Texture2D" uid="uid://bvvqxxjw31w1p" path="res://src/player/inventory/menu/eff_passive.png" id="3_uk4kk"]
-[ext_resource type="Resource" uid="uid://bkposgoemqwvu" path="res://src/player/2D/madotsuki/effects/_none/_stats.tres" id="4_f8tqf"]
-[ext_resource type="Script" uid="uid://cvc5rutk7d25j" path="res://src/player/2D/madotsuki/effects/medamude/eff_medamaude.gd" id="5_re8m3"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="4_f8tqf"]
+
+[sub_resource type="Resource" id="Resource_f8tqf"]
+script = ExtResource("4_f8tqf")
+metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
 [resource]
-script = ExtResource("5_re8m3")
+script = ExtResource("3_f8tqf")
 name = "Medamaude"
 icon = ExtResource("3_uk4kk")
-sprite_override = "uid://jkp88c1g030d"
-emote = ""
+variables = SubResource("Resource_f8tqf")
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

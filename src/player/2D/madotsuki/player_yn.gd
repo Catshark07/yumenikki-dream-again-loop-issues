@@ -1,4 +1,5 @@
-class_name Player_YN extends Player
+class_name Player_YN 
+extends Player
 
 # - component IDS
 const COMP_ANIMATION 	:= &"animation_manager"
@@ -21,9 +22,18 @@ var disable_stamina_drain: bool = false
 var global_components: SBComponentReceiver
 
 var sprite_sheet: SerializableDict = preload("res://src/player/2D/madotsuki/display/no_effect.tres"):
+	get:
+		if values != null and \
+		!values.sprite_override.is_empty() and\
+		ResourceLoader.exists(values.sprite_override):
+			return load(values.sprite_override)
+		
+		return sprite_sheet
+		
 	set(sheet):
 		sprite_sheet = sheet
 		set_texture_using_sprite_sheet(sprite_id)
+		
 var sprite_id: String = ""
 var action: PLAction 
 
@@ -88,7 +98,8 @@ func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 
 # - misc.
 func get_values() -> SBVariables:
-	if  components.has_component_by_name(COMP_EQUIP) and \
+	if  components != null and \
+		components.has_component_by_name(COMP_EQUIP) and \
 		components.get_component_by_name(COMP_EQUIP).effect_values != null:
 			return components.get_component_by_name(COMP_EQUIP).effect_values
 	else:

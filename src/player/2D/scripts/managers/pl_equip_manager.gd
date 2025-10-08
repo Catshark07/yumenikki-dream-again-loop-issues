@@ -27,6 +27,8 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 		deequip(_pl)
 		effect_data = _effect
 		effect_values = _effect.variables
+		
+		_pl.sprite_sheet = load(_effect.variables.sprite_override)
 
 		EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", _effect.skip_equip_animation or _skip)
 		EventManager.invoke_event("PLAYER_EQUIP", _effect)
@@ -46,8 +48,11 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 			effect_prefab._exit(_pl)
 			effect_prefab.queue_free()
 
-		effect_values = null
 		effect_data._unapply(_pl)
+		effect_values 	= null
+		effect_data 	= null
+		
+		_pl.sprite_sheet = load(_pl.values.sprite_override)
 
 func _physics_update(_delta: float) -> void:
 	if effect_prefab != null: 	effect_prefab._eff_physics_update	(_delta, sentient)
@@ -56,6 +61,10 @@ func _update(_delta: float) -> void:
 func _input_pass(event: InputEvent) -> void: 
 	if effect_prefab != null: 
 		effect_prefab._eff_input(event, sentient)
+		
+	if effect_data != null:
+		if Input.is_action_just_pressed("pl_primary_action"): 	effect_data._primary_action(sentient)
+		if Input.is_action_just_pressed("pl_secondary_action"): effect_data._secondary_action(sentient)
 		
 	if Input.is_action_just_pressed("ui_favourite_effect"): 
 		if !equipped: 	equip(Player.Instance.equipment_favourite, sentient)

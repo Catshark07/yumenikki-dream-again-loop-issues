@@ -131,3 +131,6 @@ func get_calculated_speed(_speed_mult: float) -> float:
 
 # - misc.
 func get_values() -> SBVariables: return values
+func set_values(_val: SBVariables) -> void: 
+	values = _val
+	values.resource_local_to_scene = true

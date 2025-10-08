@@ -20,4 +20,7 @@ script = ExtResource("1_32aa5")
 
 [node name="preload" parent="game_manager/pausable" index="0" instance=ExtResource("3_32aa5")]
 
+[node name="message_display_manager" parent="game_manager/always/ui/hud" index="3"]
+layout_mode = 0
+
 [editable path="game_manager"]

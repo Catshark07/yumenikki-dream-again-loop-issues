@@ -1,7 +1,7 @@
-[gd_scene load_steps=45 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=43 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
-[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="2_57bvo"]
+[ext_resource type="Resource" uid="uid://bkposgoemqwvu" path="res://src/player/2D/madotsuki/effects/_none/_stats.tres" id="2_f263f"]
 [ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_xe7mj"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
@@ -31,13 +31,8 @@
 [ext_resource type="Script" uid="uid://s2qduwa65o" path="res://src/player/2D/scripts/states/misc/state_pl_action.gd" id="28_4wyx3"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="29_1qwjo"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_cin7d"]
-[ext_resource type="Script" uid="uid://bmbahstk3j1x7" path="res://src/player/2D/scripts/states/misc/state_pl_emote.gd" id="30_f263f"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="32_57bvo"]
-
-[sub_resource type="Resource" id="Resource_bfa5j"]
-script = ExtResource("2_57bvo")
-metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
 [sub_resource type="Animation" id="Animation_m68sj"]
 length = 0.001
@@ -94,10 +89,11 @@ size = Vector2(16, 26)
 
 [node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stamina_fsm", "fsm", "sprite_renderer", "shadow_renderer")]
 collision_layer = 5
+motion_mode = 1
 script = ExtResource("1_wub1p")
 stamina_fsm = NodePath("stamina_fsm")
 fsm = NodePath("stance_fsm")
-values = SubResource("Resource_bfa5j")
+values = ExtResource("2_f263f")
 sprite_renderer = NodePath("sprite_container/container/sprite_renderer")
 shadow_renderer = NodePath("sprite_container/container/shadow_renderer")
 
@@ -205,7 +201,7 @@ initial_state = NodePath("IDLE")
 
 [node name="IDLE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("22_e8irh")
-transitions = [NodePath("../MOVE"), NodePath("../ACTION"), NodePath("../EMOTE")]
+transitions = [NodePath("../MOVE"), NodePath("../ACTION"), null]
 
 [node name="MOVE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("24_t8l7d")
@@ -231,11 +227,6 @@ script = ExtResource("27_xcxb0")
 [node name="ACTION" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("28_4wyx3")
 transitions = [NodePath("../IDLE"), NodePath("../MOVE")]
-
-[node name="EMOTE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
-script = ExtResource("30_f263f")
-transitions = [NodePath("../IDLE")]
-metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="movement_fsm" type="Node" parent="."]
 

@@ -9,7 +9,8 @@ func _state_enter() -> void:
 	(sentient as Player_YN).set_texture_using_sprite_sheet("run")
 
 func _state_update(_delta: float) -> void:
-	if !sentient.get_values().can_sprint or sentient.is_exhausted:
+	if !sentient.values.can_sprint or \
+	sentient.is_exhausted:
 		request_transition_to("walk")
 
 func _state_physics_update(_delta: float) -> void:
