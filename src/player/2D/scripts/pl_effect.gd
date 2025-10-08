@@ -16,7 +16,7 @@ var use_times: int = 0
 @export var behaviour: PLBehaviour		= preload("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
 
 @export_file("*.tscn") var player_component_prefab: String
-var player_component: Node
+var player_component: PLEffectComponent
 
 func _apply(_pl: Player) -> void:
 	

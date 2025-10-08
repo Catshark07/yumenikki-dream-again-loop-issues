@@ -3,7 +3,6 @@ extends Entity
 
 @export var values: SBVariables = SBVariables.new():
 	get = get_values
-
 # - input
 signal input_vector(_input: Vector2)
 var desired_vel: Vector2
@@ -20,7 +19,7 @@ var dir_input: Vector2i:
 
 var components: SBComponentReceiver
 # - consts
-const TRANS_WEIGHT:	float = 0.225
+const TRANS_WEIGHT:	float = 0.325
 const BASE_SPEED: 	float = 27.5
 const MAX_SPEED: 	float = 95
 

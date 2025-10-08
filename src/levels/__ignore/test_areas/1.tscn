@@ -114,9 +114,8 @@ collision_mask = 64
 [node name="detect_shape" type="CollisionShape2D" parent="LoopManager/loop_objects_detect"]
 shape = SubResource("RectangleShape2D_31k7y")
 
-[node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("12_d0p7m")]
+[node name="camera_handler" parent="." instance=ExtResource("12_d0p7m")]
 position = Vector2(48, -48)
-initial_target = NodePath("")
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("6_7pixw")

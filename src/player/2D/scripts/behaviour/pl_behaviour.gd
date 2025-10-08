@@ -1,10 +1,6 @@
 class_name PLBehaviour
 extends Resource
 
-# ---- behaviour apply - unapply ----
-func _apply		(_pl: Player) -> void: pass
-func _unapply	(_pl: Player) -> void: pass
-
 # ---- movement ----
 func _idle		(_pl: Player, _delta: float) -> void: 
 	if 	_pl.stamina < _pl.MAX_STAMINA:

@@ -31,7 +31,7 @@ func handle_sprite_direction(_sentient: SentientBase) -> void:
 	else: 					set_spr_dir(_sentient, _sentient.heading)
 
 func lerp_spr_dir(_sentient: SentientBase, _heading: SentientBase.compass_headings) -> void:
-	_sentient.sprite_renderer.row = (lerpf(_sentient.sprite_renderer.row, _heading, 0.2))
+	_sentient.sprite_renderer.row = (lerpf(_sentient.sprite_renderer.row, _heading, _sentient.TRANS_WEIGHT))
 func set_spr_dir(_sentient: SentientBase, _heading: SentientBase.compass_headings) -> void: 
 	_sentient.sprite_renderer.row = _heading
 func set_dynamic_rot_multi(_multi: float) -> void:

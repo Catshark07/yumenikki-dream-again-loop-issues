@@ -22,6 +22,9 @@ func _action_on_request_exit(_pl: Player) -> void:
 func _action_update(_pl: Player, _delta: float) -> void: 
 	if _pl.desired_speed > 0 or Input.is_action_just_pressed("pl_emote"):
 		request_exit(_pl)
+		
+	if 	_pl.stamina < _pl.MAX_STAMINA:
+		_pl.stamina += _delta * (_pl.values.stamina_regen / 1.5)
 
 func _perform(_pl: Player) -> void: _pl.force_change_state("action")
 func _cancel(_pl: Player) -> void: 	_pl.force_change_state("idle")

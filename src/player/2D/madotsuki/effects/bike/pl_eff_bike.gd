@@ -1,4 +1,4 @@
-extends PLBehaviour
+extends PLEffect
 
 func _apply(_pl: Player) -> void: 
 	_pl.components.get_component_by_name("sprite_manager").set_dynamic_rot_multi(0.45)

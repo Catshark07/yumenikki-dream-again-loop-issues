@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=4 uid="uid://bv5x4rpikgrho"]
+[gd_scene load_steps=65 format=4 uid="uid://bv5x4rpikgrho"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_4ckat"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="1_28p51"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://dbqq6d85qilns" path="res://src/systems/sequencing/event/camera/change_target.gd" id="17_7rtwp"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="17_uwvvk"]
 [ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="18_b1kpc"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="18_ix0g1"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="19_2suwl"]
 [ext_resource type="Script" uid="uid://cs7hum1o1xj7j" path="res://src/systems/sequencing/event/scene/travel_to_point.gd" id="19_qd70c"]
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="20_v7g16"]
@@ -89,6 +90,12 @@ shader_parameter/strength = 0.265
 shader_parameter/speed = 0.087
 shader_parameter/size = 4.099
 shader_parameter/colour_overlay = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_w6vfa"]
+resource_local_to_scene = true
+resource_name = "default"
+script = ExtResource("18_ix0g1")
+metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7g16"]
 size = Vector2(16, 16)
@@ -332,6 +339,10 @@ material = SubResource("ShaderMaterial_qmak8")
 [node name="madotsuki" parent="y_order" instance=ExtResource("1_28p51")]
 use_parent_material = true
 position = Vector2(-280, 104)
+values = SubResource("Resource_w6vfa")
+
+[node name="IDLE" parent="y_order/madotsuki/stance_fsm" index="0" node_paths=PackedStringArray("transitions")]
+transitions = [NodePath("../MOVE"), NodePath("../ACTION"), null]
 
 [node name="shader" parent="y_order/madotsuki/sprite_container/container/sprite_renderer" index="0"]
 color = Color(0, 0, 0, 1)

@@ -1,4 +1,3 @@
-
 ## This class needs a plugin to make sure previewing is easier and flexible.
 ## not really lol.
 
