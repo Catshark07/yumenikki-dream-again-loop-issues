@@ -1,8 +1,11 @@
+@tool
+
 class_name SentientBase
 extends Entity
 
 @export var values: SBVariables = SBVariables.new():
-	get = get_values
+	get = get_values,
+	set = set_values
 # - input
 signal input_vector(_input: Vector2)
 var desired_vel: Vector2
@@ -63,6 +66,8 @@ var is_moving: 		bool = false
 
 # - initial.
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
+	
 	components = $sb_components
 	components._setup(self)
 		
@@ -131,5 +136,12 @@ func get_calculated_speed(_speed_mult: float) -> float:
 # - misc.
 func get_values() -> SBVariables: return values
 func set_values(_val: SBVariables) -> void: 
-	values = _val
+	if _val == null: 
+		values = SBVariables.new()
+		values.resource_name = "sb_variables"
+		values.resource_local_to_scene = true
+		return
+	
+	values = _val.duplicate()
+	values.resource_name = "sb_variables"
 	values.resource_local_to_scene = true

@@ -52,7 +52,7 @@ func _ready() -> void:
 	
 	Application.		_setup()
 	Audio.				_setup()
-	ConfigManager.				_setup()
+	ConfigManager.		_setup()
 	Directory.			_setup()
 	Optimization.		_setup()
 	Save.				_setup() 

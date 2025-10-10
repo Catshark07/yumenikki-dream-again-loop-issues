@@ -18,7 +18,8 @@ func open(
 	_position: Vector2, 
 	_sound: AudioStream, 
 	_speed: float = 1, 
-	_font_colour: Color = Color.WHITE) -> void:
+	_font_colour: Color = Color.WHITE,
+	_panel_style: StyleBoxTexture = DEFAULT_PANEL_STYLE) -> void:
 	
 	if next_button != null: 
 		next_button.visible = true

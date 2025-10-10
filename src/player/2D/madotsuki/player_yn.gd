@@ -1,3 +1,5 @@
+@tool
+
 class_name Player_YN 
 extends Player
 
@@ -39,7 +41,8 @@ var action: PLAction
 
 func _ready() -> void:
 	super()
-	
+	if Engine.is_editor_hint(): return
+
 	Utils.connect_to_signal(
 		func(_in):
 			vel_input = _in

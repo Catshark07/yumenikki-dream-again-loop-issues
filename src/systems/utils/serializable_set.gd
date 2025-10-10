@@ -28,6 +28,7 @@ func find(_elem: Variant) -> int:
 		return arr.find(_elem)
 	return -1
 func remove_at(_index: int) -> void:
+	if is_empty(): return
 	_index = clampi(_index, 0, arr.size() - 1)
 	arr.remove_at(_index)
 func is_empty() -> bool:

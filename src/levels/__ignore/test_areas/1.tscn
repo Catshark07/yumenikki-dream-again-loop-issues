@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://brd2skoctkkxe"]
+[gd_scene load_steps=28 format=3 uid="uid://brd2skoctkkxe"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ids3t"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="6_7pixw"]
@@ -12,10 +12,15 @@
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="12_d0p7m"]
 [ext_resource type="Texture2D" uid="uid://bhfp4xsgl4dhe" path="res://src/images/panorama/2kki_nexus.png" id="12_p2qgu"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="13_p2qgu"]
-[ext_resource type="PackedScene" uid="uid://dwrwwsgxt4qhm" path="res://src/entities/effects/bike_collect.tscn" id="14_p2qgu"]
-[ext_resource type="PackedScene" uid="uid://cpe6q6ba5agcg" path="res://src/entities/effects/medamaude_alt_collect.tscn" id="15_7ahcf"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="15_8rh84"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="16_7j243"]
+[ext_resource type="Texture2D" uid="uid://cj4o4xfwroiwk" path="res://src/player/hud/clock.png" id="16_7pixw"]
 [ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_manager.gd" id="16_syomr"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="17_hq78p"]
+[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="18_54gce"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="19_wwmjk"]
+[ext_resource type="AudioStream" uid="uid://d1oaiyge765ei" path="res://src/audio/se/voice_mado_no-1.WAV" id="20_0n5dl"]
+[ext_resource type="AudioStream" uid="uid://cud60igddic07" path="res://src/audio/se/voice_mado_no-2.WAV" id="21_44x1d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kciqk"]
 
@@ -34,12 +39,15 @@ shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.12
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 
-[sub_resource type="Resource" id="Resource_7j243"]
+[sub_resource type="Resource" id="Resource_8rh84"]
 resource_local_to_scene = true
-resource_name = "default"
+resource_name = "pl_variables"
 script = ExtResource("16_7j243")
 can_sprint = false
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jpxu1"]
+size = Vector2(16, 16)
 
 [node name="GameScene" type="Node" node_paths=PackedStringArray("seq_initial", "scene_objects")]
 script = ExtResource("1_ids3t")
@@ -152,12 +160,110 @@ stream = ExtResource("9_a27ul")
 prev = NodePath("../parallax")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="bike_collect" parent="." instance=ExtResource("14_p2qgu")]
-position = Vector2(80, 96)
-
-[node name="medamaude_alt_collect" parent="." instance=ExtResource("15_7ahcf")]
-position = Vector2(128, 80)
-
 [node name="madotsuki" parent="." instance=ExtResource("13_p2qgu")]
 position = Vector2(16, 32)
-values = SubResource("Resource_7j243")
+values = SubResource("Resource_8rh84")
+
+[node name="Interactable" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("15_8rh84")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="rect" type="CollisionShape2D" parent="Interactable"]
+shape = SubResource("RectangleShape2D_jpxu1")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="Interactable"]
+texture = ExtResource("16_7pixw")
+
+[node name="OnInteract" type="Node" parent="Interactable" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
+script = ExtResource("17_hq78p")
+order = [NodePath("Sequence"), NodePath("Sequence2"), NodePath("Sequence3"), NodePath("Sequence4")]
+front = NodePath("Sequence")
+back = NodePath("Sequence4")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="Sequence" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "next")]
+script = ExtResource("6_7pixw")
+order = [NodePath("message_1"), NodePath("message_2")]
+front = NodePath("message_1")
+back = NodePath("message_2")
+next = NodePath("../Sequence2")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="message_1" type="Node" parent="Interactable/OnInteract/Sequence" node_paths=PackedStringArray("next")]
+script = ExtResource("18_54gce")
+texts = PackedStringArray("hi")
+next = NodePath("../message_2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="message_2" type="Node" parent="Interactable/OnInteract/Sequence" node_paths=PackedStringArray("prev")]
+script = ExtResource("18_54gce")
+texts = PackedStringArray("bye")
+prev = NodePath("../message_1")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Sequence2" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev", "next")]
+script = ExtResource("6_7pixw")
+order = [NodePath("audio_1"), NodePath("audio_2")]
+front = NodePath("audio_1")
+back = NodePath("audio_2")
+prev = NodePath("../Sequence")
+next = NodePath("../Sequence3")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="audio_1" type="Node" parent="Interactable/OnInteract/Sequence2" node_paths=PackedStringArray("next")]
+script = ExtResource("19_wwmjk")
+sound = ExtResource("20_0n5dl")
+next = NodePath("../audio_2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="audio_2" type="Node" parent="Interactable/OnInteract/Sequence2" node_paths=PackedStringArray("prev")]
+script = ExtResource("19_wwmjk")
+sound = ExtResource("21_44x1d")
+prev = NodePath("../audio_1")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Sequence3" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev", "next")]
+script = ExtResource("6_7pixw")
+order = [NodePath("message_1"), NodePath("message_2")]
+front = NodePath("message_1")
+back = NodePath("message_2")
+prev = NodePath("../Sequence2")
+next = NodePath("../Sequence4")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="message_1" type="Node" parent="Interactable/OnInteract/Sequence3" node_paths=PackedStringArray("next")]
+script = ExtResource("18_54gce")
+texts = PackedStringArray("hi")
+next = NodePath("../message_2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="message_2" type="Node" parent="Interactable/OnInteract/Sequence3" node_paths=PackedStringArray("prev")]
+script = ExtResource("18_54gce")
+texts = PackedStringArray("bye")
+prev = NodePath("../message_1")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Sequence4" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev")]
+script = ExtResource("6_7pixw")
+order = [NodePath("audio_1"), NodePath("audio_2")]
+front = NodePath("audio_1")
+back = NodePath("audio_2")
+prev = NodePath("../Sequence3")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="audio_1" type="Node" parent="Interactable/OnInteract/Sequence4" node_paths=PackedStringArray("next")]
+script = ExtResource("19_wwmjk")
+sound = ExtResource("20_0n5dl")
+next = NodePath("../audio_2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="audio_2" type="Node" parent="Interactable/OnInteract/Sequence4" node_paths=PackedStringArray("prev")]
+script = ExtResource("19_wwmjk")
+sound = ExtResource("21_44x1d")
+prev = NodePath("../audio_1")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"

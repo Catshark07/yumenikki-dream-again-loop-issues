@@ -4,12 +4,12 @@ class_name MessageDisplay
 extends PanelContainer
 
 # - constants.
-const MIN_SIZE := Vector2i(280, 80)
-const DEFAULT_PUNCTUATION_WAIT = 0.25
-const DEFAULT_LETTER_WAIT = 0.0275
-const DEFAULT_SOUND: AudioStreamWAV = preload("res://src/audio/se/se_talk_default.wav")
-const DEFAULT_PANEL_STULE := preload("res://src/ui/panel_default.tres")
-const SOUND_PER_LETTER := 3
+const MIN_SIZE := 				Vector2i(280, 80)
+const SOUND_PER_LETTER: 		int = 3
+const DEFAULT_PUNCTUATION_WAIT: float  = 0.25
+const DEFAULT_LETTER_WAIT: 		float = 0.0275
+const DEFAULT_SOUND: 			AudioStreamWAV = preload("res://src/audio/se/se_talk_default.wav")
+const DEFAULT_PANEL_STYLE := 	preload("res://src/ui/panel_default.tres")
 
 # - internal properties
 var initial_position: Vector2
@@ -19,6 +19,7 @@ var letter_count_to_sound: int = 0
 var sound: AudioStream = load("res://src/audio/se/se_talk_default.wav")
 var speed: float = 1
 var colour: Color = Color.WHITE
+var can_progress: bool = false
 
 var manager: MessageDisplayManager
 
@@ -28,8 +29,8 @@ var sub_container: VSplitContainer
 var text_container: RichTextLabel
 var typewriter_timer: Timer
 var buttons_container: Container
-var can_progress: bool = false
 var animation_tween: Tween
+
 
 # - signals
 signal finished
@@ -44,7 +45,6 @@ func _setup(_manager: MessageDisplayManager) -> void:
 	self.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	self.custom_minimum_size = Vector2(MIN_SIZE.x, MIN_SIZE.y)
 	self.name = "message_display"
-	self.add_theme_stylebox_override("panel", DEFAULT_PANEL_STULE)
 	
 	container = MarginContainer.new()
 	sub_container = VSplitContainer.new()
@@ -91,10 +91,12 @@ func open(
 	_position: Vector2,
 	_sound: AudioStream,
 	_speed: float = 1,
-	_font_colour: Color = Color.WHITE) -> void:
+	_font_colour: Color = Color.WHITE,
+	_panel_style: StyleBoxTexture = DEFAULT_PANEL_STYLE) -> void:
 		sound = _sound
 		speed = _speed if _speed != 1 else speed
 		colour = _font_colour 
+		self.add_theme_stylebox_override("panel", _panel_style)
 		
 		initial_position = _position
 		self.position = initial_position - self.size / 2
@@ -190,4 +192,6 @@ func __close_animation() -> void:
 	
 	await  animation_tween.finished
 	visible = false
+	self.remove_theme_stylebox_override("panel")
+	
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dwst4o7pf4ye7"]
+[gd_scene load_steps=65 format=3 uid="uid://dwst4o7pf4ye7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_gl3nc"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_jd4xj"]
@@ -39,7 +39,6 @@
 [ext_resource type="Script" uid="uid://ceoifexmpm3o5" path="res://src/systems/sequencing/event/node/call_function.gd" id="24_hvore"]
 [ext_resource type="Shader" uid="uid://hqppcc6e4xw2" path="res://src/shaders/panorama/lens_flare.gdshader" id="25_ohce6"]
 [ext_resource type="Texture2D" uid="uid://ceuj3ddjk1vk2" path="res://src/levels/_real/apartment/digital_clock.png" id="27_53vct"]
-[ext_resource type="AudioStream" uid="uid://bmx0hywuebj28" path="res://src/audio/se/se_soothe.wav" id="28_0pnw5"]
 [ext_resource type="Texture2D" uid="uid://cl7uo10edd52c" path="res://src/levels/_real/apartment/digital_clock_countdown.png" id="28_lkp4h"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="29_lkp4h"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_t6xd2"]
@@ -47,6 +46,7 @@
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="31_103tn"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="32_rjleq"]
 [ext_resource type="Texture2D" uid="uid://cav1kw6450fm0" path="res://src/player/2D/madotsuki/display/default/sleep.png" id="36_0pnw5"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="36_dehmq"]
 [ext_resource type="AudioStream" uid="uid://umly1e8go6f7" path="res://src/audio/amb/flies_buzz.ogg" id="37_nq133"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="38_1jqpe"]
 
@@ -279,6 +279,12 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nq133"]
 size = Vector2(16, 16)
 
+[sub_resource type="Resource" id="Resource_1jqpe"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("36_dehmq")
+metadata/_custom_type_script = "uid://jf85vmwx4pj"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqyao"]
 size = Vector2(16, 16)
 
@@ -289,6 +295,7 @@ size = Vector2(480, 270)
 shader = ExtResource("25_ohce6")
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
@@ -308,6 +315,7 @@ shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 
 [node name="room" type="Node2D" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
 y_sort_enabled = true
@@ -380,8 +388,11 @@ script = ExtResource("17_vphfh")
 event = NodePath("post_cutscene")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="post_cutscene" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene"]
+[node name="post_cutscene" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("13_160am")
+order = [NodePath("travel_to_balcony")]
+front = NodePath("travel_to_balcony")
+back = NodePath("travel_to_balcony")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="travel_to_balcony" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene/post_cutscene" node_paths=PackedStringArray("scene_traversal")]
@@ -431,8 +442,11 @@ enter_sequence = NodePath("enter")
 exit_sequence = NodePath("exit")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
-[node name="enter" type="Node" parent="room/deadzone/in_room"]
+[node name="enter" type="Node" parent="room/deadzone/in_room" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("13_160am")
+order = [NodePath("amb_muffle")]
+front = NodePath("amb_muffle")
+back = NodePath("amb_muffle")
 
 [node name="amb_muffle" type="Node" parent="room/deadzone/in_room/enter" node_paths=PackedStringArray("event")]
 script = ExtResource("17_vphfh")
@@ -485,43 +499,60 @@ properties = Dictionary[String, Variant]({
 skip_save = true
 metadata/_custom_type_script = "uid://0li2ud4tbkf5"
 
-[node name="OnInteract" type="Node" parent="room/bed"]
+[node name="OnInteract" type="Node" parent="room/bed" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
 script = ExtResource("13_4kjpi")
+order = [NodePath("if_melatonin_took"), NodePath("else")]
+front = NodePath("if_melatonin_took")
+back = NodePath("else")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="if_melatonin_took" type="Node" parent="room/bed/OnInteract" node_paths=PackedStringArray("input_objects", "else_conditional")]
+[node name="if_melatonin_took" type="Node" parent="room/bed/OnInteract" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
 script = ExtResource("21_dx8di")
 expression = "flag.properties[\"melatonin_took\"]"
 input_objects = {
 "flag": NodePath("../../../melatonin_pills/melatonin_took")
 }
 else_conditional = NodePath("../else")
+order = [NodePath("request_cutscene_start"), NodePath("change_cam_target"), NodePath("fade_in"), NodePath("music_fadeout"), NodePath("play_sound_foley"), NodePath("set_player_inactive"), NodePath("set_player_invisible"), NodePath("play_animation"), NodePath("fade_out")]
+front = NodePath("request_cutscene_start")
+back = NodePath("fade_out")
+next = NodePath("../else")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("next")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../change_cam_target")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="change_cam_target" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("target")]
+[node name="change_cam_target" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("target", "prev", "next")]
 script = ExtResource("18_4kjpi")
 target = NodePath("../../..")
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../fade_in")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="fade_in" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+[node name="fade_in" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("15_l7mt1")
+prev = NodePath("../change_cam_target")
+next = NodePath("../music_fadeout")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="music_fadeout" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+[node name="music_fadeout" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("22_hvore")
+prev = NodePath("../fade_in")
+next = NodePath("../play_sound_foley")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_sound_foley" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+[node name="play_sound_foley" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("23_fvhu0")
 sound = ExtResource("21_rjleq")
+prev = NodePath("../music_fadeout")
+next = NodePath("../set_player_inactive")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_player_inactive" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+[node name="set_player_inactive" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("17_t2xer")
 node = NodePath("../../../../../balcony/_/madotsuki")
@@ -536,9 +567,11 @@ property_info = {
 }
 property_value = 0
 new_value = 4
+prev = NodePath("../play_sound_foley")
+next = NodePath("../set_player_invisible")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_player_invisible" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+[node name="set_player_invisible" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("17_t2xer")
 node = NodePath("../../../../../balcony/_/madotsuki")
@@ -553,9 +586,11 @@ property_info = {
 }
 property_value = true
 new_value = false
+prev = NodePath("../set_player_inactive")
+next = NodePath("../play_animation")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_animation" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+[node name="play_animation" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node", "prev", "next")]
 script = ExtResource("24_hvore")
 node = NodePath("../../../../cutscene")
 method_name = "play"
@@ -605,28 +640,39 @@ method_info = {
 internal_args = Dictionary[String, Variant]({
 "name": &"countdown"
 })
+prev = NodePath("../set_player_invisible")
+next = NodePath("../fade_out")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="fade_out" type="Node" parent="room/bed/OnInteract/if_melatonin_took"]
+[node name="fade_out" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("prev")]
 script = ExtResource("15_l7mt1")
 fade_type = 1
+prev = NodePath("../play_animation")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="else" type="Node" parent="room/bed/OnInteract"]
+[node name="else" type="Node" parent="room/bed/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev")]
 script = ExtResource("13_160am")
+order = [NodePath("once"), NodePath("else_if_persistent")]
+front = NodePath("once")
+back = NodePath("else_if_persistent")
 skip = true
+prev = NodePath("../if_melatonin_took")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="once" type="Node" parent="room/bed/OnInteract/else" node_paths=PackedStringArray("input_objects", "else_conditional")]
+[node name="once" type="Node" parent="room/bed/OnInteract/else" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
 script = ExtResource("21_dx8di")
 expression = "flag.properties[\"persist\"] == false"
 input_objects = {
 "flag": NodePath("../../../persistent_sleep")
 }
 else_conditional = NodePath("../else_if_persistent")
+order = [NodePath("raise_flag"), NodePath("request_cutscene_start"), NodePath("notif"), NodePath("request_cutscene_end")]
+front = NodePath("raise_flag")
+back = NodePath("request_cutscene_end")
+next = NodePath("../else_if_persistent")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="raise_flag" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("node")]
+[node name="raise_flag" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("node", "next")]
 process_mode = 4
 script = ExtResource("17_t2xer")
 node = NodePath("../../../../persistent_sleep")
@@ -645,41 +691,55 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "persist": true
 })
+next = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/else/once"]
+[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_START_REQUEST"
+prev = NodePath("../raise_flag")
+next = NodePath("../notif")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="notif" type="Node" parent="room/bed/OnInteract/else/once"]
+[node name="notif" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("19_777kg")
 texts = PackedStringArray("i need my pills.")
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="room/bed/OnInteract/else/once"]
+[node name="request_cutscene_end" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("prev")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../notif")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="else_if_persistent" type="Node" parent="room/bed/OnInteract/else"]
+[node name="else_if_persistent" type="Node" parent="room/bed/OnInteract/else" node_paths=PackedStringArray("order", "front", "back", "prev")]
 script = ExtResource("13_160am")
+order = [NodePath("request_cutscene_start"), NodePath("notif"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 skip = true
+prev = NodePath("../once")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/else/else_if_persistent"]
+[node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/else/else_if_persistent" node_paths=PackedStringArray("next")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../notif")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="notif" type="Node" parent="room/bed/OnInteract/else/else_if_persistent"]
+[node name="notif" type="Node" parent="room/bed/OnInteract/else/else_if_persistent" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("19_777kg")
 texts = PackedStringArray("i... need my pills.")
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="room/bed/OnInteract/else/else_if_persistent"]
+[node name="request_cutscene_end" type="Node" parent="room/bed/OnInteract/else/else_if_persistent" node_paths=PackedStringArray("prev")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../notif")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="melatonin_pills" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
@@ -702,51 +762,57 @@ properties = Dictionary[String, Variant]({
 skip_save = true
 metadata/_custom_type_script = "uid://0li2ud4tbkf5"
 
-[node name="OnInteract" type="Node" parent="room/melatonin_pills"]
+[node name="OnInteract" type="Node" parent="room/melatonin_pills" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
 script = ExtResource("13_4kjpi")
+order = [NodePath("if_didnt_take"), NodePath("else")]
+front = NodePath("if_didnt_take")
+back = NodePath("else")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="if_didnt_take" type="Node" parent="room/melatonin_pills/OnInteract" node_paths=PackedStringArray("input_objects", "else_conditional")]
+[node name="if_didnt_take" type="Node" parent="room/melatonin_pills/OnInteract" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
 script = ExtResource("21_dx8di")
 expression = "meds.properties[\"melatonin_took\"] == false"
 input_objects = {
 "meds": NodePath("../../melatonin_took")
 }
 else_conditional = NodePath("../else")
+order = [NodePath("request_cutscene_start"), NodePath("open_message"), NodePath("wait_1_sec"), NodePath("request_cutscene_end"), NodePath("Event")]
+front = NodePath("request_cutscene_start")
+back = NodePath("Event")
+next = NodePath("../else")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
+[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("next")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../open_message")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="open_message" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
+[node name="open_message" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("19_777kg")
 texts = PackedStringArray("there\'s melatonin medication lying on the floor.")
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../wait_1_sec")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait_1_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
+[node name="wait_1_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("20_e3jfg")
+prev = NodePath("../open_message")
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="prompt" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prompt_options")]
-script = ExtResource("19_777kg")
-message_type = 2
-texts = PackedStringArray("take some?")
-prompt_options = {
-&"no": NodePath("no"),
-&"yes": NodePath("yes")
-}
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
+[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prev", "next")]
+script = ExtResource("14_fjdyw")
+event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../wait_1_sec")
+next = NodePath("../Event")
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="yes" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt"]
-script = ExtResource("13_160am")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[node name="melatonin_flag" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes" node_paths=PackedStringArray("node")]
+[node name="Event" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("node", "prev")]
 process_mode = 4
 script = ExtResource("17_t2xer")
-node = NodePath("../../../../../melatonin_took")
+node = NodePath("../../../melatonin_took")
 property_name = "properties"
 property_info = {
 "class_name": &"",
@@ -762,65 +828,28 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "melatonin_took": true
 })
+prev = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait_half_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
-script = ExtResource("20_e3jfg")
-seconds = 0.25
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="play_sound" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
-script = ExtResource("23_fvhu0")
-sound = ExtResource("28_0pnw5")
-wait_til_finished = false
-metadata/_custom_type_script = "uid://vk574kc3l7av"
-
-[node name="wait_1_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
-script = ExtResource("20_e3jfg")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes"]
-script = ExtResource("19_777kg")
-texts = PackedStringArray("consumed melatonin pills!")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="end_cutscene" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/yes" node_paths=PackedStringArray("event")]
-script = ExtResource("17_vphfh")
-event = NodePath("../../../request_cutscene_end")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="no" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt"]
+[node name="else" type="Node" parent="room/melatonin_pills/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev")]
 script = ExtResource("13_160am")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[node name="end_cutscene" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take/prompt/no" node_paths=PackedStringArray("event")]
-script = ExtResource("17_vphfh")
-event = NodePath("../../../request_cutscene_end")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take"]
-script = ExtResource("14_fjdyw")
-event_id = "CUTSCENE_END_REQUEST"
-metadata/_custom_type_script = "uid://dspsbq33tl0wa"
-
-[node name="else" type="Node" parent="room/melatonin_pills/OnInteract"]
-script = ExtResource("13_160am")
+order = [NodePath("request_cutscene_start"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 skip = true
+prev = NodePath("../if_didnt_take")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/else"]
+[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/else" node_paths=PackedStringArray("next")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="notif" type="Node" parent="room/melatonin_pills/OnInteract/else"]
-script = ExtResource("19_777kg")
-texts = PackedStringArray("i don\'t need more.")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/else"]
+[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/else" node_paths=PackedStringArray("prev")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="illegible_note" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
@@ -835,8 +864,12 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 shape = SubResource("RectangleShape2D_nq133")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="OnInteract" type="Node" parent="room/illegible_note"]
+[node name="OnInteract" type="Node" parent="room/illegible_note" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
 script = ExtResource("13_4kjpi")
+order = [NodePath("read")]
+front = NodePath("read")
+back = NodePath("read")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
 [node name="read" type="Node" parent="room/illegible_note/OnInteract"]
@@ -856,23 +889,31 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 shape = SubResource("RectangleShape2D_nq133")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="OnInteract" type="Node" parent="room/note"]
+[node name="OnInteract" type="Node" parent="room/note" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
 script = ExtResource("13_4kjpi")
+order = [NodePath("request_cutscene_start"), NodePath("read"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="request_cutscene_start" type="Node" parent="room/note/OnInteract"]
+[node name="request_cutscene_start" type="Node" parent="room/note/OnInteract" node_paths=PackedStringArray("next")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../read")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="read" type="Node" parent="room/note/OnInteract"]
+[node name="read" type="Node" parent="room/note/OnInteract" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("19_777kg")
 texts = PackedStringArray("this note is legible, it reads:", "\"the neighbours above have vandalized, or at least almost vandalized my balcony...", "the neighbours below have messed up with my apartment\'s flooring. i have contacted the landlord but it was to no avail.", "if you are reading this, i urge you to find a better place than whatever hell this is\"", "... the name is covered a by a thick ink.")
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="room/note/OnInteract"]
+[node name="request_cutscene_end" type="Node" parent="room/note/OnInteract" node_paths=PackedStringArray("prev")]
 script = ExtResource("14_fjdyw")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../read")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="balcony" parent="." instance=ExtResource("7_33y2f")]
@@ -880,6 +921,7 @@ position = Vector2(80, 136)
 
 [node name="madotsuki" parent="balcony/_" index="4" instance=ExtResource("10_p0cyb")]
 position = Vector2(104, 168)
+values = SubResource("Resource_1jqpe")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="to_room" type="Area2D" parent="balcony" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
@@ -925,8 +967,11 @@ enter_sequence = NodePath("enter")
 exit_sequence = NodePath("exit")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
-[node name="enter" type="Node" parent="balcony/deadzone/in_balcony"]
+[node name="enter" type="Node" parent="balcony/deadzone/in_balcony" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("13_160am")
+order = [NodePath("amb")]
+front = NodePath("amb")
+back = NodePath("amb")
 
 [node name="amb" type="Node" parent="balcony/deadzone/in_balcony/enter" node_paths=PackedStringArray("event")]
 script = ExtResource("17_vphfh")
@@ -971,10 +1016,13 @@ position = Vector2(176, 304)
 amount = 5
 emission_rect_extents = Vector2(40, 24)
 
-[node name="on_initial" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("13_160am")
+order = [NodePath("panorama"), NodePath("BGM")]
+front = NodePath("panorama")
+back = NodePath("BGM")
 
-[node name="panorama" type="SubViewport" parent="on_initial"]
+[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("next")]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_filter = 0
@@ -982,6 +1030,7 @@ canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 script = ExtResource("18_jd4xj")
+next = NodePath("../BGM")
 
 [node name="Dusk" type="Sprite2D" parent="on_initial/panorama"]
 material = SubResource("ShaderMaterial_4gftm")
@@ -992,10 +1041,11 @@ texture = ExtResource("4_n1yad")
 position = Vector2(248, 128)
 texture = ExtResource("4_kxofn")
 
-[node name="BGM" type="Node" parent="on_initial"]
+[node name="BGM" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
 script = ExtResource("15_lejej")
 stream = ExtResource("16_sau16")
 pitch = 0.7
+prev = NodePath("../panorama")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="on_free" type="Node" parent="."]

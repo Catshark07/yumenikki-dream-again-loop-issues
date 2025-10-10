@@ -1,12 +1,13 @@
-[gd_scene load_steps=43 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=45 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
-[ext_resource type="Resource" uid="uid://bkposgoemqwvu" path="res://src/player/2D/madotsuki/effects/_none/_stats.tres" id="2_f263f"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="2_f263f"]
 [ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_xe7mj"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
 [ext_resource type="Script" uid="uid://dtqoa37rhrqdu" path="res://src/player/2D/scripts/components/pl_mental_status.gd" id="6_mbimu"]
 [ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="7_ps2wd"]
+[ext_resource type="AnimationLibrary" uid="uid://yubpgajftv6v" path="res://src/player/2D/madotsuki/animation_libs/action.tres" id="8_57bvo"]
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="8_cin7d"]
 [ext_resource type="Texture2D" uid="uid://v1tx4oh6hb3y" path="res://src/player/2D/madotsuki/display/default/_RESET_match.png" id="8_mbimu"]
 [ext_resource type="AnimationLibrary" uid="uid://bm1cor2werd5w" path="res://src/player/2D/madotsuki/animation_libs/emote.tres" id="9_m68sj"]
@@ -33,6 +34,12 @@
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_cin7d"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="32_57bvo"]
+
+[sub_resource type="Resource" id="Resource_bfa5j"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("2_f263f")
+metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
 [sub_resource type="Animation" id="Animation_m68sj"]
 length = 0.001
@@ -93,7 +100,7 @@ motion_mode = 1
 script = ExtResource("1_wub1p")
 stamina_fsm = NodePath("stamina_fsm")
 fsm = NodePath("stance_fsm")
-values = ExtResource("2_f263f")
+values = SubResource("Resource_bfa5j")
 sprite_renderer = NodePath("sprite_container/container/sprite_renderer")
 shadow_renderer = NodePath("sprite_container/container/shadow_renderer")
 
@@ -115,6 +122,7 @@ script = ExtResource("8_cin7d")
 [node name="animation_player" type="AnimationPlayer" parent="sb_components/animation_manager"]
 libraries = {
 &"": SubResource("AnimationLibrary_m68sj"),
+&"action": ExtResource("8_57bvo"),
 &"emote": ExtResource("9_m68sj"),
 &"normal": ExtResource("10_mbimu"),
 &"reset": ExtResource("11_wc1wu")

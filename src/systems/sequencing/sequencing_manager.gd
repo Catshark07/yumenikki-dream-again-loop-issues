@@ -6,13 +6,13 @@ static var curr: Sequence
 
 static func invoke(_seq: Sequence) -> void:
 	if _seq == null: return
+	is_handling = true
 	
-	if is_handling and curr == _seq: 	# - cancel if sequence invoked is the same as current.
+	if curr == _seq: 	# - cancel if sequence invoked is the same as current.
 		cancel(curr)
 		
 	curr 		= _seq 
-	is_handling = true
-	_seq.execute()
+	curr.execute()
 	
 static func cancel(_seq: Sequence) -> void: 
 	
@@ -26,9 +26,6 @@ static func cancel(_seq: Sequence) -> void:
 	
 static func _update(_delta: float) -> void:
 	if 	curr != null and is_handling:
+		print(curr)
 		curr.update(_delta)
 	
-static func step() -> void:
-	if curr != null:
-		if curr.has_next(): curr = curr.next
-		else:				curr = null
