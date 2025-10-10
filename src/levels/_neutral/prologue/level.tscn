@@ -99,7 +99,7 @@ can_sprint = false
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7g16"]
-size = Vector2(16, 16)
+size = Vector2(16, 48)
 
 [sub_resource type="Resource" id="Resource_hyc6s"]
 resource_local_to_scene = true
@@ -392,6 +392,7 @@ script = ExtResource("14_qu046")
 order = [NodePath("request_cutscene_start"), NodePath("allow_player_sprint"), NodePath("dialogue"), NodePath("play_hint"), NodePath("request_cutscene_end")]
 front = NodePath("request_cutscene_start")
 back = NodePath("request_cutscene_end")
+call_limit = 1
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
 [node name="request_cutscene_start" type="Node" parent="y_order/dialogue_1/on_enter" node_paths=PackedStringArray("next")]
@@ -797,14 +798,14 @@ use_parent_material = true
 position = Vector2(-360, 208)
 texture = ExtResource("29_uwvvk")
 hframes = 7
-frame = 5
+frame = 4
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 10.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
-progress = 5
+progress = 4
 
 [node name="jellyfish_2" type="Sprite2D" parent="y_order"]
 use_parent_material = true

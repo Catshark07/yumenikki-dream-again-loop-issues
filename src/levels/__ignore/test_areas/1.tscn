@@ -181,17 +181,16 @@ texture = ExtResource("16_7pixw")
 [node name="OnInteract" type="Node" parent="Interactable" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("17_hq78p")
-order = [NodePath("Sequence"), NodePath("Sequence2"), NodePath("Sequence3"), NodePath("Sequence4")]
+order = [NodePath("Sequence")]
 front = NodePath("Sequence")
-back = NodePath("Sequence4")
+back = NodePath("Sequence")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="Sequence" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "next")]
+[node name="Sequence" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("6_7pixw")
 order = [NodePath("message_1"), NodePath("message_2")]
 front = NodePath("message_1")
 back = NodePath("message_2")
-next = NodePath("../Sequence2")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="message_1" type="Node" parent="Interactable/OnInteract/Sequence" node_paths=PackedStringArray("next")]
@@ -206,54 +205,12 @@ texts = PackedStringArray("bye")
 prev = NodePath("../message_1")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="Sequence2" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev", "next")]
-script = ExtResource("6_7pixw")
-order = [NodePath("audio_1"), NodePath("audio_2")]
-front = NodePath("audio_1")
-back = NodePath("audio_2")
-prev = NodePath("../Sequence")
-next = NodePath("../Sequence3")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[node name="audio_1" type="Node" parent="Interactable/OnInteract/Sequence2" node_paths=PackedStringArray("next")]
-script = ExtResource("19_wwmjk")
-sound = ExtResource("20_0n5dl")
-next = NodePath("../audio_2")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="audio_2" type="Node" parent="Interactable/OnInteract/Sequence2" node_paths=PackedStringArray("prev")]
-script = ExtResource("19_wwmjk")
-sound = ExtResource("21_44x1d")
-prev = NodePath("../audio_1")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="Sequence3" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev", "next")]
-script = ExtResource("6_7pixw")
-order = [NodePath("message_1"), NodePath("message_2")]
-front = NodePath("message_1")
-back = NodePath("message_2")
-prev = NodePath("../Sequence2")
-next = NodePath("../Sequence4")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[node name="message_1" type="Node" parent="Interactable/OnInteract/Sequence3" node_paths=PackedStringArray("next")]
-script = ExtResource("18_54gce")
-texts = PackedStringArray("hiasdasd")
-next = NodePath("../message_2")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="message_2" type="Node" parent="Interactable/OnInteract/Sequence3" node_paths=PackedStringArray("prev")]
-script = ExtResource("18_54gce")
-texts = PackedStringArray("byeddddd")
-prev = NodePath("../message_1")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
 [node name="Sequence4" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev")]
 script = ExtResource("6_7pixw")
 order = [NodePath("audio_1"), NodePath("audio_2")]
 front = NodePath("audio_1")
 back = NodePath("audio_2")
-prev = NodePath("../Sequence3")
+prev = NodePath("")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="audio_1" type="Node" parent="Interactable/OnInteract/Sequence4" node_paths=PackedStringArray("next")]

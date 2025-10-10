@@ -38,19 +38,18 @@ func execute() -> void:
 	
 	if call_limit > 0:
 		call_count += 1
+		
+		# - first event call will have the "call_count" SET TO 1, NOT TO 0.
 		if call_count > call_limit: 
-			__call_finished()
+			__call_finished.call_deferred()
 			return
 	
-	# - first event call will have the "call_count" SET TO 1, NOT TO 0.
-	
-	if wait_til_finished: 	await 	_execute()
-	else: 							_execute()
-	
+	if wait_til_finished: await _execute()
+	else:						_execute()
 	__call_finished.call_deferred()
+	
 func cancel() -> void:
 	_cancel()
-	canceled.emit.call_deferred()
 func end() -> void: 
 	_end()
 

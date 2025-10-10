@@ -9,7 +9,6 @@ func _ready() -> void:
 	dream_component._setup()
 		
 func _state_enter() -> void:
-	print_rich("[wave]PLAY STATE IS ACTIVE[/wave]")
 	await Game.main_tree.process_frame
 	PhysicsServer2D.set_active(true)
 	InputManager.request_curr_controller_change(InputManager.sb_input_controller)

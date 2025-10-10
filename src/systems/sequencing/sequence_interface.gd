@@ -51,6 +51,8 @@ func _ready() -> void:
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
 	if bail_requested: 
+		bail_requested = false
+		canceled.emit.call_deferred()
 		return
 	
 	# - if the sequence is not valid, we halt and not run it.
@@ -73,6 +75,7 @@ func _execute() -> void:
 			
 			if bail_requested: 
 				bail_requested = false
+				canceled.emit.call_deferred()
 				return
 		
 		if curr.has_next(): 
