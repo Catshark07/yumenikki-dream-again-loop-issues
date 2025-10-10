@@ -238,13 +238,13 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="message_1" type="Node" parent="Interactable/OnInteract/Sequence3" node_paths=PackedStringArray("next")]
 script = ExtResource("18_54gce")
-texts = PackedStringArray("hi")
+texts = PackedStringArray("hiasdasd")
 next = NodePath("../message_2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="message_2" type="Node" parent="Interactable/OnInteract/Sequence3" node_paths=PackedStringArray("prev")]
 script = ExtResource("18_54gce")
-texts = PackedStringArray("bye")
+texts = PackedStringArray("byeddddd")
 prev = NodePath("../message_1")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -259,11 +259,13 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 [node name="audio_1" type="Node" parent="Interactable/OnInteract/Sequence4" node_paths=PackedStringArray("next")]
 script = ExtResource("19_wwmjk")
 sound = ExtResource("20_0n5dl")
+pitch = 0.63
 next = NodePath("../audio_2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="audio_2" type="Node" parent="Interactable/OnInteract/Sequence4" node_paths=PackedStringArray("prev")]
 script = ExtResource("19_wwmjk")
 sound = ExtResource("21_44x1d")
+pitch = 1.11
 prev = NodePath("../audio_1")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"

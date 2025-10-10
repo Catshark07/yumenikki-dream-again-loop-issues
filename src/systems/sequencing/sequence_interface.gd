@@ -1,7 +1,6 @@
 @tool
 
-class_name Sequence 
-extends Event
+class_name Sequence extends Event
 
 var time_elapsed: float = 0 
 var priority: int = 0
@@ -51,64 +50,55 @@ func _ready() -> void:
 
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
-	curr = front
-	
 	if bail_requested: 
 		return
 	
 	# - if the sequence is not valid, we halt and not run it.
 	if !_validate_event_order():
 		printerr("SEQUENCE %s :: Sequence halted due to invalid events!" % (self.name)) 
-		bail_requested = true
 		return
 	
-
-func _end() -> void:
-	time_elapsed = 0
+	# - we iterate thru the events..
+	curr = front
+	while curr != null:
+		# - make sure that the child is of type Event.
+		if curr is Event:
+			
+			if curr.get_instance_id() in marked_invalid or curr.skip: 
+				continue # - we skip any events marked for skip / as invalid.
+			
+			curr.execute() 
+			await curr.finished
+			curr.end()
+			
+			if bail_requested: 
+				bail_requested = false
+				return
 		
+		if curr.has_next(): 
+			curr = curr.next
+		else:				break
 func _cancel() -> void:
 	bail_requested = true	
 			 
 func _validate_event_order() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
 	# checking for any missing dependencies, has the corect properties, etc.
-	curr = front
-	
-	while curr != null:
-		if curr.skip: continue 
-		if curr == null or !curr._validate():
+	var event = front
+	while event != null:
+		if event.skip: continue 
+		if event == null or !event._validate():
 			# - if event is invalid...
-			if skip_invalid_events: marked_invalid.append(curr.get_instance_id()) # - we mark invalid events to be skipped.
+			if skip_invalid_events: marked_invalid.append(event.get_instance_id()) # - we mark invalid events to be skipped.
 			else:
 				fail.emit()
 				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 
-		if 	curr.has_next(): 
-			curr = curr.next
-		else:				
-			break
+		if event.has_next(): event = event.next
+		else:				break
 	
 	success.emit()	
 	return true
 
 func update(_delta: float) -> void: 
 	time_elapsed += _delta
-	
-	if curr != null:
-		# - make sure that the child is of type Event.
-		if curr is Event:
-			
-			if curr.get_instance_id() in marked_invalid or curr.skip: 
-				if 	curr.has_next(): 	curr = curr.next
-				else:					return 
-			
-			curr.execute() 
-			curr.end()
-			
-			if bail_requested: 
-				bail_requested = false
-				return
-				
-		if 	curr.is_finished and curr.has_next():  	curr = curr.next
-		else:										curr = null
-		

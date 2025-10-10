@@ -47,7 +47,7 @@ func execute() -> void:
 	if wait_til_finished: 	await 	_execute()
 	else: 							_execute()
 	
-	__call_finished()
+	__call_finished.call_deferred()
 func cancel() -> void:
 	_cancel()
 	canceled.emit.call_deferred()
@@ -56,7 +56,7 @@ func end() -> void:
 
 # -- internal
 func __call_finished() -> void:
-	finished.emit.call_deferred()
+	finished.emit()
 	is_finished = true
 
 func has_next() -> bool: return next != null
