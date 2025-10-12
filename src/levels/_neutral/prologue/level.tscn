@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=4 uid="uid://bv5x4rpikgrho"]
+[gd_scene load_steps=71 format=4 uid="uid://bv5x4rpikgrho"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_4ckat"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="1_28p51"]
@@ -57,6 +57,16 @@ _data = {
 &"intro": SubResource("Animation_oaq00")
 }
 
+[sub_resource type="Gradient" id="Gradient_ix0g1"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w6vfa"]
+gradient = SubResource("Gradient_ix0g1")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hyc6s"]
+texture = SubResource("GradientTexture2D_w6vfa")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uwvvk"]
 shader = ExtResource("2_4ckat")
 shader_parameter/strength = 0.4
@@ -91,14 +101,28 @@ shader_parameter/speed = 0.087
 shader_parameter/size = 4.099
 shader_parameter/colour_overlay = Color(0, 0, 0, 1)
 
+[sub_resource type="Resource" id="Resource_ix0g1"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("18_ix0g1")
+can_sprint = false
+metadata/_custom_type_script = "uid://bxe7uci7t77tx"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7g16"]
+size = Vector2(16, 48)
+
+[sub_resource type="Resource" id="Resource_hyc6s"]
+resource_local_to_scene = true
+resource_name = "default"
+script = ExtResource("18_ix0g1")
+can_sprint = false
+metadata/_custom_type_script = "uid://bxe7uci7t77tx"
+
 [sub_resource type="Resource" id="Resource_w6vfa"]
 resource_local_to_scene = true
 resource_name = "default"
 script = ExtResource("18_ix0g1")
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7g16"]
-size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7rtwp"]
 size = Vector2(16, 16)
@@ -126,6 +150,9 @@ shader_parameter/uv_offset = Vector2(0, 0)
 shader_parameter/offset_strength = 1.0
 shader_parameter/transparency = 0.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ix0g1"]
+size = Vector2(128, 144)
+
 [node name="psychedelic_vision" type="Node2D" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
 script = ExtResource("1_4ckat")
 seq_initial = NodePath("on_initial")
@@ -141,7 +168,7 @@ libraries = {
 
 [node name="on_player_exhaustion" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("11_516q3")
-event_id = PackedStringArray("PLAYER_EXHAUST")
+event_id = Array[String](["PLAYER_EXHAUST"])
 order = [NodePath("replenish_player_stam"), NodePath("request_cutscene_start"), NodePath("alert_player_1"), NodePath("alert_player_2"), NodePath("request_cutscene_end")]
 skip_invalid_events = true
 front = NodePath("replenish_player_stam")
@@ -180,6 +207,7 @@ texts = PackedStringArray("should exhaustion befall you little one, stand still 
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
 hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../request_cutscene_start")
 next = NodePath("../alert_player_2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -190,6 +218,7 @@ texts = PackedStringArray("(standing still or sneaking improves stamina regenera
 sound_override = null
 font_colour_override = Color(0, 0.690196, 0.392157, 1)
 hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../alert_player_1")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -278,7 +307,7 @@ script = ExtResource("27_neteg")
 texts = PackedStringArray("wake up.")
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
-hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../fade_out_1")
 next = NodePath("../fade_out_2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -300,7 +329,7 @@ script = ExtResource("27_neteg")
 texts = PackedStringArray("it is time for you to wake up, little one.", "it seems you succumbed to a deep sleep.", "i will offer you my guidance. little one, trail the path, should you accept my wisdom.")
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
-hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../fade_out_2")
 next = NodePath("../play_hint")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -308,9 +337,9 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="play_hint" type="Node" parent="on_initial" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("(use WASD or ARROW KEYS to traverse).")
-sound_override = null
 font_colour_override = Color(0, 0.690196, 0.392157, 1)
 hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../dialogue_2")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -339,7 +368,7 @@ material = SubResource("ShaderMaterial_qmak8")
 [node name="madotsuki" parent="y_order" instance=ExtResource("1_28p51")]
 use_parent_material = true
 position = Vector2(-280, 104)
-values = SubResource("Resource_w6vfa")
+values = SubResource("Resource_ix0g1")
 
 [node name="IDLE" parent="y_order/madotsuki/stance_fsm" index="0" node_paths=PackedStringArray("transitions")]
 transitions = [NodePath("../MOVE"), NodePath("../ACTION"), null]
@@ -367,6 +396,7 @@ script = ExtResource("14_qu046")
 order = [NodePath("request_cutscene_start"), NodePath("allow_player_sprint"), NodePath("dialogue"), NodePath("play_hint"), NodePath("request_cutscene_end")]
 front = NodePath("request_cutscene_start")
 back = NodePath("request_cutscene_end")
+call_limit = 1
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
 [node name="request_cutscene_start" type="Node" parent="y_order/dialogue_1/on_enter" node_paths=PackedStringArray("next")]
@@ -379,17 +409,17 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 process_mode = 4
 script = ExtResource("33_7rtwp")
 node = NodePath("../../../madotsuki")
-property_name = "can_sprint"
+property_name = "values"
 property_info = {
 "class_name": &"",
-"hint": 0,
-"hint_string": "",
-"name": "can_sprint",
-"type": 1,
+"hint": 17,
+"hint_string": "SBVariables",
+"name": "values",
+"type": 24,
 "usage": 6
 }
-property_value = false
-new_value = true
+property_value = SubResource("Resource_hyc6s")
+new_value = SubResource("Resource_w6vfa")
 prev = NodePath("../request_cutscene_start")
 next = NodePath("../dialogue")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -399,7 +429,7 @@ script = ExtResource("27_neteg")
 texts = PackedStringArray("should you feel threatened little one,", "[wave]running[/wave] is your best escape.")
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
-hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../allow_player_sprint")
 next = NodePath("../play_hint")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -410,6 +440,7 @@ texts = PackedStringArray("(press and hold L/R SHIFT to sprint).")
 sound_override = null
 font_colour_override = Color(0, 0.690196, 0.392157, 1)
 hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../dialogue")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -462,7 +493,7 @@ script = ExtResource("27_neteg")
 texts = PackedStringArray("a door seems to be within close proximity.", "should you seek the door\'s secrets, reach your hand out, and open the door.")
 sound_override = ExtResource("33_oaq00")
 font_colour_override = Color(0, 0, 0, 1)
-hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../request_cutscene_start")
 next = NodePath("../play_hint")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -470,9 +501,9 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="play_hint" type="Node" parent="y_order/dialogue_2/on_enter" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("(interact with the E key)")
-sound_override = null
 font_colour_override = Color(0, 0.690196, 0.392157, 1)
 hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../dialogue")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -656,9 +687,9 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="open_dialogue" type="Node" parent="y_order/door_b/on_interact" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("27_neteg")
-texts = PackedStringArray("(the door seems to be locked)")
+texts = PackedStringArray("(the door seems to be shut tight)")
 font_colour_override = Color(0, 0, 0, 1)
-hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../play_sound")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -733,7 +764,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("27_neteg")
 texts = PackedStringArray("(the door seems to be locked)")
 font_colour_override = Color(0, 0, 0, 1)
-hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../play_sound")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -774,24 +805,28 @@ use_parent_material = true
 position = Vector2(-360, 208)
 texture = ExtResource("29_uwvvk")
 hframes = 7
+frame = 3
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 10.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
+progress = 3
 
 [node name="jellyfish_2" type="Sprite2D" parent="y_order"]
 use_parent_material = true
 position = Vector2(-224, 16)
 texture = ExtResource("29_uwvvk")
 hframes = 7
+frame = 2
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 7.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
+progress = 2
 
 [node name="key" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(1080, 840)
@@ -826,6 +861,9 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="message" type="Node" parent="y_order/key/OnInteract" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("27_neteg")
 texts = PackedStringArray("(there\'s something shiny lying here.)")
+font_colour_override = Color(0, 0, 0, 1)
+hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../request_cutscene_start")
 next = NodePath("../prompt")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -834,6 +872,9 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("27_neteg")
 message_type = 2
 texts = PackedStringArray("(investigate further?)")
+font_colour_override = Color(0, 0, 0, 1)
+hide_panel = true
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prompt_options = {
 &"no": NodePath("no"),
 &"yes": NodePath("yes")
@@ -843,46 +884,125 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="yes" type="Node" parent="y_order/key/OnInteract/prompt" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("4_w4wdm")
-order = [NodePath("pick_up_message")]
+order = [NodePath("pick_up_message"), NodePath("empty")]
 front = NodePath("pick_up_message")
-back = NodePath("pick_up_message")
+back = NodePath("empty")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
+[node name="play_sound" type="Node" parent="y_order/key/OnInteract/prompt/yes"]
+script = ExtResource("38_7agr2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
 [node name="pick_up_message" type="Node" parent="y_order/key/OnInteract/prompt/yes" node_paths=PackedStringArray("next")]
+script = ExtResource("27_neteg")
+texts = PackedStringArray("(picked up key!)")
+hide_panel = true
+custom_linked_pointers = true
+next = NodePath("../../request_cutscene_end")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="empty" type="Node" parent="y_order/key/OnInteract/prompt/yes" node_paths=PackedStringArray("next")]
 script = ExtResource("38_7agr2")
 custom_linked_pointers = true
 next = NodePath("../../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="no" type="Node" parent="y_order/key/OnInteract/prompt"]
+[node name="no" type="Node" parent="y_order/key/OnInteract/prompt" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("4_w4wdm")
+order = [NodePath("empty")]
+front = NodePath("empty")
+back = NodePath("empty")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="empty" type="Node" parent="y_order/key/OnInteract/prompt/no" node_paths=PackedStringArray("next")]
+script = ExtResource("38_7agr2")
+custom_linked_pointers = true
+next = NodePath("../../request_cutscene_end")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="request_cutscene_end" type="Node" parent="y_order/key/OnInteract/prompt"]
 script = ExtResource("15_2pbgt")
-event_id = "CUTSCENE_START_REQUEST"
+event_id = "CUTSCENE_END_REQUEST"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="Node2D" type="Node2D" parent="y_order"]
+[node name="sally" type="Node2D" parent="y_order"]
 position = Vector2(976, 712)
 
-[node name="Face" type="Sprite2D" parent="y_order/Node2D"]
+[node name="face" type="Sprite2D" parent="y_order/sally"]
 texture = ExtResource("39_rjo7c")
 
-[node name="ComponentReceiver" type="Node" parent="y_order/Node2D/Face"]
+[node name="eye" type="Sprite2D" parent="y_order/sally"]
+texture = ExtResource("42_hyc6s")
+
+[node name="ComponentReceiver" type="Node" parent="y_order/sally/eye" node_paths=PackedStringArray("affector")]
 script = ExtResource("40_ix0g1")
+affector = NodePath("..")
+independent = true
 metadata/_custom_type_script = "uid://ctbtfitoggtku"
 
-[node name="LookAt" type="Node" parent="y_order/Node2D/Face/ComponentReceiver" node_paths=PackedStringArray("look_at_target")]
+[node name="LookAt" type="Node" parent="y_order/sally/eye/ComponentReceiver" node_paths=PackedStringArray("look_at_target")]
 script = ExtResource("41_w6vfa")
 look_at_target = NodePath("../../../../madotsuki")
 metadata/_custom_type_script = "uid://cx4t46m5wt82v"
 
-[node name="Eye" type="Sprite2D" parent="y_order/Node2D"]
-texture = ExtResource("42_hyc6s")
-
-[node name="Hair" type="Sprite2D" parent="y_order/Node2D"]
+[node name="hair" type="Sprite2D" parent="y_order/sally"]
 texture = ExtResource("43_1mpi4")
+
+[node name="Interactable" type="Area2D" parent="y_order/sally" node_paths=PackedStringArray("rect")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("32_2suwl")
+rect = NodePath("rect")
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="rect" type="CollisionShape2D" parent="y_order/sally/Interactable"]
+shape = SubResource("RectangleShape2D_ix0g1")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="OnInteract" type="Node" parent="y_order/sally/Interactable" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
+script = ExtResource("14_qu046")
+order = [NodePath("request_cutscene_start"), NodePath("switch_to_sally"), NodePath("dialogue"), NodePath("switch_to_mado"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="request_cutscene_start" type="Node" parent="y_order/sally/Interactable/OnInteract" node_paths=PackedStringArray("next")]
+script = ExtResource("15_2pbgt")
+event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../switch_to_sally")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="switch_to_sally" type="Node" parent="y_order/sally/Interactable/OnInteract" node_paths=PackedStringArray("target", "prev", "next")]
+script = ExtResource("17_7rtwp")
+target = NodePath("../../..")
+switch_dur = 1.5
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../dialogue")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="dialogue" type="Node" parent="y_order/sally/Interactable/OnInteract" node_paths=PackedStringArray("prev", "next")]
+script = ExtResource("27_neteg")
+texts = PackedStringArray("(...)", "(it\'s eyes are filled with great sorrow.)")
+font_colour_override = Color(0, 0, 0, 1)
+panel_style_override = SubResource("StyleBoxTexture_hyc6s")
+prev = NodePath("../switch_to_sally")
+next = NodePath("../switch_to_mado")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="switch_to_mado" type="Node" parent="y_order/sally/Interactable/OnInteract" node_paths=PackedStringArray("target", "prev", "next")]
+script = ExtResource("17_7rtwp")
+target = NodePath("../../../../madotsuki")
+switch_dur = 1.0
+prev = NodePath("../dialogue")
+next = NodePath("../request_cutscene_end")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="request_cutscene_end" type="Node" parent="y_order/sally/Interactable/OnInteract" node_paths=PackedStringArray("prev")]
+script = ExtResource("15_2pbgt")
+event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../switch_to_mado")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [editable path="camera"]
 [editable path="y_order/madotsuki"]

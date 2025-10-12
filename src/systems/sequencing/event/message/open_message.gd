@@ -10,7 +10,9 @@ enum type {MESSAGE, DIALOGUE, PROMPT}
 @export var font_override: Font
 @export var font_colour_override: Color = Color.WHITE
 @export var speed_override: float = 1
+@export_subgroup("Panel.")
 @export var hide_panel: bool = false
+@export var panel_style_override: StyleBoxTexture = MessageDisplay.DEFAULT_PANEL_STYLE
 
 @export_group("Prompt Exclusive")
 @export var prompt_options: Dictionary[StringName, Sequence] = {}
@@ -34,7 +36,8 @@ func _execute() -> void:
 		texts,
 		sound_override,
 		speed_override,
-		font_colour_override)
+		font_colour_override,
+		panel_style_override)
 		
 	if wait_til_finished: await type_to_display.finished
 func _validate() -> bool:

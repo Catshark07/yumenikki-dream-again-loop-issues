@@ -7,9 +7,8 @@ signal canceled
 # printerr("EVENT - {NAME} :: {WARNING}!")
 
 @export_category("Event Flags.")
-@export var deferred: bool = true
-@export var wait_til_finished: bool = true
-@export var skip: bool = false
+@export var wait_til_finished: 	bool = true
+@export var skip: 				bool = false
 @export var call_limit: int = 0 # - inclusive.
 
 var call_count: int = 0
@@ -35,27 +34,29 @@ func _validate() -> bool: return true
 
 # -- concrete implementations
 func execute() -> void: 
+	is_finished = false
+	
 	if call_limit > 0:
 		call_count += 1
+		
+		# - first event call will have the "call_count" SET TO 1, NOT TO 0.
 		if call_count > call_limit: 
-			__call_finished()
+			__call_finished.call_deferred()
 			return
 	
-	# - first event call will have the "call_count" SET TO 1, NOT TO 0.
+	if wait_til_finished: await _execute()
+	else:						_execute()
+	__call_finished.call_deferred()
 	
-	if !wait_til_finished: 	__call_finished() 
-	await _execute()
-	if wait_til_finished: 	__call_finished()
 func cancel() -> void:
 	_cancel()
-	canceled.emit.call_deferred()
 func end() -> void: 
 	_end()
 
 # -- internal
 func __call_finished() -> void:
-	if deferred: finished.emit.call_deferred()
-	else:		 finished.emit()
+	finished.emit()
+	is_finished = true
 
 func has_next() -> bool: return next != null
 func has_prev() -> bool: return prev != null

@@ -17,6 +17,7 @@ var bail_requested: 				bool = false
 
 @export var front: Event
 @export var back: Event
+var curr: Event = null
 
 # - signals
 signal success
@@ -47,9 +48,13 @@ func initialize() -> void:
 func _ready() -> void:
 	initialize()
 
+func step() -> void:
+	curr = curr.next
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
 	if bail_requested: 
+		bail_requested = false
+		canceled.emit.call_deferred()
 		return
 	
 	# - if the sequence is not valid, we halt and not run it.
@@ -58,24 +63,27 @@ func _execute() -> void:
 		return
 	
 	# - we iterate thru the events..
-	var event = front
-	while event != null:
+	curr = front
+	while curr != null:
 		# - make sure that the child is of type Event.
-		if event is Event:
+		if curr is Event:
 			
-			if event.get_instance_id() in marked_invalid or event.skip: 
-				continue # - we skip any events marked for skip / as invalid.
+			if curr.get_instance_id() in marked_invalid or curr.skip: 
+				if curr.has_next(): curr = curr.next
+				else:				break
+				continue
 			
-			event.execute() 
-			if event.wait_til_finished: await event.finished
-			event.end()
+			curr.execute() 
+			await curr.finished
+			curr.end()
 			
 			if bail_requested: 
 				bail_requested = false
+				canceled.emit.call_deferred()
 				return
 		
-		if event.has_next(): 
-			event = event.next
+		if curr.has_next(): 
+			curr = curr.next
 		else:				break
 func _cancel() -> void:
 	bail_requested = true	
@@ -85,7 +93,9 @@ func _validate_event_order() -> bool:
 	# checking for any missing dependencies, has the corect properties, etc.
 	var event = front
 	while event != null:
-		if event.skip: continue 
+		if event.skip: 
+				if event.has_next(): event = event.next
+				else:				break 
 		if event == null or !event._validate():
 			# - if event is invalid...
 			if skip_invalid_events: marked_invalid.append(event.get_instance_id()) # - we mark invalid events to be skipped.

@@ -36,7 +36,8 @@ func open_message_display(
 	_texts: PackedStringArray, 
 	_sound: AudioStream,
 	_speed: int = 1,
-	_font_colour: Color = Color.WHITE, 
+	_font_colour: Color = Color.WHITE,
+	_panel_style: StyleBoxTexture = MessageDisplay.DEFAULT_PANEL_STYLE, 
 	_pos: Vector2 = Vector2(Application.viewport_width / 2, Application.viewport_length - 110)) -> void: 
 		
 		if _display != active and active != null: 
@@ -52,7 +53,7 @@ func open_message_display(
 		texts.clear()
 		texts = PackedStringArray(_texts)
 		
-		active.open(_pos, _sound, _speed, _font_colour)
+		active.open(_pos, _sound, _speed, _font_colour, _panel_style)
 		active.display_text(_texts[current_index])
 		
 func close_message_display(_display: MessageDisplay) -> void:

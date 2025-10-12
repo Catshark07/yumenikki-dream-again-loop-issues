@@ -7,7 +7,7 @@ extends SentientBase
 
 @export_storage var stamina: 		float = MAX_STAMINA:
 	set(_stam):
-		stamina = _stam
+		stamina = clampf(_stam, 0, MAX_STAMINA)
 		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", _stam)
 
 var is_exhausted: bool = false
@@ -126,3 +126,15 @@ class Instance:
 	static func is_moving() -> bool:
 		if pl_exists(): return _pl.is_moving
 		return pl_exists()
+
+# --- 
+func set_values(_val: SBVariables) -> void: 
+	if _val == null: 
+		values = PLVariables.new()
+		values.resource_name = "pl_variables"
+		values.resource_local_to_scene = true
+		return
+	
+	values = _val.duplicate()
+	values.resource_name = "pl_variables"
+	values.resource_local_to_scene = true

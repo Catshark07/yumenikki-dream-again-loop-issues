@@ -42,7 +42,7 @@ static func handle_scene_resource_load(scene: PackedScene) -> ResourceLoader.Thr
 static func _setup() -> void: 
 	scene_stack = Stack.new()
 	for i: SceneNode in Utils.get_group_arr("scene_node"):
-		
+		if i == null: continue
 		if i.lonely: 
 			i.initialize()
 			handle_scene_push(i)

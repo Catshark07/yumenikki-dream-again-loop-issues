@@ -14,9 +14,9 @@ func _action_on_enter(_pl: Player) -> void:
 		can_exit = true
 
 func _action_on_request_exit(_pl: Player) -> void:
-	if  _pl.components.get_component_by_name("animation_manager") != null:
-		_pl.components.get_component_by_name("animation_manager").play_animation(str(EMOTE_PATH + exit_anim))
-		await _pl.components.get_component_by_name("animation_manager").animation_player.animation_finished
+	if  _pl.components.get_component_by_name(Player_YN.COMP_ANIMATION) != null:
+		_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).play_animation(str(EMOTE_PATH + exit_anim))
+		await _pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).animation_player.animation_finished
 		_cancel(_pl)
 		
 func _action_update(_pl: Player, _delta: float) -> void: 

@@ -1,6 +1,9 @@
 class_name PLEffect
 extends Resource
 
+const EMOTE_PATH := &"emote/"
+const ACTION_PATH := &"action/"
+
 @export_group("Information")
 @export var name: String = ""
 @export var desc: String = ""
@@ -36,13 +39,10 @@ func _apply(_pl: Player) -> void:
 			
 			prefab_instance._enter(_pl)
 	
-	behaviour._apply(_pl)
 func _unapply(_pl: Player) -> void:
 	(_pl as Player_YN).cancel_action(
 		(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).curr_action)
 	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_emote(null)
-	
-	behaviour._unapply(_pl)
 	
 # ---- misc. getters.
 func _primary_action	(_pl: Player) -> void: pass

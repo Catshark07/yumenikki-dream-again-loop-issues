@@ -3,13 +3,16 @@
 class_name OnGameEvent
 extends Sequence
 
-@export var event_id: PackedStringArray
+@export var event_id: Array[String]
 @export var sequence: Sequence
 var listener: EventListener
 
 func _ready() -> void: 
 	super()
-	listener = EventListener.new(self, event_id)
+	if Engine.is_editor_hint(): return
 	
-	if !Engine.is_editor_hint():
-		listener.do_on_notify(execute, event_id)
+	
+	listener = EventListener.new(self)
+	for i in event_id:
+		listener.listen_to_event(i)
+		listener.do_on_notify(execute, i)
