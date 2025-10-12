@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://dwst4o7pf4ye7"]
+[gd_scene load_steps=64 format=3 uid="uid://dwst4o7pf4ye7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_gl3nc"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_jd4xj"]
@@ -28,7 +28,6 @@
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="18_jd4xj"]
 [ext_resource type="AudioStream" uid="uid://daa4fj15uaf4j" path="res://src/audio/amb/amb_rain_muffle.ogg" id="18_vphfh"]
 [ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="19_777kg"]
-[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="20_e3jfg"]
 [ext_resource type="PackedScene" uid="uid://dso3pheqqk67s" path="res://src/levels/__ignore/rain_splash.tscn" id="20_fjdyw"]
 [ext_resource type="Script" uid="uid://b6ilkvabn22lp" path="res://src/systems/sequencing/sequence/conditional/if_expression.gd" id="21_dx8di"]
 [ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/custom_properties.gd" id="21_mg10c"]
@@ -279,7 +278,7 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nq133"]
 size = Vector2(16, 16)
 
-[sub_resource type="Resource" id="Resource_1jqpe"]
+[sub_resource type="Resource" id="Resource_nq133"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("36_dehmq")
@@ -517,6 +516,7 @@ else_conditional = NodePath("../else")
 order = [NodePath("request_cutscene_start"), NodePath("change_cam_target"), NodePath("fade_in"), NodePath("music_fadeout"), NodePath("play_sound_foley"), NodePath("set_player_inactive"), NodePath("set_player_invisible"), NodePath("play_animation"), NodePath("fade_out")]
 front = NodePath("request_cutscene_start")
 back = NodePath("fade_out")
+custom_linked_pointers = true
 next = NodePath("../else")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
@@ -665,11 +665,12 @@ expression = "flag.properties[\"persist\"] == false"
 input_objects = {
 "flag": NodePath("../../../persistent_sleep")
 }
-else_conditional = NodePath("../else_if_persistent")
+else_conditional = NodePath("")
 order = [NodePath("raise_flag"), NodePath("request_cutscene_start"), NodePath("notif"), NodePath("request_cutscene_end")]
 front = NodePath("raise_flag")
 back = NodePath("request_cutscene_end")
-next = NodePath("../else_if_persistent")
+custom_linked_pointers = true
+next = NodePath("")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
 [node name="raise_flag" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("node", "next")]
@@ -762,96 +763,6 @@ properties = Dictionary[String, Variant]({
 skip_save = true
 metadata/_custom_type_script = "uid://0li2ud4tbkf5"
 
-[node name="OnInteract" type="Node" parent="room/melatonin_pills" node_paths=PackedStringArray("order", "front", "back")]
-process_mode = 4
-script = ExtResource("13_4kjpi")
-order = [NodePath("if_didnt_take"), NodePath("else")]
-front = NodePath("if_didnt_take")
-back = NodePath("else")
-metadata/_custom_type_script = "uid://bkadpjx8csm75"
-
-[node name="if_didnt_take" type="Node" parent="room/melatonin_pills/OnInteract" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
-script = ExtResource("21_dx8di")
-expression = "meds.properties[\"melatonin_took\"] == false"
-input_objects = {
-"meds": NodePath("../../melatonin_took")
-}
-else_conditional = NodePath("../else")
-order = [NodePath("request_cutscene_start"), NodePath("open_message"), NodePath("wait_1_sec"), NodePath("request_cutscene_end"), NodePath("Event")]
-front = NodePath("request_cutscene_start")
-back = NodePath("Event")
-next = NodePath("../else")
-metadata/_custom_type_script = "uid://bkadpjx8csm75"
-
-[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("next")]
-script = ExtResource("14_fjdyw")
-event_id = "CUTSCENE_START_REQUEST"
-next = NodePath("../open_message")
-metadata/_custom_type_script = "uid://dspsbq33tl0wa"
-
-[node name="open_message" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prev", "next")]
-script = ExtResource("19_777kg")
-texts = PackedStringArray("there\'s melatonin medication lying on the floor.")
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../wait_1_sec")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="wait_1_sec" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prev", "next")]
-script = ExtResource("20_e3jfg")
-prev = NodePath("../open_message")
-next = NodePath("../request_cutscene_end")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("prev", "next")]
-script = ExtResource("14_fjdyw")
-event_id = "CUTSCENE_END_REQUEST"
-prev = NodePath("../wait_1_sec")
-next = NodePath("../Event")
-metadata/_custom_type_script = "uid://dspsbq33tl0wa"
-
-[node name="Event" type="Node" parent="room/melatonin_pills/OnInteract/if_didnt_take" node_paths=PackedStringArray("node", "prev")]
-process_mode = 4
-script = ExtResource("17_t2xer")
-node = NodePath("../../../melatonin_took")
-property_name = "properties"
-property_info = {
-"class_name": &"",
-"hint": 23,
-"hint_string": "4:;0:",
-"name": "properties",
-"type": 27,
-"usage": 4102
-}
-property_value = Dictionary[String, Variant]({
-"melatonin_took": false
-})
-new_value = Dictionary[String, Variant]({
-"melatonin_took": true
-})
-prev = NodePath("../request_cutscene_end")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="else" type="Node" parent="room/melatonin_pills/OnInteract" node_paths=PackedStringArray("order", "front", "back", "prev")]
-script = ExtResource("13_160am")
-order = [NodePath("request_cutscene_start"), NodePath("request_cutscene_end")]
-front = NodePath("request_cutscene_start")
-back = NodePath("request_cutscene_end")
-skip = true
-prev = NodePath("../if_didnt_take")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[node name="request_cutscene_start" type="Node" parent="room/melatonin_pills/OnInteract/else" node_paths=PackedStringArray("next")]
-script = ExtResource("14_fjdyw")
-event_id = "CUTSCENE_START_REQUEST"
-next = NodePath("../request_cutscene_end")
-metadata/_custom_type_script = "uid://dspsbq33tl0wa"
-
-[node name="request_cutscene_end" type="Node" parent="room/melatonin_pills/OnInteract/else" node_paths=PackedStringArray("prev")]
-script = ExtResource("14_fjdyw")
-event_id = "CUTSCENE_END_REQUEST"
-prev = NodePath("../request_cutscene_start")
-metadata/_custom_type_script = "uid://dspsbq33tl0wa"
-
 [node name="illegible_note" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
 position = Vector2(168, 120)
 collision_layer = 2147483648
@@ -921,7 +832,7 @@ position = Vector2(80, 136)
 
 [node name="madotsuki" parent="balcony/_" index="4" instance=ExtResource("10_p0cyb")]
 position = Vector2(104, 168)
-values = SubResource("Resource_1jqpe")
+values = SubResource("Resource_nq133")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="to_room" type="Area2D" parent="balcony" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]

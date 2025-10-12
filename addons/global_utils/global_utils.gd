@@ -13,17 +13,28 @@ static func is_within_inclusive(_num: float, _min: float, _max: float) -> bool:
 		return ((_num <= _min) and (_num >= _max))
 
 # editor-hint exclusive
+static func add_sibling_node(
+	_target_node: 	Node,
+	_sibling_node: 	Node,
+	_sibling_node_name: String) -> Node:
+		var node_as_sibling: Node
+		if _target_node == _target_node.owner: 	node_as_sibling = _target_node
+		else:									node_as_sibling = _target_node.get_parent()
+		
+		return add_child_node(node_as_sibling, _sibling_node, _sibling_node_name)
+		
 static func add_child_node(
-	_parent_node: Node,
-	_child_node: Node,
+	_parent_node: 	Node,
+	_child_node: 	Node,
 	_child_node_name: String) -> Node:
 		var _owner: Node
 		
 		# - bail if parent or child node are non-existent.
-		if _child_node == null or _parent_node == null: return
+		if _child_node == null or _parent_node == null: 
+			return
 		
 		if Engine.is_editor_hint(): _owner = EditorInterface.get_edited_scene_root()
-		else: _owner = _parent_node.owner
+		else: 						_owner = _parent_node.owner
 		
 		if !_parent_node.has_node(_child_node_name):
 			
@@ -31,12 +42,15 @@ static func add_child_node(
 			_child_node.name = _child_node_name
 			_child_node.owner = _owner
 			
+			Utils.connect_to_signal(_child_node.free, _parent_node.tree_exiting)
 			return _child_node
 		else: 
 			push("Parent %s already has child %s - Freeing queued %s." % [_parent_node, _child_node_name, _child_node])
 			_child_node.queue_free()
+		
+			Utils.connect_to_signal(_child_node.free, _parent_node.tree_exiting)
 			return _parent_node.get_node(_child_node_name)
-		return
+			
 static func get_child_node_or_null(
 	_parent_node: Node, 
 	_child_node_name: String) -> Node: 
@@ -46,6 +60,8 @@ static func get_child_node_or_null(
 			push("Parent is null or Child node could not be found.")
 			return null
 		return _parent_node.get_node_or_null(_child_node_name)
+
+
 
 # signals
 static func connect_to_signal(

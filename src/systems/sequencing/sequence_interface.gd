@@ -48,6 +48,8 @@ func initialize() -> void:
 func _ready() -> void:
 	initialize()
 
+func step() -> void:
+	curr = curr.next
 func _execute() -> void:
 	# - if bail is requested, we don't execute this sequence.
 	if bail_requested: 
@@ -67,7 +69,9 @@ func _execute() -> void:
 		if curr is Event:
 			
 			if curr.get_instance_id() in marked_invalid or curr.skip: 
-				continue # - we skip any events marked for skip / as invalid.
+				if curr.has_next(): curr = curr.next
+				else:				break
+				continue
 			
 			curr.execute() 
 			await curr.finished
@@ -89,7 +93,9 @@ func _validate_event_order() -> bool:
 	# checking for any missing dependencies, has the corect properties, etc.
 	var event = front
 	while event != null:
-		if event.skip: continue 
+		if event.skip: 
+				if event.has_next(): event = event.next
+				else:				break 
 		if event == null or !event._validate():
 			# - if event is invalid...
 			if skip_invalid_events: marked_invalid.append(event.get_instance_id()) # - we mark invalid events to be skipped.

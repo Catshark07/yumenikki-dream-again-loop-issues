@@ -7,9 +7,10 @@ static func invoke(_seq: Sequence) -> void:
 	if _seq == null: return
 	
 	await cancel(curr)
+	_seq.finished.connect(func(): curr = null, CONNECT_ONE_SHOT)
+	_seq.execute()
 		
 	curr 		= _seq 
-	curr.execute()
 	
 static func cancel(_seq: Sequence) -> void: 
 	if _seq == null: return

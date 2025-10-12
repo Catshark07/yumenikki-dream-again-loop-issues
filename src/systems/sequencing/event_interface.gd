@@ -7,8 +7,8 @@ signal canceled
 # printerr("EVENT - {NAME} :: {WARNING}!")
 
 @export_category("Event Flags.")
-@export var wait_til_finished: bool = true
-@export var skip: bool = false
+@export var wait_til_finished: 	bool = true
+@export var skip: 				bool = false
 @export var call_limit: int = 0 # - inclusive.
 
 var call_count: int = 0
