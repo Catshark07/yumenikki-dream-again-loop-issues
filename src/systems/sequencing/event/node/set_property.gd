@@ -47,8 +47,6 @@ func _validate_property(property: Dictionary) -> void:
 			property["usage"] = PROPERTY_USAGE_NONE
 			
 func search_property(_node: Node, _name: String) -> Dictionary:
-	# - lol?
-	
 	if _node == null: 
 		property_exists_in_node = false
 		return {}
@@ -58,6 +56,7 @@ func search_property(_node: Node, _name: String) -> Dictionary:
 			property_exists_in_node = true
 			property_value = node.get(_name)
 			new_value = property_value
+			if new_value is Resource: new_value.duplicate()
 			return i
 	
 	property_exists_in_node = false

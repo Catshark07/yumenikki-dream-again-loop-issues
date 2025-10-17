@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=4 uid="uid://bkgusm21kukkw"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_0dvx7"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_8gw11"]
+[ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="2_8gw11"]
 [ext_resource type="AudioStream" uid="uid://1hp7ivcckk70" path="res://src/audio/bgm/world_checkered_path.WAV" id="3_842wn"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_7fv36"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="5_00emm"]

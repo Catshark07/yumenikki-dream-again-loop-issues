@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://hx52e5i78byf"]
+[gd_scene load_steps=46 format=4 uid="uid://hx52e5i78byf"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_6knvu"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="2_h8r0l"]
@@ -13,6 +13,7 @@
 [ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="8_s1u5h"]
 [ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="10_2w56n"]
 [ext_resource type="Texture2D" uid="uid://bel8k7h7lfio5" path="res://src/levels/_dream/upper_abyss/sprites/bubble_small.png" id="11_gap0c"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="11_s1u5h"]
 [ext_resource type="PackedScene" uid="uid://c1crevnw4c26l" path="res://src/levels/_dream/upper_abyss/entities/medium_jellyfish.tscn" id="12_3veyl"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="14_wlpfk"]
 [ext_resource type="TileSet" uid="uid://du5agmvlu6p41" path="res://src/levels/_dream/upper_abyss/upper_abyss.tres" id="15_idx74"]
@@ -152,6 +153,12 @@ turbulence_noise_scale = 8.0
 turbulence_influence_min = 0.02
 turbulence_influence_max = 0.07
 
+[sub_resource type="Resource" id="Resource_4xmih"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("11_s1u5h")
+metadata/_custom_type_script = "uid://jf85vmwx4pj"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_101a1"]
 shader = ExtResource("6_3s5hh")
 shader_parameter/dirX = 1.0
@@ -162,11 +169,10 @@ shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 
-[node name="upper_abyss" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
+[node name="upper_abyss" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_6knvu")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_purwu")
 unload_transition = SubResource("ShaderMaterial_h8r0l")
 
@@ -231,6 +237,7 @@ position = Vector2(208, 72)
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("2_tq601")]
 position = Vector2(240, 144)
+values = SubResource("Resource_4xmih")
 
 [node name="world" type="Node2D" parent="y_order"]
 
@@ -298,16 +305,20 @@ z_index = -3
 position = Vector2(904, 264)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="on_initial" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("2_h8r0l")
+order = [NodePath("bgm"), NodePath("panorama")]
+front = NodePath("bgm")
+back = NodePath("panorama")
 
-[node name="bgm" type="Node" parent="on_initial"]
+[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
 script = ExtResource("24_4xmih")
 stream = ExtResource("3_fpoo2")
 pitch = 0.8
+next = NodePath("../panorama")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="panorama" type="SubViewport" parent="on_initial"]
+[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("prev")]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_filter = 0
@@ -315,6 +326,7 @@ canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 script = ExtResource("2_s1u5h")
+prev = NodePath("../bgm")
 
 [node name="panorama" type="TextureRect" parent="on_initial/panorama"]
 material = SubResource("ShaderMaterial_101a1")

@@ -6,7 +6,6 @@ var order: Array
 var marked_for_skip: PackedInt32Array
 
 var priority: int = 0
-var is_active: bool = false
 
 @export var skip_invalid_sequences: bool = true
 @export var halt_sequence: bool = false

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="YUME NIKKI - demake"
-config/version="PREALPHA - 00"
+config/version="PREALPHA - 02"
 config/tags=PackedStringArray("concept", "fangame", "wip")
 run/main_scene="uid://l5hlafq1udx4"
 config/features=PackedStringArray("4.5", "GL Compatibility")

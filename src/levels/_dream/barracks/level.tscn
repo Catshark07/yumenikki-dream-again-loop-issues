@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=4 uid="uid://cwrdtbix8nr0o"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_r5evf"]
-[ext_resource type="PackedScene" uid="uid://blgkyj1ogaecl" path="res://src/systems/seamless_detector_v2.tscn" id="3_7gxy6"]
+[ext_resource type="PackedScene" path="res://src/systems/seamless_detector_v2.tscn" id="3_7gxy6"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_eoce6"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="5_5gbx6"]
 [ext_resource type="TileSet" uid="uid://b67lflhmdyfdh" path="res://src/levels/__ignore/tile_set/world_tile_sets/barracks.tres" id="5_ngk6t"]

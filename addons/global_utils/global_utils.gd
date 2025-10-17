@@ -31,13 +31,13 @@ static func add_child_node(
 		
 		# - bail if parent or child node are non-existent.
 		if _child_node == null or _parent_node == null: 
+			push("Child node or Parent node do not exist!")
 			return
-		
+			
 		if Engine.is_editor_hint(): _owner = EditorInterface.get_edited_scene_root()
 		else: 						_owner = _parent_node.owner
 		
 		if !_parent_node.has_node(_child_node_name):
-			
 			_parent_node.add_child(_child_node, true)
 			_child_node.name = _child_node_name
 			_child_node.owner = _owner

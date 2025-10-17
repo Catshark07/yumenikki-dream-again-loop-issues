@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/custom_properties.gd" id="2_g18vw"]
 [ext_resource type="TileSet" uid="uid://b01vptl0fltoy" path="res://src/levels/__ignore/tile_set/world_tile_sets/hell.tres" id="2_ytbok"]
 [ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="3_4s6ac"]
-[ext_resource type="Script" uid="uid://5cuh5yuxk174" path="res://src/systems/scenes/rules/change_default_footstep.gd" id="3_ddfs8"]
+[ext_resource type="Script" path="res://src/systems/scenes/rules/change_default_footstep.gd" id="3_ddfs8"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="4_j6we6"]
 [ext_resource type="AudioStream" uid="uid://dykdu3uwyaqu4" path="res://src/audio/bgm/world_graffiti.ogg" id="4_pgy4d"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="6_tfuf7"]

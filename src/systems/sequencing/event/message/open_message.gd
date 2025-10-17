@@ -39,7 +39,7 @@ func _execute() -> void:
 		font_colour_override,
 		panel_style_override)
 		
-	if wait_til_finished: await type_to_display.finished
+	await type_to_display.finished
 func _validate() -> bool:
 	return !texts.is_empty()
 

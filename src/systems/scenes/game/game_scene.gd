@@ -9,10 +9,6 @@ extends SceneNode
 @export var seq_initial	: Sequence
 @export var seq_free	: Sequence
 
-@export_group("Scene Exclusive Objects.")
-@export var scene_objects: Array[Node]
-@export_tool_button("Clear All Objects")  var clear_all: Callable = clear_all_objects
-
 @export_group("Transitions.")
 @export var load_transition: ShaderMaterial = ShaderMaterial.new()
 @export var unload_transition: ShaderMaterial = ShaderMaterial.new()
@@ -39,24 +35,15 @@ func create_on_initial() -> void:
 	if !Engine.is_editor_hint() or seq_initial != null: return
 	
 	seq_initial =  Utils.add_child_node(self, Sequence.new(), "on_initial")
-	scene_objects.append(seq_initial)
+	
 func create_on_free() -> void:
 	seq_free = Utils.get_child_node_or_null(self, "on_free")
 	if !Engine.is_editor_hint() or seq_free != null: return
 	
 	seq_free =  Utils.add_child_node(self, Sequence.new(), "on_free")
-	scene_objects.append(seq_free)
 
 # overall control
 	
-func clear_all_objects() -> void:
-	if Engine.is_editor_hint(): print(scene_objects)
-	for i in range(scene_objects.size()):
-		var obj = scene_objects[i]
-		if obj != null:
-			obj.free()
-	scene_objects.clear()
-
 # - stack functions.	
 func _on_push() -> void: 
 	load_scene()
@@ -91,9 +78,3 @@ func _physics_update(_delta: float) -> void:
 	for s in Utils.get_group_arr("actors"):
 		if s != null:
 			if s.can_process(): s._physics_update(_delta)
-
-# -- internal.
-func _validate_property(property: Dictionary) -> void:
-	var properties_to_hide = ["seq_initial", "seq_free"]
-	if  property["name"] in properties_to_hide:
-		property["usage"] = PROPERTY_USAGE_STORAGE

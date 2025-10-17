@@ -39,6 +39,7 @@ var tween: Tween
 
 
 func _state_enter() -> void: 
+	section.modulate.a = 0
 	section.visible = true
 	
 	mado.position.x -= 10
@@ -110,8 +111,10 @@ func _ready() -> void:
 func _state_enter() -> void: 
 	container.update_stats_display()
 	
+	section.modulate.a = 0
 	section.visible = true
-	mado.position.x += 10
+	
+	mado.position.x += 20
 	stats.position.x += 20
 	container.position.x += 35
 	
@@ -124,9 +127,7 @@ func _state_enter() -> void:
 	tween.tween_property(stats, \"position:x\", 42, 0.5)
 	tween.tween_property(container, \"position:x\", 32, 0.5)
 	
-	tween.tween_property(mado, \"modulate:a\", 1, 0.5)
-	tween.tween_property(stats, \"modulate:a\", 1, 0.5)
-	tween.tween_property(container, \"modulate:a\", 1, 0.5)
+	tween.tween_property(section, \"modulate:a\", 1, 0.5)
 	
 	tween.tween_property(overlay_modulate, \"modulate\", Color(\"fae4ee\"), 0.5)
 	
@@ -143,9 +144,7 @@ func _state_exit() -> void:
 	tween.tween_property(stats, \"position:x\", 42 + 15, 0.5)
 	tween.tween_property(container, \"position:x\", 48 + 35, 0.5)
 	
-	tween.tween_property(mado, \"modulate:a\", 0, 0.5)
-	tween.tween_property(stats, \"modulate:a\", 0, 0.5)
-	tween.tween_property(container, \"modulate:a\", 0, 0.5)
+	tween.tween_property(section, \"modulate:a\", 0, 0.5)
 	handle_animation_exit()
 	await tween.finished
 	
@@ -458,11 +457,11 @@ offset_right = -168.0
 offset_bottom = -14.0
 
 [node name="mado" type="Sprite2D" parent="display/white_petal_stats"]
-position = Vector2(394, 150)
+position = Vector2(384, 144)
 texture = ExtResource("12_tlelv")
 
 [node name="eye_l" type="Sprite2D" parent="display/white_petal_stats/mado"]
-position = Vector2(-29, -15)
+position = Vector2(-28, -6)
 texture = ExtResource("20_ub6k2")
 hframes = 3
 script = ExtResource("21_cgott")
@@ -474,7 +473,7 @@ frame_h_count = 3
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="eye_r" type="Sprite2D" parent="display/white_petal_stats/mado"]
-position = Vector2(29, -15)
+position = Vector2(28, -6)
 texture = ExtResource("20_ub6k2")
 flip_h = true
 hframes = 3

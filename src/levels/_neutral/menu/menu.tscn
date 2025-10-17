@@ -1,20 +1,15 @@
-[gd_scene load_steps=29 format=3 uid="uid://btg3e240ltjxx"]
+[gd_scene load_steps=19 format=3 uid="uid://btg3e240ltjxx"]
 
-[ext_resource type="AudioStream" uid="uid://2ohbctae5agp" path="res://src/audio/bgm/poubuts_yn_title.mp3" id="2_37vgk"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="3_5atdl"]
-[ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="3_dwoed"]
 [ext_resource type="PackedScene" uid="uid://7gkxfsran1js" path="res://src/scenes/credits.tscn" id="3_k4drn"]
-[ext_resource type="Texture2D" uid="uid://cr3septns1m3e" path="res://src/images/panorama/sunset_city.png" id="4_37vgk"]
-[ext_resource type="Texture2D" uid="uid://dgilrv0qps4ve" path="res://src/levels/_neutral/menu/title.png" id="4_egbxm"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_bmll1"]
 [ext_resource type="PackedScene" uid="uid://bryqyqyp5scn7" path="res://src/ui/template_button.tscn" id="5_jissf"]
+[ext_resource type="Texture2D" uid="uid://bou005stcbra6" path="res://src/images/ui/menu_game_start.png" id="6_d7jyh"]
 [ext_resource type="Shader" uid="uid://bhdcejnx8m6be" path="res://src/shaders/ui/button_texture_grad_mask.gdshader" id="7_dwoed"]
-[ext_resource type="Shader" uid="uid://hqppcc6e4xw2" path="res://src/shaders/panorama/lens_flare.gdshader" id="8_bmll1"]
+[ext_resource type="Texture2D" uid="uid://d3w274mddfvtd" path="res://src/images/ui/menu_credits.png" id="7_vexp4"]
+[ext_resource type="Texture2D" uid="uid://bu6rhvlkeswa6" path="res://src/images/ui/menu_game_quit.png" id="8_msekq"]
 [ext_resource type="Shader" uid="uid://hsx1wbnb1rif" path="res://src/shaders/screen_overlay/bw_invert_blur.gdshader" id="9_omn5r"]
-[ext_resource type="Texture2D" uid="uid://bu5u38wopg1fk" path="res://src/images/panorama/sun_flare.jpg" id="9_u2r5h"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="16_ppdc2"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="17_ppdc2"]
-[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="18_37vgk"]
 
 [sub_resource type="GDScript" id="GDScript_h18ho"]
 resource_name = "menu"
@@ -50,36 +45,7 @@ func _initialize() -> void:
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u2r5h"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppdc2"]
-shader = ExtResource("8_bmll1")
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
-shader_parameter/optional_gradient = false
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_influence = Vector2(1, 1)
-shader_parameter/uv_rotation_speed = 5.0
-shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
-shader_parameter/rotation = false
-shader_parameter/max_opacity = 1.0
-shader_parameter/min_opacity = 0.635
-shader_parameter/flicker_speed = 2.315
-
-[sub_resource type="Gradient" id="Gradient_6sr68"]
-offsets = PackedFloat32Array(0.332168, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_uj1l6"]
-gradient = SubResource("Gradient_6sr68")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8cjbf"]
-shader = ExtResource("3_dwoed")
-shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
-shader_parameter/transparency = 0.0
-shader_parameter/optional_gradient = false
-shader_parameter/gradient = SubResource("GradientTexture1D_uj1l6")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7jyh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dwoed"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -87,7 +53,7 @@ shader_parameter/position = 0.0
 shader_parameter/size = 1.0
 shader_parameter/angle = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vexp4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6sr68"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -95,15 +61,7 @@ shader_parameter/position = 0.0
 shader_parameter/size = 1.0
 shader_parameter/angle = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_msekq"]
-shader = ExtResource("7_dwoed")
-shader_parameter/first_color = Color(0, 0, 0, 1)
-shader_parameter/second_color = Color(0, 0, 0, 0)
-shader_parameter/position = 0.0
-shader_parameter/size = 1.0
-shader_parameter/angle = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_37vgk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uj1l6"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -117,7 +75,7 @@ shader_parameter/blur_amount = 1.5
 shader_parameter/pixel_size = 400.0
 shader_parameter/contrast = 1.14
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8cjbf"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -125,7 +83,7 @@ shader_parameter/position = 0.0
 shader_parameter/size = 1.0
 shader_parameter/angle = 0.0
 
-[node name="menu" type="Node2D" node_paths=PackedStringArray("button_new_game", "button_credits", "button_quit", "credits_go_back", "credits_panel", "seq_initial", "seq_free", "scene_objects")]
+[node name="menu" type="Node2D" node_paths=PackedStringArray("button_new_game", "button_credits", "button_quit", "credits_go_back", "credits_panel", "seq_initial", "seq_free")]
 script = SubResource("GDScript_h18ho")
 button_new_game = NodePath("ui/menu/new_game")
 button_credits = NodePath("ui/menu/credits")
@@ -134,53 +92,38 @@ credits_go_back = NodePath("ui/credtis_panel/PanelContainer/MarginContainer/VBox
 credits_panel = NodePath("ui/credtis_panel")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_bmll1")
 unload_transition = SubResource("ShaderMaterial_u2r5h")
 
 [node name="camera" parent="." instance=ExtResource("5_bmll1")]
 position = Vector2(240, 136)
 
-[node name="display" type="CanvasLayer" parent="."]
+[node name="bg" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
-[node name="overlay_modulate" type="CanvasModulate" parent="display"]
-position = Vector2(0, 32)
-color = Color(0.524543, 0.418031, 0.402895, 1)
-
-[node name="flare" type="TextureRect" parent="display"]
-z_index = 1
-material = SubResource("ShaderMaterial_ppdc2")
-offset_left = 16.0
+[node name="ColorRect" type="ColorRect" parent="bg"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
 offset_top = -16.0
-offset_right = 628.0
-offset_bottom = 392.0
-texture = ExtResource("9_u2r5h")
-flip_h = true
+offset_right = 16.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="ui" type="CanvasLayer" parent="."]
 layer = 20
 
-[node name="ColorRect" type="ColorRect" parent="ui"]
-material = SubResource("ShaderMaterial_8cjbf")
-offset_right = 208.0
-offset_bottom = 272.0
-
 [node name="menu" type="VBoxContainer" parent="ui"]
-offset_left = 40.0
-offset_top = 48.0
-offset_right = 156.0
-offset_bottom = 255.0
+offset_left = 176.0
+offset_top = 86.0
+offset_right = 304.0
+offset_bottom = 184.0
 mouse_filter = 2
 theme = ExtResource("3_5atdl")
-
-[node name="title" type="TextureRect" parent="ui/menu"]
-layout_mode = 2
-texture = ExtResource("4_egbxm")
-stretch_mode = 3
-
-[node name="seprator_1" type="HSeparator" parent="ui/menu"]
-layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="new_game" parent="ui/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display") instance=ExtResource("5_jissf")]
 custom_minimum_size = Vector2(60, 18)
@@ -196,7 +139,10 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/menu/new_game/main_container" index="0"]
-material = SubResource("ShaderMaterial_d7jyh")
+material = SubResource("ShaderMaterial_dwoed")
+
+[node name="icon_display" parent="ui/menu/new_game/main_container/margin_container/icon_content_seperator/icon_display_container" index="0"]
+texture = ExtResource("6_d7jyh")
 
 [node name="text_display" parent="ui/menu/new_game/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
 text = "New Game"
@@ -205,40 +151,6 @@ text = "New Game"
 button = NodePath("button")
 
 [node name="button" parent="ui/menu/new_game/main_container/abstract_button" index="0"]
-focus_mode = 1
-focus_behavior_recursive = 0
-mouse_behavior_recursive = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-
-[node name="load_game" parent="ui/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display") instance=ExtResource("5_jissf")]
-custom_minimum_size = Vector2(60, 18)
-layout_mode = 2
-abstract_button = NodePath("main_container/abstract_button")
-display_bg = NodePath("main_container/display_bg")
-main_container = NodePath("main_container")
-inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
-icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
-margin_container = NodePath("main_container/margin_container")
-icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
-icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
-text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
-
-[node name="display_bg" parent="ui/menu/load_game/main_container" index="0"]
-material = SubResource("ShaderMaterial_vexp4")
-
-[node name="text_display" parent="ui/menu/load_game/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
-text = "Load Game"
-
-[node name="abstract_button" parent="ui/menu/load_game/main_container" index="2" node_paths=PackedStringArray("button")]
-button = NodePath("button")
-
-[node name="button" parent="ui/menu/load_game/main_container/abstract_button" index="0"]
 focus_mode = 1
 focus_behavior_recursive = 0
 mouse_behavior_recursive = 0
@@ -264,7 +176,10 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/menu/credits/main_container" index="0"]
-material = SubResource("ShaderMaterial_msekq")
+material = SubResource("ShaderMaterial_6sr68")
+
+[node name="icon_display" parent="ui/menu/credits/main_container/margin_container/icon_content_seperator/icon_display_container" index="0"]
+texture = ExtResource("7_vexp4")
 
 [node name="text_display" parent="ui/menu/credits/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
 text = "Credits"
@@ -298,7 +213,10 @@ icon_display = NodePath("main_container/margin_container/icon_content_seperator/
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
 
 [node name="display_bg" parent="ui/menu/quit_to_desktop/main_container" index="0"]
-material = SubResource("ShaderMaterial_37vgk")
+material = SubResource("ShaderMaterial_uj1l6")
+
+[node name="icon_display" parent="ui/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator/icon_display_container" index="0"]
+texture = ExtResource("8_msekq")
 
 [node name="text_display" parent="ui/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
 text = "Quit to Desktop"
@@ -323,7 +241,7 @@ layout_mode = 2
 
 [node name="game_ver" type="Label" parent="ui/menu"]
 layout_mode = 2
-text = "VERSION: pre-alpha"
+text = "VERSION: pre-alpha 02"
 
 [node name="credtis_panel" parent="ui" instance=ExtResource("3_k4drn")]
 visible = false
@@ -332,42 +250,16 @@ visible = false
 material = SubResource("ShaderMaterial_jissf")
 
 [node name="display_bg" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton/main_container" index="0"]
-material = SubResource("ShaderMaterial_wx1ft")
+material = SubResource("ShaderMaterial_8cjbf")
 
-[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
+[node name="on_initial" type="Node" parent="."]
 script = ExtResource("16_ppdc2")
-order = [NodePath("panorama"), NodePath("bgm")]
-front = NodePath("panorama")
-back = NodePath("bgm")
-
-[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("next")]
-own_world_3d = true
-transparent_bg = true
-canvas_item_default_texture_filter = 0
-canvas_item_default_texture_repeat = 2
-size = Vector2i(480, 270)
-size_2d_override = Vector2i(480, 270)
-script = ExtResource("18_37vgk")
-next = NodePath("../bgm")
-
-[node name="bg" type="TextureRect" parent="on_initial/panorama"]
-custom_minimum_size = Vector2(480, 270)
-offset_right = 565.0
-offset_bottom = 375.0
-texture = ExtResource("4_37vgk")
-
-[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
-script = ExtResource("17_ppdc2")
-stream = ExtResource("2_37vgk")
-prev = NodePath("../panorama")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("16_ppdc2")
 
 [editable path="camera"]
 [editable path="ui/menu/new_game"]
-[editable path="ui/menu/load_game"]
 [editable path="ui/menu/credits"]
 [editable path="ui/menu/quit_to_desktop"]
 [editable path="ui/credtis_panel"]

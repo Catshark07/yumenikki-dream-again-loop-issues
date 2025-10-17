@@ -1,8 +1,8 @@
 @tool
 
-class_name Sequence extends Event
+class_name Sequence 
+extends Event
 
-var time_elapsed: float = 0 
 var priority: int = 0
 
 @export var order: Array[Node]
@@ -17,7 +17,6 @@ var bail_requested: 				bool = false
 
 @export var front: Event
 @export var back: Event
-var curr: Event = null
 
 # - signals
 signal success
@@ -48,22 +47,16 @@ func initialize() -> void:
 func _ready() -> void:
 	initialize()
 
-func step() -> void:
-	curr = curr.next
 func _execute() -> void:
-	# - if bail is requested, we don't execute this sequence.
-	if bail_requested: 
-		bail_requested = false
-		canceled.emit.call_deferred()
-		return
-	
+
+	reset()
 	# - if the sequence is not valid, we halt and not run it.
-	if !_validate_event_order():
+	if !_validate():
 		printerr("SEQUENCE %s :: Sequence halted due to invalid events!" % (self.name)) 
 		return
 	
 	# - we iterate thru the events..
-	curr = front
+	var curr = front
 	while curr != null:
 		# - make sure that the child is of type Event.
 		if curr is Event:
@@ -71,24 +64,31 @@ func _execute() -> void:
 			if curr.get_instance_id() in marked_invalid or curr.skip: 
 				if curr.has_next(): curr = curr.next
 				else:				break
+			
+			if !curr.is_active and !curr.is_finished: curr.execute() 
+			if !curr.is_finished: 
+				await get_tree().process_frame
 				continue
 			
-			curr.execute() 
-			await curr.finished
 			curr.end()
-			
-			if bail_requested: 
-				bail_requested = false
-				canceled.emit.call_deferred()
-				return
+		
+		if 	bail_requested: 
+			break	
 		
 		if curr.has_next(): 
 			curr = curr.next
 		else:				break
+		
+	if 	bail_requested: 
+		bail_requested = false
+		cancelled.emit.call_deferred()
+	
 func _cancel() -> void:
-	bail_requested = true	
-			 
-func _validate_event_order() -> bool:
+	bail_requested = true
+func _end() -> void: 
+	bail_requested = false 
+			
+func _validate() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
 	# checking for any missing dependencies, has the corect properties, etc.
 	var event = front
@@ -109,5 +109,15 @@ func _validate_event_order() -> bool:
 	success.emit()	
 	return true
 
-func update(_delta: float) -> void: 
-	time_elapsed += _delta
+func reset() -> void: 
+	var curr = front
+	
+	while curr != null:
+		# - make sure that the child is of type Event.
+		if curr is Event:
+			curr.is_finished = false
+			curr.is_active = false
+			
+			if curr.has_next(): curr = curr.next
+			else:				break
+# -- 
