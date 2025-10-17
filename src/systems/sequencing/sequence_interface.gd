@@ -48,7 +48,6 @@ func _ready() -> void:
 	initialize()
 
 func _execute() -> void:
-
 	reset()
 	# - if the sequence is not valid, we halt and not run it.
 	if !_validate():
@@ -73,20 +72,22 @@ func _execute() -> void:
 			curr.end()
 		
 		if 	bail_requested: 
+			print("hey buddy")
 			break	
 		
 		if curr.has_next(): 
 			curr = curr.next
 		else:				break
 		
-	if 	bail_requested: 
-		bail_requested = false
-		cancelled.emit.call_deferred()
+	end()
+
 	
 func _cancel() -> void:
 	bail_requested = true
 func _end() -> void: 
-	bail_requested = false 
+	if 	bail_requested: 
+		bail_requested = false
+		cancelled.emit.call_deferred()
 			
 func _validate() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
@@ -115,8 +116,9 @@ func reset() -> void:
 	while curr != null:
 		# - make sure that the child is of type Event.
 		if curr is Event:
-			curr.is_finished = false
-			curr.is_active = false
+			if !curr.is_active: 
+				curr.is_finished = false
+				curr.is_active = false
 			
 			if curr.has_next(): curr = curr.next
 			else:				break

@@ -38,8 +38,9 @@ shader_parameter/optional_gradient = false
 shader_parameter/progress = 0.0
 shader_parameter/colour = Color(0, 0, 0, 1)
 
-[node name="asas" type="Node"]
+[node name="asas" type="Node" node_paths=PackedStringArray("seq_initial")]
 script = ExtResource("1_ah5rn")
+seq_initial = NodePath("on_initial")
 load_transition = SubResource("ShaderMaterial_ttrd8")
 unload_transition = SubResource("ShaderMaterial_q0ft1")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"

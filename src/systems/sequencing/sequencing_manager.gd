@@ -10,7 +10,9 @@ static func invoke(_seq: Object) -> void:
 		
 		if curr != null:
 			await cancel()
+			print("IMPORTANT, LOOK HERE:  ", curr, " " , _seq)
 			if curr == _seq:
+				curr = null
 				return
 		
 		curr 		= _seq 
@@ -26,7 +28,6 @@ static func cancel() -> void:
 		
 		curr.cancel()
 		await curr.cancelled
-		curr = null
 	
 static func create_event() 		-> EventObject: 	return
 static func create_sequence() 	-> SequenceObject: 	return
