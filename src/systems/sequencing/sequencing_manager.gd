@@ -5,16 +5,14 @@ static var curr: Object
 
 static func invoke(_seq: Object) -> void:
 	if _seq == null: return
+
+	if curr != null:
+		await cancel()
+		if curr == _seq:
+			curr = null
+			return
 	
 	if _seq is Sequence:
-		
-		if curr != null:
-			await cancel()
-			print("IMPORTANT, LOOK HERE:  ", curr, " " , _seq)
-			if curr == _seq:
-				curr = null
-				return
-		
 		curr 		= _seq 
 		curr.finished.connect(func(): 
 			curr = null, CONNECT_ONE_SHOT)
@@ -38,8 +36,16 @@ static func create_sequence() 	-> SequenceObject: 	return
 class EventObject: 
 	extends Object
 
+	signal finished
+	signal cancelled
+
 	func _init() -> void: pass
-	func _pass_args(_args_dict: Dictionary) -> void: pass
+	func pass_args(_args_dict: Dictionary) -> void: 
+		for i in get_property_list():
+			if i["usage"] == PROPERTY_USAGE_SCRIPT_VARIABLE:
+				set_indexed(i["name"], _args_dict.get(i["name"]))
+				
+		print("success")
 
 	@abstract
 	func _execute() -> 	void
@@ -54,6 +60,9 @@ class EventObject:
 	
 class SequenceObject:
 	extends EventObject
+	
+	signal success
+	signal fail
 	
 	var skip_invalid_events: bool = true
 	var events: Array[EventObject]

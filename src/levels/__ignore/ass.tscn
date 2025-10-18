@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://pv68n6xubxic"]
+[gd_scene load_steps=16 format=4 uid="uid://pv68n6xubxic"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ah5rn"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="3_dj02f"]
@@ -10,18 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="9_u75xj"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="9_wa1an"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="10_p7cap"]
-[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="10_qwdne"]
 [ext_resource type="TileSet" uid="uid://bior84yl5ty0u" path="res://src/levels/__ignore/tile_set/world_tile_sets/apartment_real.tres" id="11_e6mh2"]
-[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="13_d6ort"]
-[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="13_p7cap"]
-[ext_resource type="AudioStream" uid="uid://t2otpiwgcxxf" path="res://src/audio/se/se_warp.wav" id="14_8wpfw"]
-[ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="14_u75xj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ttrd8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q0ft1"]
 
-[sub_resource type="Resource" id="Resource_aoe6l"]
+[sub_resource type="Resource" id="Resource_p7cap"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("10_p7cap")
@@ -29,14 +24,6 @@ metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d6ort"]
 size = Vector2(32, 48)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d6ort"]
-shader = ExtResource("14_u75xj")
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
-shader_parameter/optional_gradient = false
-shader_parameter/progress = 0.0
-shader_parameter/colour = Color(0, 0, 0, 1)
 
 [node name="asas" type="Node" node_paths=PackedStringArray("seq_initial")]
 script = ExtResource("1_ah5rn")
@@ -53,14 +40,17 @@ initial_target = NodePath("../madotsuki")
 
 [node name="madotsuki" parent="." instance=ExtResource("9_u75xj")]
 position = Vector2(184, 136)
-values = SubResource("Resource_aoe6l")
+values = SubResource("Resource_p7cap")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("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")
 tile_set = ExtResource("11_e6mh2")
 
-[node name="on_initial" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("3_dj02f")
+order = [NodePath("Event")]
+front = NodePath("Event")
+back = NodePath("Event")
 
 [node name="Event" type="SubViewport" parent="on_initial"]
 process_mode = 4
@@ -91,110 +81,9 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="Sprite2D" type="Sprite2D" parent="Interactable"]
 texture = ExtResource("8_e6mh2")
 
-[node name="OnInteract" type="Node" parent="Interactable" node_paths=PackedStringArray("order", "front", "back")]
+[node name="OnInteract" type="Node" parent="Interactable" node_paths=PackedStringArray("front", "back")]
 process_mode = 4
 script = ExtResource("9_wa1an")
-order = [NodePath("open_message_1"), NodePath("open_message_2"), NodePath("open_message_3"), NodePath("open_message_4"), NodePath("open_message_5"), NodePath("open_message_6"), NodePath("open_message_7"), NodePath("open_message_8")]
-front = NodePath("open_message_1")
-back = NodePath("open_message_8")
+front = NodePath("")
+back = NodePath("")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
-
-[node name="open_message_1" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("next")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("long message\n", "number 1")
-next = NodePath("../open_message_2")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_2" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("long message\n", "number 2")
-prev = NodePath("../open_message_1")
-next = NodePath("../open_message_3")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_3" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("long message\n", "number 3")
-prev = NodePath("../open_message_2")
-next = NodePath("../open_message_4")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_4" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("long message\n", "number 4")
-prev = NodePath("../open_message_3")
-next = NodePath("../open_message_5")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_5" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("long message\n", "okay.. number 5")
-prev = NodePath("../open_message_4")
-next = NodePath("../open_message_6")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_6" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("hey... we\'re close to finishing", "it should\'ve cancelled by now.")
-prev = NodePath("../open_message_5")
-next = NodePath("../open_message_7")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_7" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("last chance.")
-prev = NodePath("../open_message_6")
-next = NodePath("../open_message_8")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_8" type="Node" parent="Interactable/OnInteract" node_paths=PackedStringArray("prev")]
-process_mode = 4
-script = ExtResource("10_qwdne")
-texts = PackedStringArray("it dont work.", "fuck.")
-prev = NodePath("../open_message_7")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="Interactable2" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
-position = Vector2(80, -24)
-collision_layer = 0
-collision_mask = 0
-script = ExtResource("7_aoe6l")
-rect = NodePath("rect")
-metadata/_custom_type_script = "uid://bxh774473av7t"
-
-[node name="rect" type="CollisionShape2D" parent="Interactable2"]
-shape = SubResource("RectangleShape2D_d6ort")
-debug_color = Color(0.2, 0, 0.7, 0.2)
-
-[node name="Sprite2D" type="Sprite2D" parent="Interactable2"]
-texture = ExtResource("8_e6mh2")
-
-[node name="OnInteract2" type="Node" parent="Interactable2" node_paths=PackedStringArray("order", "front", "back")]
-process_mode = 4
-script = ExtResource("9_wa1an")
-order = [NodePath("open_message_8")]
-front = NodePath("open_message_8")
-back = NodePath("open_message_8")
-metadata/_custom_type_script = "uid://bkadpjx8csm75"
-
-[node name="play_sound" type="Node" parent="Interactable2/OnInteract2"]
-process_mode = 4
-script = ExtResource("13_p7cap")
-sound = ExtResource("14_8wpfw")
-wait_til_finished = false
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_message_8" type="Node" parent="Interactable2/OnInteract2"]
-process_mode = 4
-script = ExtResource("13_d6ort")
-fade_type = 1
-fade_shader = SubResource("ShaderMaterial_d6ort")
-fade_colour = Color(1, 1, 1, 1)
-metadata/_custom_type_script = "uid://0v2nidb8jsha"

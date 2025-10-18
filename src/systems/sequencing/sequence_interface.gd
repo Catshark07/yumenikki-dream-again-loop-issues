@@ -46,6 +46,7 @@ func initialize() -> void:
 			if !_next.custom_linked_pointers: _next.prev = _curr
 func _ready() -> void:
 	initialize()
+	Utils.connect_to_signal(initialize, child_order_changed)
 
 func _execute() -> void:
 	reset()
@@ -72,7 +73,6 @@ func _execute() -> void:
 			curr.end()
 		
 		if 	bail_requested: 
-			print("hey buddy")
 			break	
 		
 		if curr.has_next(): 
@@ -80,7 +80,6 @@ func _execute() -> void:
 		else:				break
 		
 	end()
-
 	
 func _cancel() -> void:
 	bail_requested = true

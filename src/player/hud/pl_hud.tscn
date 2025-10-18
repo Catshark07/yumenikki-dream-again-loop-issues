@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://q5moiijg0b7a"]
+[gd_scene load_steps=11 format=3 uid="uid://q5moiijg0b7a"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jajjr"]
 [ext_resource type="Script" uid="uid://d3yuvhq7nx0we" path="res://src/player/hud/pl_hud_manager.gd" id="1_o4eow"]
@@ -9,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://h7wmglg415a4" path="res://src/player/inventory/effects_indicator.png" id="9_a8b7g"]
 [ext_resource type="Script" uid="uid://bb10lmchjgadl" path="res://src/player/hud/on_game_events.gd" id="9_ufr4o"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="10_a4iu7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ufr4o"]
+blend_mode = 2
 
 [node name="hud" type="Control" node_paths=PackedStringArray("indicators", "save_icon", "save_icon_timer", "events")]
 layout_mode = 3
@@ -47,6 +50,7 @@ stamina_bar = NodePath("stamina/stamina_fill/value")
 
 [node name="stamina" type="TextureRect" parent="indicators/icons"]
 y_sort_enabled = true
+material = SubResource("CanvasItemMaterial_ufr4o")
 layout_mode = 0
 offset_left = 40.0
 offset_top = 240.0

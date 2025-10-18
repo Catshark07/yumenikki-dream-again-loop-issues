@@ -22,9 +22,9 @@ var prev_follow_strat: STRAT_FOLLOW = default
 var curr_follow_strat: STRAT_FOLLOW = default
 
 # ---- components
-var marker: Marker2D
-var cam_receiver: ComponentReceiver
-var components: ComponentReceiver
+@export var marker: Marker2D
+@export var cam_receiver: ComponentReceiver
+@export var components: ComponentReceiver
 
 var shake_comp: CamShake
 
@@ -71,12 +71,7 @@ func _ready() -> void:
 	instance = self
 	self.process_mode = Node.PROCESS_MODE_PAUSABLE
 	
-	marker = $marker
 	cam = $marker/camera
-	
-	cam_receiver = $marker/camera/components_receiver
-	components = $components_receiver
-	
 	motion_reduction = motion_reduction
 	
 	if Engine.is_editor_hint(): 

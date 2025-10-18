@@ -2,7 +2,7 @@ extends SequencerManager.EventObject
 
 enum MUSIC_BUS {MUSIC, AMBIENCE}
 
-@export_enum("Music", "Ass") var music_bus: int = 0
+var music_bus: MUSIC_BUS = MUSIC_BUS.MUSIC
 var stream: AudioStream
 var vol: float = 1
 var pitch: float = 1

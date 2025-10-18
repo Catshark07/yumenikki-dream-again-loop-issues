@@ -1,17 +1,26 @@
 class_name PlEquipManager
 extends SBComponent
 
+const IGNORE = [DEFAULT_EFFECT]
+const DEFAULT_EFFECT = preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")
+
 var equipped: bool:
-	get: return effect_data != null
+	get: return effect_data != null and !(effect_data in IGNORE)
 
 var behaviour: PLBehaviour:
 	get:
-		if effect_data == null: return load("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
-		else: return effect_data.behaviour
+		if effect_data == null: return DEFAULT_EFFECT.behaviour
+		return effect_data.behaviour
 
 var effect_prefab: 	PLEffectComponent 	= null
-var effect_data: 	PLEffect 			= null
-var effect_values: 	PLVariables 		= null
+var effect_data: 	PLEffect 			= null:
+	get:
+		if effect_data == null: return DEFAULT_EFFECT
+		return effect_data
+var effect_values: 	PLVariables 		= null:
+	get:
+		if effect_data == null: return DEFAULT_EFFECT.variables
+		return effect_data.variables
 
 func _setup(_sb: SentientBase = null) -> void:
 	equip(Player.Instance.equipment_pending, _sb, true)
@@ -26,7 +35,6 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 			
 		deequip(_pl)
 		effect_data = _effect
-		effect_values = _effect.variables
 		
 		_pl.sprite_sheet = load(_effect.variables.sprite_override)
 
@@ -49,22 +57,16 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 			effect_prefab.queue_free()
 
 		effect_data._unapply(_pl)
-		effect_values 	= null
 		effect_data 	= null
 		
 		_pl.sprite_sheet = load(_pl.values.sprite_override)
 
 func _physics_update(_delta: float) -> void:
-	if effect_prefab != null: 	effect_prefab._eff_physics_update	(_delta, sentient)
+	if effect_data != null: effect_data._effect_phys_update	(sentient, _delta)
 func _update(_delta: float) -> void:
-	if effect_prefab != null: effect_prefab._eff_update(_delta, sentient)
+	if effect_data != null: effect_data._effect_update		(sentient, _delta)
 func _input_pass(event: InputEvent) -> void: 
-	if effect_prefab != null: 
-		effect_prefab._eff_input(event, sentient)
-		
-	if effect_data != null:
-		if Input.is_action_just_pressed("pl_primary_action"): 	effect_data._primary_action(sentient)
-		if Input.is_action_just_pressed("pl_secondary_action"): effect_data._secondary_action(sentient)
+	if effect_data != null: effect_data._effect_input		(sentient, event)
 		
 	if Input.is_action_just_pressed("ui_favourite_effect"): 
 		if !equipped: 	equip(Player.Instance.equipment_favourite, sentient)

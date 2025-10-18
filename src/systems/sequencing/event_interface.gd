@@ -40,11 +40,21 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 
 # -- virtual, override these.
-func _execute	() -> void: pass
-func _cancel	() -> void: pass
-func _end		() -> void: pass
+func _execute	() -> void: 
+	if abstract_event != null:
+		abstract_event.pass_args(abstract_event_args)
+		await abstract_event._execute()
+func _cancel	() -> void: 
+	if abstract_event != null:
+		await abstract_event._cancel()
+func _end		() -> void: 
+	if abstract_event != null:
+		abstract_event.pass_args(abstract_event_args)
+		await abstract_event._end()
 
-func _validate() -> bool: return true
+func _validate() -> bool: 
+	if abstract_event != null: return abstract_event._validate()
+	return true
 
 # -- concrete implementations
 func execute() -> void: 	
@@ -61,19 +71,14 @@ func execute() -> void:
 			is_active = false
 			return
 		
-		#if abstract_event: 
-			#abstract_event._pass_args(abstract_event_args)
-			#abstract_event._execute()
-	
 	if wait_til_finished: await _execute()
 	else:						_execute()
+		
 	__call_finished.call_deferred()
 	
 	is_finished = true
 	is_active = false
 	
-	print(self, " is finished!")
-
 func cancel() -> void:
 	_cancel()
 	is_active = false
@@ -101,7 +106,7 @@ func _get_property_list() -> Array[Dictionary]:
 			
 	if abstract_event != null: 
 		for p in abstract_event.get_property_list():
-			if  p["usage"] == PROPERTY_USAGE_SCRIPT_VARIABLE:
+			if  p["usage"] % PROPERTY_USAGE_SCRIPT_VARIABLE == 0:
 				p["usage"] |= PROPERTY_USAGE_EDITOR 
 				properties.append(p)
 	return properties
@@ -134,10 +139,11 @@ func set_argument_dict(_event: SequencerManager.EventObject) -> void:
 		abstract_event = _event
 	
 	else:
-		if abstract_event != null: abstract_event.free() 
 		abstract_event_args = {}
+		if abstract_event != null: abstract_event.free() 
 		return
 	
 	for p in _event.get_property_list():
-		if p["usage"] == PROPERTY_USAGE_SCRIPT_VARIABLE: abstract_event_args[p["name"]] = null
+		if p["usage"] % PROPERTY_USAGE_SCRIPT_VARIABLE == 0:
+			abstract_event_args[p["name"]] = _event.get_indexed(p["name"])
 	

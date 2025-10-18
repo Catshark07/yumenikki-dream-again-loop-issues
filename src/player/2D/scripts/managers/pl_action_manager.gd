@@ -3,9 +3,7 @@ extends SBComponent
 
 var emote: PLAction:
 	get: 
-		if !sentient.values.emote.is_empty() and ResourceLoader.exists(sentient.values.emote):
-			return load(sentient.values.emote)
-		return emote
+		return load(sentient.values.emote)
 
 var curr_action: PLAction
 

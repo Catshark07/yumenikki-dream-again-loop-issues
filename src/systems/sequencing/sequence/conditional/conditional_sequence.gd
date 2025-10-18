@@ -3,7 +3,10 @@
 class_name ConditionalSequence
 extends Sequence
 
-@export var else_conditional: Sequence
+@export var else_conditional: Sequence:
+	set(_else):
+		else_conditional = _else
+		next = _else
 
 func _ready() -> void:
 	super()

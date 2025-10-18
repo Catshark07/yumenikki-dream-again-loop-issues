@@ -27,6 +27,7 @@ func close() -> void:
 		
 	option_buttons.clear()
 	text_container.text = ""
+	finished.emit()
 	__close_animation()
 
 		
