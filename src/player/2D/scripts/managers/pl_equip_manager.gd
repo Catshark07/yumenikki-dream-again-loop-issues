@@ -6,7 +6,6 @@ const DEFAULT_EFFECT = preload("res://src/player/2D/madotsuki/effects/_none/_def
 
 var equipped: bool:
 	get: return effect_data != null and !(effect_data in IGNORE)
-
 var behaviour: PLBehaviour:
 	get:
 		if effect_data == null: return DEFAULT_EFFECT.behaviour
@@ -30,8 +29,7 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 	if _effect == null or _effect == effect_data: return
 		
 	if _effect:
-		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(
-			_pl.components.get_component_by_name(Player_YN.COMP_ACTION).curr_action, _pl, true)
+		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
 			
 		deequip(_pl)
 		effect_data = _effect
@@ -49,8 +47,8 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 		EventManager.invoke_event("PLAYER_DEEQUIP", Player.Instance.DEFAULT_EQUIPMENT)
 		Player.Instance.equipment_pending = Player.Instance.DEFAULT_EQUIPMENT
 		
-		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(
-			_pl.components.get_component_by_name(Player_YN.COMP_ACTION).curr_action, _pl, true)
+		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
+
 
 		if effect_prefab != null: 
 			effect_prefab._exit(_pl)
@@ -71,3 +69,9 @@ func _input_pass(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_favourite_effect"): 
 		if !equipped: 	equip(Player.Instance.equipment_favourite, sentient)
 		else:			deequip(sentient)
+
+	elif Input.is_action_just_pressed("pl_primary_action"):
+		if !equipped: 	effect_data._primary_action(sentient)
+	elif Input.is_action_just_pressed("pl_secondary_action"):
+		if !equipped: 	effect_data._secondary_action(sentient)
+		 

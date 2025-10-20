@@ -129,8 +129,9 @@ libraries = {
 }
 playback_auto_capture = false
 
-[node name="action_manager" type="Node" parent="sb_components"]
+[node name="action_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("cooldown_timer")]
 script = ExtResource("10_rhwps")
+cooldown_timer = NodePath("timer")
 
 [node name="timer" type="Timer" parent="sb_components/action_manager"]
 
@@ -182,14 +183,14 @@ texture = ExtResource("17_cin7d")
 script = ExtResource("13_p5dbe")
 metadata/_custom_type_script = "uid://bgisym1hdeqgt"
 
-[node name="input" type="Node" parent="sb_components"]
-script = ExtResource("19_57bvo")
-metadata/_custom_type_script = "uid://du8llo3s6lchk"
-
 [node name="sprint_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("stamina_fsm")]
 script = ExtResource("18_k7c3c")
 stamina_fsm = NodePath("../../stamina_fsm")
 metadata/_custom_type_script = "uid://ckdi4htcyco6l"
+
+[node name="input" type="Node" parent="sb_components"]
+script = ExtResource("19_57bvo")
+metadata/_custom_type_script = "uid://du8llo3s6lchk"
 
 [node name="stamina_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("18_rujao")
@@ -209,7 +210,7 @@ initial_state = NodePath("IDLE")
 
 [node name="IDLE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("22_e8irh")
-transitions = [NodePath("../MOVE"), NodePath("../ACTION"), null]
+transitions = [NodePath("../MOVE"), NodePath("../ACTION")]
 
 [node name="MOVE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("24_t8l7d")

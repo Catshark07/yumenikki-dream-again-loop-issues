@@ -11,6 +11,7 @@ exhaust_multi = 0.85
 stamina_drain = 0.8
 stamina_regen = 0.78
 sprite_override = "uid://t640tko80xou"
+emote = "uid://c1yypq7p5sgav"
 walk_multi = 1.21
 sprint_multi = 3.0
 sneak_multi = 0.9

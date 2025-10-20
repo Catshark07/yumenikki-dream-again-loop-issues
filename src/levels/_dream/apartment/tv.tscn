@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://cnbg0ato50rwn"]
 
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_q7565"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="1_q7565"]
 [ext_resource type="Texture2D" uid="uid://b5c33hi62qlav" path="res://src/levels/_dream/apartment/tv.png" id="2_fk1p2"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="3_528yx"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="4_1ypmp"]

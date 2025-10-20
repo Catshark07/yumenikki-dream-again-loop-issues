@@ -6,6 +6,7 @@ class_name LoopableComponent
 extends Node2D
 
 @export_tool_button("Setup Loop Component") var setup_pre_game = setup_loop_nodes
+@export_tool_button("Refresh Loop Nodes List") var refresh = update_loop_nodes_list
 
 const LOOPABLE_ID := &"loop_components"
 @export var manager: LoopManager
@@ -43,6 +44,7 @@ func loopable_setup(_manager: LoopManager) -> void:
 
 func _ready() -> void:
 	do_not_update = do_not_update
+	Utils.connect_to_signal(update_loop_nodes_list, child_order_changed)
 
 func _enter_tree() -> void:	
 	Utils.u_add_to_group(self, LOOPABLE_ID)
@@ -63,8 +65,6 @@ func update_duplicates() -> void:
 func setup_loop_nodes() -> void:
 	# - we clear and free the old duplicated nodes list.
 	var first_dupe: Node = null
-	
-	Utils.u_add_to_group(self, LOOPABLE_ID)
 	if do_not_dupe: return
 	
 	dupe_nodes.resize(8)
@@ -91,8 +91,8 @@ func setup_loop_nodes() -> void:
 		if first_dupe == null: 
 			first_dupe = potential_dupe
 			
-			if !keep_child_nodes:
-				for c in first_dupe.get_children(): c.queue_free()
+		if !keep_child_nodes:
+			for c in potential_dupe.get_children(): c.queue_free()
 		
 		for c in potential_dupe.get_children(): 
 			c.owner = self.owner
@@ -100,6 +100,9 @@ func setup_loop_nodes() -> void:
 		
 		dupe_nodes[i] = (potential_dupe)
 	update_duplicates()
+func update_loop_nodes_list() -> void:
+	for i in dupe_nodes:
+		if i == null or !is_instance_valid(i): i = null 
 
 # - internal
 func __set_size(_size: Vector2) -> void: 

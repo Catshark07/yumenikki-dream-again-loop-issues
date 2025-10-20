@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://cijogi38yfo57"]
 
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_84h6v"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="1_84h6v"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="2_dcrlv"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="3_onajm"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="4_dcrlv"]

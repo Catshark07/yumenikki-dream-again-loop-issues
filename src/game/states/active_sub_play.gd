@@ -9,6 +9,8 @@ func _ready() -> void:
 	dream_component._setup()
 		
 func _state_enter() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
 	await Game.main_tree.process_frame
 	PhysicsServer2D.set_active(true)
 	InputManager.request_curr_controller_change(InputManager.sb_input_controller)

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c4xdm2th6act5" path="res://src/levels/_dream/footprint_path/thing_yellow.png" id="1_fkaag"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="2_eji5h"]
 [ext_resource type="Texture2D" uid="uid://b8l1jq8htfaaq" path="res://src/levels/_dream/footprint_path/tumor_yellow.png" id="3_1yr7l"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="4_3378m"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="4_3378m"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="5_dnubs"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="6_678bv"]
 [ext_resource type="AudioStream" uid="uid://dux6ah6eoctfc" path="res://src/audio/se/se_punch.WAV" id="7_m2mwh"]

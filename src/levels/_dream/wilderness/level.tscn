@@ -9,7 +9,7 @@
 [ext_resource type="TileSet" uid="uid://b67lflhmdyfdh" path="res://src/levels/__ignore/tile_set/world_tile_sets/barracks.tres" id="10_lej3i"]
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="14_8fsi7"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="15_b5a42"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="16_03p8s"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="16_03p8s"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="16_wyy24"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="17_53mwp"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="18_rjmpv"]

@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="11_qwl4r"]
 [ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="12_43bly"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="13_k18mo"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="14_0ec7f"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="14_0ec7f"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="15_jgdut"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="16_3yblm"]
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="17_3yblm"]

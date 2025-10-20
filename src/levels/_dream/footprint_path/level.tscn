@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bvltvxeerhk8r" path="res://src/levels/_dream/footprint_path/thing_gray.png" id="7_83tvd"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="7_jwq7s"]
 [ext_resource type="Texture2D" uid="uid://b3dk1r3e4j7iv" path="res://src/levels/_dream/footprint_path/tumor_gray.png" id="9_c6g2w"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="10_n4u68"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="10_n4u68"]
 [ext_resource type="Texture2D" uid="uid://dhljr3l72tqg8" path="res://src/levels/_dream/footprint_path/thing_pink.png" id="11_ce11j"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="11_ywh58"]
 [ext_resource type="Texture2D" uid="uid://ba16wfm0fyqvs" path="res://src/levels/_dream/footprint_path/tumor_pink.png" id="12_vfbbd"]

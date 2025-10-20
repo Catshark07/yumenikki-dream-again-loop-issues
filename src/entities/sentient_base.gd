@@ -45,7 +45,7 @@ enum compass_headings {
 	HORIZ = 2,
 	SOUTH_HORIZ = 3,
 	SOUTH = 4}
-var heading: compass_headings
+@export var heading: compass_headings = compass_headings.SOUTH
 
 var direction: Vector2 = Vector2(0, 1):
 	set(dir): 

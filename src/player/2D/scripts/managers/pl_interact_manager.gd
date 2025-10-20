@@ -12,7 +12,7 @@ var found: bool = false
 const COOL_DOWN = 1.5
 var interaction_cooldown: float = COOL_DOWN
 var cooldown: bool = false
-var curr_interactable: Interactable
+var curr_interactable: Node
 
 var prompt_icon: Sprite2D
 var prompt_tween: Tween
@@ -74,16 +74,17 @@ func handle_field() -> void:
 			if interactables[i - 1]: curr_interactable = interactables[i - 1]
 			else: curr_interactable = null
 			break
-func handle_interaction() -> void: 
-	if 	curr_interactable and !cooldown: 
-		
-		Utils.connect_to_signal(
-			AudioService.play_sound.bind(ERR_SOUNDS.pick_random()), 
-			curr_interactable.fail, 
-			CONNECT_ONE_SHOT)
-			
-		curr_interactable.interact()
-		cooldown = true	
+func handle_interaction(_choice: int = 0) -> void: 
+	if !cooldown and curr_interactable != null:
+	
+		if 	curr_interactable is Interactable : 
+			Utils.connect_to_signal(
+				AudioService.play_sound.bind(ERR_SOUNDS.pick_random()), 
+				curr_interactable.fail, 
+				CONNECT_ONE_SHOT)
+					
+			curr_interactable.interact()
+			cooldown = true	
 # ---- signals -----
 func interactable_entered(_inact: Area2D) -> void: 
 	if _inact is Interactable:
@@ -129,4 +130,5 @@ func prompt_hide_animation() -> void:
 	prompt_icon.visible = false
 
 func _input_pass(_input: InputEvent) -> void: 
-	if _input.is_action_pressed("pl_interact"): sentient.quered_interact.emit()
+	if 	 Input.is_physical_key_pressed(KEY_E): sentient.quered_interact.emit(sentient, 0)
+	elif Input.is_physical_key_pressed(KEY_R): sentient.quered_interact.emit(sentient, 1)

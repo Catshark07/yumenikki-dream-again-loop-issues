@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="9_0jnag"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_qjk5i"]
 [ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="11_1bnqm"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="12_l01gf"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="12_l01gf"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="13_no4b8"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="14_qiu13"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="15_0q71x"]

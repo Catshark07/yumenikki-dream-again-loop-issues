@@ -49,7 +49,7 @@ func _ready() -> void:
 			dir_input = _in, 	
 		self.input_vector)
 	
-	Utils.connect_to_signal(get_behaviour()._interact.bind(self), quered_interact)
+	Utils.connect_to_signal(get_behaviour()._interact, quered_interact)
 
 	
 func _enter() -> void:

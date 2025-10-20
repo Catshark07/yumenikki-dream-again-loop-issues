@@ -1,68 +1,60 @@
 class_name PLActionManager 
 extends SBComponent
 
-var emote: PLAction:
-	get: 
-		return load(sentient.values.emote)
+# - actions
+var curr: 	PLAction
+var emote: 	PLAction:
+	get: return load(sentient.values.emote)
 
-var curr_action: PLAction
+# - other props
+@export var cooldown_timer: Timer
+var cooldown: float = 1.5
+var in_cooldown: bool = false
 
-var cooldown: float = .8
-var cooldown_timer: Timer
-
-var is_action: bool = false
-var can_action: bool = true
-
+# - signals
 signal did_something
 
-func _setup(_sb: SentientBase = null) -> void:
+
+func _setup(_sb: SentientBase = null) -> void: 
 	super(_sb)
 	
-	cooldown_timer = $timer
-	cooldown_timer.wait_time = cooldown
-	cooldown_timer.autostart = false
-	cooldown_timer.one_shot = true
+	cooldown_timer.autostart 	= false
+	cooldown_timer.one_shot 	= true
+	cooldown_timer.wait_time 	= cooldown
 	
-	cooldown_timer.timeout.connect(func(): can_action = true)
+	Utils.connect_to_signal(restrict_action, did_something)
+	Utils.connect_to_signal(func(): in_cooldown = false, cooldown_timer.timeout)
 
-	did_something.connect(flag_false_can_action)
+func _update(_delta: float) -> void: 			
+	if curr != null: curr._action_update(sentient, _delta)
+func _physics_update(_delta: float) -> void: 	
+	if curr != null: curr._action_physics_update(sentient, _delta)
+
+func _input_pass(_event: InputEvent) -> void: 
+	if curr != null:  curr._action_input(sentient, _event)
+	if Input.is_action_just_pressed("pl_emote"): perform_action(sentient, emote)
+
+func perform_action(_pl: Player, _action: PLAction) -> void:
+	if in_cooldown: return 
+	if curr != null:
+		cancel_action(_pl) 
+		return
 	
-# - primary actions
-func set_emote(_emote: PLEmote) -> void: emote = _emote
-# helper
-func set_curr_action(_action: PLAction) -> void: curr_action = _action
+	did_something.emit()
+	curr = _action
+	curr._perform(_pl) 
 
-func perform_action(_action: PLAction, _pl: Player) -> void: 
-	if _action == null: return 
-	if can_action:
-		set_curr_action(_action)
-		_action._perform(_pl) 
+func cancel_action(_pl: Player, _force: bool = false) -> void:
+	if 	curr != null:
 		did_something.emit()
-func cancel_action(_action: PLAction, _pl: Player, _force: bool = false) -> void: 
-	if _action and (can_action or _force):
-		_action._cancel(_pl)
-		set_curr_action(null)
+		
+		match _force:
+			true:			curr._force_cancel(_pl)
+			_: 		await 	curr._cancel(_pl)
+		
+	await Game.main_tree.process_frame
+	curr = null
 
-# ---- action handles ----
-func handle_action_enter() -> void: 
-	if 	curr_action: 
-		curr_action._action_on_enter(sentient)
-func handle_action_exit() -> void: 
-	if 	curr_action: 
-		curr_action._action_on_exit(sentient)
-
-func handle_action_input(_input: InputEvent) -> void: 
-	if curr_action and can_action: curr_action._action_input(sentient, _input)
-func handle_action_phys_update(_delta: float) -> void: 
-	if curr_action: curr_action._action_physics_update(sentient, _delta)
-func handle_action_update(_delta: float) -> void: 
-	if curr_action: curr_action._action_update(sentient, _delta)
-
-func _input_pass(event: InputEvent) -> void:
-	if 	Input.is_action_just_pressed("pl_emote"): 				
-		perform_action(emote, sentient)
-
-# ---- action executes / cancels ----
-func flag_false_can_action() -> void: 
-	can_action = false
+func restrict_action() -> void:
+	in_cooldown = true
 	cooldown_timer.start()

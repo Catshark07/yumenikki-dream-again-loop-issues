@@ -4,7 +4,7 @@
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_odm8p"]
 [ext_resource type="Texture2D" uid="uid://cpsg4xvrbf3mo" path="res://src/images/panorama/eyeball_panorama.png" id="3_4j00j"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="3_07q2v"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="4_d5n0m"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="4_d5n0m"]
 [ext_resource type="Texture2D" uid="uid://cua8v3f5c3bwi" path="res://src/levels/__ignore/doors/door_eyeball.png" id="4_ey7sl"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_sthxv"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="5_fot1s"]

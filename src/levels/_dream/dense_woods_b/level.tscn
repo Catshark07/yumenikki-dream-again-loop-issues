@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/__ignore/rain.tscn" id="5_dwx8a"]
 [ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="5_k7yxg"]
 [ext_resource type="Shader" uid="uid://5k0375eqfw0q" path="res://src/shaders/masks/sub.gdshader" id="8_5st6v"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="8_iii1a"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="8_iii1a"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="9_xynxk"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="10_wuq7m"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="11_c3ibc"]

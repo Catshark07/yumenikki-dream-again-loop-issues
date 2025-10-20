@@ -12,7 +12,6 @@ var screen_centre 	:= Vector2()
 
 var viewport_size 	:= Vector2()
 var eqn 			:= Vector2()
-var total_uv_offset := Vector2()
 
 var warp_check: bool = false
 var panorama_update: EventListener

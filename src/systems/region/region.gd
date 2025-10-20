@@ -31,9 +31,6 @@ func _ready() -> void:
 		rect.shape.size = Vector2(16, 16)	
 		rect.debug_color = Color(0.2 ,0, 0.7, 0.2)
 		
-	if !Engine.is_editor_hint():
-		rect.disabled = !(self.visible and is_visible_in_tree())
-			
 	Utils.connect_to_signal(handle_player_enter, self.area_entered)
 	Utils.connect_to_signal(handle_player_exit, self.area_exited)
 	Utils.connect_to_signal(__disable_collision_if_invisible, self.visibility_changed)
@@ -42,6 +39,7 @@ func _ready() -> void:
 	_setup()
 
 func __disable_collision_if_invisible() -> void:
+	print(self, "IT CHANGED??")
 	rect.disabled = !(self.visible and is_visible_in_tree())
 
 func _setup() -> void: pass

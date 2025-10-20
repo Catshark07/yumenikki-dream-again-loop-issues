@@ -33,7 +33,7 @@
 [ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="27_neteg"]
 [ext_resource type="Texture2D" uid="uid://b2wf3y71rd5l8" path="res://src/entities/sentients/red_jellyfish/flap.png" id="29_uwvvk"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="30_b1kpc"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="32_2suwl"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="32_2suwl"]
 [ext_resource type="Script" uid="uid://d1ojbn5jneejv" path="res://src/systems/sequencing/event/node/set_property.gd" id="33_7rtwp"]
 [ext_resource type="AudioStream" uid="uid://ctikfoswhp602" path="res://src/audio/se/se_talk_soft.ogg" id="33_oaq00"]
 [ext_resource type="Shader" uid="uid://cclrs1syfvcos" path="res://src/shaders/panorama/radial_additive.gdshader" id="36_37x7p"]

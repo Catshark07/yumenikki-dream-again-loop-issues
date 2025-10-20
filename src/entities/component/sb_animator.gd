@@ -6,7 +6,15 @@ var can_play: bool = true
 # --- components ---
 var animation_player: AnimationPlayer
 var sprite_renderer: Sprite2D
-
+var loop_type: Animation.LoopMode:
+	get:
+		if !animation_player.current_animation.is_empty() and \
+			animation_player.get_animation(animation_player.current_animation) != null:
+			
+			return animation_player.get_animation(animation_player.current_animation).loop_mode
+		
+		return Animation.LoopMode.LOOP_NONE
+		
 # --- gimmicks ---
 const DEFAULT_DYNAMIC_ROT_MULTI = 1
 

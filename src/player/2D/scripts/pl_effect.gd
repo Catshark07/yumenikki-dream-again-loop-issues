@@ -1,6 +1,11 @@
 class_name PLEffect
 extends Resource
 
+@export_group("Action Overrides")
+
+@export var override_primary_action: PLAction
+@export var override_secondary_action: PLAction
+
 const EMOTE_PATH := &"emote/"
 const ACTION_PATH := &"action/"
 
@@ -38,10 +43,8 @@ func _apply(_pl: Player) -> void:
 				_pl.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_prefab)
 			
 			prefab_instance._enter(_pl)
-func _unapply(_pl: Player) -> void:
-	(_pl as Player_YN).cancel_action(
-		(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).curr_action)
-	(_pl as Player_YN).components.get_component_by_name(Player_YN.COMP_ACTION).set_emote(null)
+func _unapply(_pl: Player) -> void: pass
+
 
 func _effect_input(_pl: Player, _input: InputEvent)	 -> void: 
 	if player_component != null: player_component._eff_input			(_input, _pl)
@@ -49,3 +52,10 @@ func _effect_update(_pl: Player, _delta: float) 	 -> void:
 	if player_component != null: player_component._eff_update			(_delta, _pl)
 func _effect_phys_update(_pl: Player, _delta: float) -> void:
 	if player_component != null: player_component._eff_physics_update	(_delta, _pl)
+	
+func _primary_action	(_pl: Player) -> void: 
+	if override_primary_action == null: return
+	_pl.components.get_component_by_name(_pl.COMP_ACTION).perform_action(_pl, override_primary_action)
+func _secondary_action	(_pl: Player) -> void: 
+	if override_secondary_action == null: return
+	_pl.components.get_component_by_name(_pl.COMP_ACTION).perform_action(_pl, override_secondary_action)

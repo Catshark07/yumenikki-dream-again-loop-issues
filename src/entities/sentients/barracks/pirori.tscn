@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="7_44spc"]
 [ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/sequencing/event/animation/play_yield_animation.gd" id="8_u4v1j"]
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="9_4v8pq"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="9_u4v1j"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="9_u4v1j"]
 [ext_resource type="AnimationLibrary" uid="uid://br0km4uq5dly" path="res://src/entities/sentients/animation_libs/pirori.tres" id="10_4v8pq"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="10_lpcqq"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="11_scd0i"]

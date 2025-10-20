@@ -6,6 +6,7 @@ func _setup() -> void:
 	inventory._setup()
 
 func _state_enter() -> void: 
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Ambience.mute()
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
 	

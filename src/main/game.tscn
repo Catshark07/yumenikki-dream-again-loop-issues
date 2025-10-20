@@ -633,7 +633,6 @@ layout_mode = 1
 mouse_filter = 1
 
 [node name="message_display_manager" type="Control" parent="always/ui/hud" node_paths=PackedStringArray("message_display", "prompt_display", "dialogue_display")]
-layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("31_wfsxj")

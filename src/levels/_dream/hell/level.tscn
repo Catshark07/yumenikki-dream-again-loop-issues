@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://bgmkdpx1sl64v" path="res://src/systems/sequencing/event/node/set_modulate.gd" id="14_tbnnq"]
 [ext_resource type="PackedScene" uid="uid://b4efdoikr5o84" path="res://src/entities/sentients/animated_sentient.tscn" id="15_1834v"]
 [ext_resource type="Texture2D" uid="uid://dx5nmm2v31jug" path="res://src/entities/sentients/hell/hell_2.png" id="16_3smme"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="17_3smme"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="17_3smme"]
 [ext_resource type="Texture2D" uid="uid://duwjwe2dxrpyn" path="res://src/entities/sentients/hell/hell_3.png" id="17_fft2c"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="18_vfjqf"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="18_vn863"]

@@ -41,7 +41,7 @@ func add_custom_types() -> void:
 		)
 	add_custom_type("Interactable", 
 	"AreaRegion", 
-	preload("res://src/systems/interaction/base_interactable.gd"), 
+	preload("res://src/systems/interaction/interactable.gd"), 
 	preload("res://addons/miscallenous/editor/interactable.png"), 
 	)
 

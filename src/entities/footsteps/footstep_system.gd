@@ -104,7 +104,7 @@ func spawn_footstep_fx() -> void:
 func play_footstep_sound(_footstep_se: AudioStream) -> void: 
 	footstep_se_player.play_sound(
 		_footstep_se, 
-		clampf(2.1 *(log(sentient.noise + 1)), 0.5, 1.75), 
+		clampf(2.1 *(log(sentient.noise + 1)), 0.1, 1.85), 
 		clampf(randf_range(0.75, sentient.noise), 0.75, 1.2))	
 
 func _on_body_shape_entered(

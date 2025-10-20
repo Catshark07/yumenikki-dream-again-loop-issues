@@ -27,7 +27,7 @@ signal quered_primary_action
 signal quered_secondary_action
 signal quered_teritiary_action
 
-signal quered_interact
+signal quered_interact(_pl: Player, choice: int)
 
 signal quered_sprint_start
 signal quered_sprint_end

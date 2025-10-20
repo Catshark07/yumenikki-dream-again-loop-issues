@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="11_vr5ql"]
 [ext_resource type="PackedScene" uid="uid://b4efdoikr5o84" path="res://src/entities/sentients/animated_sentient.tscn" id="12_racc1"]
 [ext_resource type="Texture2D" uid="uid://dx5nmm2v31jug" path="res://src/entities/sentients/hell/hell_2.png" id="13_x8278"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="14_hpeqf"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="14_hpeqf"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="15_4q656"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="16_jrplj"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="17_po4ul"]
