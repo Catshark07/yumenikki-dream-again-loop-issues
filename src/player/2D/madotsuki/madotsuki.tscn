@@ -39,6 +39,7 @@
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("2_f263f")
+disable_drain = true
 metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
 [sub_resource type="Animation" id="Animation_m68sj"]

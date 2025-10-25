@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://oicnl35egh3r"
-path="res://.godot/imported/blood_tiles.png-85843f4c87ec221b479ba5fe72094e3e.ctex"
+uid="uid://d2gj0ypij1whe"
+path="res://.godot/imported/rectangular_prism.png-34878eb023924bdedab91590c379eb70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/_dream/colourful_irises/sprites/blood_tiles.png"
-dest_files=["res://.godot/imported/blood_tiles.png-85843f4c87ec221b479ba5fe72094e3e.ctex"]
+source_file="res://src/entities/sentients/cube_heaven/rectangular_prism.png"
+dest_files=["res://.godot/imported/rectangular_prism.png-34878eb023924bdedab91590c379eb70.ctex"]
 
 [params]
 

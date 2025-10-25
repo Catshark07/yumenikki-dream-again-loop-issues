@@ -46,7 +46,8 @@ func add_item(_item: PLEffect) -> void:
 	button.pressed.		connect(func():
 		if button.abstract_button.unique_data:
 			EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST")
-			(Player.Instance.get_pl() as Player_YN).equip(button.abstract_button.unique_data))
+			Player.Instance.get_pl().components.get_component_by_name(Player_YN.COMP_EQUIP).change_effect(
+				Player.Instance.get_pl(), button.abstract_button.unique_data))
 
 # - removing items.
 func remove_item(_item: PLEffect) -> void:

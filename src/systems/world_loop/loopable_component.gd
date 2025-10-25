@@ -38,25 +38,27 @@ const LOOPABLE_ID := &"loop_components"
 @export var world_size: Vector2:
 	set = __set_size
 
+# - signals
+signal loop_node_deleted(_loop_node)
+
 func loopable_setup(_manager: LoopManager) -> void:
 	manager 	= _manager
-	world_size 	= _manager.world_size
 
 func _ready() -> void:
 	do_not_update = do_not_update
-	Utils.connect_to_signal(update_loop_nodes_list, child_order_changed)
+	Utils.connect_to_signal(update_loop_nodes_list, loop_node_deleted)
 
 func _enter_tree() -> void:	
 	Utils.u_add_to_group(self, LOOPABLE_ID)
 	if custom_target: return
 	target = self.get_parent()
+	
 func _exit_tree() -> void: 	
 	Utils.u_remove_from_group(self, LOOPABLE_ID)
 	
 func update_duplicates() -> void: 
 	for i in dupe_nodes:
-		if i == null or target == null: 
-			continue
+		if i == null: continue
 		
 		for p in properties:
 			if target.get_indexed(p) == null: continue
@@ -73,14 +75,14 @@ func setup_loop_nodes() -> void:
 	for i in range(8):
 		# - we get any dupes already existent.
 		var potential_dupe = Utils.get_child_node_or_null(self, "loop_%s_%s" % [target.name, i])
-			
+						
 		# - if it already exists, then skip it.
 		if 		potential_dupe != null and dupe_nodes.has(potential_dupe): 
 			dupe_nodes[i] = (potential_dupe)
 		
 		# - if it does exist but not in the array, then delete it.	
 		elif 	potential_dupe != null: 
-			potential_dupe.queue_free()
+			potential_dupe.reparent(self)
 			continue
 		
 		if first_dupe != null:
@@ -99,17 +101,31 @@ func setup_loop_nodes() -> void:
 			if c.name == self.name: c.free()
 		
 		dupe_nodes[i] = (potential_dupe)
+		Utils.connect_to_signal(loop_node_deleted.emit.bind(dupe_nodes[i]) ,dupe_nodes[i].tree_exiting)
+		
+		if !(dupe_nodes[i] is CanvasItem): return
+		var occlusion: VisibleOnScreenNotifier2D = VisibleOnScreenNotifier2D.new()
+
+		dupe_nodes[i].add_child(occlusion)
+
+		occlusion.name = "occlusion"
+		occlusion.screen_entered.connect(func(): dupe_nodes[i] .visible = true)
+		occlusion.screen_exited.connect(func(): dupe_nodes[i] .visible = false)
+		occlusion.rect.size = world_size / 1.2
+		occlusion.rect.position = -(occlusion.rect.size / 2)
+		
 	update_duplicates()
-func update_loop_nodes_list() -> void:
-	for i in dupe_nodes:
-		if i == null or !is_instance_valid(i): i = null 
+	
+func update_loop_nodes_list(_loop_node) -> void:
+	if _loop_node in dupe_nodes:
+		dupe_nodes[dupe_nodes.find(_loop_node)] = null
 
 # - internal
 func __set_size(_size: Vector2) -> void: 
 	world_size = _size
 	if do_not_dupe: return
 	
-	for i in range(8):
+	for i in dupe_nodes.size():
 		if 	dupe_nodes[i] != null:
 			dupe_nodes[i].global_position = target.global_position + world_size * manager.LOOP_UNIT_VECTOR[i]
 

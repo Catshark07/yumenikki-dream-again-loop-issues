@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_u6cpc")
+return_location = "uid://dwst4o7pf4ye7"
 metadata/_custom_type_script = "uid://gqxupngqpt0n"

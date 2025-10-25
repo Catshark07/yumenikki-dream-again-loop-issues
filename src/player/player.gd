@@ -68,7 +68,7 @@ class Instance:
 	static var door_listener: EventListener
 	static var equipment_auto_apply: EventListener 
 
-	const DEFAULT_EQUIPMENT = preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")
+	const DEFAULT_EQUIPMENT = preload("res://src/player/2D/madotsuki/effects/_none/_no_effect.tres")
 	
 	static var equipment_pending	: PLEffect = null
 	static var equipment_favourite	: PLEffect = null
@@ -120,13 +120,14 @@ class Instance:
 	static func pl_exists() -> bool: return (get_pl() != null)
 	static func get_pl() -> Player: return _pl
 	
-	static func get_pos() -> Vector2:
-		if pl_exists(): return _pl.global_position
+	static func get_pos(_global: bool = true) -> Vector2:
+		if pl_exists(): 
+			if _global	: return _pl.global_position
+			else		: return _pl.position
 		return Vector2.ZERO
 	static func is_moving() -> bool:
 		if pl_exists(): return _pl.is_moving
 		return pl_exists()
-
 # --- 
 func set_values(_val: SBVariables) -> void: 
 	if _val == null: 

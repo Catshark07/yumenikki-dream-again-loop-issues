@@ -83,7 +83,7 @@ func cancel_action(_action: PLAction = action) -> void:
 	components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_action, self)
 
 func equip(_effect: PLEffect, _skip: bool = false) -> void: 
-	components.get_component_by_name("equip_manager").equip(_effect, self, _skip)
+	components.get_component_by_name("equip_manager").equip(self, _effect, _skip)
 func deequip_effect() -> void: 
 	components.get_component_by_name("equip_manager").deequip(self)
 

@@ -32,14 +32,19 @@ func _physics_update(_delta: float) -> void:
 
 func _input_pass(_event: InputEvent) -> void: 
 	if curr != null:  curr._action_input(sentient, _event)
+	
 	if Input.is_action_just_pressed("pl_emote"): perform_action(sentient, emote)
+	elif Input.is_action_just_pressed("pl_primary_action"): 	
+		sentient.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_data._primary_action(sentient)
+	elif Input.is_action_just_pressed("pl_secondary_action"): 
+		sentient.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_data._secondary_action(sentient)
 
 func perform_action(_pl: Player, _action: PLAction) -> void:
 	if in_cooldown: return 
 	if curr != null:
-		cancel_action(_pl) 
+		cancel_action(sentient)
 		return
-	
+		
 	did_something.emit()
 	curr = _action
 	curr._perform(_pl) 

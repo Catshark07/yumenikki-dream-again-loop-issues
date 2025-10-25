@@ -3,14 +3,14 @@ extends Game.GameSubClass
 
 static var curr: Object
 
-static func invoke(_seq: Object) -> void:
+static func invoke(_seq: Object, _force_continue: bool = false) -> void:
 	if _seq == null: return
 
 	if curr != null:
 		await cancel()
 		if curr == _seq:
 			curr = null
-			return
+			if !_force_continue: return
 	
 	if _seq is Sequence:
 		curr 		= _seq 
@@ -61,17 +61,49 @@ class EventObject:
 class SequenceObject:
 	extends EventObject
 	
+	var events: Array[EventObject]
+	var front: 	EventObject
+	var back: 	EventObject
+	
 	signal success
 	signal fail
 	
 	var skip_invalid_events: bool = true
-	var events: Array[EventObject]
+	var bail_requested:		 bool = false
 
+	func _init(_skip_invalid_events: bool, ..._events) -> void: 
+		skip_invalid_events = _skip_invalid_events
+		
+		for i in _events:
+			events.append(_events)
+		
+		if _events.size() == 0: return
+		front = _events[0]
+		back = _events[_events.size()]
+		
 	func _execute() -> 	void: 
-		for event in events: pass
+		if !_validate():
+			printerr("SEQUENCE %s :: Sequence halted due to invalid events!" % (self.name)) 
+			return
+		
+		# - we iterate thru the events..
+		for i in range(events.size()):
+			# - make sure that the child is of type Event.
+			var curr = events[i]
 			
-	func _end() -> 		void: pass
-	func _cancel() -> 	void: pass
+			if 	curr is EventObject and curr != null:
+				curr.execute() 
+				curr.end()
+				
+			else: continue
+			
+			if 	bail_requested: 
+				break	
+			
+		_end()
+			
+	func _end() -> 		void: bail_requested = false
+	func _cancel() -> 	void: bail_requested = true
 
 	func _validate() -> bool: 
 		var revised_events_arr: Array[EventObject] = []
@@ -81,12 +113,15 @@ class SequenceObject:
 			if !event._validate():
 				# - if event is invalid...
 				if skip_invalid_events: continue
-				else: return false
+				else:
+					fail.emit() 
+					return false
 		
 			revised_events_arr.append(event)
 		
+		success.emit()
 		events = revised_events_arr
 		return true
 
 	func push(_event: EventObject) -> void: events.append(_event)
-	func pop() -> EventObject: return events.pop_back()
+	func pop() -> EventObject: return 		events.pop_back()

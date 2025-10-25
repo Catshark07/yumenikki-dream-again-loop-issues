@@ -1,32 +1,31 @@
 class_name PlEquipManager
 extends SBComponent
 
-const IGNORE = [DEFAULT_EFFECT]
-const DEFAULT_EFFECT = preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")
+const IGNORE = [Player.Instance.DEFAULT_EQUIPMENT]
 
 var equipped: bool:
-	get: return effect_data != null and !(effect_data in IGNORE)
+	get: return effect_data != null and !effect_data in IGNORE
 var behaviour: PLBehaviour:
 	get:
-		if effect_data == null: return DEFAULT_EFFECT.behaviour
+		if effect_data == null: return Player.Instance.DEFAULT_EQUIPMENT.behaviour
 		return effect_data.behaviour
 
 var effect_prefab: 	PLEffectComponent 	= null
 var effect_data: 	PLEffect 			= null:
 	get:
-		if effect_data == null: return DEFAULT_EFFECT
+		if effect_data == null: return Player.Instance.DEFAULT_EQUIPMENT
 		return effect_data
 var effect_values: 	PLVariables 		= null:
 	get:
-		if effect_data == null: return DEFAULT_EFFECT.variables
+		if effect_data == null: return Player.Instance.DEFAULT_EQUIPMENT.variables
 		return effect_data.variables
 
 func _setup(_sb: SentientBase = null) -> void:
-	equip(Player.Instance.equipment_pending, _sb, true)
+	equip(_sb, Player.Instance.equipment_pending, true)
 
 # ----> equip / de-equip.
-func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
-	if _effect == null or _effect == effect_data: return
+func equip(_pl: Player, _effect: PLEffect, _skip: bool = false) -> void:
+	if _effect == null or _effect == effect_data or _effect in IGNORE: return
 		
 	if _effect:
 		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
@@ -42,13 +41,11 @@ func equip(_effect: PLEffect, _pl: Player, _skip: bool = false) -> void:
 		
 		_effect._apply(_pl)
 func deequip(_pl: Player, _skip: bool = false) -> void:
-	if effect_data:
+	if effect_data and !(effect_data in IGNORE):
 		EventManager.invoke_event("PLAYER_DEEQUIP_SKIP_ANIM", effect_data.skip_deequip_animation or _skip)
 		EventManager.invoke_event("PLAYER_DEEQUIP", Player.Instance.DEFAULT_EQUIPMENT)
 		Player.Instance.equipment_pending = Player.Instance.DEFAULT_EQUIPMENT
 		
-		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
-
 
 		if effect_prefab != null: 
 			effect_prefab._exit(_pl)
@@ -59,6 +56,11 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 		
 		_pl.sprite_sheet = load(_pl.values.sprite_override)
 
+func change_effect(_pl: Player, _new_effect: PLEffect, _skip: bool = false) -> void:
+	if _new_effect == null: return
+	_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
+	equip(_pl, _new_effect, _skip) 
+
 func _physics_update(_delta: float) -> void:
 	if effect_data != null: effect_data._effect_phys_update	(sentient, _delta)
 func _update(_delta: float) -> void:
@@ -67,11 +69,8 @@ func _input_pass(event: InputEvent) -> void:
 	if effect_data != null: effect_data._effect_input		(sentient, event)
 		
 	if Input.is_action_just_pressed("ui_favourite_effect"): 
-		if !equipped: 	equip(Player.Instance.equipment_favourite, sentient)
-		else:			deequip(sentient)
-
-	elif Input.is_action_just_pressed("pl_primary_action"):
-		if !equipped: 	effect_data._primary_action(sentient)
-	elif Input.is_action_just_pressed("pl_secondary_action"):
-		if !equipped: 	effect_data._secondary_action(sentient)
-		 
+		if !equipped: 	
+			change_effect(sentient, Player.Instance.equipment_favourite)
+		else:	
+			sentient.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(sentient, true)		
+			deequip(sentient)

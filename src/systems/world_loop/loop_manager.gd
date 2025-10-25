@@ -7,6 +7,10 @@ extends Node
 @export_tool_button("Update Loop Duplicates' Properties.") 	var update_loop_objs  := update_loopable_components
 @export_tool_button("Setup Components.") 					var setup_loop_objs   := setup_loopable_components
 
+@export_group("Drawing Options.")
+@export var draw_colour: Color = Color(Color.PALE_VIOLET_RED, 0.2)
+@export_tool_button("Update Boundaries Draw.") 				var redraw   := 	redraw_boundaries
+
 #@export_group("Loop Component Visibility.")
 #@export_tool_button("Show All Duplicates") var show_dupes
 #@export_tool_button("Hide All Duplicates") var hide_dupes
@@ -16,6 +20,8 @@ const LOOP_UNIT_VECTOR := [
 	Vector2(-1, 0), Vector2(1, 0),
 	Vector2(-1, 1), Vector2(0, 1), Vector2(1, 1)
 ]
+
+const SAFE_ZONE = Vector2(550, 350)
 
 @export_group("Info.")
 @export var loop_objects: Array[Node]
@@ -29,6 +35,10 @@ const LOOP_UNIT_VECTOR := [
 # - signals.
 signal update_dupe_nodes
 
+func redraw_boundaries() -> void: 
+	shape_detect.queue_redraw()
+
+# -- 
 func _ready() -> void: 
 	loop_objects_detect	= Utils.get_child_node_or_null(self, "loop_objects_detect")
 	
@@ -42,6 +52,16 @@ func _ready() -> void:
 		loop_objects_detect.set_collision_mask_value(7, true)
 
 	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
+	
+	Utils.connect_to_signal(
+		func():
+			if Engine.is_editor_hint():
+				shape_detect.draw_rect(
+					Rect2(
+						-(world_size + SAFE_ZONE * 2) / 2, 
+						world_size + SAFE_ZONE * 2), draw_colour),
+			shape_detect.draw)
+	
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): (shape_detect.shape as RectangleShape2D).size = world_size
 	else: 						update_dupe_nodes.emit()
@@ -66,9 +86,9 @@ func update_loopable_collection() -> void:
 		if 	loopable != null: 
 			loopable.loopable_setup(self)
 			Utils.connect_to_signal(update_loopable_collection, loopable.tree_exiting)
+	set_world_size.call_deferred(world_size)
 func update_loopable_components() -> void: 
-	for i: LoopableComponent in loop_objects:
-		i.update_duplicates()
+	update_dupe_nodes.emit()
 
 func setup_loopable_components() -> void: 
 	for i: LoopableComponent in loop_objects:
