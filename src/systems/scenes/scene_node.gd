@@ -1,8 +1,8 @@
 class_name SceneNode
 extends StackNode
 
-var initialized: bool = false
-var lonely: bool = true
+var initialized: 	bool = false
+var lonely: 		bool = true
 
 func set_node_active(active: Node.ProcessMode) -> void:
 	self.set_process_mode.call_deferred(active)
@@ -10,6 +10,7 @@ func set_node_active(active: Node.ProcessMode) -> void:
 # - concrete
 func _ready() -> void:
 	self.add_to_group("scene_node")
+	EventManager.invoke_event("SCENE_TREE_ENTERED", self)
 
 func initialize() -> void: 
 	if !initialized:

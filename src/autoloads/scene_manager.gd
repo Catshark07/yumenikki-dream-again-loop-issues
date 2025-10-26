@@ -1,8 +1,11 @@
 class_name SceneManager 
 extends Game.GameSubClass
 
+static var scene_entered: EventListener
+
 static var scene_stack: Stack
 static var scene_node: SceneNode
+
 static var curr_scene_resource: PackedScene
 static var prev_scene_resource: PackedScene
 
@@ -40,12 +43,11 @@ static func handle_scene_resource_load(scene: PackedScene) -> ResourceLoader.Thr
 	
 	return scene_load_status
 static func _setup() -> void: 
-	scene_stack = Stack.new()
-	for i: SceneNode in Utils.get_group_arr("scene_node"):
-		if i == null: continue
-		if i.lonely: 
-			i.initialize()
-			handle_scene_push(i)
+	scene_stack 		= Stack.new()
+	scene_entered 		= EventListener.new(null, "SCENE_TREE_ENTERED")
+	scene_entered.do_on_notify(func(): 
+		handle_scene_push(EventManager.get_event_param("SCENE_TREE_ENTERED")[0]), 
+		"SCENE_TREE_ENTERED")
 		
 	
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
@@ -60,8 +62,7 @@ static func load_scene(_scene: PackedScene) -> void:
 		result = await handle_scene_resource_load(_scene)
 		
 		if result == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
-			scene_node = _scene.instantiate()
-			handle_scene_push(scene_node)
+			handle_scene_push(_scene.instantiate())
 			
 			EventManager.invoke_event("SCENE_LOADED", _scene)
 					
@@ -74,16 +75,17 @@ static func load_scene(_scene: PackedScene) -> void:
 	else: curr_scene_resource = null
 
 static func handle_scene_push(_scene_node: SceneNode) -> void:
+	scene_node = _scene_node
+	
 	prev_scene_resource = curr_scene_resource
 	curr_scene_resource = load(_scene_node.scene_file_path)
-	scene_node = _scene_node
+	_scene_node.initialize()
 
-	if scene_node.get_parent() == null: GameManager.pausable_parent.add_child(scene_node)
-	else: scene_node.reparent(GameManager.pausable_parent)
+	if 		_scene_node.get_parent() == null: GameManager.pausable_parent.add_child(_scene_node)
+	else: 	_scene_node.reparent(GameManager.pausable_parent)
 	
 	EventManager.invoke_event("SCENE_PUSHED", _scene_node)
 	
-	scene_node.initialize()
 	scene_stack.push(_scene_node)
 	
 	

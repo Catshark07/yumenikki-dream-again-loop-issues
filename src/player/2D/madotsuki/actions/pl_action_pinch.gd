@@ -8,7 +8,7 @@ var pinch_progress: float = 0:
 
 func _perform(_pl: Player) -> void:
 	if DreamManager.global_dream_state != DreamManager.state.DREAM:
-		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl)
+		finished.emit()
 		return
 	
 	pinch_progress = 0
@@ -27,7 +27,7 @@ func _action_update			(_pl: Player, _delta: float) -> void:
 		if pinch_progress > 0.45:
 			_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).play_animation(pinch_animation, 1)
 			_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).seek(.45)
-			_pl.components.get_component_by_name(Player_YN.COMP_ACTION).curr = null
+			finished.emit()
 	
 	else:
 		pinch_progress -= (_pl.get_process_delta_time() * _delta) * 45

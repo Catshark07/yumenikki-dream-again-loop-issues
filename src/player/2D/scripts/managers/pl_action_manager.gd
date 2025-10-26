@@ -45,12 +45,14 @@ func perform_action(_pl: Player, _action: PLAction) -> void:
 		cancel_action(sentient)
 		return
 		
+	Utils.connect_to_signal(empty_action, _action.finished)
 	did_something.emit()
 	curr = _action
 	curr._perform(_pl) 
 
 func cancel_action(_pl: Player, _force: bool = false) -> void:
 	if 	curr != null:
+		Utils.disconnect_from_signal(empty_action, curr.finished)
 		did_something.emit()
 		
 		match _force:
@@ -63,3 +65,5 @@ func cancel_action(_pl: Player, _force: bool = false) -> void:
 func restrict_action() -> void:
 	in_cooldown = true
 	cooldown_timer.start()
+
+func empty_action() -> void: curr = null

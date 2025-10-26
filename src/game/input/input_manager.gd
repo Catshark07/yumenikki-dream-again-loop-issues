@@ -37,7 +37,6 @@ static func _update(_delta: float) -> void:
 		curr_controller.dir_input = dir_input
 		curr_controller._update(_delta)
 		
-	
 static func _input_pass(_event: InputEvent) -> void: 
 	if curr_controller != null: 
 		curr_controller._handled_input(_event)

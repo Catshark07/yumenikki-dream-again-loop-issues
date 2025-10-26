@@ -38,7 +38,6 @@ func singleton_setup() -> void:
 
 func _ready() -> void:
 	PhysicsServer2D.set_active(false)
-	
 	ProjectSettings.set_setting("application/config/version", GAME_VER)
 	
 	set_process(false)
@@ -46,7 +45,6 @@ func _ready() -> void:
 	set_process_input(false)
 	
 	true_time_scale = Engine.time_scale
-		
 	main_tree 	= get_tree()
 	root 		= get_tree().root
 	
@@ -61,11 +59,9 @@ func _ready() -> void:
 	
 	singleton_setup()
 	
-	await main_tree.process_frame
-	
+	SceneManager.					_setup()
 	game_manager.					_setup()
 	game_manager.global_components.	_setup()
-	SceneManager.					_setup()
 	game_manager.state_handle.		_setup()
 
 	set_process(true)

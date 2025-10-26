@@ -13,7 +13,7 @@ var non_playable_scenes: PackedStringArray = [
 	"res://src/scenes/save/save.tscn"]
 var state_requests_listener: EventListener
 
-func _ready() -> void:
+func _setup() -> void:
 	state_requests_listener = EventListener.new(self, "SCENE_PUSHED")
 	state_requests_listener.do_on_notify(update_game_state, "SCENE_PUSHED")
 	
