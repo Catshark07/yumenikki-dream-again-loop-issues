@@ -5,9 +5,9 @@ extends Control
 @export var display: Control
 @export var item_container: GridContainer
 
-var hovered_button: GUIPanelButton
 @export var favourite_icon: Sprite2D
 
+var hovered_button: GUIPanelButton
 var effects: Array[PLEffect]
 var effect_buttons: Array[GUIPanelButton]
 

@@ -18,7 +18,7 @@ func _init(_owner: Node = null, ..._id: Array) -> void:
 func on_notify(_id: String) -> void: # --- called from the event_manager.
 	_id = _id.to_upper()
 	if _id in actions and actions[_id] and (node_owner != null or is_static): 
-		actions[_id].call_deferred()
+		actions[_id].call()
 		
 func do_on_notify(_do := Callable(), ..._ids: Array) -> void: 
 	for id in _ids:
@@ -27,13 +27,12 @@ func do_on_notify(_do := Callable(), ..._ids: Array) -> void:
 			if id in events_listening_to:
 				actions[id] = Callable(_do)
 
-func listen_to_event(..._ids: Array):
-	for id in _ids:
-		if 	id is String:
+func listen_to_event(_id: String):
+	if 	_id is String:
 			
-			id = id.to_upper()
-			EventManager.add_listener(self, id)
-			events_listening_to.append(id)
+		_id = _id.to_upper()
+		events_listening_to.append		(_id)
+		EventManager.add_listener(self,  _id)
 		
 func is_valid_listener() -> bool:
 	return ((is_static and node_owner == null) or (node_owner != null))

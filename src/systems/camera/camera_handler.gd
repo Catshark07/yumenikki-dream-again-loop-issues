@@ -3,12 +3,11 @@
 class_name CameraHolder
 extends Node2D
 
-static var cam: Camera2D
 static var instance: CameraHolder
 
-var old_pos: Vector2
-var new_pos: Vector2
-var vel: Vector2
+var old_pos:	 Vector2
+var new_pos: 	Vector2
+var vel: 		Vector2
 
 @export var fsm: FSM
 
@@ -22,6 +21,7 @@ var prev_follow_strat: STRAT_FOLLOW = default
 var curr_follow_strat: STRAT_FOLLOW = default
 
 # ---- components
+@export var cam: Camera2D
 @export var marker: Marker2D
 @export var cam_receiver: ComponentReceiver
 @export var components: ComponentReceiver
@@ -49,7 +49,7 @@ static var motion_reduction: bool = false:
 				CameraHolder.instance.components.bypass = true
 				
 			else: 
-				CameraHolder.instance.set_follow_strategy(CameraHolder.instance.prev_follow_strat)
+				CameraHolder.instance.set_follow_strategy(follow_player)
 				CameraHolder.instance.cam_receiver.bypass = false
 				CameraHolder.instance.components.bypass = false
 
@@ -62,22 +62,17 @@ var zoom_tween: Tween
 var curr_target: CanvasItem
 var prev_target: CanvasItem
 
-func _init() -> void: 
-	self.name = "camera_handler"
-	self.top_level = true
 func _ready() -> void:
-	set_follow_strategy(default)
-	
 	instance = self
+	self.top_level = true
 	self.process_mode = Node.PROCESS_MODE_PAUSABLE
 	
-	cam = $marker/camera
 	motion_reduction = motion_reduction
 	
 	if Engine.is_editor_hint(): 
 		if initial_target != null:
 			global_position = initial_target.global_position
-	if !Engine.is_editor_hint():
+	else:
 		fsm._setup(self)
 		set_target(initial_target)
 		
@@ -114,7 +109,6 @@ func set_follow_strategy(strat: STRAT_FOLLOW):
 	prev_follow_strat = curr_follow_strat
 	curr_follow_strat = strat
 	curr_follow_strat._changed()
-	curr_follow_strat._setup(self)
 
 # ---- cam control ----
 func set_zoom(_zoom: float) -> void:
@@ -130,17 +124,17 @@ func set_offset(_offset: Vector2) -> void:
 	offset = _offset
 	marker.position = _offset
 func set_target(_target: CanvasItem, _dur: float = .5) -> void:
-	if _target == null: 
-		print("target is null")
-		return
+	if _target == null: return
 	
 	switch_duration = _dur
-	curr_target = _target
+	curr_target 	= _target
 	fsm.change_to_state("changing_target")
 	
 	if (_target as Node) is SentientBase: 
-		set_follow_strategy(follow_player if !motion_reduction else default)
-	else: set_follow_strategy(follow_lerp if !motion_reduction else default)
+			set_follow_strategy(follow_player if !motion_reduction else default)
+	else: 	set_follow_strategy(follow_lerp if !motion_reduction else default)
+	
+	curr_follow_strat._setup(self)
 	
 	if curr_target: prev_target = curr_target
 	curr_target = _target
@@ -270,7 +264,9 @@ class STRAT_FOLLOW_SENTIENT:
 
 	func _setup(_cam: CameraHolder) -> void:
 		player = Player.Instance.get_pl()
+		
 	func _follow(_cam: CameraHolder, point: Vector2) -> void:
+		if player == null: return
 		look_ahead = look_ahead.lerp(
 			(player.velocity * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 
 			Game.get_real_delta() * follow_speed)

@@ -2,8 +2,11 @@ class_name Application
 extends Game.GameSubClass
 	
 static func _setup() -> void:
-	main_window = Game.main_tree.root.get_window()
-	main_viewport = Game.main_tree.root.get_viewport()
+	main_window 	= Game.main_tree.root.get_window()
+	main_viewport 	= Game.main_tree.root.get_viewport()
+	
+	main_window.close_requested.connect(on_quit)
+	
 	window_setup()
 	viewport_setup()
 	render_server_setup()
@@ -15,14 +18,11 @@ static var main_window: Window
 static var main_viewport: Viewport
 
 static func quit(): 
-	Optimization.set_max_fps(30)
+	on_quit()
+	await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
 	
 	if Game.game_manager != null:
 		Game.game_manager.process_mode = Node.PROCESS_MODE_DISABLED
-	Music.fade_out()
-	Ambience.fade_out()
-	Save.save_data()
-	await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
 	Game.main_tree.quit.call_deferred()
 static func pause(): 
 	Game.is_paused = true
@@ -30,6 +30,12 @@ static func pause():
 static func resume(): 
 	Game.is_paused = false
 	Game.main_tree.paused = false
+
+static func on_quit() -> void:
+	Optimization.set_max_fps(30)
+	Music.		fade_out()
+	Ambience.	fade_out()
+	Save.		save_data()
 
 static func get_viewport_width() -> int: return ProjectSettings.get("display/window/size/viewport_width")
 static func get_viewport_height() -> int: return ProjectSettings.get("display/window/size/viewport_height")		

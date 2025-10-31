@@ -42,13 +42,11 @@ static func add_child_node(
 			_child_node.name = _child_node_name
 			_child_node.owner = _owner
 			
-			Utils.connect_to_signal(_child_node.free, _parent_node.tree_exiting)
 			return _child_node
 		else: 
 			push("Parent %s already has child %s - Freeing queued %s." % [_parent_node, _child_node_name, _child_node])
 			_child_node.queue_free()
 		
-			Utils.connect_to_signal(_child_node.free, _parent_node.tree_exiting)
 			return _parent_node.get_node(_child_node_name)
 			
 static func get_child_node_or_null(
@@ -60,8 +58,6 @@ static func get_child_node_or_null(
 			push("Parent is null or Child node could not be found.")
 			return null
 		return _parent_node.get_node_or_null(_child_node_name)
-
-
 
 # signals
 static func connect_to_signal(

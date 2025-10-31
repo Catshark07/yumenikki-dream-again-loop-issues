@@ -13,6 +13,7 @@
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="7_4yua0"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="7_gg2wt"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="8_bwsrp"]
+[ext_resource type="Resource" uid="uid://b3ej66fhp7a0e" path="res://src/player/2D/madotsuki/effects/cat/cat.tres" id="8_yu80x"]
 [ext_resource type="TileSet" uid="uid://b7vdcqrtnh77e" path="res://src/levels/__ignore/tile_set/world_tile_sets/colourful_irises.tres" id="9_n1xg1"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="9_q6f27"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="12_4yua0"]
@@ -24,7 +25,6 @@
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="16_v680p"]
 [ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/entities/effects/_template_effect_collect.tscn" id="17_bwsrp"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="18_3pj81"]
-[ext_resource type="Script" uid="uid://b2je1meyfnp7s" path="res://src/systems/sequencing/grouped_event_interface.gd" id="18_chr53"]
 [ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/2D/madotsuki/effects/medamude/medamaude.tres" id="18_epmdn"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="18_y6rev"]
 [ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="19_r2b8w"]
@@ -78,7 +78,7 @@ shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
 
-[sub_resource type="Resource" id="Resource_wagwh"]
+[sub_resource type="Resource" id="Resource_yu80x"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("6_3p5oo")
@@ -102,20 +102,25 @@ seq_free = NodePath("on_free")
 load_transition = SubResource("ShaderMaterial_bsomg")
 unload_transition = SubResource("ShaderMaterial_rlt31")
 
-[node name="show_ghost_hands" type="Node" parent="." node_paths=PackedStringArray("prev", "next")]
+[node name="show_ghost_hands" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back", "prev", "next")]
 process_mode = 4
-script = ExtResource("18_chr53")
+script = ExtResource("20_5siph")
+order = [NodePath("play_music"), NodePath("make_visible"), NodePath("play_music2"), NodePath("darken_screen_modulate")]
+front = NodePath("play_music")
+back = NodePath("darken_screen_modulate")
 prev = NodePath("../worldd/medamaude_effect/on_interact/screen_flash/flag_value")
 next = NodePath("../worldd/medamaude_effect/on_interact/screen_flash/request_cutscene_start")
-metadata/_custom_type_script = "uid://b2je1meyfnp7s"
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="play_music" type="Node" parent="show_ghost_hands"]
+[node name="play_music" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("next")]
 script = ExtResource("9_q6f27")
 stream = ExtResource("3_qi1ih")
 pitch = 0.8
+wait_til_finished = false
+next = NodePath("../make_visible")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="make_visible" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node")]
+[node name="make_visible" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
 node = NodePath("../../worldd/ghost_hands")
@@ -130,9 +135,12 @@ property_info = {
 }
 property_value = false
 new_value = true
+wait_til_finished = false
+prev = NodePath("../play_music")
+next = NodePath("../play_music2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="enable_collision" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node")]
+[node name="play_music2" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
 node = NodePath("../../worldd/ghost_hands")
@@ -147,9 +155,12 @@ property_info = {
 }
 property_value = false
 new_value = true
+wait_til_finished = false
+prev = NodePath("../make_visible")
+next = NodePath("../darken_screen_modulate")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="darken_screen_modulate" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node")]
+[node name="darken_screen_modulate" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node", "prev")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
 node = NodePath("../../camera/marker/camera/overlay_3")
@@ -164,11 +175,13 @@ property_info = {
 }
 property_value = Color(0.967774, 0.682599, 0.715787, 1)
 new_value = Color(0.760746, 0.232616, 0.315769, 1)
+wait_til_finished = false
+prev = NodePath("../play_music2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("20_5siph")
-order = [NodePath("append_neon"), NodePath("apply_panorama"), NodePath("if_medamaude_collected"), NodePath("else")]
+order = [NodePath("append_neon"), NodePath("append_cat"), NodePath("apply_panorama"), NodePath("if_medamaude_collected"), NodePath("else")]
 front = NodePath("append_neon")
 back = NodePath("else")
 
@@ -176,6 +189,14 @@ back = NodePath("else")
 process_mode = 4
 script = ExtResource("30_xqpjc")
 effect = ExtResource("5_yu80x")
+next = NodePath("../append_cat")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="append_cat" type="Node" parent="on_initial" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+script = ExtResource("30_xqpjc")
+effect = ExtResource("8_yu80x")
+prev = NodePath("../append_neon")
 next = NodePath("../apply_panorama")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -183,7 +204,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("13_xm48m")
 subviewport = NodePath("subviewport")
 pivot = NodePath("pivot")
-prev = NodePath("../append_neon")
+prev = NodePath("../append_cat")
 next = NodePath("../if_medamaude_collected")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -284,7 +305,7 @@ y_sort_enabled = true
 
 [node name="mado" parent="worldd" instance=ExtResource("5_u851k")]
 position = Vector2(-184, -144)
-values = SubResource("Resource_wagwh")
+values = SubResource("Resource_yu80x")
 heading = 0
 
 [node name="player" type="Node2D" parent="worldd/mado" node_paths=PackedStringArray("manager", "target")]
@@ -397,10 +418,9 @@ new_value = Dictionary[String, Variant]({
 next = NodePath("../show_ghost_hands_ext")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="show_ghost_hands_ext" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("event", "prev", "next")]
+[node name="show_ghost_hands_ext" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("33_k1x66")
-event = NodePath("../../../../../show_ghost_hands")
 prev = NodePath("../flag_value")
 next = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"

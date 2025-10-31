@@ -1,6 +1,17 @@
 extends Control
 
-const GAME_VER := "pre_alpha_002"
+var finished_preloading_content: bool = false
+var is_editor: bool = false
+
+const GAME_VER := "pre_alpha_02"
+
+# - scene paths
+const INITIAL_SCENE 		:= "res://src/scenes/initial_scene.tscn" 		# - 0
+const PRELOAD_SHADERS_SCENE := "res://src/scenes/debug_preload.tscn" 		# - 1
+const PREMENU_SCENE			:= "res://src/scenes/pre_menu.tscn"				# - 2
+const MENU_SCENE 			:= "res://src/levels/_neutral/menu/menu.tscn"	# - 3
+
+const PREGAME_SCENES 		:= [INITIAL_SCENE, MENU_SCENE, PREMENU_SCENE]
 
 # ---- windows
 var is_paused: bool = false
@@ -8,11 +19,11 @@ var root: Window
 var main_tree: SceneTree
 
 # ---- time
-var true_time_scale: float: 
+var true_time_scale: 	float: 
 	set(true_ts): 
 		true_time_scale = true_ts
 		true_time_scale_changed.emit(true_ts)
-var true_delta: float: get = get_real_delta
+var true_delta: 		float: get = get_real_delta
 
 signal time_scale_changed(_new: float)
 signal true_time_scale_changed(_new: float)
@@ -29,25 +40,20 @@ static var game_manager: GameManager
 
 func singleton_setup() -> void: 
 	if GameManager.instance == null:
-		game_manager = preload("res://src/main/game.tscn").instantiate()
-		game_manager.name = "game_manager"
+		game_manager 			= preload("res://src/main/game.tscn").instantiate()
+		game_manager.name 		= "game_manager"
 		self.add_child(game_manager)
 		
 	else:
 		game_manager.reparent(self)
 
-func _ready() -> void:
-	PhysicsServer2D.set_active(false)
-	ProjectSettings.set_setting("application/config/version", GAME_VER)
-	
-	set_process(false)
-	set_physics_process(false)
-	set_process_input(false)
-	
+func _enter_tree() -> void:
 	true_time_scale = Engine.time_scale
 	main_tree 	= get_tree()
 	root 		= get_tree().root
 	
+	EventManager.		_setup()
+	SceneManager.		_setup()
 	Application.		_setup()
 	Audio.				_setup()
 	ConfigManager.		_setup()
@@ -57,16 +63,29 @@ func _ready() -> void:
 	InputManager.		_setup()
 	SequencerManager.	_setup()
 	
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
 	singleton_setup()
 	
-	SceneManager.					_setup()
+	PhysicsServer2D.set_active(false)
+	ProjectSettings.set_setting("application/config/version", GAME_VER)
+	
+	set_process(false)
+	set_physics_process(false)
+	set_process_input(false)
+	
 	game_manager.					_setup()
 	game_manager.global_components.	_setup()
 	game_manager.state_handle.		_setup()
+	
+	initialize()
+	
+	# - post-initializtion.
 
-	set_process(true)
-	set_physics_process(true)
-	set_process_input(true)
+	set_process			(true)
+	set_physics_process	(true)
+	set_process_input	(true)
 	
 	game_ready.emit()
 	PhysicsServer2D.set_active(true)
@@ -102,14 +121,25 @@ func set_timescale(_new: float) -> void:
 	Engine.time_scale = _new
 	time_scale_changed.emit(_new)
 	
-static func change_scene_to(_new: PackedScene) -> void: 
-	SceneManager.change_scene_to(_new)
 # ---- game values ----	
 func get_real_delta() -> float: 
 	return (true_time_scale / Engine.max_fps)
 func get_real_timescale() -> float:
 	return true_time_scale
 func get_timescale() -> float: return Engine.time_scale
+
+# --- game's initial state (and is editor determination)
+func initialize() -> void: 
+	var initial_scene: PackedScene = SceneManager.curr_scene_resource
+	if initial_scene == null: return
+	
+	match initial_scene.resource_path:
+		INITIAL_SCENE: 
+			is_editor = false
+			SceneManager.change_scene_to(load(PRELOAD_SHADERS_SCENE), false, false)
+		_:	
+			is_editor = true
+
 
 class GameSubClass:
 	extends RefCounted

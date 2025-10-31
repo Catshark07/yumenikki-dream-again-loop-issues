@@ -39,7 +39,10 @@ class EventObject:
 	signal finished
 	signal cancelled
 
-	func _init() -> void: pass
+	func _init() -> void: 
+		finished.	connect(free, ConnectFlags.CONNECT_ONE_SHOT)
+		cancelled.	connect(free, ConnectFlags.CONNECT_ONE_SHOT)
+		
 	func pass_args(_args_dict: Dictionary) -> void: 
 		for i in get_property_list():
 			if i["usage"] == PROPERTY_USAGE_SCRIPT_VARIABLE:
@@ -47,16 +50,24 @@ class EventObject:
 				
 		print("success")
 
+	# - abstract
 	@abstract
 	func _execute() -> 	void
 	@abstract
 	func _end() -> 		void
 	@abstract
 	func _cancel() -> 	void
-
 	@abstract
 	func _validate() -> bool
 
+	func execute() 	-> void: 
+		await _execute()
+		finished.emit()
+	func emd() 		-> void: 
+		await _end()
+	func cancel() 	-> void: 
+		await _cancel()
+		cancelled.emit()
 	
 class SequenceObject:
 	extends EventObject
@@ -89,10 +100,10 @@ class SequenceObject:
 		# - we iterate thru the events..
 		for i in range(events.size()):
 			# - make sure that the child is of type Event.
-			var curr = events[i]
+			var curr: EventObject = events[i]
 			
 			if 	curr is EventObject and curr != null:
-				curr.execute() 
+				await curr.execute() 
 				curr.end()
 				
 			else: continue
@@ -123,5 +134,5 @@ class SequenceObject:
 		events = revised_events_arr
 		return true
 
-	func push(_event: EventObject) -> void: events.append(_event)
-	func pop() -> EventObject: return 		events.pop_back()
+	func append(_event: EventObject) -> void: 	events.append(_event)
+	func pop() -> EventObject: return 			events.pop_back()

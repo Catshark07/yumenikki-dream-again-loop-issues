@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c30tca8ol6ugo"]
+[gd_scene load_steps=16 format=3 uid="uid://c30tca8ol6ugo"]
 
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="2_juckd"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="2_o2rco"]
@@ -17,12 +17,14 @@ extends GameScene
 @export var proceed: GUIPanelButton
 
 func _ready() -> void:
-	super()
 	if !Engine.is_editor_hint():
-		Game.Save.data[\"game\"][\"read_warning\"] = true
 		proceed.pressed.connect(func(): SceneManager.change_scene_to(load(scene_path)))
 	
 "
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_juckd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tcehx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0aey"]
 shader = ExtResource("4_tcehx")
@@ -43,7 +45,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_v2jl3"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_juckd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwet7"]
 shader = ExtResource("7_x008i")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -55,6 +57,8 @@ shader_parameter/angle = 0.0
 script = SubResource("GDScript_x008i")
 scene_path = "uid://btg3e240ltjxx"
 proceed = NodePath("warning/Control/VBoxContainer/GUIPanelButton")
+load_transition = SubResource("ShaderMaterial_juckd")
+unload_transition = SubResource("ShaderMaterial_tcehx")
 metadata/_custom_type_script = "uid://dcos3dvfrola8"
 
 [node name="panorama (top_layer)" type="CanvasLayer" parent="."]
@@ -158,7 +162,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="warning/Control/VBoxContainer/GUIPanelButton/main_container"]
-material = SubResource("ShaderMaterial_juckd")
+material = SubResource("ShaderMaterial_qwet7")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2

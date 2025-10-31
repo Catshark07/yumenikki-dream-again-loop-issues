@@ -513,6 +513,7 @@ inventory = NodePath("../../always/ui/hud/inventory")
 
 [node name="game_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_v3f7h")
+track_state_changes = true
 initial_state = NodePath("PREGAME")
 
 [node name="PREGAME" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
@@ -555,13 +556,13 @@ transitions = [NodePath("../CUTSCENE"), NodePath("../PLAY")]
 
 [node name="CHANGING_SCENES" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
 script = ExtResource("25_3apph")
-transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE"), NodePath("../PREGAME")]
+transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE"), null]
 
 [node name="PAUSE" type="Node" parent="game_fsm" node_paths=PackedStringArray("pause_menu", "hud", "transitions")]
 script = ExtResource("29_scyrd")
 pause_menu = NodePath("../../always/pause")
 hud = NodePath("../../always/ui/hud")
-transitions = [NodePath("../PREGAME"), NodePath("../ACTIVE")]
+transitions = [null, NodePath("../ACTIVE")]
 
 [node name="BGM" type="Node" parent="game_fsm/PAUSE"]
 script = SubResource("GDScript_3apph")
@@ -585,32 +586,15 @@ texture = SubResource("GradientTexture2D_dpjd1")
 
 [node name="always" type="CanvasLayer" parent="."]
 process_mode = 3
-layer = 15
-
-[node name="secondary_transition" type="ColorRect" parent="always"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-script = ExtResource("29_3apph")
-metadata/_custom_type_script = "uid://dmro0dra81fni"
-
-[node name="primary_transition" type="ColorRect" parent="always"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-script = ExtResource("29_3apph")
+layer = 30
 
 [node name="pause" parent="always" instance=ExtResource("32_r2hvo")]
 visible = false
+z_index = 80
+custom_minimum_size = Vector2(480, 270)
 
 [node name="ui" type="Control" parent="always"]
+z_index = 80
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -626,6 +610,7 @@ offset_right = 480.0
 offset_bottom = 270.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("34_nnm53")
 
 [node name="hud" parent="always/ui" instance=ExtResource("33_a0tkc")]
@@ -651,3 +636,25 @@ script = ExtResource("37_aa7m6")
 [node name="dialogue_display" type="PanelContainer" parent="always/ui/hud/message_display_manager"]
 layout_mode = 0
 script = ExtResource("38_yapge")
+
+[node name="secondary_transition" type="ColorRect" parent="always"]
+visible = false
+custom_minimum_size = Vector2(480, 270)
+offset_right = 480.0
+offset_bottom = 270.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("29_3apph")
+metadata/_custom_type_script = "uid://dmro0dra81fni"
+
+[node name="primary_transition" type="ColorRect" parent="always"]
+visible = false
+custom_minimum_size = Vector2(480, 270)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("29_3apph")

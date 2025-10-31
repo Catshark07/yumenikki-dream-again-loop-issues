@@ -3,7 +3,7 @@ extends State
 @export var dream_fsm: FSM
 
 func _state_enter() -> void: 
-	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	EventManager.invoke_event("CUTSCENE_START")
 	GameManager.set_cinematic_bars(true)
 

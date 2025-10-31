@@ -29,7 +29,6 @@ func _ready() -> void:
 	default_shader.shader = DEFAULT_SHADER
 	fade_in_shader = default_shader
 	fade_out_shader = default_shader
-	# im so confused
 	
 	self.size = Vector2(Application.get_viewport_dimens())
 	self.material = default_shader
@@ -81,10 +80,9 @@ func request_transition(
 	_fade_type: fade_type, 
 	_a_progress: float = 0,
 	_b_progress: float = 1) -> void:
-		
 	match _fade_type:
-		fade_type.FADE_IN: await fade_in(_a_progress, _b_progress)
-		fade_type.FADE_OUT: await fade_out(_b_progress, _a_progress)
+		fade_type.FADE_IN: 	await fade_in	(_a_progress, _b_progress)
+		fade_type.FADE_OUT: await fade_out	(_b_progress, _a_progress)
 
 func set_transition(
 	_colour: Color = Color.BLACK,
@@ -100,7 +98,6 @@ func set_transition(
 		if _custom_shader == null: self.material = default_shader
 		else: self.material = _custom_shader
 		
-	
 func set_fade_out_shader(_shader: ShaderMaterial) -> void: 
 	if _shader.shader == null: 
 		fade_out_shader.shader = DEFAULT_SHADER

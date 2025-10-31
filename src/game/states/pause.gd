@@ -4,6 +4,7 @@ extends State
 @export var hud: Control
 
 func _state_enter() -> void: 
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
 	
 	GameManager.set_cinematic_bars(true)
@@ -16,6 +17,7 @@ func _state_enter() -> void:
 	Application.main_window.grab_focus()
 
 func _state_exit() -> void: 
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
 
 	GameManager.options.visible = false

@@ -7,6 +7,6 @@ extends Event
 @export var duration: int = 1		
 
 func _execute() -> void:
-	if CameraHolder.instance: 
+	if 	CameraHolder.instance: 
 		CameraHolder.instance.lerp_zoom(zoom, ease, trans, duration)
 		finished.emit()

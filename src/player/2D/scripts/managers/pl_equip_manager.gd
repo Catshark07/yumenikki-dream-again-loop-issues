@@ -11,14 +11,12 @@ var behaviour: PLBehaviour:
 		return effect_data.behaviour
 
 var effect_prefab: 	PLEffectComponent 	= null
-var effect_data: 	PLEffect 			= null:
-	get:
-		if effect_data == null: return Player.Instance.DEFAULT_EQUIPMENT
-		return effect_data
+var effect_data: 	PLEffect 			= null
 var effect_values: 	PLVariables 		= null:
 	get:
-		if effect_data == null: return Player.Instance.DEFAULT_EQUIPMENT.variables
-		return effect_data.variables
+		if effect_data != null:   	return effect_data.variables
+		else: 						return effect_values
+		
 
 func _setup(_sb: SentientBase = null) -> void:
 	equip(_sb, Player.Instance.equipment_pending, true)
@@ -26,7 +24,6 @@ func _setup(_sb: SentientBase = null) -> void:
 # ----> equip / de-equip.
 func equip(_pl: Player, _effect: PLEffect, _skip: bool = false) -> void:
 	if _effect == null or _effect == effect_data or _effect in IGNORE: return
-		
 	if _effect:
 		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
 			

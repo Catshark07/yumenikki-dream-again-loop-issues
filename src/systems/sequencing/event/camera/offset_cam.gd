@@ -7,7 +7,7 @@ extends Event
 @export var duration: int = 1
 
 func _execute() -> void:
-	if CameraHolder.instance: 
+	if 	CameraHolder.instance: 
 		CameraHolder.instance.lerp_offset(offset, ease, trans, duration)
 		finished.emit()
 	

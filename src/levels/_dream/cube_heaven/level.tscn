@@ -1,0 +1,40 @@
+[gd_scene load_steps=10 format=3 uid="uid://4h6dxq7osjsn"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_481v3"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="2_08ene"]
+[ext_resource type="AudioStream" uid="uid://bjdwdwfoqtani" path="res://src/audio/bgm/luff_yta_calm.ogg" id="3_00hcm"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_7hp21"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="7_ysxm6"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="8_hsra8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2oure"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_08ene"]
+
+[sub_resource type="Resource" id="Resource_e3w3l"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("7_ysxm6")
+disable_drain = true
+metadata/_custom_type_script = "uid://jf85vmwx4pj"
+
+[node name="cube_heaven" type="Node"]
+script = ExtResource("1_481v3")
+load_transition = SubResource("ShaderMaterial_2oure")
+unload_transition = SubResource("ShaderMaterial_08ene")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="Event" type="Node" parent="."]
+process_mode = 4
+script = ExtResource("2_08ene")
+stream = ExtResource("3_00hcm")
+pitch = 0.9
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="madotsuki" parent="." instance=ExtResource("6_7hp21")]
+position = Vector2(88, 136)
+values = SubResource("Resource_e3w3l")
+
+[node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("8_hsra8")]
+position = Vector2(88, 136)
+initial_target = NodePath("../madotsuki")

@@ -20,8 +20,6 @@ func update_inventory_array(_effects: Array[PLEffect]) -> void:
 func add_item(_effect: PLEffect) -> void:
 	if _effect == null or _effect in effects: 
 		print(_effect.resource_path, " DUPLICATE EFFECT")
-		for i in effects:
-			print(i.resource_path)
 		return
 	
 	inventory.add_item(_effect)

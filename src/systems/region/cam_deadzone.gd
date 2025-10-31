@@ -36,6 +36,5 @@ func get_max_clamp_pos() -> Vector2:
 
 func _handle_player_enter() -> void: 
 	CameraHolder.instance.components.get_component_by_name("deadzone_manager").curr_deadzone = self
-	pass
 func _handle_player_exit() -> void: 
 	CameraHolder.instance.components.get_component_by_name("deadzone_manager").curr_deadzone = null

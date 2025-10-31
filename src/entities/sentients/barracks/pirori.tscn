@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://3rcijpl4bfm4"]
+[gd_scene load_steps=18 format=3 uid="uid://3rcijpl4bfm4"]
 
 [ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_orc3b"]
 [ext_resource type="Texture2D" uid="uid://omtelqffkiig" path="res://src/entities/sentients/barracks/walk.png" id="2_orc3b"]
@@ -10,7 +10,6 @@
 [ext_resource type="AnimationLibrary" uid="uid://br0km4uq5dly" path="res://src/entities/sentients/animation_libs/pirori.tres" id="10_4v8pq"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="10_lpcqq"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="11_scd0i"]
-[ext_resource type="Script" uid="uid://b2je1meyfnp7s" path="res://src/systems/sequencing/grouped_event_interface.gd" id="11_w3fjo"]
 [ext_resource type="AudioStream" uid="uid://bmx0hywuebj28" path="res://src/audio/se/se_soothe.wav" id="12_lpcqq"]
 [ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/sequencing/sequence/game/on_state.gd" id="13_4v8pq"]
 [ext_resource type="Script" uid="uid://ceoifexmpm3o5" path="res://src/systems/sequencing/event/node/call_function.gd" id="13_lpcqq"]
@@ -52,6 +51,7 @@ material = SubResource("CanvasItemMaterial_jg6uj")
 script = ExtResource("6_cj8vh")
 
 [node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager" index="0"]
+process_mode = 1
 max_distance = 750.0
 bus = &"Effects"
 script = ExtResource("7_44spc")
@@ -98,27 +98,27 @@ collision_mask = 1073741824
 script = ExtResource("9_u4v1j")
 rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
-presence_detect = true
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="on_interact" type="Node" parent="interactable" index="0"]
+[node name="on_interact" type="Node" parent="interactable" index="0" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
 script = ExtResource("10_lpcqq")
+order = [NodePath("play_sound"), NodePath("force_to_idle")]
+front = NodePath("play_sound")
+back = NodePath("force_to_idle")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="grouped" type="Node" parent="interactable/on_interact" index="0"]
-process_mode = 4
-script = ExtResource("11_w3fjo")
-metadata/_custom_type_script = "uid://b2je1meyfnp7s"
-
-[node name="play_sound" type="Node" parent="interactable/on_interact/grouped" index="0"]
+[node name="play_sound" type="Node" parent="interactable/on_interact" index="0" node_paths=PackedStringArray("next")]
 script = ExtResource("11_scd0i")
 sound = ExtResource("12_lpcqq")
 pitch = 0.75
+wait_til_finished = false
+next = NodePath("../force_to_idle")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="force_to_idle" type="Node" parent="interactable/on_interact/grouped" index="1" node_paths=PackedStringArray("node")]
+[node name="force_to_idle" type="Node" parent="interactable/on_interact" index="1" node_paths=PackedStringArray("node", "prev")]
 script = ExtResource("13_lpcqq")
-node = NodePath("../../../../behaviour_fsm/WANDER/WANDER_MOVE")
+node = NodePath("../../../behaviour_fsm/WANDER/WANDER_MOVE")
 method_name = "request_transition"
 method_info = {
 "args": Array[Dictionary]([{
@@ -160,6 +160,8 @@ internal_args = Dictionary[String, Variant]({
 "_from": &"wander_move",
 "_to": &"wander_idle"
 })
+wait_til_finished = false
+prev = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="rect" type="CollisionShape2D" parent="interactable" index="1"]

@@ -20,13 +20,14 @@ shader = ExtResource("3_mqlxo")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wxyky"]
 shader = ExtResource("3_mqlxo")
 
-[node name="camera_handler" type="Node2D" node_paths=PackedStringArray("fsm", "marker", "cam_receiver", "components")]
+[node name="camera_handler" type="Node2D" node_paths=PackedStringArray("fsm", "cam", "marker", "cam_receiver", "components")]
 process_mode = 1
 top_level = true
 z_index = 5
 y_sort_enabled = true
 script = ExtResource("1_0c5nr")
 fsm = NodePath("cam_fsm")
+cam = NodePath("marker/camera")
 marker = NodePath("marker")
 cam_receiver = NodePath("marker/camera/components_receiver")
 components = NodePath("components_receiver")

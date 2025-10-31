@@ -24,18 +24,17 @@ func _setup() -> void:
 	)
 	
 func _physics_update(_delta: float) -> void:
-	if Player.Instance.get_pl() != null:
+	if Player.Instance.get_pl() != null and Player.Instance.get_pl().can_process():
 		eqn += (Player.Instance.get_pl().desired_vel / 100) / Application.get_viewport_dimens()
 
 	RenderingServer.global_shader_parameter_set("uv_offset",  eqn)
 
-func apply_panorama(_panorama: Node, _pivot: Vector2) -> void:
+func apply_panorama(_panorama: SubViewport, _pivot: Vector2) -> void:
 	eqn = _pivot - Player.Instance.get_pos()
 	
 	panorama_rect.visible 				= true
 	panorama_rect.texture 				= _panorama.get_texture()
 		
 	panorama_rect.custom_minimum_size 	= MINIMUM_SIZE
-	panorama_rect.size 					= Vector2(480, 270)
 func remove_panorama() -> void:
 	panorama_rect.visible = false

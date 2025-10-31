@@ -101,6 +101,7 @@ func _validate() -> bool:
 			if skip_invalid_events: marked_invalid.append(event.get_instance_id()) # - we mark invalid events to be skipped.
 			else:
 				fail.emit()
+				printerr("SEQUENCE %s :: Event error: %s!" % [self.name, event.name])
 				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 
 		if event.has_next(): event = event.next

@@ -23,3 +23,14 @@ func _enter_sub_state() -> void:
 func _exit_sub_state() -> void:
 	super()
 	InputManager.request_curr_controller_change(InputManager.def_input_controller)
+	
+
+func _update_sub_state(_delta: float) -> void: 
+	for s in Utils.get_group_arr("actors"):
+		if s != null:
+			if s.can_process(): s._update(_delta)
+			
+func _physics_update_sub_state(_delta: float) -> void:
+	for s in Utils.get_group_arr("actors"):
+		if s != null:
+			if s.can_process(): s._physics_update(_delta)

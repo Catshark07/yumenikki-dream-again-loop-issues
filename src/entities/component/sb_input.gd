@@ -4,7 +4,6 @@ extends SBComponent
 
 func _setup(_sb: SentientBase = null) -> void: 
 	super(_sb)
-	
 	if _sb is Player: 
 		InputManager.sb_input_controller._setup(_sb)
 

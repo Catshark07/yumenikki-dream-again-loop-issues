@@ -14,8 +14,8 @@ static var direction_vector_4		: Vector4i
 
 static func _setup() -> void:
 	keybind = Keybind.new()
-	sb_input_controller = SBInputController.new()
-	def_input_controller = UIInputController.new()
+	sb_input_controller 	= SBInputController.new()
+	def_input_controller 	= UIInputController.new()
 	
 static func request_curr_controller_change(_controller: InputController) -> void: 
 	curr_controller = _controller

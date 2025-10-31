@@ -3,10 +3,9 @@ shader_type canvas_item;
 #include "res://src/shaders/_include/general_base.gdshaderinc"
 #include "res://src/shaders/_include/depth_base.gdshaderinc"
 #include "res://src/shaders/_include/linear_base.gdshaderinc"
+group_uniforms DistortionWaves;
 
 uniform sampler2D screen_texture : hint_screen_texture;
-
-
 uniform float noise_strength : hint_range(-0.085, 1, 0.01 ) = 0.025;
 uniform sampler2D noise_fwd : repeat_enable;
 

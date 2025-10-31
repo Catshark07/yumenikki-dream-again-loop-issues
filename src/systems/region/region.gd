@@ -39,7 +39,6 @@ func _ready() -> void:
 	_setup()
 
 func __disable_collision_if_invisible() -> void:
-	print(self, "IT CHANGED??")
 	rect.disabled = !(self.visible and is_visible_in_tree())
 
 func _setup() -> void: pass

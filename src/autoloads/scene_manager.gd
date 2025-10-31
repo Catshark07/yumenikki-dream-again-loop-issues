@@ -51,8 +51,7 @@ static func _setup() -> void:
 		
 	
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
-static func load_scene(_scene: PackedScene) -> void:
-		
+static func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void:
 	if ResourceLoader.exists(_scene.resource_path) and _scene.can_instantiate():
 		scene_load_err_check = ResourceLoader.load_threaded_request(_scene.resource_path)
 		
@@ -62,7 +61,8 @@ static func load_scene(_scene: PackedScene) -> void:
 		result = await handle_scene_resource_load(_scene)
 		
 		if result == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
-			handle_scene_push(_scene.instantiate())
+			if _push_to_stack: 
+				handle_scene_push(_scene.instantiate())
 			
 			EventManager.invoke_event("SCENE_LOADED", _scene)
 					
@@ -75,29 +75,34 @@ static func load_scene(_scene: PackedScene) -> void:
 	else: curr_scene_resource = null
 
 static func handle_scene_push(_scene_node: SceneNode) -> void:
+	# - bail out in case we were already taken care of.
+	
+	if _scene_node == null or _scene_node.initialized: return
 	scene_node = _scene_node
 	
+	print(_scene_node, "          ---- --- - - - -PUSHED!!!")
+	
 	prev_scene_resource = curr_scene_resource
-	curr_scene_resource = load(_scene_node.scene_file_path)
+	curr_scene_resource = load(_scene_node.scene_file_path) if !_scene_node.scene_file_path.is_empty() else null
 	_scene_node.initialize()
 
 	if 		_scene_node.get_parent() == null: GameManager.pausable_parent.add_child(_scene_node)
-	else: 	_scene_node.reparent(GameManager.pausable_parent)
+	else: 	_scene_node.reparent.call_deferred(GameManager.pausable_parent)
 	
 	EventManager.invoke_event("SCENE_PUSHED", _scene_node)
 	
 	scene_stack.push(_scene_node)
-	
-	
 static func handle_scene_pop() -> void:
 	print_rich(str("[color=yellow]SceneManager // Scene Pop: %s [/color]" % scene_stack.pop()))
+	EventManager.invoke_event("SCENE_POPPED")
+	
 
-static func change_scene_to(scene: PackedScene) -> void:
-	if scene == null or !ResourceLoader.exists(scene.resource_path): 
+static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_out: bool = true) -> void:
+	if _scene == null or !ResourceLoader.exists(_scene.resource_path): 
 		print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 		return
 		
-	if scene_node and scene and scene != curr_scene_resource:
+	if scene_node and _scene and _scene != curr_scene_resource:
 	
 		if !scene_change_pending:
 			scene_change_pending = true
@@ -105,18 +110,18 @@ static func change_scene_to(scene: PackedScene) -> void:
 			EventManager.invoke_event("SCENE_CHANGE_REQUEST")
 			GameManager.change_to_state("CHANGING_SCENES")
 			scene_stack.queue_pop()
-			await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
+			if _fade_in: await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
 			Game.scene_unloaded.emit()
 			
 			handle_scene_pop()
-			await load_scene(scene)
+			await load_scene(_scene)
 			Game.scene_loaded.emit()
 			
-			GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
+			if _fade_out: GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
 			GameManager.secondary_transition.fade_progress = 0
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
-			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", scene.resource_path)
+			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", _scene.resource_path)
 			GameManager.change_to_state(GameManager.game_fsm.prev_state.name)
 				
 			scene_change_pending = false
@@ -125,7 +130,8 @@ static func change_scene_to(scene: PackedScene) -> void:
 		EventManager.invoke_event("SCENE_CHANGE_FAIL")
 		print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 
-static func _update(_delta: float) -> void: if scene_node: scene_node._update(_delta)
+
+static func _update(_delta: float) -> void: 		if scene_node: scene_node._update(_delta)
 static func _physics_update(_delta: float) -> void: if scene_node: scene_node._physics_update(_delta)
 # ---------- 									---------- #
 # ----
