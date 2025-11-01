@@ -1030,7 +1030,6 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="madotsuki" parent="y_order" instance=ExtResource("1_28p51")]
 use_parent_material = true
 position = Vector2(-280, 104)
-effect = null
 values = SubResource("Resource_yeiuu")
 
 [node name="IDLE" parent="y_order/madotsuki/stance_fsm" index="0" node_paths=PackedStringArray("transitions")]
@@ -1044,28 +1043,24 @@ use_parent_material = true
 position = Vector2(-360, 208)
 texture = ExtResource("29_uwvvk")
 hframes = 7
-frame = 5
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 10.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
-progress = 5
 
 [node name="jellyfish_2" type="Sprite2D" parent="y_order"]
 use_parent_material = true
 position = Vector2(-224, 16)
 texture = ExtResource("29_uwvvk")
 hframes = 7
-frame = 4
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 7.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
-progress = 4
 
 [node name="sally" type="Node2D" parent="y_order"]
 position = Vector2(976, 712)

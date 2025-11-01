@@ -1,19 +1,18 @@
 @tool
-class_name Utils
-extends EditorPlugin
+extends Node
 
-static var ignore_warnings: bool = true
+var ignore_warnings: bool = true
 
-func _handles(object: Object) -> bool:
-	return object is Node
+signal node_entered_grouo	(node, group_id)
+signal node_exited_group	(node, group_id)
 
-static func is_within_exclusive(_num: float, _min: float, _max: float) -> bool:
+func is_within_exclusive(_num: float, _min: float, _max: float) -> bool:
 	return ((_num < _min) and (_num > _max))
-static func is_within_inclusive(_num: float, _min: float, _max: float) -> bool:
+func is_within_inclusive(_num: float, _min: float, _max: float) -> bool:
 		return ((_num <= _min) and (_num >= _max))
 
 # editor-hint exclusive
-static func add_sibling_node(
+func add_sibling_node(
 	_target_node: 	Node,
 	_sibling_node: 	Node,
 	_sibling_node_name: String) -> Node:
@@ -23,7 +22,7 @@ static func add_sibling_node(
 		
 		return add_child_node(node_as_sibling, _sibling_node, _sibling_node_name)
 		
-static func add_child_node(
+func add_child_node(
 	_parent_node: 	Node,
 	_child_node: 	Node,
 	_child_node_name: String) -> Node:
@@ -49,7 +48,7 @@ static func add_child_node(
 		
 			return _parent_node.get_node(_child_node_name)
 			
-static func get_child_node_or_null(
+func get_child_node_or_null(
 	_parent_node: Node, 
 	_child_node_name: String) -> Node: 
 		var _child_node: Node
@@ -60,7 +59,7 @@ static func get_child_node_or_null(
 		return _parent_node.get_node_or_null(_child_node_name)
 
 # signals
-static func connect_to_signal(
+func connect_to_signal(
 	_conectee: Callable, 
 	_signal: Signal, 
 	_flags: Object.ConnectFlags = 0, 
@@ -76,7 +75,7 @@ static func connect_to_signal(
 			return
 			
 	_signal.connect(_conectee, _flags)
-static func disconnect_from_signal(
+func disconnect_from_signal(
 	_conectee: Callable,
 	_signal: Signal) -> void:
 		if !_signal.is_connected(_conectee): 
@@ -85,16 +84,17 @@ static func disconnect_from_signal(
 		_signal.disconnect(_conectee)
 
 # - groups
-static func u_add_to_group(_node: Node, _name: String) -> void: 
+func u_add_to_group(_node: Node, _name: String) -> void: 
 	if _node.is_in_group(_name):
 		push("GLOBAL UTILS: Node %s is already in group %s!" % [_node, _name])
 		return
 	_node.add_to_group(_name)
-static func u_remove_from_group(_node: Node, _name: String) -> void:
+	node_entered_grouo.emit()
+func u_remove_from_group(_node: Node, _name: String) -> void:
 	if 	_node.is_in_group(_name):
 		_node.remove_from_group(_name)
 
-static func get_group_arr(_name: String) -> Array[Node]: 
+func get_group_arr(_name: String) -> Array[Node]: 
 	var tree: SceneTree
 	
 	if Engine.is_editor_hint(): tree = EditorInterface.get_edited_scene_root().get_tree()
@@ -106,10 +106,10 @@ static func get_group_arr(_name: String) -> Array[Node]:
 	
 
 # refinements.
-static func u_load(_res_path: String) -> Resource:
+func u_load(_res_path: String) -> Resource:
 	if !ResourceLoader.exists(_res_path): return
 	return load(_res_path)
 
 # - helper.
-static func push(...a: Array) -> void:
+func push(...a: Array) -> void:
 	if !ignore_warnings: push_warning(a)

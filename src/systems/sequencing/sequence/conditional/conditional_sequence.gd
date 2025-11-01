@@ -19,11 +19,16 @@ func _ready() -> void:
 		
 	Utils.connect_to_signal(func(): else_conditional.name = "else_%s" % self.name, self.renamed)
 
-func _execute() -> void:
-	if _predicate(): 
-		super()
-	else:
-		else_conditional.skip = false
 
 func _predicate() -> bool:
+	return true
+	
+func _validate() -> bool:
+	if _predicate(): 	
+		next = else_conditional.next
+	else:			
+		end()
+		else_conditional.skip = false
+		next = else_conditional
+	
 	return true

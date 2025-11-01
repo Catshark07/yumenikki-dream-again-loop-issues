@@ -1,3 +1,4 @@
+class_name EVN_OpenMessage
 extends Event
 
 enum type {MESSAGE, DIALOGUE, PROMPT}
@@ -16,17 +17,21 @@ enum type {MESSAGE, DIALOGUE, PROMPT}
 
 @export_group("Prompt Exclusive")
 @export var prompt_options: Dictionary[StringName, Sequence] = {}
+@export var normal_colour: 		Color = Color(1, 1, 1)
+@export var hover_colour: 		Color = Color(1, 0.0, 0.23)
+@export var disabled_colour: 	Color = Color(0.35, 0.35, 0.45) 
+@export var press_colour: 		Color = Color(1, 1, 0)
 
 # - event implementations
 func _execute() -> void: 
 	var type_to_display: MessageDisplay
 	
 	match message_type:
-		type.MESSAGE: type_to_display 	= MessageDisplayManager.instance.message_display
-		type.DIALOGUE: type_to_display	= MessageDisplayManager.instance.dialogue_display
-		type.PROMPT: 
-			type_to_display 	= MessageDisplayManager.instance.prompt_display
-			(type_to_display as Prompt).set_options(prompt_options)
+		type.MESSAGE: 	type_to_display 	= MessageDisplayManager.instance.message_display
+		type.DIALOGUE: 	type_to_display		= MessageDisplayManager.instance.dialogue_display
+		type.PROMPT:  	
+			type_to_display 	= MessageDisplayManager.instance.prompt_display  
+			type_to_display.set_options(prompt_options, normal_colour, hover_colour, disabled_colour, press_colour)
 		
 	if hide_panel:  type_to_display.self_modulate.a = 0
 	else:			type_to_display.self_modulate.a = 1

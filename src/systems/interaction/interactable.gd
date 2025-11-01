@@ -35,7 +35,4 @@ func interact() -> void:
 		interacted.emit()
 func _interact() -> void: pass
 
-
-func _handle_player_enter() -> void: 
-	if area: self.interact()
-func _handle_player_exit() -> void: pass
+func _handle_player_enter() -> void: if area: self.interact()

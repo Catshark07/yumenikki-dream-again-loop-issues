@@ -79,7 +79,6 @@ func _ready() -> void:
 	game_manager.global_components.	_setup()
 	game_manager.state_handle.		_setup()
 	
-	initialize()
 	
 	# - post-initializtion.
 
@@ -89,6 +88,9 @@ func _ready() -> void:
 	
 	game_ready.emit()
 	PhysicsServer2D.set_active(true)
+	
+	await main_tree.process_frame
+	initialize()
 	
 	
 func _process(delta: float) -> void: 

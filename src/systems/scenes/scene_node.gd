@@ -1,3 +1,5 @@
+@tool
+
 class_name SceneNode
 extends StackNode
 

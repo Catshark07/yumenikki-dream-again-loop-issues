@@ -9,6 +9,8 @@ signal cancelled
 # printerr("EVENT - {NAME} :: {WARNING}!")
 
 # -- 
+const GROUP_EVN := "EventNode"
+const GROUP_SQN := "SequenceNode"
 const DEFAULT_EVENT = "res://src/systems/sequencing/objects/event_object.gd"
 
 @export_storage var abstract_event: SequencerManager.EventObject:
@@ -26,8 +28,10 @@ const DEFAULT_EVENT = "res://src/systems/sequencing/objects/event_object.gd"
 var call_count: int = 0
 @export_category("Event Linked-Pointers.")
 @export var custom_linked_pointers: bool = false
-@export var prev: Node
-@export var next: Node
+@export var prev: Node:
+	set(_p): if _p != self: prev = _p
+@export var next: Node:
+	set(_n): if _n != self: next = _n
 
 var is_finished: bool = false
 var is_active: bool = false
@@ -85,7 +89,7 @@ func cancel() -> void:
 	is_finished = true
 func end() -> void: 
 	_end()
-	is_active = false
+	is_active 	= false
 	is_finished = true
 
 # -- internal

@@ -26,11 +26,12 @@ general/3d_panning_strength=1.0
 
 [autoload]
 
-NodeSaveService="*res://src/systems/save/node_save_service.gd"
 Game="*res://src/game/game.gd"
 Music="*res://src/autoloads/bgm_player_music.gd"
 Ambience="*res://src/autoloads/bgm_player_amb.gd"
 AudioService="*res://src/autoloads/audio_service.gd"
+NodeSaveService="*res://src/systems/save/node_save_service.gd"
+Utils="*res://src/autoloads/global_utils.gd"
 
 [display]
 
@@ -41,7 +42,7 @@ window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/global_utils/plugin.cfg", "res://addons/miscallenous/plugin.cfg", "res://addons/panorama_preview/plugin.cfg")
+enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/miscallenous/plugin.cfg", "res://addons/panorama_preview/plugin.cfg")
 
 [file_customization]
 

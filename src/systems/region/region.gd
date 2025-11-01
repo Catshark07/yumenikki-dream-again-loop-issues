@@ -31,9 +31,9 @@ func _ready() -> void:
 		rect.shape.size = Vector2(16, 16)	
 		rect.debug_color = Color(0.2 ,0, 0.7, 0.2)
 		
-	Utils.connect_to_signal(handle_player_enter, self.area_entered)
-	Utils.connect_to_signal(handle_player_exit, self.area_exited)
-	Utils.connect_to_signal(__disable_collision_if_invisible, self.visibility_changed)
+	Utils.connect_to_signal(handle_player_enter, 				self.area_entered)
+	Utils.connect_to_signal(handle_player_exit, 				self.area_exited)
+	Utils.connect_to_signal(__disable_collision_if_invisible, 	self.visibility_changed)
 	
 	process_mode = Node.PROCESS_MODE_INHERIT
 	_setup()
@@ -47,11 +47,9 @@ func _handle_player_exit() -> void: pass
 
 func handle_player_enter(_pl: Area2D) -> void:
 	if _pl.get_parent() != null and _pl.get_parent() is Player: 
-		print(self, "::   enter - ", _pl)
 		_handle_player_enter()
 		player_enter_handle.emit(Player.Instance.get_pl())
 func handle_player_exit(_pl: Area2D) -> void:
 	if _pl.get_parent() != null and _pl.get_parent() is Player:
-		print(self, "::   exit - ", _pl)
 		_handle_player_exit()
 		player_exit_handle.emit(Player.Instance.get_pl())

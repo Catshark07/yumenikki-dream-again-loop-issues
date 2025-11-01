@@ -24,7 +24,10 @@ signal fail
 
 func initialize() -> void:
 	order = get_children()	
-	if order.is_empty(): return
+	if order.is_empty(): 
+		front = null
+		back = null
+		return
 	
 	front = order[0]
 	back = order[order.size() - 1]
@@ -117,8 +120,8 @@ func reset() -> void:
 		# - make sure that the child is of type Event.
 		if curr is Event:
 			if !curr.is_active: 
-				curr.is_finished = false
-				curr.is_active = false
+				curr.is_finished 	= false
+				curr.is_active 		= false
 			
 			if curr.has_next(): curr = curr.next
 			else:				break

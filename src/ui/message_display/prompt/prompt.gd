@@ -3,9 +3,21 @@ extends MessageDisplay
 
 @export var option_buttons: Array = []
 
-func set_options(_opts: Dictionary[StringName, Sequence]) -> void:
+func set_options(
+	_opts: Dictionary[StringName, Sequence],
+	_normal_colour: 	Color = Color(1, 1, 1),
+	_hover_colour: 		Color = Color(1, 0.0, 0.23),
+	_disabled_colour: 	Color = Color(0.35, 0.35, 0.45) ,
+	_press_colour: 		Color = Color(1, 1, 0)) -> void:
+		
 	for option in _opts:
-		var option_button: GUIPanelButton = Utils.add_child_node(buttons_container, GUIPanelButton.new(), option)
+		var option_button: GUIPanelButton = Utils.add_child_node(
+			buttons_container, 
+			GUIPanelButton.new(
+				_normal_colour, _hover_colour, _disabled_colour, _press_colour
+			), 
+			option)
+			
 		var sequence = _opts[option]
 		
 		option_button.text_display.text = option
@@ -41,4 +53,4 @@ func open(
 	if 	option_buttons.size() > 0: 
 		option_buttons[0].grab_focus()
 	
-	super(_position, _sound, _speed, _font_colour)
+	super(_position, _sound, _speed, _font_colour, _panel_style)

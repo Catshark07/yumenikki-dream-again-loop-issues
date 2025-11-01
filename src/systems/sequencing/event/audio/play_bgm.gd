@@ -1,3 +1,4 @@
+class_name EVN_PlayBGM
 extends Event
 
 enum MUSIC_BUS {MUSIC, AMBIENCE}

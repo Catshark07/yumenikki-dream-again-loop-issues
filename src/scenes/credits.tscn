@@ -78,7 +78,6 @@ text = "-> [rainbow speed=.3]thissmay[/rainbow] (me!!)"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
-script = ExtResource("2_y1npw")
 
 [node name="music" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
@@ -96,7 +95,7 @@ scroll_active = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
 bbcode_enabled = true
-text = "-> Luff 		([url]https://linktr.ee/NailbatAubrey[/url])
+text = "-> Luff 		([url]https://linktr.ee/xluffx[/url])
 -> SILAS ROE 	([url]https://linktr.ee/silas.roe[/url])
 -> Madoxy 		([url]https://madoxy.neocities.org[/url])
 -> -1 			([url]https://youtube.com/@-1_void/[/url])
@@ -173,7 +172,7 @@ scroll_active = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
 bbcode_enabled = true
-text = "-> Aubrey 		([url]https://linktr.ee/NailbatAubrey[/url]])
+text = "-> Aubrey 		([url]https://linktr.ee/NailbatAubrey[/url])
 -> koala 		(handle TBA)
 -> Floofinator 	([url]https://floofinator.com/[/url])
 -> peppersalt 	([url]https://pepper-salt.itch.io/[/url])"

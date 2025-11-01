@@ -22,18 +22,33 @@ const  button_display_texture_shader: Shader = preload("res://src/shaders/ui/but
 @export var button_display_texture: Texture = CanvasTexture.new()
 
 @export_group("Color Visuals")
-var curr_colour: 				Color = Color.WHITE
+const NORMAL_CLR: 	Color = Color(1, 1, 1)
+const HOVER_CLR: 	Color = Color(1, 0.0, 0.23)
+const DISABLED_CLR: Color = Color(0.35, 0.35, 0.45) 
+const PRESSED_CLR: 	Color = Color(1, 1, 0)
+
 @export var normal_colour: 		Color = Color(1, 1, 1)
+@export var press_colour: 		Color = Color(1, 1, 0)
 @export var hover_colour: 		Color = Color(1, 0.0, 0.23)
 @export var disabled_colour: 	Color = Color(0.35, 0.35, 0.45) 
-@export var press_colour: 		Color = Color(1, 1, 0)
+var curr_colour: 				Color = normal_colour
 
 # ---- misc ----
 @export var abstract_button: AbstractButton
 var modu_tw: Tween
 var disp_tw: Tween
 
-# ---- signals ----
+func _init(
+	_normal_colour: 	Color = NORMAL_CLR,
+	_hover_colour: 		Color = HOVER_CLR,
+	_disabled_colour: 	Color = DISABLED_CLR,
+	_press_colour: 		Color = PRESSED_CLR) -> void:
+		normal_colour 	= _normal_colour
+		hover_colour 	= _hover_colour
+		disabled_colour = _disabled_colour
+		press_colour 	= _press_colour
+	
+
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"): abstract_button.pressed.emit()
 func _children_components_setup() -> void:
@@ -44,7 +59,7 @@ func _children_components_setup() -> void:
 
 func _additional_setup() -> void:	
 	set_active(true)
-	set_panel_modulate(curr_colour)
+	set_panel_modulate(Color.WHITE)
 	
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	focus_mode = Control.FOCUS_ALL
@@ -52,9 +67,9 @@ func _additional_setup() -> void:
 	display_bg.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	display_bg.size_flags_vertical = Control.SIZE_FILL
 	
-	if Engine.is_editor_hint():
-		set_button_modulate(curr_colour)
-		
+	if Engine.is_editor_hint(): set_button_modulate(curr_colour)
+	else:						set_button_modulate(normal_colour)
+
 	Utils.connect_to_signal(on_visibility_change, visibility_changed)
 	
 	Utils.connect_to_signal(on_hover.emit, 		abstract_button.hover_entered)
@@ -73,7 +88,7 @@ func _additional_setup() -> void:
 
 func on_visibility_change() -> void: 
 	unhover_animation()
-	set_modulate(curr_colour)
+	set_self_modulate(curr_colour)
 	
 # --- visual & general behaviour functions ---
 func _on_hover() -> void: 
@@ -108,8 +123,8 @@ func hover_animation() -> void:
 		0, 
 		main_container.size.x - 5, .35)
 		
-	disp_tw.tween_property(text_display, "modulate:v", 1 - modulate.v, .35)
-	disp_tw.tween_property(icon_display, "modulate:v", 1 - modulate.v, .35)
+	disp_tw.tween_property(text_display, "modulate:v", - modulate.v, .35)
+	disp_tw.tween_property(icon_display, "modulate:v", - modulate.v, .35)
 func unhover_animation() -> void: 
 	if disp_tw != null: disp_tw.kill()
 	disp_tw = create_tween()
@@ -124,7 +139,7 @@ func unhover_animation() -> void:
 		display_bg.custom_minimum_size.x, 
 		0, .35)
 		
-	disp_tw.tween_property(text_display, "modulate:v", 1, .35)
+	disp_tw.tween_property(text_display, "modulate:v", normal_colour.v, .35)
 	disp_tw.tween_property(icon_display, "modulate:v", 1, .35)
 
 func press_animation() -> void:
@@ -147,7 +162,9 @@ func set_button_modulate(
 	modu_tw.set_parallel()
 	modu_tw.set_ignore_time_scale()
 	
-	modu_tw.tween_method(set_modulate, modulate, _modu, dur)
+	modu_tw.tween_method(display_bg.set_self_modulate, 		modulate, _modu, dur)
+	modu_tw.tween_method(main_container.set_self_modulate, 	modulate, _modu, dur)
+	
 		
 func set_active(_active: bool) -> void:
 	abstract_button.set_active(_active)

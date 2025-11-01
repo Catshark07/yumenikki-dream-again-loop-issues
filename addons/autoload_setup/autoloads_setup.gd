@@ -3,19 +3,12 @@ class_name Autoloads
 extends EditorPlugin
 
 const SCRIPT_REFERENCES: Dictionary[String, String] = {
-	"NodeSaveService" 	: "res://src/systems/save/node_save_service.gd",
 	"Game" 				: "res://src/game/game.gd",
 	"Music" 			: "res://src/autoloads/bgm_player_music.gd",
 	"Ambience" 			: "res://src/autoloads/bgm_player_amb.gd",
 	"AudioService" 		: "res://src/autoloads/audio_service.gd",
-}
-
-static var CLASS_REFERENCES: Dictionary[String, Node] = {
-	"NodeSaveService" 	: NodeSaveService,
-	"Game" 				: Game,
-	"Music" 			: Music,
-	"Ambience" 			: Ambience,
-	"AudioService" 		: AudioService,
+	"NodeSaveService" 	: "res://src/systems/save/node_save_service.gd",
+	"Utils" 			: "res://src/autoloads/global_utils.gd",
 }
 
 func _enter_tree() -> void:

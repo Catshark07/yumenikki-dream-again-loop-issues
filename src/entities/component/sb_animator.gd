@@ -25,10 +25,6 @@ var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	animation_player = get_node("animation_player")
-	Utils.connect_to_signal(
-		func(_anim): 
-			print(animation_player.assigned_animation),
-			animation_player.animation_finished)
 				
 func _update(_delta: float) -> void:
 

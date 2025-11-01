@@ -5,7 +5,6 @@ extends ConditionalSequence
 @export var input_objects: Dictionary[String, Node] = {}
 
 var expression_instance: Expression
-var autoload_references: Dictionary = Autoloads.CLASS_REFERENCES
 
 func _predicate() -> bool:
 	expression_instance = Expression.new()

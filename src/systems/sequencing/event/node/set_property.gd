@@ -15,6 +15,7 @@ extends Event
 			"hint_string"	: "",
 			"usage" 		: PROPERTY_USAGE_NONE}
 
+
 var property_exists_in_node: bool = false
 @export_storage var property_value: Variant
 @export_storage var new_value: Variant

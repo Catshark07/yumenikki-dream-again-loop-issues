@@ -26,7 +26,7 @@ void fragment() {
   }
 
   // Color calculation using time and position
-  col += 0.45 + 0.45 * cos(TIME + pos.xyx + vec3(0.0, 2.0, 4.0));
+  col += 0.45 + 0.45 * sin(TIME + pos.xyx + vec3(0.0, .0, 4.0));
 
   // Gamma correction
   col = pow(col, vec3(0.4545));

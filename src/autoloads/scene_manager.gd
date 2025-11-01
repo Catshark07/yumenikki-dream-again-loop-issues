@@ -80,8 +80,6 @@ static func handle_scene_push(_scene_node: SceneNode) -> void:
 	if _scene_node == null or _scene_node.initialized: return
 	scene_node = _scene_node
 	
-	print(_scene_node, "          ---- --- - - - -PUSHED!!!")
-	
 	prev_scene_resource = curr_scene_resource
 	curr_scene_resource = load(_scene_node.scene_file_path) if !_scene_node.scene_file_path.is_empty() else null
 	_scene_node.initialize()
@@ -103,7 +101,6 @@ static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_ou
 		return
 		
 	if scene_node and _scene and _scene != curr_scene_resource:
-	
 		if !scene_change_pending:
 			scene_change_pending = true
 
@@ -122,7 +119,6 @@ static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_ou
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
 			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", _scene.resource_path)
-			GameManager.change_to_state(GameManager.game_fsm.prev_state.name)
 				
 			scene_change_pending = false
 			

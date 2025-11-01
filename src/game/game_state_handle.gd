@@ -6,13 +6,12 @@ var state_requests_listener: EventListener
 
 func _setup() -> void:
 	game_state_fsm._setup(GameManager.instance)
-	state_requests_listener = EventListener.new(self, "SCENE_PUSHED", "SCENE_POPPED")
+	state_requests_listener = EventListener.new(self, 		"SCENE_PUSHED", "SCENE_POPPED")
 	state_requests_listener.do_on_notify(update_game_state, "SCENE_PUSHED", "SCENE_POPPED")
 	
 func update_game_state() -> void: 
 	var curr_res_scene = SceneManager.curr_scene_resource
 	var state_id: String = ""
-	
 	
 	# temp.
 	if curr_res_scene == null: return
