@@ -50,7 +50,13 @@ func open(
 	_font_colour: Color = Color.WHITE,
 	_panel_style: StyleBoxTexture = DEFAULT_PANEL_STYLE) -> void:
 	
+	for o in option_buttons: o.visible = false
+	
+	super(_position, _sound, _speed, _font_colour, _panel_style)
+	await typing_finished
+	
+	for o in option_buttons: o.visible = true
+	
 	if 	option_buttons.size() > 0: 
 		option_buttons[0].grab_focus()
 	
-	super(_position, _sound, _speed, _font_colour, _panel_style)

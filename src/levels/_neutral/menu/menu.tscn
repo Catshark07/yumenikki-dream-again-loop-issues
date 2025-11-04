@@ -94,7 +94,7 @@ fill_to = Vector2(1, 0.7)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ppdc2"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_msekq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7jyh"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -104,7 +104,7 @@ shader_parameter/angle = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_d7jyh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_msekq"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -114,7 +114,7 @@ shader_parameter/angle = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_vexp4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7o6ls"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppdc2"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -124,7 +124,7 @@ shader_parameter/angle = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_msekq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_46psg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -251,7 +251,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/new_game/main_container"]
-material = SubResource("ShaderMaterial_msekq")
+material = SubResource("ShaderMaterial_d7jyh")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
@@ -401,7 +401,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/credits/main_container"]
-material = SubResource("ShaderMaterial_wx1ft")
+material = SubResource("ShaderMaterial_msekq")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
@@ -551,7 +551,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/quit_to_desktop/main_container"]
-material = SubResource("ShaderMaterial_7o6ls")
+material = SubResource("ShaderMaterial_ppdc2")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
@@ -715,7 +715,7 @@ offset_bottom = -18.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container"]
-material = SubResource("ShaderMaterial_46psg")
+material = SubResource("ShaderMaterial_wx1ft")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2

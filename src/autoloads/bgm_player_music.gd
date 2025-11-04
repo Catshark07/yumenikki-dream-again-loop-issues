@@ -1,3 +1,4 @@
+@tool
 extends BGMPlayer
 
 func _ready() -> void: 

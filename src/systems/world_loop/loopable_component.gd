@@ -6,7 +6,7 @@ class_name LoopableComponent
 extends Node2D
 
 @export_tool_button("Setup Loop Component") var setup_pre_game = setup_loop_nodes
-@export_tool_button("Refresh Loop Nodes List") var refresh = update_loop_nodes_list
+@export_tool_button("Update Properties") var update_props = update_duplicates
 
 const LOOPABLE_ID := &"loop_components"
 @export var manager: LoopManager
@@ -14,6 +14,7 @@ const LOOPABLE_ID := &"loop_components"
 # - the nodes and their properties.
 @export var target: Node
 @export var dupe_nodes: Array[Node]
+@export var occlusions: Array[OnScreenNotifier]
 @export var properties: PackedStringArray 
 
 # - flags.
@@ -57,12 +58,18 @@ func _exit_tree() -> void:
 	Utils.u_remove_from_group(self, LOOPABLE_ID)
 	
 func update_duplicates() -> void: 
-	for i in dupe_nodes:
-		if i == null: continue
+	for i in range(dupe_nodes.size()):
+		var dupe_node = dupe_nodes[i]
+		var occlusion = occlusions[i]
+		
+		occlusion.rect.size = world_size * 1.35
+		occlusion.rect.position = -(occlusion.rect.size / 2)
+		
+		if dupe_node == null: continue
 		
 		for p in properties:
 			if target.get_indexed(p) == null: continue
-			i.set_indexed(p, target.get_indexed(p))	
+			dupe_node.set_indexed(p, target.get_indexed(p))	
 
 func setup_loop_nodes() -> void:
 	# - we clear and free the old duplicated nodes list.
@@ -111,8 +118,9 @@ func setup_loop_nodes() -> void:
 		occlusion.name = "occlusion"
 		occlusion.screen_entered.connect(func(): dupe_nodes[i] .visible = true)
 		occlusion.screen_exited.connect(func(): dupe_nodes[i] .visible = false)
-		occlusion.rect.size = world_size / 1.2
+		occlusion.rect.size = world_size * 1.35
 		occlusion.rect.position = -(occlusion.rect.size / 2)
+		occlusions.append(occlusion)
 		
 	update_duplicates()
 	

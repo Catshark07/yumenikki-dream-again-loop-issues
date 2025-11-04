@@ -37,6 +37,7 @@ func create_on_initial() -> void:
 		return
 	
 	seq_initial =  Utils.add_child_node(self, Sequence.new(), "on_initial")
+	Utils.connect_to_signal(func(): seq_initial = null, seq_initial.tree_exiting)
 	seq_initial.skip_invalid_events = true
 	
 func create_on_free() -> void:
@@ -46,6 +47,7 @@ func create_on_free() -> void:
 		return
 	
 	seq_free =  Utils.add_child_node(self, Sequence.new(), "on_free")
+	Utils.connect_to_signal(func(): seq_free = null, seq_free.tree_exiting)
 	seq_free.skip_invalid_events = true
 
 # overall control

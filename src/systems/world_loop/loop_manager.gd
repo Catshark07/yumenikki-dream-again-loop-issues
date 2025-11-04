@@ -1,11 +1,14 @@
 @tool
+@icon("res://addons/miscallenous/editor/loop_manager.png")
+
 class_name LoopManager
-extends Node
+extends Node2D
 
 @export_group("Loop Component Updates and Setups.")
-@export_tool_button("Update Collection and Info.") 			var update_collection := update_loopable_collection
-@export_tool_button("Update Loop Duplicates' Properties.") 	var update_loop_objs  := update_loopable_components
-@export_tool_button("Setup Components.") 					var setup_loop_objs   := setup_loopable_components
+@export_tool_button("Update Collection.") 					var update_loopables_collection := update_loopable_collection
+@export_tool_button("Update Loop Duplicate Info.") 			var update_loopables_world_size := update_loopable_world_size
+@export_tool_button("Update Loop Duplicates' Properties.") 	var update_loopables  			:= update_loopable_components
+@export_tool_button("Setup Components.") 					var setup_loopables  	 		:= setup_loopable_components
 
 @export_group("Drawing Options.")
 @export var draw_colour: Color = Color(Color.PALE_VIOLET_RED, 0.2)
@@ -52,6 +55,8 @@ func _ready() -> void:
 		loop_objects_detect.set_collision_mask_value(7, true)
 
 	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
+	loop_objects_detect.set_meta("_edit_lock_", true)
+	shape_detect.		set_meta("_edit_lock_", true)
 	
 	Utils.connect_to_signal(
 		func():
@@ -70,8 +75,11 @@ func _physics_process(_delta: float) -> void:
 		if loopable == null: continue
 		if loopable.target is CanvasItem and !loopable.do_not_loop:
 			
-			loopable.target.global_position.x = wrap(loopable.target.global_position.x, -world_size.x / 2, world_size.x / 2)
-			loopable.target.global_position.y = wrap(loopable.target.global_position.y, -world_size.y / 2, world_size.y / 2)
+			var min_pos = -world_size / 2 + self.global_position
+			var max_pos =  world_size / 2 + self.global_position
+			
+			loopable.target.global_position.x = wrap(loopable.target.global_position.x, min_pos.x, max_pos.x)
+			loopable.target.global_position.y = wrap(loopable.target.global_position.y, min_pos.y, max_pos.y)
 									
 func set_world_size(_size: Vector2) -> void:
 	world_size = _size.round()
@@ -86,12 +94,16 @@ func update_loopable_collection() -> void:
 		if 	loopable != null: 
 			loopable.loopable_setup(self)
 			Utils.connect_to_signal(update_loopable_collection, loopable.tree_exiting)
+func update_loopable_world_size() -> void:
 	set_world_size.call_deferred(world_size)
+
+	
 func update_loopable_components() -> void: 
 	update_dupe_nodes.emit()
 
 func setup_loopable_components() -> void: 
 	for i: LoopableComponent in loop_objects:
 		i.setup_loop_nodes()
+		set_world_size(world_size)
 
 	

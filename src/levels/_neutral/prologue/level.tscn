@@ -177,6 +177,29 @@ libraries = {
 &"": SubResource("AnimationLibrary_7rtwp")
 }
 
+[node name="phase_1" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("4_w4wdm")
+order = [NodePath("Event"), NodePath("Event2")]
+front = NodePath("Event")
+back = NodePath("Event2")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="Event" type="Node" parent="phase_1" node_paths=PackedStringArray("next")]
+process_mode = 4
+script = ExtResource("38_7agr2")
+next = NodePath("../Event2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Event2" type="Node" parent="phase_1" node_paths=PackedStringArray("prev")]
+process_mode = 4
+script = ExtResource("38_7agr2")
+prev = NodePath("../Event")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="phase_2" type="Node" parent="."]
+script = ExtResource("4_w4wdm")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
 [node name="on_player_exhaustion" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("11_516q3")
 event_id = Array[String](["PLAYER_EXHAUST"])

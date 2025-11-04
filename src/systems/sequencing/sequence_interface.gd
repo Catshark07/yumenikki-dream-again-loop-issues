@@ -10,6 +10,8 @@ var marked_invalid: PackedInt32Array
 var bail_requested: 				bool = false
 
 @export_tool_button("Re-initialize Sequence Order") var reinitialize: Callable = initialize
+@export_tool_button("Let all (children) events wait.") 		var let_events_wait: Callable = initialize
+@export_tool_button("Let all (children) events instant.") 		var let_events_instant: Callable = initialize
 @export_group("Sequence Flags.")
 
 @export var skip_invalid_events: 	bool = false

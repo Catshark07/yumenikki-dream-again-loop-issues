@@ -33,6 +33,7 @@ var animation_tween: Tween
 
 
 # - signals
+signal typing_finished
 signal finished
 
 func _ready() -> void:
@@ -163,6 +164,7 @@ func iterate_text	(_text: String) -> void:
 				await typewriter_timer.timeout
 				
 			can_progress = true
+			typing_finished.emit()
 
 # - animations
 func __open_animation() -> void: 

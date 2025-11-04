@@ -7,4 +7,9 @@ shader_type canvas_item;
 void vertex() {
 	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 }
+
+void fragment()
+{
+	COLOR *= overlay_modulate;
+}
 	

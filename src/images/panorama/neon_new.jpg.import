@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtvwh5fdmawvg"
-path="res://.godot/imported/_common_non_damagable_entities.png-8da3576e827adf3021e508fae742e6c2.ctex"
+uid="uid://dsct0u5twb3om"
+path="res://.godot/imported/neon_new.jpg-7d6bddf9e0071331c05455e28c30e31f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/__ignore/tile_atlas/_common_non_damagable_entities.png"
-dest_files=["res://.godot/imported/_common_non_damagable_entities.png-8da3576e827adf3021e508fae742e6c2.ctex"]
+source_file="res://src/images/panorama/neon_new.jpg"
+dest_files=["res://.godot/imported/neon_new.jpg-7d6bddf9e0071331c05455e28c30e31f.ctex"]
 
 [params]
 

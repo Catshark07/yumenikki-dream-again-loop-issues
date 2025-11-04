@@ -1,10 +1,9 @@
-[gd_scene load_steps=24 format=4 uid="uid://ct8ji25wno2g0"]
+[gd_scene load_steps=29 format=4 uid="uid://ct8ji25wno2g0"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_btdm5"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_0gjmk"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_66mxq"]
 [ext_resource type="TileSet" uid="uid://da3yvrd5fkate" path="res://src/levels/__ignore/tile_set/world_tile_sets/dark_world.tres" id="2_j5e4d"]
-[ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="2_riqk2"]
 [ext_resource type="AudioStream" uid="uid://dq081qpttbo87" path="res://src/audio/bgm/world_dark.WAV" id="3_3uwa1"]
 [ext_resource type="Texture2D" uid="uid://blod6qywfp1to" path="res://src/images/panorama/dark_galaxy.png" id="4_fjcq2"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="4_y1f6q"]
@@ -18,54 +17,53 @@
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="14_ifr6g"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="14_l7566"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="15_1nbvf"]
-[ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="17_1nbvf"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="15_4l7um"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="16_lxt01"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="17_jg0gg"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="20_jg0gg"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5y7fs"]
-shader = ExtResource("4_y1f6q")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.73
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yskj0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wd2vx"]
 
 [sub_resource type="Curve" id="Curve_y1f6q"]
 _limits = [0.0, 1.5, 0.0, 1.0]
 _data = [Vector2(0, 1.07898), 0.0, 0.0, 0, 0, Vector2(0.0705882, 1.5), 0.0, 0.0, 0, 0, Vector2(0.170588, 0.75767), 0.0, 0.0, 0, 0, Vector2(0.220588, 0.957102), 0.0, 0.0, 0, 0, Vector2(0.408823, 0.667614), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 6
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_50r0p"]
-size = Vector2(15, 15)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eclfr"]
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fjcq2"]
 
-[node name="dark_world" type="Node"]
+[sub_resource type="Resource" id="Resource_u016b"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("15_4l7um")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5y7fs"]
+shader = ExtResource("4_y1f6q")
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.73
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
+
+[node name="dark_world" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_btdm5")
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
+load_transition = SubResource("ShaderMaterial_yskj0")
+unload_transition = SubResource("ShaderMaterial_wd2vx")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("2_riqk2")
-stream = ExtResource("3_3uwa1")
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
-
 [node name="camera" parent="." instance=ExtResource("2_66mxq")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../y_order/Madotsuki")
 
 [node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
 layer = -30
 visible = false
-
-[node name="bg" type="TextureRect" parent="panorama (bottom_layer)"]
-material = SubResource("ShaderMaterial_5y7fs")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_fjcq2")
 
 [node name="stars" type="CPUParticles2D" parent="."]
 position = Vector2(240, 135)
@@ -83,9 +81,8 @@ affector = NodePath("..")
 independent = true
 metadata/_custom_type_script = "uid://ctbtfitoggtku"
 
-[node name="NodeFollower" type="Node" parent="stars/ComponentReceiver" node_paths=PackedStringArray("node")]
+[node name="NodeFollower" type="Node" parent="stars/ComponentReceiver"]
 script = ExtResource("8_40cwn")
-node = NodePath("../../../camera/camera_handler/marker/camera")
 metadata/_custom_type_script = "uid://dwpwacl2mob54"
 
 [node name="dark_overlay" type="CanvasModulate" parent="."]
@@ -97,10 +94,30 @@ y_sort_enabled = true
 [node name="dark_door" parent="y_order" instance=ExtResource("9_4l7um")]
 position = Vector2(560, 144)
 
-[node name="scene_traversal" parent="y_order/dark_door" index="2"]
-scene_path = "uid://dl25joalnmaxt"
+[node name="on_interact" parent="y_order/dark_door" index="0" node_paths=PackedStringArray("order", "front", "back")]
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("wait"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 
-[node name="renderer" parent="y_order/dark_door" index="6"]
+[node name="request_cutscene_start" parent="y_order/dark_door/on_interact" index="0" node_paths=PackedStringArray("next")]
+next = NodePath("../play_sound")
+
+[node name="play_sound" parent="y_order/dark_door/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../wait")
+
+[node name="wait" parent="y_order/dark_door/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+prev = NodePath("../play_sound")
+next = NodePath("../travel_to_scene")
+
+[node name="travel_to_scene" parent="y_order/dark_door/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+prev = NodePath("../wait")
+next = NodePath("../request_cutscene_end")
+
+[node name="request_cutscene_end" parent="y_order/dark_door/on_interact" index="4" node_paths=PackedStringArray("prev")]
+prev = NodePath("../travel_to_scene")
+
+[node name="renderer" parent="y_order/dark_door" index="2"]
 texture = ExtResource("10_lxt01")
 hframes = 1
 frame_h_count = 1
@@ -113,19 +130,23 @@ tile_set = ExtResource("2_j5e4d")
 tile_map_data = PackedByteArray("AAAwAEIAAAACAAQAAAA=")
 tile_set = ExtResource("6_riqk2")
 
-[node name="wilderness_gate" type="Area2D" parent="y_order/wilderness_door"]
+[node name="wilderness_gate" type="Area2D" parent="y_order/wilderness_door" node_paths=PackedStringArray("rect")]
 position = Vector2(776, 1096)
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("12_40cwn")
 secret = true
 area = true
-centred = true
-shape = SubResource("RectangleShape2D_50r0p")
+rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="sequence" type="Node" parent="y_order/wilderness_door/wilderness_gate"]
+[node name="sequence" type="Node" parent="y_order/wilderness_door/wilderness_gate" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("13_ybkk5")
+order = [NodePath("travel")]
+front = NodePath("travel")
+back = NodePath("travel")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="travel" type="Node" parent="y_order/wilderness_door/wilderness_gate/sequence" node_paths=PackedStringArray("scene_traversal")]
@@ -133,9 +154,12 @@ script = ExtResource("14_l7566")
 scene_traversal = NodePath("../../to_wilderness")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="from_wilderness" type="Node2D" parent="y_order/wilderness_door/wilderness_gate"]
+[node name="from_wilderness" type="Node2D" parent="y_order/wilderness_door/wilderness_gate" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 24)
 script = ExtResource("14_ifr6g")
+scene_path = "uid://cs8yn56f0t60a"
+connection_id = "dark_world"
+parent_instead_of_self = NodePath(".")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="to_wilderness" type="Node" parent="y_order/wilderness_door/wilderness_gate" node_paths=PackedStringArray("spawn_point")]
@@ -145,6 +169,10 @@ connection_id = "dark_world"
 spawn_point = NodePath("../from_wilderness")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
+[node name="rect" type="CollisionShape2D" parent="y_order/wilderness_door/wilderness_gate"]
+shape = SubResource("RectangleShape2D_eclfr")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
 [node name="col" type="StaticBody2D" parent="y_order/wilderness_door"]
 position = Vector2(776, 1080)
 
@@ -153,11 +181,50 @@ shape = SubResource("RectangleShape2D_fjcq2")
 
 [node name="Madotsuki" parent="y_order" instance=ExtResource("2_0gjmk")]
 position = Vector2(744, 1120)
+values = SubResource("Resource_u016b")
 
-[node name="seamless_detector" parent="." instance=ExtResource("17_1nbvf")]
-position = Vector2(96, -112)
-expansion = Vector2i(84, 95)
-boundary_size = Vector2i(1824, 1776)
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("16_lxt01")
+order = [NodePath("panorama"), NodePath("bgm")]
+skip_invalid_events = true
+front = NodePath("panorama")
+back = NodePath("bgm")
+
+[node name="panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "next")]
+script = ExtResource("17_jg0gg")
+subviewport = NodePath("subviewport")
+pivot = NodePath("pivot")
+next = NodePath("../bgm")
+metadata/_custom_type_script = "uid://dxx2gbg56i1ts"
+
+[node name="pivot" type="Marker2D" parent="on_initial/panorama"]
+
+[node name="subviewport" type="SubViewport" parent="on_initial/panorama"]
+own_world_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+
+[node name="bg" type="TextureRect" parent="on_initial/panorama/subviewport"]
+material = SubResource("ShaderMaterial_5y7fs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_fjcq2")
+
+[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
+script = ExtResource("20_jg0gg")
+stream = ExtResource("3_3uwa1")
+prev = NodePath("../panorama")
+metadata/_custom_type_script = "uid://ctqw6a8qsvnv4"
+
+[node name="on_free" type="Node" parent="."]
+script = ExtResource("16_lxt01")
+skip_invalid_events = true
 
 [editable path="camera"]
 [editable path="y_order/dark_door"]

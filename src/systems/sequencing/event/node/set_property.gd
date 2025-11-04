@@ -57,7 +57,8 @@ func search_property(_node: Node, _name: String) -> Dictionary:
 			property_exists_in_node = true
 			property_value = node.get(_name)
 			new_value = property_value
-			if new_value is Resource: new_value.duplicate()
+			if 	property_value is Resource: 
+				new_value = property_value.duplicate(true)
 			return i
 	
 	property_exists_in_node = false
