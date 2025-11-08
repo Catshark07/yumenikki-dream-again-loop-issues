@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=46 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="2_f263f"]
@@ -34,8 +34,9 @@
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_cin7d"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="32_57bvo"]
+[ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="35_bfa5j"]
 
-[sub_resource type="Resource" id="Resource_57bvo"]
+[sub_resource type="Resource" id="Resource_kkxcg"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("2_f263f")
@@ -45,7 +46,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../../sprite_container/container/sprite_renderer:progress")
+tracks/0/path = NodePath("../../sprite_container/sprite_renderer:progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -57,7 +58,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../sprite_container/container/sprite_renderer:texture")
+tracks/1/path = NodePath("../../sprite_container/sprite_renderer:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -99,9 +100,9 @@ motion_mode = 1
 script = ExtResource("1_wub1p")
 stamina_fsm = NodePath("stamina_fsm")
 fsm = NodePath("stance_fsm")
-values = SubResource("Resource_57bvo")
-sprite_renderer = NodePath("sprite_container/container/sprite_renderer")
-shadow_renderer = NodePath("sprite_container/container/shadow_renderer")
+values = SubResource("Resource_kkxcg")
+sprite_renderer = NodePath("sprite_container/sprite_renderer")
+shadow_renderer = NodePath("sprite_container/shadow_renderer")
 
 [node name="sb_components" type="Node2D" parent="."]
 script = ExtResource("7_ps2wd")
@@ -247,21 +248,15 @@ avoidance_layers = 2
 [node name="audio_listener" type="AudioListener2D" parent="."]
 current = true
 
-[node name="sprite_container" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(0, 6)
-enable_node_path = NodePath("container/sprite_renderer")
-script = ExtResource("32_57bvo")
+[node name="sprite_container" type="Node2D" parent="."]
 
-[node name="container" type="Node2D" parent="sprite_container"]
-position = Vector2(0, -6)
-
-[node name="shadow_renderer" type="Sprite2D" parent="sprite_container/container"]
+[node name="shadow_renderer" type="Sprite2D" parent="sprite_container"]
 material = SubResource("CanvasItemMaterial_qcosp")
 position = Vector2(0, 16)
 texture = ExtResource("29_1qwjo")
 offset = Vector2(0, -22)
 
-[node name="sprite_renderer" type="Sprite2D" parent="sprite_container/container"]
+[node name="sprite_renderer" type="Sprite2D" parent="sprite_container"]
 clip_children = 2
 use_parent_material = true
 position = Vector2(0, 16)
@@ -270,12 +265,17 @@ offset = Vector2(0, -24)
 script = ExtResource("30_kknx7")
 frame_dimensions = Vector2i(48, 48)
 
-[node name="shader" type="ColorRect" parent="sprite_container/container/sprite_renderer"]
+[node name="shader" type="ColorRect" parent="sprite_container/sprite_renderer"]
 offset_left = -24.0
 offset_top = -48.0
 offset_right = 24.0
 color = Color(1, 1, 1, 0)
 metadata/_edit_use_anchors_ = true
+
+[node name="on_screen" type="VisibleOnScreenEnabler2D" parent="sprite_container"]
+position = Vector2(0, 6)
+enable_node_path = NodePath("../sprite_renderer")
+script = ExtResource("32_57bvo")
 
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
@@ -302,3 +302,9 @@ shape = SubResource("RectangleShape2D_ylvyo")
 bus = &"Effects"
 script = ExtResource("30_cin7d")
 metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="pl_loop" type="Node2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("35_bfa5j")
+target = NodePath("..")
+do_not_dupe = true
+metadata/_custom_type_script = "uid://bnajku7ggsr2q"

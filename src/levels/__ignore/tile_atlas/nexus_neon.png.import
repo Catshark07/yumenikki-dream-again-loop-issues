@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgxj3fto4j2vl"
-path="res://.godot/imported/neon_world.png-e5ba81356f28e3c5c02f7be1563bd2fd.ctex"
+uid="uid://c0vlp7sk6mcfp"
+path="res://.godot/imported/nexus_neon.png-0a540cdcaf1fb937752706454b3addae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/__ignore/tile_atlas/neon_world.png"
-dest_files=["res://.godot/imported/neon_world.png-e5ba81356f28e3c5c02f7be1563bd2fd.ctex"]
+source_file="res://src/levels/__ignore/tile_atlas/nexus_neon.png"
+dest_files=["res://.godot/imported/nexus_neon.png-0a540cdcaf1fb937752706454b3addae.ctex"]
 
 [params]
 

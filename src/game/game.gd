@@ -25,8 +25,8 @@ var true_time_scale: 	float:
 		true_time_scale_changed.emit(true_ts)
 var true_delta: 		float: get = get_real_delta
 
-signal time_scale_changed(_new: float)
-signal true_time_scale_changed(_new: float)
+signal time_scale_changed		(_new: float)
+signal true_time_scale_changed	(_new: float)
 
 # - signals
 signal game_ready

@@ -9,7 +9,7 @@ signal node_exited_group	(node, group_id)
 func is_within_exclusive(_num: float, _min: float, _max: float) -> bool:
 	return ((_num < _min) and (_num > _max))
 func is_within_inclusive(_num: float, _min: float, _max: float) -> bool:
-		return ((_num <= _min) and (_num >= _max))
+	return ((_num <= _min) and (_num >= _max))
 
 # editor-hint exclusive
 func add_sibling_node(
@@ -26,43 +26,38 @@ func add_child_node(
 	_parent_node: 	Node,
 	_child_node: 	Node,
 	_child_node_name: String) -> Node:
-		var _owner: Node
-		
 		# - bail if parent or child node are non-existent.
-		if _child_node == null or _parent_node == null: 
+		if _child_node == null or _parent_node == null:
 			push("Child node or Parent node do not exist!")
 			return
 			
-		if Engine.is_editor_hint(): _owner = EditorInterface.get_edited_scene_root()
-		else: 						_owner = _parent_node.owner
-		
 		if !_parent_node.has_node(_child_node_name):
 			_parent_node.add_child(_child_node, true)
 			_child_node.name = _child_node_name
-			_child_node.owner = _owner
+			_child_node.owner = _parent_node.owner
 			
 			return _child_node
-		else: 
+			
+		else:
 			push("Parent %s already has child %s - Freeing queued %s." % [_parent_node, _child_node_name, _child_node])
 			_child_node.queue_free()
-		
 			return _parent_node.get_node(_child_node_name)
 			
 func get_child_node_or_null(
-	_parent_node: Node, 
-	_child_node_name: String) -> Node: 
+	_parent_node: Node,
+	_child_node_name: String) -> Node:
 		var _child_node: Node
 		
-		if _parent_node == null or _child_node_name.is_empty(): 
+		if _parent_node == null or _child_node_name.is_empty():
 			push("Parent is null or Child node could not be found.")
 			return null
 		return _parent_node.get_node_or_null(_child_node_name)
 
 # signals
 func connect_to_signal(
-	_conectee: Callable, 
-	_signal: Signal, 
-	_flags: Object.ConnectFlags = 0, 
+	_conectee: Callable,
+	_signal: Signal,
+	_flags: Object.ConnectFlags = 0,
 	_allow_lambda: bool = true) -> void:
 	
 	if _signal.is_connected(_conectee):
@@ -70,7 +65,7 @@ func connect_to_signal(
 		return
 	
 	if !_allow_lambda:
-		if 	_conectee.get_object() == null: 
+		if 	_conectee.get_object() == null:
 			push("GLOBAL UTILS: Lambda callable %s restricted from connecting to signal." % [_conectee])
 			return
 			
@@ -78,13 +73,13 @@ func connect_to_signal(
 func disconnect_from_signal(
 	_conectee: Callable,
 	_signal: Signal) -> void:
-		if !_signal.is_connected(_conectee): 
+		if !_signal.is_connected(_conectee):
 			push("GLOBAL UTILS: Callable %s is not connected to signal %s!" % [_conectee, _signal])
 			return
 		_signal.disconnect(_conectee)
 
 # - groups
-func u_add_to_group(_node: Node, _name: String) -> void: 
+func u_add_to_group(_node: Node, _name: String) -> void:
 	if _node.is_in_group(_name):
 		push("GLOBAL UTILS: Node %s is already in group %s!" % [_node, _name])
 		return
@@ -94,14 +89,9 @@ func u_remove_from_group(_node: Node, _name: String) -> void:
 	if 	_node.is_in_group(_name):
 		_node.remove_from_group(_name)
 
-func get_group_arr(_name: String) -> Array[Node]: 
-	var tree: SceneTree
-	
-	if Engine.is_editor_hint(): tree = EditorInterface.get_edited_scene_root().get_tree()
-	else: 						tree = Game.get_tree()
-	
-	if tree.has_group(_name):
-		return tree.get_nodes_in_group(_name)
+func get_group_arr(_name: String) -> Array[Node]:
+	if get_tree().has_group(_name):
+		return get_tree().get_nodes_in_group(_name)
 	return [null]
 	
 

@@ -1,11 +1,13 @@
 extends Component
-@export var rot_curve: Curve
-@export var rot_strength: float = .9
+@export var camera: CameraHolder
 
 func _physics_update(_delta: float) -> void:
-	if rot_curve:
+	if camera.rot_curve:
 		receiver.affector.marker.global_rotation_degrees = (
-			lerpf(receiver.affector.marker.global_rotation_degrees, rot_strength * rot_curve.sample(receiver.affector.vel.x), _delta * 3.75))
+			lerpf(
+				receiver.affector.marker.global_rotation_degrees, 
+				camera.rot_strength * camera.rot_curve.sample(receiver.affector.vel.x), 
+				_delta * camera.rot_speed))
 	else:
 		receiver.affector.marker.global_rotation_degrees = 0
 

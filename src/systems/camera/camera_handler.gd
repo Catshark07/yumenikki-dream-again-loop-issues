@@ -13,9 +13,10 @@ var vel: 		Vector2
 
 # ---- FOLLOW STRATS ----
 @export_group("Miscallenous")
-static var default := STRAT_FOLLOW.new()
-static var follow_player := STRAT_FOLLOW_SENTIENT.new()
-static var follow_lerp := STRAT_FOLLOW_DEFAULT.new()
+@export var follow_speed: float = 2.35
+static var default 			:= STRAT_FOLLOW.new()
+static var follow_player 	:= STRAT_FOLLOW_SENTIENT.new()
+static var follow_lerp 		:= STRAT_FOLLOW_DEFAULT.new()
 
 var prev_follow_strat: STRAT_FOLLOW = default
 var curr_follow_strat: STRAT_FOLLOW = default
@@ -30,15 +31,20 @@ var shake_comp: CamShake
 
 # ---- cam properties
 @export_group("Camera Properties")
-
-var switch_duration: float = .35
 @export var offset: Vector2 = Vector2(0, 0): set = set_offset
 @export_range(0.8, 2) var zoom: float = 1: set = set_zoom
+var switch_duration: float = .35
 
 @export var override: bool = false:
 	set(ov):
 		override = ov 
 		set_override_flag(ov)
+
+@export_subgroup("Rotation TIlt")
+@export var rot_curve: 		Curve = preload("res://src/systems/camera/rotational_wiggle_curve.tres")
+@export var rot_strength: 	float = .9
+@export var rot_speed: 		float = 2.5
+
 static var motion_reduction: bool = false:
 	set(_reduction):
 		motion_reduction = _reduction
@@ -58,7 +64,12 @@ var zoom_tween: Tween
 
 # ---- target
 @export_group("Target Properties")
-@export var initial_target: CanvasItem
+@export var initial_target: CanvasItem:
+	set(_target):
+		initial_target = _target
+		if _target != null and Engine.is_editor_hint():
+			Utils.connect_to_signal(func(): 
+				if !initial_target.is_inside_tree(): initial_target = null, initial_target.tree_exiting)
 var curr_target: CanvasItem
 var prev_target: CanvasItem
 
@@ -238,7 +249,6 @@ class CamShake:
 class STRAT_FOLLOW:
 	extends Strategy
 
-	var follow_speed := 4.0
 	var final: Vector2
 
 	func _setup(_cam: CameraHolder) -> void: pass
@@ -250,7 +260,7 @@ class STRAT_FOLLOW:
 class STRAT_FOLLOW_DEFAULT:
 	extends STRAT_FOLLOW
 	func _follow(_cam: CameraHolder, _point: Vector2) -> void:
-		final = _cam.global_position.lerp(_point, Game.get_real_delta() * follow_speed)
+		final = _cam.global_position.lerp(_point, Game.get_real_delta() * _cam.follow_speed)
 		_cam.global_position = final
 class STRAT_FOLLOW_SENTIENT:
 	extends STRAT_FOLLOW
@@ -269,7 +279,7 @@ class STRAT_FOLLOW_SENTIENT:
 		if player == null: return
 		look_ahead = look_ahead.lerp(
 			(player.velocity * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 
-			Game.get_real_delta() * follow_speed)
+			Game.get_real_delta() * _cam.follow_speed)
 		final = point + look_ahead
 
 		_cam.global_position = final

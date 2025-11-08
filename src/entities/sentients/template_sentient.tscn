@@ -1,10 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://qvbki1ipp72p"]
+[gd_scene load_steps=26 format=3 uid="uid://qvbki1ipp72p"]
 
 [ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="1_l8d6l"]
+[ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/entities/sb_variables.gd" id="2_2w8np"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="2_xd2xn"]
 [ext_resource type="Texture2D" uid="uid://51l0bvgjidxn" path="res://src/player/2D/madotsuki/display/default/_RESET.png" id="3_l8d6l"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="4_ausy4"]
 [ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="5_33g5e"]
+[ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="5_yha0i"]
 [ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="6_yha0i"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/systems/tools/FSM/sentient_fsm.gd" id="7_2w8np"]
 [ext_resource type="Script" uid="uid://qdqcvtymsa3v" path="res://src/systems/tools/FSM/sentient_state.gd" id="8_0k3de"]
@@ -19,9 +21,12 @@
 [ext_resource type="Script" uid="uid://cgrlne63ptsn5" path="res://src/entities/hostile/behaviour_states/wander_sub_move.gd" id="14_yha0i"]
 [ext_resource type="Script" uid="uid://sahjehrg3n8o" path="res://src/entities/hostile/behaviour_states/follow.gd" id="15_icb7j"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="17_21guf"]
+[ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="22_0k3de"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xd2xn"]
-size = Vector2(2, 2)
+[sub_resource type="Resource" id="Resource_0k3de"]
+resource_local_to_scene = true
+resource_name = "sb_variables"
+script = ExtResource("2_2w8np")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18lqh"]
 blend_mode = 2
@@ -34,19 +39,9 @@ script = ExtResource("1_l8d6l")
 nav_agent = NodePath("nav")
 stance_fsm = NodePath("stance_fsm")
 behaviour_fsm = NodePath("behaviour_fsm")
+values = SubResource("Resource_0k3de")
 sprite_renderer = NodePath("sprite_renderer")
 shadow_renderer = NodePath("shadow_renderer")
-
-[node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="."]
-rect = Rect2(-150, -125, 300, 250)
-
-[node name="world_warp" type="Area2D" parent="."]
-disable_mode = 1
-collision_layer = 2147483648
-collision_mask = 2147483648
-
-[node name="_" type="CollisionShape2D" parent="world_warp"]
-shape = SubResource("RectangleShape2D_xd2xn")
 
 [node name="shadow_renderer" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_18lqh")
@@ -60,6 +55,13 @@ texture = ExtResource("3_l8d6l")
 script = ExtResource("4_ausy4")
 frame_dimensions = Vector2i(20, 26)
 metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
+
+[node name="sb_sprite" type="Node2D" parent="sprite_renderer" node_paths=PackedStringArray("target")]
+script = ExtResource("5_yha0i")
+target = NodePath("..")
+properties = PackedStringArray("texture", "frame", "flip_h")
+do_not_update = false
+metadata/_custom_type_script = "uid://bnajku7ggsr2q"
 
 [node name="sb_components" type="Node2D" parent="."]
 script = ExtResource("5_33g5e")
@@ -156,3 +158,15 @@ metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 [node name="sound_player" type="AudioStreamPlayer" parent="."]
 script = ExtResource("17_21guf")
 metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="sb_loop" type="Node2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("5_yha0i")
+target = NodePath("..")
+do_not_dupe = true
+do_not_include_occlusions = true
+metadata/_custom_type_script = "uid://bnajku7ggsr2q"
+
+[node name="enabler" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-160, -90, 320, 180)
+script = ExtResource("22_0k3de")
+metadata/_custom_type_script = "uid://bokon3yk8g4bw"

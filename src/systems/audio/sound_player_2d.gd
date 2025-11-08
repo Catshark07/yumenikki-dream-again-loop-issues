@@ -16,9 +16,11 @@ const ZERO_VOLUME = -50
 @export var affected_by_timescale: bool = false:
 	set(_is_affected):
 		affected_by_timescale = _is_affected
+		if Engine.is_editor_hint(): return
+	
 		match _is_affected:
-			true: Game.true_time_scale_changed.connect(set_timescale_factor)
-			false: Game.true_time_scale_changed.disconnect(set_timescale_factor)
+			true: 	Utils.connect_to_signal(set_timescale_factor, Game.true_time_scale_changed)
+			false: 	Utils.disconnect_from_signal(set_timescale_factor, Game.true_time_scale_changed)
 var timescale_factor: float = 0
 
 func _ready() -> void:

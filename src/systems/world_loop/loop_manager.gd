@@ -58,14 +58,15 @@ func _ready() -> void:
 	loop_objects_detect.set_meta("_edit_lock_", true)
 	shape_detect.		set_meta("_edit_lock_", true)
 	
+	var draw_safe_zone = func draw_safezone(): 
+		if Engine.is_editor_hint():
+			shape_detect.draw_rect(
+				Rect2(
+					-(world_size + SAFE_ZONE * 2) / 2, 
+					world_size + SAFE_ZONE * 2), draw_colour)
+	
 	Utils.connect_to_signal(
-		func():
-			if Engine.is_editor_hint():
-				shape_detect.draw_rect(
-					Rect2(
-						-(world_size + SAFE_ZONE * 2) / 2, 
-						world_size + SAFE_ZONE * 2), draw_colour),
-			shape_detect.draw)
+		draw_safe_zone, shape_detect.draw)
 	
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): (shape_detect.shape as RectangleShape2D).size = world_size

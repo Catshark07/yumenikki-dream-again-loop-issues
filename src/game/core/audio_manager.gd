@@ -14,7 +14,9 @@ static func adjust_bus_effect(_bus_name: String, _fx_indx: int, _fx_prop: String
 		AudioServer.get_bus_effect_count(AudioServer.get_bus_index(_bus_name)) - 1 >= _fx_indx and
 		AudioServer.get_bus_effect(AudioServer.get_bus_index(_bus_name), _fx_indx)):
 		AudioServer.get_bus_effect(AudioServer.get_bus_index(_bus_name), _fx_indx).set(_fx_prop, _new_val)	
+
 static func add_bus_effect(_bus_name: String, _fx: AudioEffect) -> void:
+	if _fx == null: return
 	if (AudioServer.get_bus_index(_bus_name)) >= 0:			
 		AudioServer.add_bus_effect(AudioServer.get_bus_index(_bus_name), _fx)
 static func remove_bus_effect(_bus_name: String, _fx_indx: int) -> void:
@@ -22,6 +24,14 @@ static func remove_bus_effect(_bus_name: String, _fx_indx: int) -> void:
 		AudioServer.get_bus_effect_count(AudioServer.get_bus_index(_bus_name)) - 1 >= _fx_indx and
 		AudioServer.get_bus_effect(AudioServer.get_bus_index(_bus_name), _fx_indx)):
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index(_bus_name), _fx_indx)
+static func clear_bus_from_all_effects(_bus_name: String) -> void:
+	if (AudioServer.get_bus_index(_bus_name)) >= 0:
+		for i in AudioServer.get_bus_effect_count(AudioServer.get_bus_index(_bus_name)) - 1:
+			AudioServer.remove_bus_effect(AudioServer.get_bus_index(_bus_name), i)
+
+static func has_bus_name(_bus_name: String) -> bool:
+	return (AudioServer.get_bus_index(_bus_name)) >= 0 
+
 static func set_effect_active(_bus_name: String, _fx_indx: int, _active: bool) -> void:
 	if ((AudioServer.get_bus_index(_bus_name)) >= 0 and 
 		AudioServer.get_bus_effect_count(AudioServer.get_bus_index(_bus_name)) - 1 >= _fx_indx and

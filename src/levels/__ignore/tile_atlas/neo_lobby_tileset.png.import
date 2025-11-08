@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1nd5p3pvb04b"
-path="res://.godot/imported/wiggle.png-e1cb696a3dbd74720408a77896956085.ctex"
+uid="uid://bgxj3fto4j2vl"
+path="res://.godot/imported/neo_lobby_tileset.png-3a7b78da00c569bcd1e3cd885af2fad8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/entities/sentients/neon/wiggle.png"
-dest_files=["res://.godot/imported/wiggle.png-e1cb696a3dbd74720408a77896956085.ctex"]
+source_file="res://src/levels/__ignore/tile_atlas/neo_lobby_tileset.png"
+dest_files=["res://.godot/imported/neo_lobby_tileset.png-3a7b78da00c569bcd1e3cd885af2fad8.ctex"]
 
 [params]
 

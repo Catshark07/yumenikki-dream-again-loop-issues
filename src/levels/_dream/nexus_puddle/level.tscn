@@ -1,15 +1,13 @@
-[gd_scene load_steps=25 format=4 uid="uid://4qtk6nnecrel"]
+[gd_scene load_steps=28 format=4 uid="uid://4qtk6nnecrel"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_7eh56"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_61b85"]
-[ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="2_j13fa"]
-[ext_resource type="AudioStream" uid="uid://c73s1pvspdp5w" path="res://src/audio/bgm/world_puddle.ogg" id="4_0jnag"]
 [ext_resource type="Shader" uid="uid://bwrguqumtsyrq" path="res://src/shaders/masks/sprite.gdshader" id="4_61b85"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="4_a2suj"]
 [ext_resource type="Texture2D" uid="uid://d21ss1ocopvp0" path="res://src/images/panorama/puddle_panorama.png" id="4_d3qgj"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="5_3k7cl"]
 [ext_resource type="TileSet" uid="uid://t43wqgdupoji" path="res://src/levels/__ignore/tile_set/world_tile_sets/puddle.tres" id="7_61b85"]
-[ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="9_0jnag"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="8_0q71x"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_qjk5i"]
 [ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="11_1bnqm"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="12_l01gf"]
@@ -17,61 +15,57 @@
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="14_qiu13"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="15_0q71x"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="16_gop38"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="18_gop38"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="18_qiu13"]
 [ext_resource type="PackedScene" uid="uid://d16fq6x3pv6mv" path="res://src/entities/effects/lantern/lantern.tscn" id="19_0q71x"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="19_ojb0a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7th6b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hi2k1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0jnag"]
 shader = ExtResource("4_61b85")
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 0.9
 shader_parameter/scroll_speed = 0.03
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 shader_parameter/world_texture = ExtResource("4_d3qgj")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4ptl"]
-size = Vector2(42, 42)
+[sub_resource type="Resource" id="Resource_o4ctc"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("8_0q71x")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0q71x"]
-size = Vector2(16, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iic3v"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2uhlm"]
+size = Vector2(16, 16)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_no4b8"]
 vertices = PackedVector2Array(1670, 438, 1546, 438, 1546, 258, 1670, 258)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(1536, 248, 1536, 448, 1680, 448, 1680, 248)])
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qiu13"]
-size = Vector2(16, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jahj1"]
+size = Vector2(16, 16)
 
-[node name="puddle_world" type="Node"]
+[node name="puddle_world" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_7eh56")
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
+load_transition = SubResource("ShaderMaterial_7th6b")
+unload_transition = SubResource("ShaderMaterial_hi2k1")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." instance=ExtResource("2_61b85")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../puddle_loop/Madotsuki")
-
-[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
-layer = -30
-
-[node name="ColorRect" type="ColorRect" parent="panorama (bottom_layer)"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("2_j13fa")
-stream = ExtResource("4_0jnag")
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="puddle_loop" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -95,29 +89,55 @@ tile_set = ExtResource("5_3k7cl")
 
 [node name="Madotsuki" parent="puddle_loop" instance=ExtResource("4_a2suj")]
 position = Vector2(210, 120)
+values = SubResource("Resource_o4ctc")
 
 [node name="door_interactable" parent="puddle_loop" instance=ExtResource("10_qjk5i")]
 position = Vector2(240, 136)
 
-[node name="scene_traversal" parent="puddle_loop/door_interactable" index="2"]
-scene_path = "uid://dl25joalnmaxt"
+[node name="on_interact" parent="puddle_loop/door_interactable" index="0" node_paths=PackedStringArray("order", "front", "back")]
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("wait"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 
-[node name="renderer" parent="puddle_loop/door_interactable" index="6"]
+[node name="request_cutscene_start" parent="puddle_loop/door_interactable/on_interact" index="0" node_paths=PackedStringArray("next")]
+next = NodePath("../play_sound")
+
+[node name="play_sound" parent="puddle_loop/door_interactable/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../wait")
+
+[node name="wait" parent="puddle_loop/door_interactable/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+prev = NodePath("../play_sound")
+next = NodePath("../travel_to_scene")
+
+[node name="travel_to_scene" parent="puddle_loop/door_interactable/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+prev = NodePath("../wait")
+next = NodePath("../request_cutscene_end")
+
+[node name="request_cutscene_end" parent="puddle_loop/door_interactable/on_interact" index="4" node_paths=PackedStringArray("prev")]
+prev = NodePath("../travel_to_scene")
+
+[node name="renderer" parent="puddle_loop/door_interactable" index="2"]
 texture = ExtResource("11_1bnqm")
 hframes = 1
 frame_h_count = 1
 
-[node name="to_dense_woods_A" type="Area2D" parent="puddle_loop"]
+[node name="to_dense_woods_A" type="Area2D" parent="puddle_loop" node_paths=PackedStringArray("rect")]
 position = Vector2(1176, 424)
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("12_l01gf")
-centred = true
-size = Vector2i(42, 42)
-shape = SubResource("RectangleShape2D_j4ptl")
+rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="OnInteract" type="Node" parent="puddle_loop/to_dense_woods_A"]
+[node name="OnInteract" type="Node" parent="puddle_loop/to_dense_woods_A" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
 script = ExtResource("13_no4b8")
+order = [NodePath("Event")]
+front = NodePath("Event")
+back = NodePath("Event")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
 [node name="Event" type="Node" parent="puddle_loop/to_dense_woods_A/OnInteract" node_paths=PackedStringArray("scene_traversal")]
@@ -128,8 +148,9 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="from_dense_woods" type="Node2D" parent="puddle_loop/to_dense_woods_A" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(-32, 16)
 script = ExtResource("15_0q71x")
+scene_path = "uid://dgcff10ohhvo7"
+connection_id = "pink_box"
 parent_instead_of_self = NodePath("..")
-as_sibling = true
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="to_dense_woods" type="Node" parent="puddle_loop/to_dense_woods_A" node_paths=PackedStringArray("spawn_point")]
@@ -139,33 +160,33 @@ connection_id = "pink_box"
 spawn_point = NodePath("../from_dense_woods")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
-[node name="seamless_detector" parent="puddle_loop" instance=ExtResource("9_0jnag")]
-position = Vector2(-336, -176)
-expansion = Vector2i(90, 45)
-boundary_size = Vector2i(1920, 976)
+[node name="rect" type="CollisionShape2D" parent="puddle_loop/to_dense_woods_A"]
+shape = SubResource("RectangleShape2D_iic3v")
+debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="to_lantern_loop" type="Area2D" parent="puddle_loop" node_paths=PackedStringArray("spawn_point", "target_door")]
+[node name="to_lantern_loop" type="Area2D" parent="puddle_loop" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
 position = Vector2(696, 208)
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("18_qiu13")
 spawn_point = NodePath("spawn_point")
 target_door = NodePath("../../lantern_loop/to_puddle_loop")
-spawn_dir_vector = Vector2(0, 1)
-spawn_pos_vector = Vector2(0, 36)
 parallel = true
-centred = true
-size = Vector2i(16, 32)
-shape = SubResource("RectangleShape2D_0q71x")
+rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="rect" type="CollisionShape2D" parent="puddle_loop/to_lantern_loop"]
+shape = SubResource("RectangleShape2D_2uhlm")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="puddle_loop/to_lantern_loop" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("15_0q71x")
+parent_instead_of_self = NodePath("../..")
 
 [node name="lantern_loop" type="Node2D" parent="."]
 y_sort_enabled = true
 position = Vector2(984, -240)
-
-[node name="seamless_detector" parent="lantern_loop" instance=ExtResource("9_0jnag")]
-position = Vector2(1240, 64)
-expansion = Vector2i(24, 20)
-boundary_size = Vector2i(864, 576)
 
 [node name="lamps" type="TileMapLayer" parent="lantern_loop"]
 y_sort_enabled = true
@@ -176,22 +197,63 @@ tile_set = ExtResource("5_3k7cl")
 navigation_polygon = SubResource("NavigationPolygon_no4b8")
 navigation_layers = 2
 
-[node name="to_puddle_loop" type="Area2D" parent="lantern_loop" node_paths=PackedStringArray("spawn_point", "target_door")]
+[node name="to_puddle_loop" type="Area2D" parent="lantern_loop" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
 position = Vector2(1320, 256)
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("18_qiu13")
 spawn_point = NodePath("spawn_point")
 target_door = NodePath("../../puddle_loop/to_lantern_loop")
-spawn_dir_vector = Vector2(0, 1)
-spawn_pos_vector = Vector2(0, 36)
 parallel = true
-centred = true
-size = Vector2i(16, 32)
-shape = SubResource("RectangleShape2D_qiu13")
+rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
+[node name="rect" type="CollisionShape2D" parent="lantern_loop/to_puddle_loop"]
+shape = SubResource("RectangleShape2D_jahj1")
+debug_color = Color(0.2, 0, 0.7, 0.2)
+
+[node name="spawn_point" type="Node2D" parent="lantern_loop/to_puddle_loop" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("15_0q71x")
+parent_instead_of_self = NodePath("../..")
+
 [node name="lantern" parent="lantern_loop" instance=ExtResource("19_0q71x")]
 position = Vector2(1616, 336)
+
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("18_gop38")
+order = [NodePath("panorama")]
+skip_invalid_events = true
+front = NodePath("panorama")
+back = NodePath("panorama")
+
+[node name="panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot")]
+script = ExtResource("19_ojb0a")
+subviewport = NodePath("subviewport")
+pivot = NodePath("pivot")
+metadata/_custom_type_script = "uid://dxx2gbg56i1ts"
+
+[node name="pivot" type="Marker2D" parent="on_initial/panorama"]
+
+[node name="subviewport" type="SubViewport" parent="on_initial/panorama"]
+own_world_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+
+[node name="black" type="ColorRect" parent="on_initial/panorama/subviewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="on_free" type="Node" parent="."]
+script = ExtResource("18_gop38")
+skip_invalid_events = true
 
 [editable path="camera"]
 [editable path="puddle_loop/door_interactable"]

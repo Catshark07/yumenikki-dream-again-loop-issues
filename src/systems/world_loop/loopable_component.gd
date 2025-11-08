@@ -12,26 +12,31 @@ const LOOPABLE_ID := &"loop_components"
 @export var manager: LoopManager
 
 # - the nodes and their properties.
+@export_group("Target and Properties Info")
 @export var target: Node
+@export var properties: PackedStringArray 
+
+@export_group("Duplicates and Occlusion Array")
 @export var dupe_nodes: Array[Node]
 @export var occlusions: Array[OnScreenNotifier]
-@export var properties: PackedStringArray 
 
 # - flags.
 @export_group("Flags")
-@export var do_not_loop:		bool = false
-@export var do_not_dupe: 		bool = false:
+@export var do_not_loop:				bool = false
+@export var do_not_dupe: 				bool = false:
 	get:
 		if target == null or !target is CanvasItem: return true
 		return do_not_dupe
-@export var do_not_update: 		bool = true:
+@export var do_not_update: 				bool = true:
 	set(no_update):
 		do_not_update = no_update
 		if manager == null: return
 		if no_update:	 	Utils.disconnect_from_signal(update_duplicates, manager.update_dupe_nodes)
 		else:				Utils.connect_to_signal		(update_duplicates, manager.update_dupe_nodes)
-@export var keep_child_nodes: 	bool = false
-@export var custom_target: 		bool = false
+@export var do_not_include_occlusions: 	bool = false
+
+@export var keep_child_nodes: 			bool = false
+@export var custom_target: 				bool = false
 
 #  - readonly.
 @export_group("Read-Only")
@@ -40,14 +45,12 @@ const LOOPABLE_ID := &"loop_components"
 	set = __set_size
 
 # - signals
-signal loop_node_deleted(_loop_node)
 
 func loopable_setup(_manager: LoopManager) -> void:
 	manager 	= _manager
 
 func _ready() -> void:
 	do_not_update = do_not_update
-	Utils.connect_to_signal(update_loop_nodes_list, loop_node_deleted)
 
 func _enter_tree() -> void:	
 	Utils.u_add_to_group(self, LOOPABLE_ID)
@@ -60,68 +63,47 @@ func _exit_tree() -> void:
 func update_duplicates() -> void: 
 	for i in range(dupe_nodes.size()):
 		var dupe_node = dupe_nodes[i]
-		var occlusion = occlusions[i]
-		
-		occlusion.rect.size = world_size * 1.35
-		occlusion.rect.position = -(occlusion.rect.size / 2)
-		
-		if dupe_node == null: continue
+		if 	dupe_node == null: continue
 		
 		for p in properties:
 			if target.get_indexed(p) == null: continue
 			dupe_node.set_indexed(p, target.get_indexed(p))	
-
+		
 func setup_loop_nodes() -> void:
 	# - we clear and free the old duplicated nodes list.
-	var first_dupe: Node = null
-	if do_not_dupe: return
+	if do_not_dupe or !(target is CanvasItem) : return
 	
+	var first_dupe: Node = null
 	dupe_nodes.resize(8)
+	occlusions.resize(8)
 	
 	# - we create the duplicated nodes.
 	for i in range(8):
 		# - we get any dupes already existent.
-		var potential_dupe = Utils.get_child_node_or_null(self, "loop_%s_%s" % [target.name, i])
-						
 		# - if it already exists, then skip it.
-		if 		potential_dupe != null and dupe_nodes.has(potential_dupe): 
-			dupe_nodes[i] = (potential_dupe)
+		var potential_dupe = Utils.get_child_node_or_null(self, "loop_%s_%s" % [target.name, i])
+		if 		potential_dupe != null and dupe_nodes.has(potential_dupe): 	continue
+		elif 	potential_dupe != null: dupe_nodes[i] = potential_dupe; 	continue
 		
-		# - if it does exist but not in the array, then delete it.	
-		elif 	potential_dupe != null: 
-			potential_dupe.reparent(self)
-			continue
-		
-		if first_dupe != null:
-			potential_dupe = Utils.add_child_node(self, first_dupe.duplicate(), "loop_%s_%s" % [target.name, i])
+		# -- 
+		if 	first_dupe == null:
+			first_dupe = Utils.add_child_node(self, target.duplicate(), "loop_%s_%s" % [target.name, i])
+			potential_dupe = first_dupe
 		else:
-			potential_dupe = Utils.add_child_node(self, target.duplicate(), "loop_%s_%s" % [target.name, i])
-		
-		if first_dupe == null: 
-			first_dupe = potential_dupe
+			potential_dupe = Utils.add_child_node(self, first_dupe.duplicate(), "loop_%s_%s" % [target.name, i])
 			
-		if !keep_child_nodes:
-			for c in potential_dupe.get_children(): c.queue_free()
 		
-		for c in potential_dupe.get_children(): 
-			c.owner = self.owner
-			if c.name == self.name: c.free()
+		if !keep_child_nodes: for c in potential_dupe.get_children(): c.queue_free() 
+		else: 
+			var potential_duped_loop = potential_dupe.get_node_or_null(str(self.name))
+			if	potential_duped_loop in potential_dupe.get_children(): 
+				potential_duped_loop.queue_free()
+				
+		for c in potential_dupe.get_children(): c.owner = self.owner
+		dupe_nodes[i] = potential_dupe
 		
-		dupe_nodes[i] = (potential_dupe)
-		Utils.connect_to_signal(loop_node_deleted.emit.bind(dupe_nodes[i]) ,dupe_nodes[i].tree_exiting)
-		
-		if !(dupe_nodes[i] is CanvasItem): return
-		var occlusion: VisibleOnScreenNotifier2D = VisibleOnScreenNotifier2D.new()
-
-		dupe_nodes[i].add_child(occlusion)
-
-		occlusion.name = "occlusion"
-		occlusion.screen_entered.connect(func(): dupe_nodes[i] .visible = true)
-		occlusion.screen_exited.connect(func(): dupe_nodes[i] .visible = false)
-		occlusion.rect.size = world_size * 1.35
-		occlusion.rect.position = -(occlusion.rect.size / 2)
-		occlusions.append(occlusion)
-		
+		Utils.connect_to_signal(func(): dupe_nodes[i] = null, dupe_nodes[i].tree_exited)
+				
 	update_duplicates()
 	
 func update_loop_nodes_list(_loop_node) -> void:

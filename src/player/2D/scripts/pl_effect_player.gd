@@ -25,6 +25,7 @@ func _ready() -> void:
 			
 
 func flash_player_sprite() -> void:
+	if Player.Instance.get_pl() != null:
 		(Player.Instance.get_pl().sprite_renderer.get_node("shader") as ColorRect).color.a = 1
 		if flash_tween != null: flash_tween.kill()
 		flash_tween = self.create_tween()
