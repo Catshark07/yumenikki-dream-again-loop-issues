@@ -8,7 +8,7 @@ func _setup() -> void:
 func _state_enter() -> void: 
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Ambience.mute()
-	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
+	Audio.adjust_bus_effect(Audio.BUS_DISTORTED, 1, "cutoff_hz", 300)
 	
 	Game.lerp_timescale(0.5)
 	GameManager.set_cinematic_bars(true)
@@ -19,7 +19,7 @@ func _state_enter() -> void:
 	if inventory != null: inventory._enter()
 func _state_exit() -> void: 	
 	Ambience.unmute()
-	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
+	Audio.adjust_bus_effect(Audio.BUS_DISTORTED, 1, "cutoff_hz", 16000)
 	
 	Game.lerp_timescale(1)
 	GameManager.set_cinematic_bars(false)

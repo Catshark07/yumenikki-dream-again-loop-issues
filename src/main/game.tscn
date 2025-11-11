@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://ra24ysq2f70c"]
+[gd_scene load_steps=51 format=3 uid="uid://ra24ysq2f70c"]
 
 [ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_y4aoe"]
 [ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_3apph"]
@@ -424,6 +424,13 @@ colors = PackedColorArray(1, 1, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dpjd1"]
 gradient = SubResource("Gradient_ci86m")
 
+[sub_resource type="Gradient" id="Gradient_tboue"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8fuah"]
+gradient = SubResource("Gradient_tboue")
+
 [node name="game_manager" type="Node"]
 process_mode = 3
 script = ExtResource("1_y4aoe")
@@ -652,17 +659,16 @@ size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("34_nnm53")
 
-[node name="secondary_transition" type="ColorRect" parent="always"]
+[node name="secondary_transition" type="TextureRect" parent="always"]
 visible = false
 custom_minimum_size = Vector2(480, 270)
 offset_right = 480.0
 offset_bottom = 270.0
 mouse_filter = 2
-color = Color(0, 0, 0, 1)
+texture = SubResource("GradientTexture1D_8fuah")
 script = ExtResource("29_3apph")
-metadata/_custom_type_script = "uid://dmro0dra81fni"
 
-[node name="primary_transition" type="ColorRect" parent="always"]
+[node name="primary_transition" type="TextureRect" parent="always"]
 visible = false
 custom_minimum_size = Vector2(480, 270)
 anchors_preset = 15
@@ -671,5 +677,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 1)
+texture = SubResource("GradientTexture1D_8fuah")
 script = ExtResource("29_3apph")

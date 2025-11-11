@@ -8,17 +8,6 @@ signal cancelled
 # template pusherr line:
 # printerr("EVENT - {NAME} :: {WARNING}!")
 
-# -- 
-const GROUP_EVN := "EventNode"
-const GROUP_SQN := "SequenceNode"
-const DEFAULT_EVENT = "res://src/systems/sequencing/objects/event_object.gd"
-
-@export_storage var abstract_event: SequencerManager.EventObject:
-	set = set_argument_dict
-@export_file("*.gd") var abstract_event_script: String:
-	set = create_abstract_event
-@export var abstract_event_args: Dictionary
-
 # --
 @export_category("Event Flags.")
 @export var wait_til_finished: 	bool = true
@@ -44,21 +33,10 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 
 # -- virtual, override these.
-func _execute	() -> void: 
-	if abstract_event != null:
-		abstract_event.pass_args(abstract_event_args)
-		await abstract_event._execute()
-func _cancel	() -> void: 
-	if abstract_event != null:
-		await abstract_event._cancel()
-func _end		() -> void: 
-	if abstract_event != null:
-		abstract_event.pass_args(abstract_event_args)
-		await abstract_event._end()
-
-func _validate() -> bool: 
-	if abstract_event != null: return abstract_event._validate()
-	return true
+func _execute	() -> void: pass
+func _cancel	() -> void: pass
+func _end		() -> void: pass
+func _validate() -> bool: return true
 
 # -- concrete implementations
 func execute() -> void: 	
@@ -98,56 +76,3 @@ func __call_finished() -> void:
 
 func has_next() -> bool: return next != null
 func has_prev() -> bool: return prev != null
-
-# --
-func _get_property_list() -> Array[Dictionary]:
-	var properties: Array[Dictionary] = [{
-		"name"			: "Event Object Arguments",
-		"type"			: TYPE_NIL,
-		"hint"			: PROPERTY_HINT_NONE,
-		"hint_string"	: "",
-		"usage" 		: PROPERTY_USAGE_CATEGORY}]
-			
-	if abstract_event != null: 
-		for p in abstract_event.get_property_list():
-			if  p["usage"] % PROPERTY_USAGE_SCRIPT_VARIABLE == 0:
-				p["usage"] |= PROPERTY_USAGE_EDITOR 
-				properties.append(p)
-	return properties
-
-func _set(property: StringName, value: Variant) -> bool:
-	if !abstract_event_args.is_empty():
-		if  abstract_event_args.has(property):
-			abstract_event_args[property] = value
-	return false
-	
-func _get(property: StringName) -> Variant:
-	if property in abstract_event_args: 
-		return abstract_event_args[property]
-	return
-
-func create_abstract_event(_script_path: String) -> void:
-	if abstract_event != null: abstract_event.free()
-	abstract_event_script = _script_path
-	
-	if _script_path.is_empty() or \
-		!ResourceLoader.exists(_script_path) or \
-		abstract_event_script == DEFAULT_EVENT: 
-			if abstract_event != null: abstract_event.free()
-			return
-			
-	abstract_event = load(_script_path).new()
-	
-func set_argument_dict(_event: SequencerManager.EventObject) -> void:
-	if _event != null:
-		abstract_event = _event
-	
-	else:
-		abstract_event_args = {}
-		if abstract_event != null: abstract_event.free() 
-		return
-	
-	for p in _event.get_property_list():
-		if p["usage"] % PROPERTY_USAGE_SCRIPT_VARIABLE == 0:
-			abstract_event_args[p["name"]] = _event.get_indexed(p["name"])
-	

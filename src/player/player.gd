@@ -83,10 +83,10 @@ class Instance:
 		door_listener.do_on_notify(func(): 
 			
 			for points: SpawnPoint in Utils.get_group_arr("spawn_points"):
-				if points == null: continue
-				
+				print(points, " --- ", ResourceUID.uid_to_path(points.scene_path))
+				print("prev scene --- ", SceneManager.prev_scene_resource.resource_path)
 				if (
-					load(points.scene_path) == SceneManager.prev_scene_resource and
+					load(points.scene_path) == SceneManager.prev_scene_resource and 
 					door_went_flag and
 					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
 						

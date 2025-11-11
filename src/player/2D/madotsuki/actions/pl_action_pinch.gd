@@ -22,7 +22,7 @@ func _action_update			(_pl: Player, _delta: float) -> void:
 		_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).get_animation(pinch_animation).length
 	)
 		
-	if Input.is_action_pressed("pl_primary_action"):
+	if Input.is_physical_key_pressed(KEY_Q):
 		pinch_progress += (_pl.get_process_delta_time() * _delta) * 50
 		if pinch_progress > 0.45:
 			_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).play_animation(pinch_animation, 1)

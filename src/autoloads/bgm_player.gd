@@ -9,9 +9,9 @@ const MUSIC_DICT := {
 	"pitch" : 1, 
 	"carry_over": false}
 
-@onready var prev_music := MUSIC_DICT.duplicate()
-@onready var curr_music := MUSIC_DICT.duplicate()
-@onready var pending_music := MUSIC_DICT.duplicate()
+@onready var prev_music 	:= MUSIC_DICT.duplicate()
+@onready var curr_music 	:= MUSIC_DICT.duplicate()
+@onready var pending_music 	:= MUSIC_DICT.duplicate()
 
 var vol_tween: Tween
 var pitch_tween: Tween

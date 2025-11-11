@@ -14,12 +14,13 @@ extends Node2D
 
 @onready var spawn_texture: Texture2D = load("res://src/systems/components/independent/pl_spawn.png")
 	
+func _enter_tree() -> void: Utils.u_add_to_group(self, "spawn_points")
+func _exit_tree() -> void: 	Utils.u_remove_from_group(self, "spawn_points")
+	
 func _ready() -> void:		
 	set_process(false)
-	
 	if Engine.is_editor_hint(): queue_redraw()
-	if !Engine.is_editor_hint(): self.add_to_group("spawn_points")
-		
+	
 func _draw() -> void:
 	if Engine.is_editor_hint():
 		draw_texture(

@@ -72,8 +72,9 @@ func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): (shape_detect.shape as RectangleShape2D).size = world_size
 	else: 						update_dupe_nodes.emit()
 		
-	for loopable: LoopableComponent in loop_objects: 
-		if loopable == null: continue
+	for l in range(loop_objects.size()):
+		var loopable: LoopableComponent = loop_objects[l] 
+		if loopable == null or loopable.do_not_loop: continue
 		if loopable.target is CanvasItem and !loopable.do_not_loop:
 			
 			var min_pos = -world_size / 2 + self.global_position
@@ -91,10 +92,12 @@ func set_world_size(_size: Vector2) -> void:
 # - loop components exclusive.
 func update_loopable_collection() -> void: 
 	loop_objects = Utils.get_group_arr(LoopableComponent.LOOPABLE_ID)
-	for loopable: LoopableComponent in loop_objects:
-		if 	loopable != null: 
-			loopable.loopable_setup(self)
-			Utils.connect_to_signal(update_loopable_collection, loopable.tree_exiting)
+	
+	for l in range(loop_objects.size()):
+		var loopable: LoopableComponent = loop_objects[l]
+		if 	loopable == null: continue
+		loopable.loopable_setup(self)
+		
 func update_loopable_world_size() -> void:
 	set_world_size.call_deferred(world_size)
 

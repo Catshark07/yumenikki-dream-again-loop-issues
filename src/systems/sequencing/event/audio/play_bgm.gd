@@ -4,11 +4,9 @@ class_name EVN_PlayBGM
 extends Event
 
 enum MUSIC_BUS {MUSIC, AMBIENCE}
-@export var bus_effect: AudioEffect
-
-@export_group("Audio Stream and Bus")
-@export var music_bus: MUSIC_BUS
+@export var bus_effects: Array[AudioEffect] = []
 @export var stream: AudioStream
+@export var music_bus: MUSIC_BUS
 
 @export_group("Volume and Pitch")
 @export_range(0, 1, .1) var vol: float = 1
@@ -20,7 +18,12 @@ enum MUSIC_BUS {MUSIC, AMBIENCE}
 @export_tool_button("Stop Test Audio") var stop: Callable = stop_test_audio
 
 func _execute() -> void:
-	Audio.add_bus_effect("BGM", bus_effect)
+	for fx in range(bus_effects.size()):
+		Audio.remove_bus_effect("BGM", fx)
+
+	for fx in range(bus_effects.size()):
+		Audio.add_bus_effect("BGM", bus_effects[fx], fx)
+		
 	match music_bus:
 		MUSIC_BUS.MUSIC: 	Music.		play_sound(stream, vol, pitch)
 		MUSIC_BUS.AMBIENCE: Ambience.	play_sound(stream, vol, pitch) 

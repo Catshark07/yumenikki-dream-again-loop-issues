@@ -1,33 +1,28 @@
 [gd_scene load_steps=6 format=3 uid="uid://d26q1aec864fy"]
 
 [ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_rk1pp"]
-[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="2_amob3"]
-[ext_resource type="Texture2D" uid="uid://b1nd5p3pvb04b" path="res://src/entities/sentients/neon/wiggle.png" id="2_g4v4r"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/entities/sb_variables.gd" id="2_xbcqx"]
+[ext_resource type="Texture2D" uid="uid://b1nd5p3pvb04b" path="res://src/entities/sentients/neon/wiggle.png" id="3_1rcer"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="4_jtppu"]
 
 [sub_resource type="Resource" id="Resource_xbcqx"]
 resource_local_to_scene = true
 resource_name = "sb_variables"
 script = ExtResource("2_xbcqx")
 
-[node name="wiggle" instance=ExtResource("1_rk1pp")]
+[node name="template_neutral" instance=ExtResource("1_rk1pp")]
 values = SubResource("Resource_xbcqx")
 
-[node name="sprite_renderer" parent="." index="1"]
-texture = ExtResource("2_g4v4r")
+[node name="sprite_renderer" parent="." index="0"]
+texture = ExtResource("3_1rcer")
 hframes = 4
-script = ExtResource("2_amob3")
+frame = 3
+script = ExtResource("4_jtppu")
 autoplay = true
 loop = true
 reverse = false
 end_frame = false
-fps = 5.0
+fps = 6.0
 frame_dimensions = Vector2i(16, 32)
 frame_h_count = 4
-
-[node name="sb_sprite" parent="sprite_renderer" index="0"]
-properties = PackedStringArray("texture", "frame", "flip_h", "rotation")
-do_not_loop = true
-
-[node name="behaviour_fsm" parent="." index="6" node_paths=PackedStringArray("initial_state")]
-initial_state = NodePath("WANDER")
+progress = 3

@@ -3,7 +3,7 @@ extends RefCounted
 
 var events_listening_to: PackedStringArray
 
-var is_static: bool
+var is_static: 	bool
 var node_owner: Node
 var actions: Dictionary
 

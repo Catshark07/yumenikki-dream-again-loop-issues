@@ -5,7 +5,7 @@ extends State
 
 func _state_enter() -> void: 
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
+	Audio.adjust_bus_effect(Audio.BUS_DISTORTED, 1, "cutoff_hz", 300)
 	
 	GameManager.set_cinematic_bars(true)
 	GameManager.player_hud.indicators.visible = false
@@ -18,7 +18,7 @@ func _state_enter() -> void:
 
 func _state_exit() -> void: 
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
+	Audio.adjust_bus_effect(Audio.BUS_DISTORTED, 1, "cutoff_hz", 16000)
 
 	GameManager.options.visible = false
 	pause_menu	.visible = false

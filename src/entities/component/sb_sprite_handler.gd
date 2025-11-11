@@ -1,10 +1,11 @@
 extends SBComponent
 
-var sprite_renderer: SpriteSheetFormatter
-
 const DEFAULT_DYNAMIC_ROT_MULTI = 1
+
+var sprite_renderer: SpriteSheetFormatter
 var dynamic_rot_intensity: float = 3.85
 var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
+@export var dynamic_rot: bool = true
 
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
@@ -17,7 +18,7 @@ func _update(_delta: float) -> void:
 	handle_sprite_direction(sentient)
 
 func handle_sprite_subtle_rotation(_sentient: SentientBase) -> void:
-	if _sentient != null:
+	if _sentient != null and dynamic_rot:
 		_sentient.sprite_renderer.rotation_degrees = lerp(
 			_sentient.sprite_renderer.rotation_degrees, 
 			sign(_sentient.direction.x) * abs((_sentient.velocity.x / _sentient.BASE_SPEED) * dynamic_rot_intensity * dynamic_rot_multi),

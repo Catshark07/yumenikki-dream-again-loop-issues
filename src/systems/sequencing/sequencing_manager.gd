@@ -18,121 +18,17 @@ static func invoke(_seq: Object, _force_continue: bool = false) -> void:
 			curr = null, CONNECT_ONE_SHOT)
 		
 		curr.execute()
-		
 static func cancel() -> void: 
 	if curr == null: return
 	
 	if curr is Sequence:
-		
 		curr.cancel()
 		await curr.cancelled
 	
-static func create_event() 		-> EventObject: 	return
-static func create_sequence() 	-> SequenceObject: 	return
-	
-# - event objects.
-	
-@abstract
-class EventObject: 
-	extends Object
-
-	signal finished
-	signal cancelled
-
-	func _init() -> void: 
-		finished.	connect(free, ConnectFlags.CONNECT_ONE_SHOT)
-		cancelled.	connect(free, ConnectFlags.CONNECT_ONE_SHOT)
-		
-	func pass_args(_args_dict: Dictionary) -> void: 
-		for i in get_property_list():
-			if i["usage"] == PROPERTY_USAGE_SCRIPT_VARIABLE:
-				set_indexed(i["name"], _args_dict.get(i["name"]))
-				
-		print("success")
-
-	# - abstract
-	@abstract
-	func _execute() -> 	void
-	@abstract
-	func _end() -> 		void
-	@abstract
-	func _cancel() -> 	void
-	@abstract
-	func _validate() -> bool
-
-	func execute() 	-> void: 
-		await _execute()
-		finished.emit()
-	func emd() 		-> void: 
-		await _end()
-	func cancel() 	-> void: 
-		await _cancel()
-		cancelled.emit()
-	
-class SequenceObject:
-	extends EventObject
-	
-	var events: Array[EventObject]
-	var front: 	EventObject
-	var back: 	EventObject
-	
-	signal success
-	signal fail
-	
-	var skip_invalid_events: bool = true
-	var bail_requested:		 bool = false
-
-	func _init(_skip_invalid_events: bool, ..._events) -> void: 
-		skip_invalid_events = _skip_invalid_events
-		
-		for i in _events:
-			events.append(_events)
-		
-		if _events.size() == 0: return
-		front = _events[0]
-		back = _events[_events.size()]
-		
-	func _execute() -> 	void: 
-		if !_validate():
-			printerr("SEQUENCE %s :: Sequence halted due to invalid events!" % (self.name)) 
-			return
-		
-		# - we iterate thru the events..
-		for i in range(events.size()):
-			# - make sure that the child is of type Event.
-			var curr: EventObject = events[i]
-			
-			if 	curr is EventObject and curr != null:
-				await curr.execute() 
-				curr.end()
-				
-			else: continue
-			
-			if 	bail_requested: 
-				break	
-			
-		_end()
-			
-	func _end() -> 		void: bail_requested = false
-	func _cancel() -> 	void: bail_requested = true
-
-	func _validate() -> bool: 
-		var revised_events_arr: Array[EventObject] = []
-		
-		for event in events:
-			if event.skip or event == null: continue
-			if !event._validate():
-				# - if event is invalid...
-				if skip_invalid_events: continue
-				else:
-					fail.emit() 
-					return false
-		
-			revised_events_arr.append(event)
-		
-		success.emit()
-		events = revised_events_arr
-		return true
-
-	func append(_event: EventObject) -> void: 	events.append(_event)
-	func pop() -> EventObject: return 			events.pop_back()
+static func create_sequence(_name: String, _skip_invalid: bool = true, _wait_finish: bool = true) -> Sequence: 
+	var seq = Sequence.new()
+	seq.name 					= _name 
+	seq.skip_invalid_events 	= _skip_invalid
+	seq.wait_til_finished 		= _wait_finish
+	Utils.connect_to_signal(seq.free, seq.finished, ConnectFlags.CONNECT_ONE_SHOT)
+	return seq 

@@ -46,6 +46,7 @@ stamina_bar = NodePath("stamina/stamina_fill/value")
 
 [node name="stamina" type="TextureRect" parent="indicators/icons"]
 y_sort_enabled = true
+use_parent_material = true
 layout_mode = 0
 offset_left = 40.0
 offset_top = 240.0
@@ -72,6 +73,7 @@ offset_bottom = 12.0
 color = Color(0.99998015, 0.124565475, 0.4053996, 1)
 
 [node name="effect_indicator" type="Sprite2D" parent="indicators/icons"]
+use_parent_material = true
 position = Vector2(24, 240)
 texture = ExtResource("9_a8b7g")
 centered = false

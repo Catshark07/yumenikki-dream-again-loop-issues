@@ -31,11 +31,11 @@ func _interact() -> void:
 		
 		EventManager.invoke_event("PLAYER_DOOR_TELEPORTATION")
 		EventManager.invoke_event("CUTSCENE_START_REQUEST")
-		await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
+		await GameManager.screen_transition.fade_in()
 		
 		Player.Instance.teleport_player(target_door.spawn_point.global_position, target_door.spawn_point.spawn_dir)
 		Player.Instance.get_pl().reparent(target_door.get_parent())
 		
-		GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
+		GameManager.screen_transition.fade_out()
 		EventManager.invoke_event("CUTSCENE_END_REQUEST")
 	

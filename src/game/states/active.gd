@@ -4,7 +4,7 @@ var active_state_listener: EventListener
 
 func _setup() -> void:
 	super()
-	active_state_listener = EventListener.new(self, 
+	active_state_listener = EventListener.new(self,  
 		"CUTSCENE_START_REQUEST", "CUTSCENE_END_REQUEST",
 		"SPECIAL_INVERT_START_REQUEST", "SPECIAL_INVERT_END_REQUEST")
 	

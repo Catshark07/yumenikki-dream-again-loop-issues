@@ -49,7 +49,6 @@ static func _setup() -> void:
 		handle_scene_push(EventManager.get_event_param("SCENE_TREE_ENTERED")[0]), 
 		"SCENE_TREE_ENTERED")
 		
-	
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
 static func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void:
 	if ResourceLoader.exists(_scene.resource_path) and _scene.can_instantiate():
@@ -61,6 +60,7 @@ static func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void
 		result = await handle_scene_resource_load(_scene)
 		
 		if result == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
+			prev_scene_resource = curr_scene_resource
 			if _push_to_stack: 
 				handle_scene_push(_scene.instantiate())
 			
@@ -80,13 +80,14 @@ static func handle_scene_push(_scene_node: SceneNode) -> void:
 	if _scene_node == null or _scene_node.initialized: return
 	scene_node = _scene_node
 	
-	prev_scene_resource = curr_scene_resource
 	curr_scene_resource = load(_scene_node.scene_file_path) if !_scene_node.scene_file_path.is_empty() else null
-	_scene_node.initialize()
+	if 		_scene_node.get_parent() == null: 
+		GameManager.pausable_parent.add_child(_scene_node)
+	else: 	
+		_scene_node.reparent.call_deferred(GameManager.pausable_parent)
+		await Game.main_tree.process_frame
 
-	if 		_scene_node.get_parent() == null: GameManager.pausable_parent.add_child(_scene_node)
-	else: 	_scene_node.reparent.call_deferred(GameManager.pausable_parent)
-	
+	_scene_node.initialize()
 	EventManager.invoke_event("SCENE_PUSHED", _scene_node)
 	
 	scene_stack.push(_scene_node)
@@ -107,14 +108,16 @@ static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_ou
 			EventManager.invoke_event("SCENE_CHANGE_REQUEST")
 			GameManager.change_to_state("CHANGING_SCENES")
 			scene_stack.queue_pop()
-			if _fade_in: await GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_IN)
+			
+			if _fade_in: await GameManager.screen_transition.fade_in()
 			Game.scene_unloaded.emit()
 			
 			handle_scene_pop()
+			await Game.main_tree.process_frame
 			await load_scene(_scene)
 			Game.scene_loaded.emit()
 			
-			if _fade_out: GameManager.screen_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
+			if _fade_out: GameManager.screen_transition.fade_out()
 			GameManager.secondary_transition.fade_progress = 0
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")

@@ -27,15 +27,18 @@ func add_child_node(
 	_child_node: 	Node,
 	_child_node_name: String) -> Node:
 		# - bail if parent or child node are non-existent.
+		var _owner
+		if Engine.is_editor_hint(): _owner = EditorInterface.get_edited_scene_root()
+		else:						_owner = _parent_node.owner
+		
 		if _child_node == null or _parent_node == null:
 			push("Child node or Parent node do not exist!")
 			return
 			
 		if !_parent_node.has_node(_child_node_name):
 			_parent_node.add_child(_child_node, true)
-			_child_node.name = _child_node_name
-			_child_node.owner = _parent_node.owner
-			
+			_child_node.name 	= _child_node_name
+			_child_node.owner 	= _owner
 			return _child_node
 			
 		else:
@@ -79,11 +82,11 @@ func disconnect_from_signal(
 		_signal.disconnect(_conectee)
 
 # - groups
-func u_add_to_group(_node: Node, _name: String) -> void:
+func u_add_to_group(_node: Node, _name: String, _persist: bool = false) -> void:
 	if _node.is_in_group(_name):
 		push("GLOBAL UTILS: Node %s is already in group %s!" % [_node, _name])
 		return
-	_node.add_to_group(_name)
+	_node.add_to_group(_name, _persist)
 	node_entered_grouo.emit()
 func u_remove_from_group(_node: Node, _name: String) -> void:
 	if 	_node.is_in_group(_name):

@@ -15,7 +15,6 @@ extends Event
 @export var ease: Tween.EaseType = Tween.EASE_OUT
 
 func _execute() -> void:
-		
 	GameManager.secondary_transition.set_transition(
 		fade_colour,
 		fade_speed,
@@ -23,8 +22,6 @@ func _execute() -> void:
 		transition,
 		ease)
 
-	await GameManager.secondary_transition.request_transition(
-		fade_type, 
-		a,
-		b)
-		
+	match fade_type:
+		ScreenTransition.fade_type.FADE_IN	: GameManager.secondary_transition.fade_in(a, b)
+		ScreenTransition.fade_type.FADE_OUT	: GameManager.secondary_transition.fade_out(b, a)

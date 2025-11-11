@@ -1,7 +1,9 @@
-[gd_scene load_steps=25 format=4 uid="uid://pv68n6xubxic"]
+[gd_scene load_steps=27 format=4 uid="uid://pv68n6xubxic"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ah5rn"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="3_dj02f"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="4_ut3ag"]
+[ext_resource type="AudioStream" uid="uid://b4ccjxsuwusfl" path="res://src/audio/bgm/2kki_zaza.wav" id="5_6i208"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="7_wa1an"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="8_aoe6l"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="8_d6ort"]
@@ -31,13 +33,13 @@ shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
 
-[sub_resource type="Resource" id="Resource_8wpfw"]
+[sub_resource type="Resource" id="Resource_p7cap"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("10_p7cap")
 metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
-[sub_resource type="Resource" id="Resource_ut3ag"]
+[sub_resource type="Resource" id="Resource_8wpfw"]
 resource_local_to_scene = true
 resource_name = "sb_variables"
 script = ExtResource("10_u75xj")
@@ -62,20 +64,28 @@ metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("3_dj02f")
-order = [NodePath("Event")]
-front = NodePath("Event")
-back = NodePath("Event")
+order = [NodePath("play_bgm"), NodePath("panorama")]
+front = NodePath("play_bgm")
+back = NodePath("panorama")
 
-[node name="Event" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot")]
+[node name="play_bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
+process_mode = 4
+script = ExtResource("4_ut3ag")
+stream = ExtResource("5_6i208")
+next = NodePath("../panorama")
+metadata/_custom_type_script = "uid://ctqw6a8qsvnv4"
+
+[node name="panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "prev")]
 process_mode = 4
 script = ExtResource("7_wa1an")
 subviewport = NodePath("subviewport")
 pivot = NodePath("pivot")
+prev = NodePath("../play_bgm")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="pivot" type="Marker2D" parent="on_initial/Event"]
+[node name="pivot" type="Marker2D" parent="on_initial/panorama"]
 
-[node name="subviewport" type="SubViewport" parent="on_initial/Event"]
+[node name="subviewport" type="SubViewport" parent="on_initial/panorama"]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_filter = 0
@@ -83,7 +93,7 @@ canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 
-[node name="TextureRect" type="TextureRect" parent="on_initial/Event/subviewport"]
+[node name="TextureRect" type="TextureRect" parent="on_initial/panorama/subviewport"]
 material = SubResource("ShaderMaterial_e6mh2")
 offset_right = 40.0
 offset_bottom = 40.0
@@ -97,11 +107,11 @@ initial_target = NodePath("../madotsuki")
 
 [node name="madotsuki" parent="." instance=ExtResource("9_u75xj")]
 position = Vector2(184, 136)
-values = SubResource("Resource_8wpfw")
+values = SubResource("Resource_p7cap")
 
 [node name="wiggle" parent="." instance=ExtResource("9_d6ort")]
 position = Vector2(256, 168)
-values = SubResource("Resource_ut3ag")
+values = SubResource("Resource_8wpfw")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("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")
@@ -152,9 +162,7 @@ navigation_layers = 2
 
 [node name="LoopManager" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects", "loop_objects_detect", "shape_detect")]
 script = ExtResource("16_p7cap")
-draw_colour = Color(0.85882354, 0.4392157, 0.5764706, 0.2)
 loop_objects = [null]
-world_size = Vector2(100, 100)
 loop_objects_detect = NodePath("loop_objects_detect")
 shape_detect = NodePath("loop_objects_detect/detect_shape")
 metadata/_custom_type_script = "uid://desxt7tbq37sf"

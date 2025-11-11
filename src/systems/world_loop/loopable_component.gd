@@ -15,10 +15,11 @@ const LOOPABLE_ID := &"loop_components"
 @export_group("Target and Properties Info")
 @export var target: Node
 @export var properties: PackedStringArray 
+@export var node_to_update_properties: Array[Node] = Array[1]
 
 @export_group("Duplicates and Occlusion Array")
 @export var dupe_nodes: Array[Node]
-@export var occlusions: Array[OnScreenNotifier]
+@export var occlusions: Array[VisibleOnScreenNotifier2D]
 
 # - flags.
 @export_group("Flags")
@@ -36,7 +37,6 @@ const LOOPABLE_ID := &"loop_components"
 @export var do_not_include_occlusions: 	bool = false
 
 @export var keep_child_nodes: 			bool = false
-@export var custom_target: 				bool = false
 
 #  - readonly.
 @export_group("Read-Only")
@@ -46,31 +46,32 @@ const LOOPABLE_ID := &"loop_components"
 
 # - signals
 
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_PREDELETE:
+			if 	manager != null:
+				var idx = manager.loop_objects.find(self)
+				if idx >= 0: manager.loop_objects[manager.loop_objects.find(self)] = null
+		
+
 func loopable_setup(_manager: LoopManager) -> void:
 	manager 	= _manager
 
 func _ready() -> void:
+	self.y_sort_enabled = true
 	do_not_update = do_not_update
-
+	
 func _enter_tree() -> void:	
 	Utils.u_add_to_group(self, LOOPABLE_ID)
-	if custom_target: return
 	target = self.get_parent()
+	node_to_update_properties[0] = target
 	
 func _exit_tree() -> void: 	
 	Utils.u_remove_from_group(self, LOOPABLE_ID)
-	
-func update_duplicates() -> void: 
-	for i in range(dupe_nodes.size()):
-		var dupe_node = dupe_nodes[i]
-		if 	dupe_node == null: continue
-		
-		for p in properties:
-			if target.get_indexed(p) == null: continue
-			dupe_node.set_indexed(p, target.get_indexed(p))	
 		
 func setup_loop_nodes() -> void:
 	# - we clear and free the old duplicated nodes list.
+	node_to_update_properties[0] = target
 	if do_not_dupe or !(target is CanvasItem) : return
 	
 	var first_dupe: Node = null
@@ -101,11 +102,32 @@ func setup_loop_nodes() -> void:
 				
 		for c in potential_dupe.get_children(): c.owner = self.owner
 		dupe_nodes[i] = potential_dupe
+		dupe_nodes[i].set_meta("_edit_lock_", true)
 		
-		Utils.connect_to_signal(func(): dupe_nodes[i] = null, dupe_nodes[i].tree_exited)
+	if !do_not_include_occlusions:
+		for i in range(8):
+			if 	dupe_nodes[i] != null:
+				occlusions[i] = Utils.add_child_node(dupe_nodes[i], VisibleOnScreenEnabler2D.new(), "occlusion")
+				occlusions[i].rect.size = world_size * 1.25
+				occlusions[i].rect.position = -occlusions[i].rect.size / 2
+				Utils.connect_to_signal(func(): occlusions[i] = null, occlusions[i].tree_exited)
 				
 	update_duplicates()
 	
+func update_duplicates() -> void: 
+	for i in range(dupe_nodes.size()):
+		if node_to_update_properties.size() == 1: pass
+		var dupe_node = dupe_nodes[i]
+		
+		for p in properties:
+			if target.get_indexed(p) == null: continue
+			dupe_node.set_indexed(p, target.get_indexed(p))	
+		
+		if !do_not_include_occlusions:
+			if occlusions[i] == null: continue
+			occlusions[i].rect.size = world_size * 1.25
+			occlusions[i].rect.position = -occlusions[i].rect.size / 2
+
 func update_loop_nodes_list(_loop_node) -> void:
 	if _loop_node in dupe_nodes:
 		dupe_nodes[dupe_nodes.find(_loop_node)] = null

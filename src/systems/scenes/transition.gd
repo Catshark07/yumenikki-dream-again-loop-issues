@@ -1,7 +1,8 @@
 class_name ScreenTransition
-extends ColorRect
+extends TextureRect
 
 const DEFAULT_SHADER: Shader = preload("res://src/shaders/transition/tr_fade.gdshader")
+var default_texture: GradientTexture1D
 
 var fade_in_shader: 	ShaderMaterial
 var fade_out_shader: 	ShaderMaterial
@@ -19,6 +20,12 @@ var ease_type: 			Tween.EaseType = Tween.EASE_OUT
 var speed: float = 1
 
 func _ready() -> void:
+	default_texture = GradientTexture1D.new()
+	default_texture.gradient = Gradient.new()
+	default_texture.gradient.colors = PackedColorArray([Color.BLACK])
+	
+	texture = default_texture
+	
 	self.z_index = 99
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -75,14 +82,6 @@ func fade_out(
 func set_fade_progress(_progress):
 	fade_progress = _progress
 	self.material.set_shader_parameter("progress", fade_progress)
-	
-func request_transition(
-	_fade_type: fade_type, 
-	_a_progress: float = 0,
-	_b_progress: float = 1) -> void:
-	match _fade_type:
-		fade_type.FADE_IN: 	await fade_in	(_a_progress, _b_progress)
-		fade_type.FADE_OUT: await fade_out	(_b_progress, _a_progress)
 
 func set_transition(
 	_colour: Color = Color.BLACK,
@@ -90,14 +89,13 @@ func set_transition(
 	_custom_shader: ShaderMaterial = null,
 	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
 	_ease: Tween.EaseType = Tween.EASE_OUT) -> void: 
-		self.color 				= _colour
+		self.modulate 			= _colour
 		self.transition_type 	= _transition
 		self.ease_type 			= _ease
 		self.speed				= _speed
 		
 		if _custom_shader == null: self.material = default_shader
 		else: self.material = _custom_shader
-		
 func set_fade_out_shader(_shader: ShaderMaterial) -> void: 
 	if _shader.shader == null: 
 		fade_out_shader.shader = DEFAULT_SHADER
