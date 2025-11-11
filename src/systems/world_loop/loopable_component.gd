@@ -14,8 +14,8 @@ const LOOPABLE_ID := &"loop_components"
 # - the nodes and their properties.
 @export_group("Target and Properties Info")
 @export var target: Node
+@export var children: Array[Node]
 @export var properties: PackedStringArray 
-@export var node_to_update_properties: Array[Node] = Array[1]
 
 @export_group("Duplicates and Occlusion Array")
 @export var dupe_nodes: Array[Node]
@@ -40,7 +40,6 @@ const LOOPABLE_ID := &"loop_components"
 
 #  - readonly.
 @export_group("Read-Only")
-@export var loop_nodes_dict: Dictionary[Node, Array]
 @export var world_size: Vector2:
 	set = __set_size
 
@@ -63,16 +62,18 @@ func _ready() -> void:
 	
 func _enter_tree() -> void:	
 	Utils.u_add_to_group(self, LOOPABLE_ID)
-	target = self.get_parent()
-	node_to_update_properties[0] = target
+	target 		= self.get_parent()
+	children 	= target.get_children()
+	children.remove_at(children.find(self))
 	
 func _exit_tree() -> void: 	
 	Utils.u_remove_from_group(self, LOOPABLE_ID)
 		
 func setup_loop_nodes() -> void:
 	# - we clear and free the old duplicated nodes list.
-	node_to_update_properties[0] = target
 	if do_not_dupe or !(target is CanvasItem) : return
+	children 	= target.get_children()
+	children.remove_at(children.find(self))
 	
 	var first_dupe: Node = null
 	dupe_nodes.resize(8)
@@ -116,17 +117,25 @@ func setup_loop_nodes() -> void:
 	
 func update_duplicates() -> void: 
 	for i in range(dupe_nodes.size()):
-		if node_to_update_properties.size() == 1: pass
 		var dupe_node = dupe_nodes[i]
 		
-		for p in properties:
-			if target.get_indexed(p) == null: continue
-			dupe_node.set_indexed(p, target.get_indexed(p))	
-		
-		if !do_not_include_occlusions:
-			if occlusions[i] == null: continue
-			occlusions[i].rect.size = world_size * 1.25
-			occlusions[i].rect.position = -occlusions[i].rect.size / 2
+		if children.size() > 0: 
+			for c in children.size():
+				var child = Utils.get_child_node_or_null(dupe_node, children[c].name)
+				for p in properties:
+					if child.get_indexed(p) == null: continue
+					child.set_indexed(p, children[c].get_indexed(p))
+				
+		else:
+			
+			for p in properties:
+				if target.get_indexed(p) == null: continue
+				dupe_node.set_indexed(p, target.get_indexed(p))	
+			
+			if !do_not_include_occlusions:
+				if occlusions[i] == null: continue
+				occlusions[i].rect.size = world_size * 1.25
+				occlusions[i].rect.position = -occlusions[i].rect.size / 2
 
 func update_loop_nodes_list(_loop_node) -> void:
 	if _loop_node in dupe_nodes:
@@ -140,9 +149,3 @@ func __set_size(_size: Vector2) -> void:
 	for i in dupe_nodes.size():
 		if 	dupe_nodes[i] != null:
 			dupe_nodes[i].global_position = target.global_position + world_size * manager.LOOP_UNIT_VECTOR[i]
-
-# - editor
-func _validate_property(property: Dictionary) -> void:
-	var props_to_hide = ["world_size", "loop_nodes"]
-	if 	property.name in props_to_hide:
-		property.usage = PROPERTY_USAGE_EDITOR
