@@ -1,8 +1,5 @@
 extends SBState
 
-func state_enter() -> void:
-	print(fsm.context, " hello!")
-
 func _state_physics_update(_delta: float) -> void: 
 	sentient.handle_velocity()
 	sentient.handle_heading()

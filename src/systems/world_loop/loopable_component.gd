@@ -10,6 +10,7 @@ extends Node2D
 
 const LOOPABLE_ID := &"loop_components"
 @export var manager: LoopManager
+@export_storage var idx: int = 0
 
 # - the nodes and their properties.
 @export_group("Target and Properties Info")
@@ -49,9 +50,7 @@ func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_PREDELETE:
 			if 	manager != null:
-				var idx = manager.loop_objects.find(self)
-				if idx >= 0: manager.loop_objects[manager.loop_objects.find(self)] = null
-		
+				manager.loop_objects[idx] = null
 
 func loopable_setup(_manager: LoopManager) -> void:
 	manager 	= _manager
@@ -101,7 +100,10 @@ func setup_loop_nodes() -> void:
 			if	potential_duped_loop in potential_dupe.get_children(): 
 				potential_duped_loop.queue_free()
 				
-		for c in potential_dupe.get_children(): c.owner = self.owner
+		for c in potential_dupe.get_children(): 
+			c.owner = self.owner
+			c.set_meta("_edit_lock_", true)
+			
 		dupe_nodes[i] = potential_dupe
 		dupe_nodes[i].set_meta("_edit_lock_", true)
 		

@@ -23,6 +23,7 @@ func _setup() -> void:
 	repath_timer.wait_time = 2
 	
 func _state_enter() -> void:
+	update_random_wander_point()
 	sentient.velocity = Vector2.ZERO
 	idle_timer.wait_time = randf_range(sentient.min_wait_time, sentient.max_wait_time)
 	
@@ -30,7 +31,6 @@ func _state_enter() -> void:
 	repath_timer.start()
 
 func _state_exit() -> void:
-	update_random_wander_point()
 	idle_timer.stop()
 	repath_timer.stop()
 	

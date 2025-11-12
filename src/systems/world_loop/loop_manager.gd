@@ -43,6 +43,7 @@ func redraw_boundaries() -> void:
 
 # -- 
 func _ready() -> void: 
+	update_loopable_collection()
 	loop_objects_detect	= Utils.get_child_node_or_null(self, "loop_objects_detect")
 	
 	if 	loop_objects_detect == null:
@@ -64,7 +65,7 @@ func _ready() -> void:
 				Rect2(
 					-(world_size + SAFE_ZONE * 2) / 2, 
 					world_size + SAFE_ZONE * 2), draw_colour)
-	
+
 	Utils.connect_to_signal(
 		draw_safe_zone, shape_detect.draw)
 	
@@ -97,6 +98,7 @@ func update_loopable_collection() -> void:
 		var loopable: LoopableComponent = loop_objects[l]
 		if 	loopable == null: continue
 		loopable.loopable_setup(self)
+		loopable.idx = l
 		
 func update_loopable_world_size() -> void:
 	set_world_size.call_deferred(world_size)
