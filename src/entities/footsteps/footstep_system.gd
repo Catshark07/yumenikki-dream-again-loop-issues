@@ -60,8 +60,6 @@ var floor_priority: TileMapLayer
 var greatest_index: int = -50
 var material_id: int = 0
 
-var sound_to_be_played: AudioStream
-
 @onready var multiple_floors := FootstepSet.new()
 
 func _on_bypass_enabled() -> void:
@@ -90,11 +88,7 @@ func initate_footstep() -> void:
 	
 	curr_anim = sounds_set.footstep_anim
 	spawn_footstep_fx()
-	
-	if sound_to_be_played == null:
-		play_footstep_sound(sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP)
-	else:
-		play_footstep_sound(sound_to_be_played)
+	play_footstep_sound(sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP)
 func spawn_footstep_fx() -> void: 
 	if Optimization.footstep_instances < Optimization.FOOTSTEP_MAX_INSTANCES:
 		var footstep_fx := FootstepDust.new(curr_anim)
@@ -104,7 +98,7 @@ func spawn_footstep_fx() -> void:
 func play_footstep_sound(_footstep_se: AudioStream) -> void: 
 	footstep_se_player.play_sound(
 		_footstep_se, 
-		clampf(2.1 *(log(sentient.noise + 1)), 0.1, 1.85), 
+		clampf(2.1 *(log(sentient.noise + 1)), 0.5, 1.75), 
 		clampf(randf_range(0.75, sentient.noise), 0.75, 1.2))	
 
 func _on_body_shape_entered(
@@ -135,7 +129,6 @@ func _on_body_shape_exited(
 					curr_material = default_footstep
 					floor_priority = null
 					sentient.shadow_renderer.visible = false
-					sound_to_be_played = null
 					
 func scan_ground_material() -> void:
 	for floors: FootstepTileMap in multiple_floors.arr:
@@ -152,7 +145,7 @@ class FootstepDust:
 		Optimization.footstep_instances += 1
 		
 		self.frame_dimensions = Vector2i(48, 48)
-		self.fps = 18
+		self.fps = 22
 		self.loop = false
 		
 		self.z_index = -1

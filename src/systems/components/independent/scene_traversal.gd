@@ -15,6 +15,7 @@ extends Node
 @export var spawn_point: SpawnPoint
 
 func _ready() -> void:
+	self.name = "spawn"
 	update_spawn_point_scene_path()
 	update_spawn_point_connection_id()
 

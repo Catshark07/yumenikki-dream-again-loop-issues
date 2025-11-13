@@ -48,10 +48,10 @@ stamina_bar = NodePath("stamina/stamina_fill/value")
 y_sort_enabled = true
 use_parent_material = true
 layout_mode = 0
-offset_left = 40.0
-offset_top = 240.0
-offset_right = 88.0
-offset_bottom = 256.0
+offset_left = 35.0
+offset_top = 239.0
+offset_right = 83.0
+offset_bottom = 255.0
 mouse_filter = 2
 texture = ExtResource("6_2qcr0")
 
@@ -66,15 +66,14 @@ texture = ExtResource("4_hogqo")
 
 [node name="value" type="ColorRect" parent="indicators/icons/stamina/stamina_fill"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 7.0
-offset_right = 41.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 42.0
 offset_bottom = 12.0
-color = Color(0.99998015, 0.124565475, 0.4053996, 1)
 
 [node name="effect_indicator" type="Sprite2D" parent="indicators/icons"]
 use_parent_material = true
-position = Vector2(24, 240)
+position = Vector2(28, 240)
 texture = ExtResource("9_a8b7g")
 centered = false
 hframes = 2
@@ -86,10 +85,10 @@ metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
 [node name="icon" type="TextureRect" parent="indicators"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 424.0
-offset_top = 8.0
-offset_right = 472.0
-offset_bottom = 56.0
+offset_left = 432.0
+offset_top = 4.0
+offset_right = 480.0
+offset_bottom = 52.0
 
 [node name="timer" type="Timer" parent="indicators/icon"]
 one_shot = true

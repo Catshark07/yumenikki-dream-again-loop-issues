@@ -70,7 +70,7 @@ shader_parameter/noise_strength = 0.89499997720097
 shader_parameter/noise_fwd = SubResource("NoiseTexture2D_uiuoe")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yu80x"]
-size = Vector2(1800, 1200)
+size = Vector2(100, 100)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bwsrp"]
 shader = ExtResource("3_4yua0")
@@ -113,6 +113,7 @@ next = NodePath("../worldd/medamaude_effect/on_interact/screen_flash/request_cut
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_music" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("next")]
+process_mode = 4
 script = ExtResource("9_q6f27")
 stream = ExtResource("3_qi1ih")
 pitch = 0.8
@@ -251,25 +252,27 @@ prev = NodePath("../if_medamaude_collected")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="BGM" type="Node" parent="on_initial/else"]
+process_mode = 4
 script = ExtResource("9_q6f27")
 stream = ExtResource("3_qi1ih")
 
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("20_5siph")
 
-[node name="LoopManager" type="Node" parent="." node_paths=PackedStringArray("loop_objects", "loop_objects_detect", "shape_detect")]
+[node name="LoopManager" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects", "loop_objects_detect", "shape_detect")]
 script = ExtResource("39_xqpjc")
-loop_objects = [NodePath("../worldd/mado/player"), NodePath("../worldd/ghost_hands/ghost_hands"), NodePath("../worldd/world/world")]
-world_size = Vector2(1800, 1200)
+loop_objects = [NodePath("../worldd/mado/pl_loop"), NodePath("../worldd/mado/player"), NodePath("../worldd/ghost_hands/ghost_hands"), NodePath("../worldd/world/world")]
 loop_objects_detect = NodePath("loop_objects_detect")
 shape_detect = NodePath("loop_objects_detect/detect_shape")
 metadata/_custom_type_script = "uid://desxt7tbq37sf"
 
 [node name="loop_objects_detect" type="Area2D" parent="LoopManager"]
 collision_mask = 64
+metadata/_edit_lock_ = true
 
 [node name="detect_shape" type="CollisionShape2D" parent="LoopManager/loop_objects_detect"]
 shape = SubResource("RectangleShape2D_yu80x")
+metadata/_edit_lock_ = true
 
 [node name="scene_flag" type="Node" parent="." node_paths=PackedStringArray("properties_saver")]
 script = ExtResource("34_k1x66")
@@ -301,14 +304,17 @@ metadata/_custom_type_script = "uid://bptlrkdn0tpua"
 y_sort_enabled = true
 
 [node name="mado" parent="worldd" instance=ExtResource("5_u851k")]
-position = Vector2(-184, -144)
+position = Vector2(16, -44)
 values = SubResource("Resource_yu80x")
 heading = 0
 
-[node name="player" type="Node2D" parent="worldd/mado" node_paths=PackedStringArray("manager", "target")]
+[node name="player" type="Node2D" parent="worldd/mado" node_paths=PackedStringArray("manager", "target", "children")]
+y_sort_enabled = true
 script = ExtResource("40_yu80x")
 manager = NodePath("../../../LoopManager")
+idx = 1
 target = NodePath("..")
+children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player"), NodePath("../pl_loop")]
 do_not_dupe = true
 metadata/_custom_type_script = "uid://bnajku7ggsr2q"
 
@@ -352,20 +358,20 @@ back = NodePath("else_if_pl_moving_north")
 script = ExtResource("32_l7mvp")
 expression = "pl.velocity.y < 0"
 else_conditional = NodePath("../else_if_pl_moving_north")
-order = [NodePath("Event")]
-front = NodePath("Event")
-back = NodePath("Event")
+order = [NodePath("travel_to")]
+front = NodePath("travel_to")
+back = NodePath("travel_to")
 custom_linked_pointers = true
 next = NodePath("../else_if_pl_moving_north")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="Event" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north" node_paths=PackedStringArray("scene_traversal")]
+[node name="travel_to" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north" node_paths=PackedStringArray("scene_traversal")]
 process_mode = 4
 script = ExtResource("15_s5ewf")
-scene_traversal = NodePath("SceneTraversal")
+scene_traversal = NodePath("spawn")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="SceneTraversal" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north/Event" node_paths=PackedStringArray("spawn_point")]
+[node name="spawn" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north/travel_to" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("16_v680p")
 scene_path = "uid://b67q2b5hm6tsu"
 connection_id = "colourful_eyes"
@@ -399,6 +405,9 @@ next = NodePath("../screen_flash")
 
 [node name="append_effect" parent="worldd/medamaude_effect/on_interact/effect_sequence" index="1"]
 effect = ExtResource("18_epmdn")
+
+[node name="play_sound" parent="worldd/medamaude_effect/on_interact/effect_sequence" index="2"]
+process_mode = 4
 
 [node name="notification" parent="worldd/medamaude_effect/on_interact/effect_sequence" index="3"]
 texts = PackedStringArray()
@@ -458,6 +467,7 @@ next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="play_sound" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("20_qvbou")
 sound = ExtResource("21_y6rev")
 pitch = 0.7
@@ -487,8 +497,10 @@ tile_set = ExtResource("9_n1xg1")
 collision_enabled = false
 
 [node name="ghost_hands" type="Node2D" parent="worldd/ghost_hands" node_paths=PackedStringArray("manager", "target", "dupe_nodes")]
+y_sort_enabled = true
 script = ExtResource("40_yu80x")
 manager = NodePath("../../../LoopManager")
+idx = 2
 target = NodePath("..")
 dupe_nodes = [NodePath("loop_ghost_hands_0"), NodePath("loop_ghost_hands_1"), NodePath("loop_ghost_hands_2"), NodePath("loop_ghost_hands_3"), NodePath("loop_ghost_hands_4"), NodePath("loop_ghost_hands_5"), NodePath("loop_ghost_hands_6"), NodePath("loop_ghost_hands_7")]
 do_not_loop = true
@@ -582,10 +594,13 @@ script = ExtResource("14_8vxfw")
 ground_material = 6
 metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
-[node name="world" type="Node2D" parent="worldd/world" node_paths=PackedStringArray("manager", "target", "dupe_nodes")]
+[node name="world" type="Node2D" parent="worldd/world" node_paths=PackedStringArray("manager", "target", "children", "dupe_nodes")]
+y_sort_enabled = true
 script = ExtResource("40_yu80x")
 manager = NodePath("../../../LoopManager")
+idx = 3
 target = NodePath("..")
+children = [NodePath("../blood_tiles"), NodePath("../eye_tiles"), NodePath("../collision"), NodePath("../material_blood")]
 dupe_nodes = [null, null, null, null, null, null, null, null]
 do_not_loop = true
 keep_child_nodes = true
