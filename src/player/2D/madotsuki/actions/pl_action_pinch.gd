@@ -14,23 +14,23 @@ func _perform(_pl: Player) -> void:
 	pinch_progress = 0
 	_pl.deequip_effect()
 	_pl.force_change_state("action")
-	_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).play_animation(pinch_animation, 0)
+	_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).play_animation(pinch_animation, 0)
 	
 func _action_update			(_pl: Player, _delta: float) -> void:
-	_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).seek(
+	_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).seek(
 		pinch_progress * \
-		_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).get_animation(pinch_animation).length
+		_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).get_animation(pinch_animation).length
 	)
 		
 	if Input.is_physical_key_pressed(KEY_Q):
 		pinch_progress += (_pl.get_process_delta_time() * _delta) * 50
 		if pinch_progress > 0.45:
-			_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).play_animation(pinch_animation, 1)
-			_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).seek(.45)
+			_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).play_animation(pinch_animation, 1)
+			_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).seek(.45)
 			finished.emit()
 	
 	else:
 		pinch_progress -= (_pl.get_process_delta_time() * _delta) * 45
 		if pinch_progress <= 0:
 			_pl.force_change_state("idle")
-			_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl)
+			_pl.components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(_pl)

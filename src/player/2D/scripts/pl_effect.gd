@@ -38,9 +38,9 @@ func _apply(_pl: Player) -> void:
 			prefab_instance.name = "effect" + self.name
 			prefab_instance.effect_data = self
 			
-			_pl.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_prefab = prefab_instance 			
-			_pl.components.get_component_by_name(Player_YN.COMP_EQUIP).add_child(
-				_pl.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_prefab)
+			_pl.components.get_component_by_name(Player_YN.Components.EQUIP).effect_prefab = prefab_instance 			
+			_pl.components.get_component_by_name(Player_YN.Components.EQUIP).add_child(
+				_pl.components.get_component_by_name(Player_YN.Components.EQUIP).effect_prefab)
 			
 			prefab_instance._enter(_pl)
 func _unapply(_pl: Player) -> void: pass
@@ -55,7 +55,7 @@ func _effect_phys_update(_pl: Player, _delta: float) -> void:
 	
 func _primary_action	(_pl: Player) -> void: 
 	if override_primary_action == null: return
-	_pl.components.get_component_by_name(_pl.COMP_ACTION).perform_action(_pl, override_primary_action)
+	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_pl, override_primary_action)
 func _secondary_action	(_pl: Player) -> void: 
 	if override_secondary_action == null: return
-	_pl.components.get_component_by_name(_pl.COMP_ACTION).perform_action(_pl, override_secondary_action)
+	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_pl, override_secondary_action)

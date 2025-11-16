@@ -41,24 +41,7 @@ func _ready() -> void:
 	self.material = default_shader
 	self.visible = false
 
-func fade_in(
-	_start_progress: float = 0,
-	_end_progress: float = 1) -> void:
-		
-		if fade_tween != null: fade_tween.kill()
-		fade_tween = self.create_tween()
-		
-		self.visible = true 
-		self.material.set_shader_parameter("progress", 0)
-		
-		fade_tween.tween_method(
-			set_fade_progress,
-			_start_progress, 
-			_end_progress, 
-			(1.0 / speed) if speed > 0.0 else 1.0).set_trans(transition_type).set_ease(ease_type)
-			
-		await fade_tween.finished
-func fade_out(
+func fade(
 	_start_progress: float = 1,
 	_end_progress: float = 0) -> void:
 		self.visible = true 
@@ -66,7 +49,7 @@ func fade_out(
 		if fade_tween != null: fade_tween.kill()
 		fade_tween = self.create_tween()
 		
-		self.material.set_shader_parameter("progress", 1)
+		self.material.set_shader_parameter("progress", _start_progress)
 		
 		fade_tween.tween_method(
 			set_fade_progress,
@@ -75,21 +58,19 @@ func fade_out(
 			(1.0 / speed) if speed > 0.0 else 1.0).set_trans(transition_type).set_ease(ease_type)
 			
 		await fade_tween.finished
-		
-		if _end_progress <= 0:
-			self.visible = false 
-		
+			
 func set_fade_progress(_progress):
 	fade_progress = _progress
 	self.material.set_shader_parameter("progress", fade_progress)
+	
+	if _progress <= 0:
+		self.visible = false 
 
 func set_transition(
-	_colour: Color = Color.BLACK,
 	_speed: float = 1,
 	_custom_shader: ShaderMaterial = null,
 	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
 	_ease: Tween.EaseType = Tween.EASE_OUT) -> void: 
-		self.modulate 			= _colour
 		self.transition_type 	= _transition
 		self.ease_type 			= _ease
 		self.speed				= _speed

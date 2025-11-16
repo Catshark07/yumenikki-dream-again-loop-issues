@@ -28,4 +28,4 @@ func _climb		(_pl: Player, _delta: float) -> void: pass
 
 # ---- miscallenous ----
 func _interact	(_pl: Player, _choice: int) -> void: 
-	_pl.components.get_component_by_name(_pl.COMP_INTERACT).handle_interaction(_choice)
+	_pl.components.get_component_by_name(Player_YN.Components.INTERACT).handle_interaction(_choice)

@@ -1,6 +1,6 @@
 @tool
 
-class_name PlaySound
+class_name EVN_PlaySound
 extends Event
 
 @export var sound: AudioStream = null

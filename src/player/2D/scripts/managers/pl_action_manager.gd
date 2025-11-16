@@ -38,11 +38,11 @@ func _input_pass(_event: InputEvent) -> void:
 	
 	elif	Input.is_action_just_pressed("pl_emote"): perform_action(sentient, emote)
 	elif 	Input.is_action_just_pressed("pl_primary_action"): 
-		if !sentient.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_data: return	
-		sentient.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_data._primary_action(sentient)
+		if !sentient.components.get_component_by_name(Player_YN.Components.EQUIP).effect_data: return	
+		sentient.components.get_component_by_name(Player_YN.Components.EQUIP).effect_data._primary_action(sentient)
 	elif 	Input.is_action_just_pressed("pl_secondary_action"): 
-		if !sentient.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_data: return
-		sentient.components.get_component_by_name(Player_YN.COMP_EQUIP).effect_data._secondary_action(sentient)
+		if !sentient.components.get_component_by_name(Player_YN.Components.EQUIP).effect_data: return
+		sentient.components.get_component_by_name(Player_YN.Components.EQUIP).effect_data._secondary_action(sentient)
 
 func perform_action(_pl: Player, _action: PLAction) -> void:
 	if in_cooldown: return 

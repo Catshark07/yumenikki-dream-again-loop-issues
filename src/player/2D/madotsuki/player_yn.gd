@@ -3,16 +3,6 @@
 class_name Player_YN 
 extends Player
 
-# - component IDS
-const COMP_ANIMATION 	:= &"animation_manager"
-const COMP_ACTION 		:= &"action_manager"
-const COMP_SPRITE 		:= &"sprite_manager"
-const COMP_EQUIP 		:= &"equip_manager"
-const COMP_INTERACT 	:= &"interaction_manager"
-const COMP_MENTAL 		:= &"mental_status"
-const COMP_FOOTSTEP 	:= &"footstep_manager"
-const COMP_INPUT 		:= &"input"
-
 # - dependencies.
 @export var stamina_fsm: FSM
 var audio_listener: AudioListener2D
@@ -50,8 +40,6 @@ func _ready() -> void:
 		self.input_vector)
 	
 	Utils.connect_to_signal(get_behaviour()._interact, quered_interact)
-
-	
 func _enter() -> void:
 	super()
 	if GameManager.global_player_components != null: 
@@ -78,9 +66,9 @@ func _sb_input(event: InputEvent) -> void:
 	if fsm != null: 		fsm._input_pass(event)
 	
 func perform_action(_action: PLAction) -> void: 
-	components.get_component_by_name(Player_YN.COMP_ACTION).perform_action(_action, self)
+	components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_action, self)
 func cancel_action(_action: PLAction = action) -> void: 
-	components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_action, self)
+	components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(_action, self)
 
 func equip(_effect: PLEffect, _skip: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").equip(self, _effect, _skip)
@@ -102,8 +90,21 @@ func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 # - misc.
 func get_values() -> SBVariables:
 	if  components != null and \
-		components.has_component_by_name(COMP_EQUIP) and \
-		components.get_component_by_name(COMP_EQUIP).effect_values != null:
-			return components.get_component_by_name(COMP_EQUIP).effect_values
+		components.has_component_by_name(Player_YN.Components.EQUIP) and \
+		components.get_component_by_name(Player_YN.Components.EQUIP).effect_values != null:
+			return components.get_component_by_name(Player_YN.Components.EQUIP).effect_values
 	else:
 		return super()
+
+# -------------------------------------------------------------
+
+class Components:
+	const ANIMATION 	:= &"animation_manager"
+	const ACTION 		:= &"action_manager"
+	const SPRITE 		:= &"sprite_manager"
+	const EQUIP 		:= &"equip_manager"
+	const INTERACT 		:= &"interaction_manager"
+	const MENTAL 		:= &"mental_status"
+	const FOOTSTEP 		:= &"footstep_manager"
+	const INPUT 		:= &"input"
+class Effects: pass

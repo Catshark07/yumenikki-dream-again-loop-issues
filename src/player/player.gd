@@ -83,14 +83,15 @@ class Instance:
 		door_listener.do_on_notify(func(): 
 			
 			for points: SpawnPoint in Utils.get_group_arr("spawn_points"):
-				print(points, " --- ", ResourceUID.uid_to_path(points.scene_path))
-				print("prev scene --- ", SceneManager.prev_scene_resource.resource_path)
-				if (
-					load(points.scene_path) == SceneManager.prev_scene_resource and 
-					door_went_flag and
-					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
+				if points.scene_path.is_empty(): continue
+
+				if  load(points.scene_path) == SceneManager.prev_scene_resource and \
+					door_went_flag and \
+					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id:
 						
 						teleport_player(points.global_position, points.spawn_dir, true)
+						print("hooray")
+						
 						if points.parent_instead_of_self != null:
 							if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
 							else: _pl.reparent(points.parent_instead_of_self)
@@ -100,8 +101,7 @@ class Instance:
 							else: _pl.reparent(points)
 						
 						door_went_flag = false
-						break, 
-					
+						break,
 			"SCENE_CHANGE_SUCCESS")
 
 		equipment_auto_apply = EventListener.new(null, "SCENE_CHANGE_SUCCESS")

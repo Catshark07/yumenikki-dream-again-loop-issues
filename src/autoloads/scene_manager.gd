@@ -1,27 +1,26 @@
-class_name SceneManager 
-extends Game.GameSubClass
+extends Node
 
-static var scene_entered: EventListener
+var scene_entered: EventListener
 
-static var scene_stack: Stack
-static var scene_node: SceneNode
+var scene_stack: Stack
+var scene_node: SceneNode
 
-static var curr_scene_resource: PackedScene
-static var prev_scene_resource: PackedScene
+var curr_scene_resource: PackedScene
+var prev_scene_resource: PackedScene
 
-static var scene_change_pending: bool = false
+var scene_change_pending: bool = false
 
 # ---------- 	BACKGROUND LOADING 		---------- #
-static var load_requested: bool = false
-static var bg_load_finished: bool = false
+var load_requested: bool = false
+var bg_load_finished: bool = false
 
-static var load_progress: Array[int] = [0]
-static var scene_load_err_check: Error
-static var scene_load_status: ResourceLoader.ThreadLoadStatus
+var load_progress: Array[int] = [0]
+var scene_load_err_check: Error
+var scene_load_status: ResourceLoader.ThreadLoadStatus
 
-static var result: ResourceLoader.ThreadLoadStatus
+var result: ResourceLoader.ThreadLoadStatus
 
-static func handle_scene_resource_load(scene: PackedScene) -> ResourceLoader.ThreadLoadStatus:
+func handle_scene_resource_load(scene: PackedScene) -> ResourceLoader.ThreadLoadStatus:
 	if scene == null: 
 		print("case one")
 		return ResourceLoader.ThreadLoadStatus.THREAD_LOAD_FAILED
@@ -42,27 +41,33 @@ static func handle_scene_resource_load(scene: PackedScene) -> ResourceLoader.Thr
 				bg_load_finished = true
 	
 	return scene_load_status
-static func _setup() -> void: 
+func _setup() -> void: 
 	scene_stack 		= Stack.new()
 	scene_entered 		= EventListener.new(null, "SCENE_TREE_ENTERED")
+	
 	scene_entered.do_on_notify(func(): 
+		var scene = EventManager.get_event_param("SCENE_TREE_ENTERED")[0]
+		if scene.manager != null: return
 		handle_scene_push(EventManager.get_event_param("SCENE_TREE_ENTERED")[0]), 
 		"SCENE_TREE_ENTERED")
 		
 # ---------- 	SCENES LOADER / UNLOADERS 		---------- #
-static func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void:
+func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void:
 	if ResourceLoader.exists(_scene.resource_path) and _scene.can_instantiate():
+		var scene_instance: SceneNode
 		scene_load_err_check = ResourceLoader.load_threaded_request(_scene.resource_path)
-		
 		load_requested = true
 		bg_load_finished = false
 		
 		result = await handle_scene_resource_load(_scene)
-		
+				
 		if result == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
 			prev_scene_resource = curr_scene_resource
+			scene_instance = _scene.instantiate()
+			scene_instance.manager = self
+			
 			if _push_to_stack: 
-				handle_scene_push(_scene.instantiate())
+				handle_scene_push(scene_instance)
 			
 			EventManager.invoke_event("SCENE_LOADED", _scene)
 					
@@ -74,7 +79,7 @@ static func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void
 
 	else: curr_scene_resource = null
 
-static func handle_scene_push(_scene_node: SceneNode) -> void:
+func handle_scene_push(_scene_node: SceneNode) -> void:
 	# - bail out in case we were already taken care of.
 	
 	if _scene_node == null or _scene_node.initialized: return
@@ -91,12 +96,12 @@ static func handle_scene_push(_scene_node: SceneNode) -> void:
 	EventManager.invoke_event("SCENE_PUSHED", _scene_node)
 	
 	scene_stack.push(_scene_node)
-static func handle_scene_pop() -> void:
+func handle_scene_pop() -> void:
 	print_rich(str("[color=yellow]SceneManager // Scene Pop: %s [/color]" % scene_stack.pop()))
 	EventManager.invoke_event("SCENE_POPPED")
 	
 
-static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_out: bool = true) -> void:
+func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_out: bool = true) -> void:
 	if _scene == null or !ResourceLoader.exists(_scene.resource_path): 
 		print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 		return
@@ -104,12 +109,11 @@ static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_ou
 	if scene_node and _scene and _scene != curr_scene_resource:
 		if !scene_change_pending:
 			scene_change_pending = true
-
 			EventManager.invoke_event("SCENE_CHANGE_REQUEST")
 			GameManager.change_to_state("CHANGING_SCENES")
 			scene_stack.queue_pop()
 			
-			if _fade_in: await GameManager.screen_transition.fade_in()
+			if _fade_in: await GameManager.screen_transition.fade(0, 1)
 			Game.scene_unloaded.emit()
 			
 			handle_scene_pop()
@@ -117,7 +121,7 @@ static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_ou
 			await load_scene(_scene)
 			Game.scene_loaded.emit()
 			
-			if _fade_out: GameManager.screen_transition.fade_out()
+			if _fade_out: GameManager.screen_transition.fade(1, 0)
 			GameManager.secondary_transition.fade_progress = 0
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
@@ -130,8 +134,8 @@ static func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_ou
 		print_rich("[color=yellow]SceneManager // Scene Change :: Scene does not exist. [/color]")
 
 
-static func _update(_delta: float) -> void: 		if scene_node: scene_node._update(_delta)
-static func _physics_update(_delta: float) -> void: if scene_node: scene_node._physics_update(_delta)
+func _update(_delta: float) -> void: 		if scene_node: scene_node._update(_delta)
+func _physics_update(_delta: float) -> void: if scene_node: scene_node._physics_update(_delta)
 # ---------- 									---------- #
 # ----
 # here are the scene events called in order:

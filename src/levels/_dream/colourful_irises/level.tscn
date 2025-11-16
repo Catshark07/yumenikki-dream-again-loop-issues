@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://b5h2bldsnmdsb"]
+[gd_scene load_steps=48 format=4 uid="uid://b5h2bldsnmdsb"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_vndl4"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="3_4yua0"]
@@ -6,9 +6,7 @@
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="5_bsomg"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_jx2yo"]
 [ext_resource type="Shader" uid="uid://b4qcyrwpo36fo" path="res://src/shaders/panorama/distortion_texture.gdshader" id="5_nqkx8"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="5_u851k"]
 [ext_resource type="Resource" uid="uid://ncax1yyo23go" path="res://src/player/2D/madotsuki/effects/neon/neon.tres" id="5_yu80x"]
-[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="6_3p5oo"]
 [ext_resource type="Texture2D" uid="uid://cm6iimafcot25" path="res://src/images/panorama/face.png" id="6_hdfwf"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="7_4yua0"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="7_gg2wt"]
@@ -38,7 +36,7 @@
 [ext_resource type="Script" uid="uid://cvb48ow8p04j8" path="res://src/systems/sequencing/event/call_external_event.gd" id="33_k1x66"]
 [ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/custom_properties.gd" id="34_k1x66"]
 [ext_resource type="Script" uid="uid://bdm7kig80eqqk" path="res://src/systems/save/node/save_properties.gd" id="35_0chjm"]
-[ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_manager.gd" id="39_xqpjc"]
+[ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_region.gd" id="39_xqpjc"]
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="40_yu80x"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bsomg"]
@@ -62,7 +60,6 @@ shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.07999999821184
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.49
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/texture_scroll = false
@@ -70,7 +67,7 @@ shader_parameter/noise_strength = 0.89499997720097
 shader_parameter/noise_fwd = SubResource("NoiseTexture2D_uiuoe")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yu80x"]
-size = Vector2(100, 100)
+size = Vector2(1760, 1120)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bwsrp"]
 shader = ExtResource("3_4yua0")
@@ -78,20 +75,11 @@ shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
 
-[sub_resource type="Resource" id="Resource_yu80x"]
-resource_local_to_scene = true
-resource_name = "pl_variables"
-script = ExtResource("6_3p5oo")
-metadata/_custom_type_script = "uid://jf85vmwx4pj"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vpbd"]
 size = Vector2(48, 16)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uoh1u"]
 shader = ExtResource("19_r2b8w")
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
-shader_parameter/optional_gradient = false
 shader_parameter/progress = 0.0
 shader_parameter/colour = Color(0, 0, 0, 1)
 
@@ -108,8 +96,8 @@ script = ExtResource("20_5siph")
 order = [NodePath("play_music"), NodePath("make_visible"), NodePath("play_music2"), NodePath("darken_screen_modulate")]
 front = NodePath("play_music")
 back = NodePath("darken_screen_modulate")
-prev = NodePath("../worldd/medamaude_effect/on_interact/screen_flash/flag_value")
-next = NodePath("../worldd/medamaude_effect/on_interact/screen_flash/request_cutscene_start")
+prev = NodePath("../y_order/medamaude_effect/on_interact/screen_flash/flag_value")
+next = NodePath("../y_order/medamaude_effect/on_interact/screen_flash/request_cutscene_start")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_music" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("next")]
@@ -124,7 +112,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="make_visible" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
-node = NodePath("../../worldd/ghost_hands")
+node = NodePath("../../y_order/ghost_hands")
 property_name = "visible"
 property_info = {
 "class_name": &"",
@@ -144,7 +132,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="play_music2" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
-node = NodePath("../../worldd/ghost_hands")
+node = NodePath("../../y_order/ghost_hands")
 property_name = "collision_enabled"
 property_info = {
 "class_name": &"",
@@ -259,22 +247,23 @@ stream = ExtResource("3_qi1ih")
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("20_5siph")
 
-[node name="LoopManager" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects", "loop_objects_detect", "shape_detect")]
+[node name="LoopRegion" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects", "loop_objects_detect", "shape_detect")]
 script = ExtResource("39_xqpjc")
-loop_objects = [NodePath("../worldd/mado/pl_loop"), NodePath("../worldd/mado/player"), NodePath("../worldd/ghost_hands/ghost_hands"), NodePath("../worldd/world/world")]
+loop_objects = [NodePath("../y_order/ghost_hands/dupes"), NodePath("../y_order/world/world")]
+world_size = Vector2(1760, 1120)
 loop_objects_detect = NodePath("loop_objects_detect")
 shape_detect = NodePath("loop_objects_detect/detect_shape")
 metadata/_custom_type_script = "uid://desxt7tbq37sf"
 
-[node name="loop_objects_detect" type="Area2D" parent="LoopManager"]
+[node name="loop_objects_detect" type="Area2D" parent="LoopRegion"]
 collision_mask = 64
 metadata/_edit_lock_ = true
 
-[node name="detect_shape" type="CollisionShape2D" parent="LoopManager/loop_objects_detect"]
+[node name="detect_shape" type="CollisionShape2D" parent="LoopRegion/loop_objects_detect"]
 shape = SubResource("RectangleShape2D_yu80x")
 metadata/_edit_lock_ = true
 
-[node name="scene_flag" type="Node" parent="." node_paths=PackedStringArray("properties_saver")]
+[node name="medamaude_flag" type="Node" parent="." node_paths=PackedStringArray("properties_saver")]
 script = ExtResource("34_k1x66")
 properties = Dictionary[String, Variant]({
 "medamaude_found": false
@@ -282,13 +271,12 @@ properties = Dictionary[String, Variant]({
 properties_saver = NodePath("save_properties")
 metadata/_custom_type_script = "uid://clajyplvoricf"
 
-[node name="save_properties" type="Node" parent="scene_flag"]
+[node name="save_properties" type="Node" parent="medamaude_flag"]
 script = ExtResource("35_0chjm")
 properties = PackedStringArray("properties")
 
-[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("5_jx2yo")]
-position = Vector2(-184, -144)
-initial_target = NodePath("../worldd/mado")
+[node name="camera" parent="." instance=ExtResource("5_jx2yo")]
+position = Vector2(312, 192)
 
 [node name="overlay_3" parent="camera/marker/camera" index="2"]
 material = SubResource("ShaderMaterial_bwsrp")
@@ -300,25 +288,10 @@ wig_x_strn = 8.0
 wig_y_strn = 8.0
 metadata/_custom_type_script = "uid://bptlrkdn0tpua"
 
-[node name="worldd" type="Node2D" parent="."]
+[node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="mado" parent="worldd" instance=ExtResource("5_u851k")]
-position = Vector2(16, -44)
-values = SubResource("Resource_yu80x")
-heading = 0
-
-[node name="player" type="Node2D" parent="worldd/mado" node_paths=PackedStringArray("manager", "target", "children")]
-y_sort_enabled = true
-script = ExtResource("40_yu80x")
-manager = NodePath("../../../LoopManager")
-idx = 1
-target = NodePath("..")
-children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player"), NodePath("../pl_loop")]
-do_not_dupe = true
-metadata/_custom_type_script = "uid://bnajku7ggsr2q"
-
-[node name="to_eyeball_world" type="Area2D" parent="worldd" node_paths=PackedStringArray("rect")]
+[node name="to_eyeball_world" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(-184, -160)
 collision_layer = 2684354560
 collision_mask = 2684354560
@@ -328,11 +301,11 @@ area = true
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="rect" type="CollisionShape2D" parent="worldd/to_eyeball_world"]
+[node name="rect" type="CollisionShape2D" parent="y_order/to_eyeball_world"]
 shape = SubResource("RectangleShape2D_3vpbd")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="spawn_point" type="Node2D" parent="worldd/to_eyeball_world" node_paths=PackedStringArray("parent_instead_of_self")]
+[node name="spawn_point" type="Node2D" parent="y_order/to_eyeball_world" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 16)
 script = ExtResource("12_4yua0")
 scene_path = "uid://b67q2b5hm6tsu"
@@ -341,20 +314,20 @@ parent_instead_of_self = NodePath("../..")
 as_sibling = false
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
-[node name="SequenceRegion" type="Node" parent="worldd/to_eyeball_world" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
+[node name="SequenceRegion" type="Node" parent="y_order/to_eyeball_world" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
 process_mode = 4
 script = ExtResource("13_bwsrp")
 enter_sequence = NodePath("enter")
 exit_sequence = NodePath("exit")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
-[node name="enter" type="Node" parent="worldd/to_eyeball_world/SequenceRegion" node_paths=PackedStringArray("order", "front", "back")]
+[node name="enter" type="Node" parent="y_order/to_eyeball_world/SequenceRegion" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("20_5siph")
 order = [NodePath("if_pl_moving_north"), NodePath("else_if_pl_moving_north")]
 front = NodePath("if_pl_moving_north")
 back = NodePath("else_if_pl_moving_north")
 
-[node name="if_pl_moving_north" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter" node_paths=PackedStringArray("else_conditional", "order", "front", "back", "next")]
+[node name="if_pl_moving_north" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter" node_paths=PackedStringArray("else_conditional", "order", "front", "back", "next")]
 script = ExtResource("32_l7mvp")
 expression = "pl.velocity.y < 0"
 else_conditional = NodePath("../else_if_pl_moving_north")
@@ -365,54 +338,54 @@ custom_linked_pointers = true
 next = NodePath("../else_if_pl_moving_north")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="travel_to" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north" node_paths=PackedStringArray("scene_traversal")]
+[node name="travel_to" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north" node_paths=PackedStringArray("scene_traversal")]
 process_mode = 4
 script = ExtResource("15_s5ewf")
 scene_traversal = NodePath("spawn")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="spawn" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north/travel_to" node_paths=PackedStringArray("spawn_point")]
+[node name="spawn" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north/travel_to" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("16_v680p")
 scene_path = "uid://b67q2b5hm6tsu"
 connection_id = "colourful_eyes"
 spawn_point = NodePath("../../../../../spawn_point")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
-[node name="else_if_pl_moving_north" type="Node" parent="worldd/to_eyeball_world/SequenceRegion/enter" node_paths=PackedStringArray("prev")]
+[node name="else_if_pl_moving_north" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter" node_paths=PackedStringArray("prev")]
 script = ExtResource("20_5siph")
 skip = true
 prev = NodePath("../if_pl_moving_north")
 
-[node name="exit" type="Node" parent="worldd/to_eyeball_world/SequenceRegion"]
+[node name="exit" type="Node" parent="y_order/to_eyeball_world/SequenceRegion"]
 script = ExtResource("20_5siph")
 
-[node name="medamaude_effect" parent="worldd" instance=ExtResource("17_bwsrp")]
+[node name="medamaude_effect" parent="y_order" instance=ExtResource("17_bwsrp")]
 position = Vector2(504, 392)
 collision_layer = 1610612736
 collision_mask = 1610612736
 
-[node name="on_interact" parent="worldd/medamaude_effect" index="0" node_paths=PackedStringArray("order", "front", "back")]
+[node name="on_interact" parent="y_order/medamaude_effect" index="0" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 order = [NodePath("effect_sequence"), NodePath("screen_flash")]
 front = NodePath("effect_sequence")
 back = NodePath("screen_flash")
 
-[node name="effect_sequence" parent="worldd/medamaude_effect/on_interact" index="0" node_paths=PackedStringArray("order", "front", "back", "next")]
+[node name="effect_sequence" parent="y_order/medamaude_effect/on_interact" index="0" node_paths=PackedStringArray("order", "front", "back", "next")]
 order = [NodePath("request_cutscene_start"), NodePath("append_effect"), NodePath("play_sound"), NodePath("notification"), NodePath("set_interactable_inactive"), NodePath("wait_seconds"), NodePath("request_cutscene_end")]
 front = NodePath("request_cutscene_start")
 back = NodePath("request_cutscene_end")
 next = NodePath("../screen_flash")
 
-[node name="append_effect" parent="worldd/medamaude_effect/on_interact/effect_sequence" index="1"]
+[node name="append_effect" parent="y_order/medamaude_effect/on_interact/effect_sequence" index="1"]
 effect = ExtResource("18_epmdn")
 
-[node name="play_sound" parent="worldd/medamaude_effect/on_interact/effect_sequence" index="2"]
+[node name="play_sound" parent="y_order/medamaude_effect/on_interact/effect_sequence" index="2"]
 process_mode = 4
 
-[node name="notification" parent="worldd/medamaude_effect/on_interact/effect_sequence" index="3"]
+[node name="notification" parent="y_order/medamaude_effect/on_interact/effect_sequence" index="3"]
 texts = PackedStringArray()
 
-[node name="screen_flash" type="Node" parent="worldd/medamaude_effect/on_interact" index="1" node_paths=PackedStringArray("order", "front", "back", "prev")]
+[node name="screen_flash" type="Node" parent="y_order/medamaude_effect/on_interact" index="1" node_paths=PackedStringArray("order", "front", "back", "prev")]
 script = ExtResource("20_5siph")
 order = [NodePath("flag_value"), NodePath("show_ghost_hands_ext"), NodePath("request_cutscene_start"), NodePath("flash_red"), NodePath("play_sound"), NodePath("notification"), NodePath("request_cutscene_end")]
 front = NodePath("flag_value")
@@ -420,10 +393,10 @@ back = NodePath("request_cutscene_end")
 prev = NodePath("../effect_sequence")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="flag_value" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("node", "next")]
+[node name="flag_value" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("node", "next")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
-node = NodePath("../../../../../scene_flag")
+node = NodePath("../../../../../medamaude_flag")
 property_name = "properties"
 property_info = {
 "class_name": &"",
@@ -442,31 +415,30 @@ new_value = Dictionary[String, Variant]({
 next = NodePath("../show_ghost_hands_ext")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="show_ghost_hands_ext" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
+[node name="show_ghost_hands_ext" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("33_k1x66")
 prev = NodePath("../flag_value")
 next = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_start" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
+[node name="request_cutscene_start" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("18_y6rev")
 event_id = "CUTSCENE_START_REQUEST"
 prev = NodePath("../show_ghost_hands_ext")
 next = NodePath("../flash_red")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="flash_red" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
+[node name="flash_red" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("18_3pj81")
 fade_type = 1
 fade_shader = SubResource("ShaderMaterial_uoh1u")
-fade_colour = Color(1, 0, 0, 1)
 wait_til_finished = false
 prev = NodePath("../request_cutscene_start")
 next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_sound" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
+[node name="play_sound" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("20_qvbou")
 sound = ExtResource("21_y6rev")
@@ -475,20 +447,20 @@ prev = NodePath("../flash_red")
 next = NodePath("../notification")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="notification" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
+[node name="notification" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("26_uoh1u")
 font_colour_override = Color(0.786281, 0.154866, 0.357413, 1)
 prev = NodePath("../play_sound")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="worldd/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev")]
+[node name="request_cutscene_end" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev")]
 script = ExtResource("18_y6rev")
 event_id = "CUTSCENE_END_REQUEST"
 prev = NodePath("../notification")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="ghost_hands" type="TileMapLayer" parent="worldd"]
+[node name="ghost_hands" type="TileMapLayer" parent="y_order"]
 visible = false
 y_sort_enabled = true
 position = Vector2(72, -48)
@@ -496,115 +468,54 @@ tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQ
 tile_set = ExtResource("9_n1xg1")
 collision_enabled = false
 
-[node name="ghost_hands" type="Node2D" parent="worldd/ghost_hands" node_paths=PackedStringArray("manager", "target", "dupe_nodes")]
+[node name="dupes" type="Node2D" parent="y_order/ghost_hands" node_paths=PackedStringArray("target")]
 y_sort_enabled = true
 script = ExtResource("40_yu80x")
-manager = NodePath("../../../LoopManager")
-idx = 2
 target = NodePath("..")
-dupe_nodes = [NodePath("loop_ghost_hands_0"), NodePath("loop_ghost_hands_1"), NodePath("loop_ghost_hands_2"), NodePath("loop_ghost_hands_3"), NodePath("loop_ghost_hands_4"), NodePath("loop_ghost_hands_5"), NodePath("loop_ghost_hands_6"), NodePath("loop_ghost_hands_7")]
 do_not_loop = true
 metadata/_custom_type_script = "uid://bnajku7ggsr2q"
 
-[node name="loop_ghost_hands_0" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
+[node name="material_blood" type="TileMapLayer" parent="y_order"]
 y_sort_enabled = true
-position = Vector2(-1800, -1200)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="loop_ghost_hands_1" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
-y_sort_enabled = true
-position = Vector2(0, -1200)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="loop_ghost_hands_2" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
-y_sort_enabled = true
-position = Vector2(1800, -1200)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="loop_ghost_hands_3" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
-y_sort_enabled = true
-position = Vector2(-1800, 0)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="loop_ghost_hands_4" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
-y_sort_enabled = true
-position = Vector2(1800, 0)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="loop_ghost_hands_5" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
-y_sort_enabled = true
-position = Vector2(-1800, 1200)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="loop_ghost_hands_6" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
-y_sort_enabled = true
-position = Vector2(0, 1200)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="loop_ghost_hands_7" type="TileMapLayer" parent="worldd/ghost_hands/ghost_hands"]
-y_sort_enabled = true
-position = Vector2(1800, 1200)
-tile_map_data = PackedByteArray("AAAgABwAAAAHAAIAAAAgAB0AAAAHAAMAAAAgAB4AAAAHAAQAAAAgAB8AAAAHAAUAAAAgABsAAAAGAAAAAAAwABUAAAAGAAAAAAAwABYAAAAHAAIAAAAwABcAAAAHAAMAAAAwABgAAAAHAAQAAAAwABkAAAAHAAUAAAAxABcAAAAGAAAAAAAxABgAAAAHAAIAAAAxABkAAAAHAAMAAAAxABoAAAAHAAQAAAAxABsAAAAHAAUAAAA0ABMAAAAGAAAAABA0ABQAAAAHAAIAABA0ABUAAAAHAAMAABA0ABYAAAAHAAQAABA0ABcAAAAHAAUAABA3ABoAAAAGAAAAABA3ABsAAAAHAAIAABA3ABwAAAAHAAMAABA3AB0AAAAHAAQAABA3AB4AAAAHAAUAABAdAA8AAAAGAAAAAAAdABAAAAAHAAIAAAAdABEAAAAHAAMAAAAdABIAAAAHAAQAAAAdABMAAAAHAAUAAAAaABYAAAAGAAAAAAAaABcAAAAHAAIAAAAaABgAAAAHAAMAAAAaABkAAAAHAAQAAAAaABoAAAAHAAUAAAARAB4AAAAGAAAAAAARAB8AAAAHAAIAAAARACAAAAAHAAMAAAARACEAAAAHAAQAAAARACIAAAAHAAUAAAAkAAQAAAAGAAAAABAkAAUAAAAHAAIAABAkAAYAAAAHAAMAABAkAAcAAAAHAAQAABAkAAgAAAAHAAUAABAUABAAAAAGAAAAABAUABEAAAAHAAIAABAUABIAAAAHAAMAABAUABMAAAAHAAQAABAUABQAAAAHAAUAABADABwAAAAGAAAAAAADAB0AAAAHAAIAAAADAB4AAAAHAAMAAAADAB8AAAAHAAQAAAADACAAAAAHAAUAAAD6/xQAAAAGAAAAAAD6/xUAAAAHAAIAAAD6/xYAAAAHAAMAAAD6/xcAAAAHAAQAAAD6/xgAAAAHAAUAAAD8/xkAAAAGAAAAABD8/xoAAAAHAAIAABD8/xsAAAAHAAMAABD8/xwAAAAHAAQAABD8/x0AAAAHAAUAABD9/xIAAAAGAAAAABD9/xMAAAAHAAIAABD9/xQAAAAHAAMAABD9/xUAAAAHAAQAABD9/xYAAAAHAAUAABD5/w4AAAAGAAAAAAD5/w8AAAAHAAIAAAD5/xAAAAAHAAMAAAD5/xEAAAAHAAQAAAD5/xIAAAAHAAUAAAAIAAoAAAAGAAAAABAIAAsAAAAHAAIAABAIAAwAAAAHAAMAABAIAA0AAAAHAAQAABAIAA4AAAAHAAUAABANABEAAAAGAAAAAAANABIAAAAHAAIAAAANABMAAAAHAAMAAAANABQAAAAHAAQAAAANABUAAAAHAAUAAADx/wAAAAAGAAAAABDx/wEAAAAHAAIAABDx/wIAAAAHAAMAABDx/wMAAAAHAAQAABDx/wQAAAAHAAUAABDv/wMAAAAGAAAAABDv/wQAAAAHAAIAABDv/wUAAAAHAAMAABDv/wYAAAAHAAQAABDv/wcAAAAHAAUAABDq/xEAAAAGAAAAAADq/xIAAAAHAAIAAADq/xMAAAAHAAMAAADq/xQAAAAHAAQAAADq/xUAAAAHAAUAAADr/xQAAAAGAAAAABDr/xUAAAAHAAIAABDr/xYAAAAHAAMAABDr/xcAAAAHAAQAABDr/xgAAAAHAAUAABDv/x0AAAAGAAAAAADv/x4AAAAHAAIAAADv/x8AAAAHAAMAAADv/yAAAAAHAAQAAADv/yEAAAAHAAUAAAAQAAYAAAAGAAAAABAQAAcAAAAHAAIAABAQAAgAAAAHAAMAABAQAAkAAAAHAAQAABAQAAoAAAAHAAUAABDh/xgAAAAGAAAAABDh/xkAAAAHAAIAABDh/xoAAAAHAAMAABDh/xsAAAAHAAQAABDh/xwAAAAHAAUAABDm/wkAAAAGAAAAABDm/woAAAAHAAIAABDm/wsAAAAHAAMAABDm/wwAAAAHAAQAABDm/w0AAAAHAAUAABDh/wUAAAAGAAAAABDh/wYAAAAHAAIAABDh/wcAAAAHAAMAABDh/wgAAAAHAAQAABDh/wkAAAAHAAUAABAdAP//AAAGAAAAAAAdAAAAAAAHAAIAAAAdAAEAAAAHAAMAAAAdAAIAAAAHAAQAAAAdAAMAAAAHAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-collision_enabled = false
-
-[node name="world" type="Node2D" parent="worldd"]
-y_sort_enabled = true
-position = Vector2(72, -48)
-
-[node name="blood_tiles" type="TileMapLayer" parent="worldd/world"]
-y_sort_enabled = true
-use_parent_material = true
-position = Vector2(-264, -120)
-tile_map_data = PackedByteArray("AAD+/wAAAAABAAEAABD+/wEAAAABAAEAABD//wEAAAAAAAEAAAD//wIAAAAAAAEAAAD//wAAAAAAAAEAAAD/////AAABAAEAAGD+////AAABAAAAABD//wMAAAABAAAAABD//wQAAAABAAAAADD+/wIAAAABAAAAADATAAQAAAAAAAQAAFAUAAQAAAAAAAMAAHAVAAQAAAAAAAEAAAAWAAMAAAABAAAAABAWAAQAAAAAAAEAAAAXAAMAAAAAAAEAAAAXAAQAAAABAAAAACAAAAsAAAAAAAQAADAAAAwAAAAAAAMAADAAAA0AAAAAAAIAADAAAA4AAAAAAAEAADAAAA8AAAAAAAMAAAAAABAAAAAAAAQAAAAAABEAAAAAAAQAACAAABIAAAAAAAMAACAAABMAAAAAAAIAACAAABQAAAAAAAEAACAAABUAAAAAAAEAACAAABYAAAAAAAEAAAAAABcAAAAAAAEAAAAAABgAAAAAAAIAAAAAABoAAAAAAAQAAADn/x8AAAABAAAAABDo/x4AAAABAAAAABDp/x0AAAAAAAIAADDp/yAAAAABAAAAACDq/x0AAAABAAEAAADq/x8AAAABAAAAACDq/yUAAAAAAAEAAADr/yYAAAABAAAAACAAABkAAAAAAAMAAAAVAPD/AAAAAAEAAFAVAPH/AAAAAAEAAAAWAPD/AAAAAAEAAAAWAPH/AAAAAAEAAAAXAO//AAABAAEAAGAXAPD/AAAAAAEAAAAXAPH/AAAAAAEAAAAYAO7/AAABAAEAAGAYAO//AAAAAAEAAAAYAPD/AAAAAAEAAAAYAPH/AAAAAAEAAAAZAO7/AAABAAEAAGAZAO//AAAAAAEAAAAZAPD/AAAAAAEAAAAaAO7/AAABAAEAAGAaAO//AAAAAAEAAAAaAPD/AAAAAAEAAAAbAO7/AAABAAEAAGAbAO//AAAAAAEAAAAbAPD/AAAAAAEAAAAcAO//AAAAAAEAAAAdAO//AAAAAAEAAAAeAO//AAAAAAIAAGATAPH/AAAAAAIAAFAUAPH/AAAAAAEAAFAXAPL/AAAAAAEAAAAXAPP/AAAAAAEAAAAXAPT/AAABAAEAAEAYAPL/AAAAAAEAAAAZAPH/AAAAAAEAAAAZAPL/AAABAAAAACAaAPH/AAAAAAEAAAAbAPH/AAABAAAAACAcAPD/AAAAAAEAAAAdAPD/AAABAAAAACASAPH/AAAAAAMAAFARAPH/AAAAAAQAAFAUAPD/AAABAAAAABAWAO//AAABAAAAABAYAAMAAAABAAAAACAYAAIAAAAAAAEAAAAYAAEAAAAAAAEAAAAXAAIAAAABAAAAABAYAAAAAAAAAAIAACAYAP//AAAAAAMAACAYAP7/AAAAAAQAACAZAAAAAAABAAAAAAAgAO//AAAAAAQAAGAfAO//AAAAAAMAAGAcAO7/AAABAAAAAAAWAPL/AAAAAAEAAAAWAPP/AAABAAEAABAWAPT/AAABAAEAABAWAPX/AAABAAEAABAYAPP/AAABAAAAACAVAPL/AAABAAAAADDn/yAAAAABAAEAABDn/yEAAAABAAAAADDo/x8AAAAAAAEAAADo/yAAAAAAAAEAAADo/yEAAAAAAAEAAADp/x4AAAAAAAEAAADp/x8AAAAAAAEAAADp/yEAAAABAAEAAGDq/x4AAAABAAEAAADq/yEAAAABAAAAAADq/yIAAAAAAAEAAADq/yMAAAAAAAEAAADq/yQAAAAAAAEAAADr/yIAAAABAAAAAADr/yMAAAABAAEAAADr/yQAAAABAAEAAADr/yUAAAABAAEAAADq/yYAAAAAAAIAAAAZAAIAAAABAAEAAAAZAAEAAAABAAEAAAAjACQAAAAAAAQAAHAkACQAAAAAAAMAAHAlACQAAAAAAAIAAHAmACMAAAABAAAAABAmACQAAAAAAAEAAAAnACIAAAABAAAAABAnACMAAAABAAEAAAAnACQAAAABAAEAAAAnACUAAAABAAAAADAoACEAAAABAAAAAGAoACIAAAABAAAAACAoACUAAAABAAAAAAAoACYAAAABAAAAAEApACEAAAAAAAEAAAApACYAAAAAAAEAAAAqACEAAAAAAAEAAAAqACMAAAABAAAAABAqACQAAAABAAAAADAqACYAAAAAAAEAAADg/yQAAAAAAAQAAGDq/ycAAAAAAAMAAADq/ygAAAAAAAQAAADp/yIAAAABAAAAADDp/xwAAAAAAAMAADDp/xsAAAAAAAQAADDq/xwAAAABAAIAACDq/xsAAAAAAAAAAAABAAEAAAAAAAEAAAABAAIAAAAAAAEAAAABAAMAAAABAAAAACACAAEAAAABAAEAAAACAAIAAAABAAAAACAAAAAAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAIAAAAAAAEAAAAAAP//AAABAAEAAGAAAAMAAAAAAAEAAAAAAAQAAAAAAAEAAAAAAAYAAAAAAAMAAAAAAAcAAAAAAAQAAAAAAAUAAAAAAAIAAAABAP//AAABAAEAAGABAAAAAAAAAAEAAAACAP//AAABAAAAAAACAAAAAAABAAEAAAAlACoAAAAAAAQAAHAmACoAAAAAAAMAAHAnACoAAAAAAAIAAHAoACkAAAABAAAAABAoACoAAAAAAAEAAAApACgAAAABAAAAABApACkAAAABAAEAAAApACoAAAABAAEAAAApACsAAAABAAAAADAqACcAAAABAAAAAGAqACgAAAABAAAAACAqACsAAAABAAAAAAAqACwAAAABAAAAAEAsACEAAAAAAAEAABAsACYAAAAAAAEAAAAsACgAAAABAAAAADAsACsAAAABAAAAABAtACEAAAAAAAEAABAtACYAAAAAAAEAAAAtACkAAAABAAEAABAtACoAAAABAAEAABAuACIAAAABAAAAADAuACUAAAABAAAAABAuACoAAAAAAAEAABAvACMAAAABAAEAABAvACQAAAABAAEAABAvACoAAAAAAAIAAGAwACQAAAAAAAEAABAwACoAAAAAAAMAAGAxACQAAAAAAAIAAGAyACQAAAAAAAMAAGAzACQAAAAAAAQAAGA0ACQAAAAAAAQAAHA1ACQAAAAAAAMAAHA2ACQAAAAAAAIAAHA3ACMAAAABAAAAABA3ACQAAAAAAAEAAAAsACMAAAABAAAAAAAsACQAAAABAAAAACAsACcAAAABAAAAAHAsACwAAAABAAAAAFAtACgAAAABAAAAAAAtACsAAAABAAAAACAuACEAAAABAAAAAHAuACYAAAABAAAAAFAuACkAAAABAAAAAAAvACIAAAABAAAAAAAvACUAAAABAAAAACAwACMAAAABAAAAAAAxACoAAAAAAAQAAGArACMAAAAAAAEAAAArACQAAAAAAAEAAAArACEAAAAAAAEAAAArACYAAAAAAAEAAAArACcAAAABAAEAAGArACwAAAABAAEAAEAlAB4AAAAAAAQAAHAmAB4AAAAAAAMAAHAnAB4AAAAAAAIAAHAoAB0AAAABAAAAABAoAB4AAAAAAAEAAAApABwAAAABAAAAABApAB0AAAABAAEAAAApAB4AAAABAAEAAAApAB8AAAABAAAAADAqABsAAAABAAAAAGAqABwAAAABAAAAACAqAB8AAAABAAAAAAAqACAAAAABAAAAAEArABsAAAABAAEAAGArACAAAAABAAEAAEAsABsAAAABAAAAAHAsABwAAAABAAAAADAsAB8AAAABAAAAABAsACAAAAABAAAAAFAtABwAAAABAAAAAAAtAB0AAAABAAEAABAtAB4AAAABAAEAABAtAB8AAAABAAAAACAuAB0AAAABAAAAAAAuAB4AAAAAAAEAABAvAB4AAAAAAAIAAGAwAB4AAAAAAAMAAGAxAB4AAAAAAAQAAGA4ACIAAAABAAAAABA4ACMAAAABAAEAAAA4ACQAAAABAAEAAAA4ACUAAAABAAAAADA5ACEAAAABAAAAAGA5ACIAAAABAAAAACA5ACUAAAABAAAAAAA5ACYAAAABAAAAAEA6ACEAAAABAAEAAGA6ACYAAAABAAEAAEA7ACEAAAABAAAAAHA7ACIAAAABAAAAADA7ACUAAAABAAAAABA7ACYAAAABAAAAAFA8ACIAAAABAAAAAAA8ACMAAAABAAEAABA8ACQAAAABAAEAABA8ACUAAAABAAAAACA9ACMAAAABAAAAAAA9ACQAAAAAAAEAABA+ACQAAAAAAAIAAGA/ACQAAAAAAAMAAGBAACQAAAAAAAQAAGAWACQAAAAAAAQAAHAXACQAAAAAAAMAAHAYACQAAAAAAAIAAHAZACMAAAABAAAAABAZACQAAAAAAAEAAAAaACIAAAABAAAAABAaACMAAAABAAEAAAAaACQAAAABAAEAAAAaACUAAAABAAAAADAbACEAAAABAAAAAGAbACIAAAABAAAAACAbACUAAAABAAAAAAAbACYAAAABAAAAAEAcACEAAAABAAEAAGAcACYAAAABAAEAAEAdACEAAAABAAAAAHAdACIAAAABAAAAADAdACUAAAABAAAAABAdACYAAAABAAAAAFAeACIAAAABAAAAAAAeACMAAAABAAEAABAeACQAAAABAAEAABAeACUAAAABAAAAACAfACMAAAABAAAAAAAfACQAAAAAAAEAABAgACQAAAAAAAIAAGAhACQAAAAAAAMAAGAiACQAAAAAAAQAAGARABoAAAABAAAAADASABoAAAAAAAEAAAASABsAAAABAAAAADATABsAAAAAAAEAAAATABoAAAABAAAAAAATABwAAAAAAAIAAAATAB0AAAAAAAMAAAATAB4AAAAAAAQAAAARABkAAAAAAAAAAADp/wsAAAAAAAQAAFDq/wsAAAAAAAMAAFDr/wsAAAAAAAIAAFDs/woAAAABAAAAABDs/wsAAAABAAAAACDt/woAAAAAAAEAAFDt/wwAAAABAAAAADDu/wkAAAABAAAAABDu/woAAAAAAAEAAADu/wwAAAAAAAEAAADu/w0AAAAAAAEAAADu/w4AAAAAAAEAAADu/w8AAAAAAAEAAADv/wkAAAABAAEAAGDv/woAAAABAAAAACDv/wwAAAABAAAAAADv/w0AAAAAAAEAAADv/w4AAAAAAAIAAADw/wgAAAABAAAAABDw/wkAAAABAAAAACDw/w0AAAABAAAAACDx/wgAAAABAAEAAGDy/wgAAAABAAEAAGDz/wgAAAABAAEAAGD0/wgAAAABAAAAAAD2/wkAAAAAAAIAAHD3/wkAAAAAAAEAAHDv/w8AAAAAAAMAAADv/xAAAAAAAAQAAADu/xAAAAAAAAIAAADu/xEAAAAAAAMAAADu/xIAAAAAAAQAAAD5/wkAAAAAAAQAAGD4/wkAAAAAAAMAAGD1/wkAAAAAAAMAAHD0/wkAAAAAAAQAAHDf/+//AAABAAAAABDf//D/AAABAAEAABDf//H/AAABAAEAABDg/+//AAABAAAAAADg//D/AAABAAEAAADg//H/AAABAAEAAADg//L/AAAAAAEAAADg//P/AAABAAEAABDg//T/AAABAAEAABDh//L/AAAAAAEAAADh//P/AAAAAAEAAADh//T/AAABAAEAAADi//L/AAAAAAEAAADi//P/AAABAAAAACDj//L/AAAAAAEAAADk//L/AAAAAAEAAADl//X/AAAAAAEAAADl//b/AAAAAAIAAADm//X/AAAAAAEAAADm//b/AAAAAAIAAADn//X/AAAAAAEAAADn//b/AAAAAAIAAADo//X/AAAAAAEAAADo//b/AAAAAAIAAADp//X/AAAAAAIAACDp//b/AAAAAAIAAADq//X/AAABAAAAAADq//b/AAABAAAAACDn//P/AAABAAAAAADn//T/AAAAAAEAAADm//P/AAAAAAEAAADm//T/AAAAAAEAAADl//P/AAABAAEAABDl//T/AAAAAAEAAADg//X/AAAAAAEAAADg//b/AAAAAAIAAADg//f/AAABAAAAADDh//X/AAAAAAEAAADh//b/AAAAAAEAAADh//f/AAAAAAAAACDi//X/AAAAAAEAAADi//b/AAAAAAIAAADi//f/AAABAAAAACDf//L/AAABAAAAADDj//X/AAAAAAEAAADk//X/AAAAAAEAAADl//L/AAAAAAEAAADm//L/AAAAAAEAAADm//H/AAABAAAAAADl//H/AAAAAAEAAADk//H/AAABAAAAABDf//X/AAAAAAEAAADe//X/AAAAAAEAAADd//X/AAAAAAEAAADc//X/AAABAAAAABDc//b/AAAAAAEAAADc//f/AAAAAAEAAADb//r/AAABAAAAAADb//v/AAABAAEAAADb//z/AAAAAAEAAADc//z/AAABAAAAAADf//r/AAABAAEAABDg//r/AAABAAAAAADa//z/AAABAAEAABDa//v/AAABAAEAABDa//r/AAABAAAAABDb//3/AAAAAAEAAADa//3/AAABAAAAADDc//3/AAAAAAEAAADd//7/AAABAAEAAADd////AAABAAAAACDc////AAAAAAEAAADb////AAABAAEAABDb//7/AAABAAEAABDc/wAAAAABAAEAAADb/wAAAAABAAEAABDc/wEAAAABAAAAACDb/wEAAAABAAAAADDc//7/AAAAAAEAAADd//3/AAAAAAAAAADe//3/AAABAAAAAADf//j/AAABAAAAAADe//f/AAABAAAAAADd//b/AAAAAAEAAADe//j/AAABAAEAABDd//f/AAAAAAEAAADZ//j/AAABAAAAABDb//f/AAAAAAEAAADb//b/AAABAAAAABDn//n/AAABAAAAAADn//r/AAABAAAAADDo//r/AAAAAAEAAADo//v/AAABAAAAADDp//v/AAAAAAEAAADq//v/AAAAAAEAAADq//z/AAABAAAAACDp//z/AAAAAAEAAADp//3/AAAAAAIAAADp//r/AAABAAAAAADr//v/AAAAAAEAAADs//v/AAAAAAEAAADt//v/AAABAAAAAADZ//n/AAABAAAAACDY//n/AAABAAAAABDY//r/AAABAAAAACDX//r/AAAAAAEAAADW//r/AAABAAAAABDW//v/AAABAAEAABDo//T/AAABAAAAAADk//T/AAABAAAAABDW//z/AAAAAAMAAADW//3/AAAAAAIAAADX//v/AAAAAAEAAADX//z/AAAAAAIAAADm//j/AAAAAAAAAADm//n/AAABAAAAADDj//b/AAAAAAAAACDk//b/AAAAAAAAACDf//b/AAAAAAAAACDe//b/AAAAAAAAACDg//v/AAAAAAIAAADg//z/AAAAAAMAAADg//3/AAAAAAQAAADf//n/AAAAAAIAAADa//f/AAABAAAAABDX//3/AAAAAAMAAADW//7/AAAAAAMAAADa//j/AAAAAAEAAADp//7/AAAAAAMAAADp////AAAAAAQAAAA=")
-tile_set = ExtResource("9_n1xg1")
-
-[node name="eye_tiles" type="TileMapLayer" parent="worldd/world"]
-y_sort_enabled = true
-position = Vector2(-264, -120)
-tile_map_data = PackedByteArray("AAADAP//AAACAAcAAAAEAAAAAAAEAAYAAAD7/wMAAAACAAcAAAD8/wQAAAAEAAYAABD4//z/AQAAAAAAABD6//3/AAACAAcAABAYAAYAAAACAAcAAAAaAAUAAQAAAAAAABDy/xcAAAAHAAYAAAD0/xkAAAACAAcAABAkABcAAAAEAAYAABAnABMAAAAHAAYAAAAoABcAAAACAAcAAAAnABYAAAAEAAYAAAAoABoAAAACAAcAABAZAO7/AAACAAcAABAbAO//AAAHAAYAAAAXAO//AAAEAAYAAAAVAPH/AAAHAAYAAAAXAPT/AAAEAAYAABAaAPT/AAACAAcAABAPAO7/AQAAAAAAABAQAPD/AAACAAcAAAD7/+//AAAEAAYAAAAAAPD/AAACAAcAAAACAPH/AAACAAcAAADy//P/AAAEAAYAAAAAAO3/AAACAAcAABAHABkAAAACAAcAABAJABsAAAAHAAYAAAALABgAAAACAAcAAAAMABkAAAACAAcAAADx/ycAAAACAAcAABD1/yMAAAAEAAYAAAD3/yUAAQAAAAAAABANACUAAAACAAcAAAAWACYAAAACAAcAAAA0AAIAAAACAAcAABAyAAUAAAAEAAYAABAyAP7/AAAEAAYAAAAzAP//AAAEAAYAAAApAPX/AAACAAcAAAA0ABAAAAACAAcAABDl/wUAAAAHAAYAAADk/wcAAQAAAAAAABDj////AAACAAcAAADi/wAAAAACAAcAAADg/w8AAAACAAcAAADj/xEAAAACAAcAAADi/xIAAAAEAAYAAADe/xIAAAAEAAYAABDj/wwAAAACAAcAABDd//n/AQAAAAAAABDg/yYAAQAAAAAAABDi/x4AAQAAAAAAABDk/yIAAAAHAAYAAAAAAAAAAAACAAAAAAAmACMAAAAEAAYAABAvACMAAAAEAAYAAAAmACQAAAACAAcAABAnACIAAAAHAAYAABAoACEAAAAEAAYAABApACAAAAACAAcAABAsACAAAAACAAcAAAAtACEAAAAEAAYAAAAuACIAAAAHAAYAAAAuACUAAAAEAAYAAAAvACQAAAACAAcAAAAnACUAAAAEAAYAABAtACYAAAACAAcAAAAoACYAAAACAAcAABArAB8AAAAGAAEAAAArACAAAAAGAAIAAAArACEAAAAGAAMAAAArACIAAAAGAAQAAAArACMAAAAGAAUAAAA=")
-tile_set = ExtResource("9_n1xg1")
-
-[node name="collision" type="TileMapLayer" parent="worldd/world"]
-y_sort_enabled = true
-position = Vector2(-264, -120)
-tile_set = ExtResource("7_4yua0")
-script = ExtResource("8_bwsrp")
-
-[node name="material_blood" type="TileMapLayer" parent="worldd/world"]
-y_sort_enabled = true
-position = Vector2(-264, -120)
+position = Vector2(-192, -168)
 tile_map_data = PackedByteArray("AADs/wsAAAAAAAEAAADr/wsAAAAAAAEAAADq/wsAAAAAAAEAAADp/wsAAAAAAAEAAADs/woAAAAAAAEAAADt/woAAAAAAAEAAADu/woAAAAAAAEAAADv/woAAAAAAAEAAADv/wkAAAAAAAEAAADu/wkAAAAAAAEAAADw/wkAAAAAAAEAAADw/wgAAAAAAAEAAADx/wgAAAAAAAEAAADy/wgAAAAAAAEAAADz/wgAAAAAAAEAAAD0/wgAAAAAAAEAAAD0/wkAAAAAAAEAAAD1/wkAAAAAAAEAAAD2/wkAAAAAAAEAAAD3/wkAAAAAAAEAAAD4/wkAAAAAAAEAAAD5/wkAAAAAAAEAAADv/wwAAAAAAAEAAADu/wwAAAAAAAEAAADt/wwAAAAAAAEAAADu/w0AAAAAAAEAAADv/w0AAAAAAAEAAADv/w4AAAAAAAEAAADv/w8AAAAAAAEAAADv/xAAAAAAAAEAAADu/xIAAAAAAAEAAADu/xEAAAAAAAEAAADu/xAAAAAAAAEAAADu/w8AAAAAAAEAAADu/w4AAAAAAAEAAADw/w0AAAAAAAEAAAAAAAwAAAAAAAEAAAAAAA0AAAAAAAEAAAAAAA4AAAAAAAEAAAAAAA8AAAAAAAEAAAAAABAAAAAAAAEAAAAAABEAAAAAAAEAAAAAABIAAAAAAAEAAAAAABMAAAAAAAEAAAAAABQAAAAAAAEAAAAAABUAAAAAAAEAAAAAABYAAAAAAAEAAAAAABcAAAAAAAEAAAAAABgAAAAAAAEAAAAAABkAAAAAAAEAAAAAABoAAAAAAAEAAADp/xwAAAAAAAEAAADp/x0AAAAAAAEAAADp/x4AAAAAAAEAAADq/x4AAAAAAAEAAADq/xwAAAAAAAEAAADq/xsAAAAAAAEAAADq/x0AAAAAAAEAAADp/xsAAAAAAAEAAADq/x8AAAAAAAEAAADp/x8AAAAAAAEAAADo/x8AAAAAAAEAAADo/yAAAAAAAAEAAADn/yAAAAAAAAEAAADp/yAAAAAAAAEAAADo/x4AAAAAAAEAAADn/x8AAAAAAAEAAADn/yEAAAAAAAEAAADo/yEAAAAAAAEAAADp/yIAAAAAAAEAAADq/yIAAAAAAAEAAADr/yIAAAAAAAEAAADq/yEAAAAAAAEAAADp/yEAAAAAAAEAAADr/yMAAAAAAAEAAADr/yQAAAAAAAEAAADr/yUAAAAAAAEAAADr/yYAAAAAAAEAAADq/yUAAAAAAAEAAADq/yQAAAAAAAEAAADq/yMAAAAAAAEAAADq/yYAAAAAAAEAAADq/ycAAAAAAAEAAADq/ygAAAAAAAEAAAARABkAAAAAAAEAAAARABoAAAAAAAEAAAASABoAAAAAAAEAAAASABsAAAAAAAEAAAATABsAAAAAAAEAAAATABoAAAAAAAEAAAATABwAAAAAAAEAAAATAB0AAAAAAAEAAAATAB4AAAAAAAEAAAAiACQAAAAAAAEAAAAhACQAAAAAAAEAAAAgACQAAAAAAAEAAAAfACQAAAAAAAEAAAAfACMAAAAAAAEAAAAeACMAAAAAAAEAAAAeACQAAAAAAAEAAAAeACUAAAAAAAEAAAAdACUAAAAAAAEAAAAdACYAAAAAAAEAAAAcACYAAAAAAAEAAAAbACYAAAAAAAEAAAAbACUAAAAAAAEAAAAaACUAAAAAAAEAAAAaACQAAAAAAAEAAAAZACQAAAAAAAEAAAAYACQAAAAAAAEAAAAXACQAAAAAAAEAAAAWACQAAAAAAAEAAAAZACMAAAAAAAEAAAAaACMAAAAAAAEAAAAaACIAAAAAAAEAAAAbACIAAAAAAAEAAAAbACEAAAAAAAEAAAAcACEAAAAAAAEAAAAdACEAAAAAAAEAAAAdACIAAAAAAAEAAAAeACIAAAAAAAEAAAAlAB4AAAAAAAEAAAAmAB4AAAAAAAEAAAAnAB4AAAAAAAEAAAAoAB0AAAAAAAEAAAAoAB4AAAAAAAEAAAApABwAAAAAAAEAAAApAB0AAAAAAAEAAAApAB4AAAAAAAEAAAApAB8AAAAAAAEAAAAqABsAAAAAAAEAAAAqABwAAAAAAAEAAAAqAB8AAAAAAAEAAAAqACAAAAAAAAEAAAArABsAAAAAAAEAAAArACAAAAAAAAEAAAAsABsAAAAAAAEAAAAsABwAAAAAAAEAAAAsAB8AAAAAAAEAAAAsACAAAAAAAAEAAAAtABwAAAAAAAEAAAAtAB0AAAAAAAEAAAAtAB4AAAAAAAEAAAAtAB8AAAAAAAEAAAAuAB0AAAAAAAEAAAAuAB4AAAAAAAEAAAAvAB4AAAAAAAEAAAAwAB4AAAAAAAEAAAAxAB4AAAAAAAEAAAA0ACQAAAAAAAEAAAA1ACQAAAAAAAEAAAA2ACQAAAAAAAEAAAA3ACMAAAAAAAEAAAA3ACQAAAAAAAEAAAA4ACIAAAAAAAEAAAA4ACMAAAAAAAEAAAA4ACQAAAAAAAEAAAA4ACUAAAAAAAEAAAA5ACEAAAAAAAEAAAA5ACIAAAAAAAEAAAA5ACUAAAAAAAEAAAA5ACYAAAAAAAEAAAA6ACEAAAAAAAEAAAA6ACYAAAAAAAEAAAA7ACEAAAAAAAEAAAA7ACIAAAAAAAEAAAA7ACUAAAAAAAEAAAA7ACYAAAAAAAEAAAA8ACIAAAAAAAEAAAA8ACMAAAAAAAEAAAA8ACQAAAAAAAEAAAA8ACUAAAAAAAEAAAA9ACMAAAAAAAEAAAA9ACQAAAAAAAEAAAA+ACQAAAAAAAEAAAA/ACQAAAAAAAEAAABAACQAAAAAAAEAAAAlACoAAAAAAAEAAAAmACoAAAAAAAEAAAAnACoAAAAAAAEAAAAoACkAAAAAAAEAAAAoACoAAAAAAAEAAAApACgAAAAAAAEAAAApACkAAAAAAAEAAAApACoAAAAAAAEAAAApACsAAAAAAAEAAAAqACcAAAAAAAEAAAAqACgAAAAAAAEAAAAqACsAAAAAAAEAAAAqACwAAAAAAAEAAAArACcAAAAAAAEAAAArACwAAAAAAAEAAAAsACcAAAAAAAEAAAAsACgAAAAAAAEAAAAsACsAAAAAAAEAAAAsACwAAAAAAAEAAAAtACgAAAAAAAEAAAAtACkAAAAAAAEAAAAtACoAAAAAAAEAAAAtACsAAAAAAAEAAAAuACkAAAAAAAEAAAAuACoAAAAAAAEAAAAvACoAAAAAAAEAAAAwACoAAAAAAAEAAAAxACoAAAAAAAEAAAAjACQAAAAAAAEAAAAkACQAAAAAAAEAAAAlACQAAAAAAAEAAAAmACMAAAAAAAEAAAAmACQAAAAAAAEAAAAnACIAAAAAAAEAAAAnACMAAAAAAAEAAAAnACQAAAAAAAEAAAAnACUAAAAAAAEAAAAoACEAAAAAAAEAAAAoACIAAAAAAAEAAAAoACUAAAAAAAEAAAAoACYAAAAAAAEAAAApACEAAAAAAAEAAAApACYAAAAAAAEAAAAvACQAAAAAAAEAAAAuACEAAAAAAAEAAAAuACIAAAAAAAEAAAAuACUAAAAAAAEAAAAuACYAAAAAAAEAAAAvACIAAAAAAAEAAAAvACMAAAAAAAEAAAAvACUAAAAAAAEAAAAwACMAAAAAAAEAAAAwACQAAAAAAAEAAAAxACQAAAAAAAEAAAAyACQAAAAAAAEAAAAzACQAAAAAAAEAAAAqACEAAAAAAAEAAAArACEAAAAAAAEAAAAsACEAAAAAAAEAAAAtACEAAAAAAAEAAAAtACYAAAAAAAEAAAAsACYAAAAAAAEAAAArACYAAAAAAAEAAAAqACYAAAAAAAEAAAAqACMAAAAAAAEAAAArACQAAAAAAAEAAAAsACQAAAAAAAEAAAAsACMAAAAAAAEAAAArACMAAAAAAAEAAAAqACQAAAAAAAEAAAAAAAcAAAAAAAEAAAAAAAYAAAAAAAEAAAAAAAUAAAAAAAEAAAAAAAQAAAAAAAEAAAAAAAMAAAAAAAEAAAD//wMAAAAAAAEAAAD//wQAAAAAAAEAAAABAAMAAAAAAAEAAAABAAIAAAAAAAEAAAAAAAIAAAAAAAEAAAD//wIAAAAAAAEAAAD+/wIAAAAAAAEAAAD+/wEAAAAAAAEAAAD+/wAAAAAAAAEAAAD//wAAAAAAAAEAAAD/////AAAAAAEAAAAAAP//AAAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAEAAAABAAEAAAAAAAEAAAACAAIAAAAAAAEAAAACAAEAAAAAAAEAAAACAAAAAAAAAAEAAAACAP//AAAAAAEAAAABAP//AAAAAAEAAAAAAAEAAAAAAAEAAAD+////AAAAAAEAAAD//wEAAAAAAAEAAAAYAP7/AAAAAAEAAAAYAP//AAAAAAEAAAAYAAAAAAAAAAEAAAAYAAEAAAAAAAEAAAAYAAIAAAAAAAEAAAAZAAEAAAAAAAEAAAAZAAAAAAAAAAEAAAAZAAIAAAAAAAEAAAAXAAIAAAAAAAEAAAAXAAMAAAAAAAEAAAAXAAQAAAAAAAEAAAAWAAQAAAAAAAEAAAAVAAQAAAAAAAEAAAAUAAQAAAAAAAEAAAATAAQAAAAAAAEAAAAYAAMAAAAAAAEAAAAWAAMAAAAAAAEAAAAWAPX/AAAAAAEAAAAWAPT/AAAAAAEAAAAWAPP/AAAAAAEAAAAWAPL/AAAAAAEAAAAWAPH/AAAAAAEAAAAVAPL/AAAAAAEAAAAXAPL/AAAAAAEAAAAYAPL/AAAAAAEAAAAZAPL/AAAAAAEAAAAYAPP/AAAAAAEAAAAXAPP/AAAAAAEAAAAXAPT/AAAAAAEAAAAVAPH/AAAAAAEAAAAUAPH/AAAAAAEAAAATAPH/AAAAAAEAAAASAPH/AAAAAAEAAAARAPH/AAAAAAEAAAAWAPD/AAAAAAEAAAAVAPD/AAAAAAEAAAAWAO//AAAAAAEAAAAXAO//AAAAAAEAAAAXAO7/AAAAAAEAAAAYAO7/AAAAAAEAAAAZAO7/AAAAAAEAAAAaAO7/AAAAAAEAAAAaAO//AAAAAAEAAAAbAO//AAAAAAEAAAAcAO//AAAAAAEAAAAdAO//AAAAAAEAAAAeAO//AAAAAAEAAAAfAO//AAAAAAEAAAAgAO//AAAAAAEAAAAdAPD/AAAAAAEAAAAcAPD/AAAAAAEAAAAbAPD/AAAAAAEAAAAbAPH/AAAAAAEAAAAaAPH/AAAAAAEAAAAZAPH/AAAAAAEAAAAYAPH/AAAAAAEAAAAXAPH/AAAAAAEAAAAXAPD/AAAAAAEAAAAYAPD/AAAAAAEAAAAZAPD/AAAAAAEAAAAaAPD/AAAAAAEAAAAYAO//AAAAAAEAAAAZAO//AAAAAAEAAADX//r/AAAAAAEAAADX//v/AAAAAAEAAADX//z/AAAAAAEAAADX//3/AAAAAAEAAADW//v/AAAAAAEAAADW//r/AAAAAAEAAADW//z/AAAAAAEAAADW//3/AAAAAAEAAADW//7/AAAAAAEAAADY//r/AAAAAAEAAADY//n/AAAAAAEAAADZ//n/AAAAAAEAAADZ//j/AAAAAAEAAADa//j/AAAAAAEAAADa//f/AAAAAAEAAADb//f/AAAAAAEAAADc//f/AAAAAAEAAADd//f/AAAAAAEAAADd//b/AAAAAAEAAADc//b/AAAAAAEAAADb//b/AAAAAAEAAADb//X/AAAAAAEAAADc//X/AAAAAAEAAADd//X/AAAAAAEAAADe//X/AAAAAAEAAADf//X/AAAAAAEAAADg//X/AAAAAAEAAADh//X/AAAAAAEAAADi//X/AAAAAAEAAADj//X/AAAAAAEAAADk//X/AAAAAAEAAADl//X/AAAAAAEAAADm//X/AAAAAAEAAADn//X/AAAAAAEAAADo//X/AAAAAAEAAADp//X/AAAAAAEAAADp//b/AAAAAAEAAADo//b/AAAAAAEAAADn//b/AAAAAAEAAADm//b/AAAAAAEAAADl//b/AAAAAAEAAADk//b/AAAAAAEAAADj//b/AAAAAAEAAADi//b/AAAAAAEAAADh//b/AAAAAAEAAADe//b/AAAAAAEAAADf//b/AAAAAAEAAADg//b/AAAAAAEAAADq//b/AAAAAAEAAADq//X/AAAAAAEAAADh//f/AAAAAAEAAADg//f/AAAAAAEAAADi//f/AAAAAAEAAADg//T/AAAAAAEAAADg//P/AAAAAAEAAADh//P/AAAAAAEAAADh//T/AAAAAAEAAADh//L/AAAAAAEAAADi//L/AAAAAAEAAADi//P/AAAAAAEAAADg//L/AAAAAAEAAADg//H/AAAAAAEAAADf//H/AAAAAAEAAADg//D/AAAAAAEAAADg/+//AAAAAAEAAADf//D/AAAAAAEAAADf//L/AAAAAAEAAADf/+//AAAAAAEAAADj//L/AAAAAAEAAADk//L/AAAAAAEAAADl//L/AAAAAAEAAADm//L/AAAAAAEAAADm//H/AAAAAAEAAADl//H/AAAAAAEAAADk//H/AAAAAAEAAADl//P/AAAAAAEAAADm//P/AAAAAAEAAADm//T/AAAAAAEAAADn//T/AAAAAAEAAADn//P/AAAAAAEAAADo//T/AAAAAAEAAADl//T/AAAAAAEAAADk//T/AAAAAAEAAADm//j/AAAAAAEAAADm//n/AAAAAAEAAADn//n/AAAAAAEAAADn//r/AAAAAAEAAADo//r/AAAAAAEAAADo//v/AAAAAAEAAADp//r/AAAAAAEAAADp//v/AAAAAAEAAADp//z/AAAAAAEAAADp//3/AAAAAAEAAADp//7/AAAAAAEAAADp////AAAAAAEAAADq//z/AAAAAAEAAADq//v/AAAAAAEAAADr//v/AAAAAAEAAADs//v/AAAAAAEAAADt//v/AAAAAAEAAADe//f/AAAAAAEAAADe//j/AAAAAAEAAADf//j/AAAAAAEAAADf//n/AAAAAAEAAADf//r/AAAAAAEAAADg//r/AAAAAAEAAADg//v/AAAAAAEAAADg//z/AAAAAAEAAADg//3/AAAAAAEAAADe//3/AAAAAAEAAADd//3/AAAAAAEAAADc//3/AAAAAAEAAADb//3/AAAAAAEAAADa//3/AAAAAAEAAADb//z/AAAAAAEAAADc//z/AAAAAAEAAADa//z/AAAAAAEAAADa//v/AAAAAAEAAADa//r/AAAAAAEAAADb//r/AAAAAAEAAADb//v/AAAAAAEAAADb//7/AAAAAAEAAADb////AAAAAAEAAADb/wAAAAAAAAEAAADb/wEAAAAAAAEAAADc/wEAAAAAAAEAAADc/wAAAAAAAAEAAADc////AAAAAAEAAADc//7/AAAAAAEAAADd//7/AAAAAAEAAADd////AAAAAAEAAAA=")
 tile_set = ExtResource("13_3vpbd")
 script = ExtResource("14_8vxfw")
 ground_material = 6
 metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
-[node name="world" type="Node2D" parent="worldd/world" node_paths=PackedStringArray("manager", "target", "children", "dupe_nodes")]
+[node name="world" type="Node2D" parent="y_order"]
+y_sort_enabled = true
+position = Vector2(72, -48)
+
+[node name="blood_tiles" type="TileMapLayer" parent="y_order/world"]
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-264, -120)
+tile_map_data = PackedByteArray("AAD+/wAAAAABAAEAABD+/wEAAAABAAEAABD//wEAAAAAAAEAAAD//wIAAAAAAAEAAAD//wAAAAAAAAEAAAD/////AAABAAEAAGD+////AAABAAAAABD//wMAAAABAAAAABD//wQAAAABAAAAADD+/wIAAAABAAAAADATAAQAAAAAAAQAAFAUAAQAAAAAAAMAAHAVAAQAAAAAAAEAAAAWAAMAAAABAAAAABAWAAQAAAAAAAEAAAAXAAMAAAAAAAEAAAAXAAQAAAABAAAAACAAAAsAAAAAAAQAADAAAAwAAAAAAAMAADAAAA0AAAAAAAIAADAAAA4AAAAAAAEAADAAAA8AAAAAAAMAAAAAABAAAAAAAAQAAAAAABEAAAAAAAQAACAAABIAAAAAAAMAACAAABMAAAAAAAIAACAAABQAAAAAAAEAACAAABUAAAAAAAEAACAAABYAAAAAAAEAAAAAABcAAAAAAAEAAAAAABgAAAAAAAIAAAAAABoAAAAAAAQAAADn/x8AAAABAAAAABDo/x4AAAABAAAAABDp/x0AAAAAAAIAADDp/yAAAAABAAAAACDq/x0AAAABAAEAAADq/x8AAAABAAAAACDq/yUAAAAAAAEAAADr/yYAAAABAAAAACAAABkAAAAAAAMAAAAVAPD/AAAAAAEAAFAVAPH/AAAAAAEAAAAWAPD/AAAAAAEAAAAWAPH/AAAAAAEAAAAXAO//AAABAAEAAGAXAPD/AAAAAAEAAAAXAPH/AAAAAAEAAAAYAO7/AAABAAEAAGAYAO//AAAAAAEAAAAYAPD/AAAAAAEAAAAYAPH/AAAAAAEAAAAZAO7/AAABAAEAAGAZAO//AAAAAAEAAAAZAPD/AAAAAAEAAAAaAO7/AAABAAEAAGAaAO//AAAAAAEAAAAaAPD/AAAAAAEAAAAbAO7/AAABAAEAAGAbAO//AAAAAAEAAAAbAPD/AAAAAAEAAAAcAO//AAAAAAEAAAAdAO//AAAAAAEAAAAeAO//AAAAAAIAAGATAPH/AAAAAAIAAFAUAPH/AAAAAAEAAFAXAPL/AAAAAAEAAAAXAPP/AAAAAAEAAAAXAPT/AAABAAEAAEAYAPL/AAAAAAEAAAAZAPH/AAAAAAEAAAAZAPL/AAABAAAAACAaAPH/AAAAAAEAAAAbAPH/AAABAAAAACAcAPD/AAAAAAEAAAAdAPD/AAABAAAAACASAPH/AAAAAAMAAFARAPH/AAAAAAQAAFAUAPD/AAABAAAAABAWAO//AAABAAAAABAYAAMAAAABAAAAACAYAAIAAAAAAAEAAAAYAAEAAAAAAAEAAAAXAAIAAAABAAAAABAYAAAAAAAAAAIAACAYAP//AAAAAAMAACAYAP7/AAAAAAQAACAZAAAAAAABAAAAAAAgAO//AAAAAAQAAGAfAO//AAAAAAMAAGAcAO7/AAABAAAAAAAWAPL/AAAAAAEAAAAWAPP/AAABAAEAABAWAPT/AAABAAEAABAWAPX/AAABAAEAABAYAPP/AAABAAAAACAVAPL/AAABAAAAADDn/yAAAAABAAEAABDn/yEAAAABAAAAADDo/x8AAAAAAAEAAADo/yAAAAAAAAEAAADo/yEAAAAAAAEAAADp/x4AAAAAAAEAAADp/x8AAAAAAAEAAADp/yEAAAABAAEAAGDq/x4AAAABAAEAAADq/yEAAAABAAAAAADq/yIAAAAAAAEAAADq/yMAAAAAAAEAAADq/yQAAAAAAAEAAADr/yIAAAABAAAAAADr/yMAAAABAAEAAADr/yQAAAABAAEAAADr/yUAAAABAAEAAADq/yYAAAAAAAIAAAAZAAIAAAABAAEAAAAZAAEAAAABAAEAAAAjACQAAAAAAAQAAHAkACQAAAAAAAMAAHAlACQAAAAAAAIAAHAmACMAAAABAAAAABAmACQAAAAAAAEAAAAnACIAAAABAAAAABAnACMAAAABAAEAAAAnACQAAAABAAEAAAAnACUAAAABAAAAADAoACEAAAABAAAAAGAoACIAAAABAAAAACAoACUAAAABAAAAAAAoACYAAAABAAAAAEApACEAAAAAAAEAAAApACYAAAAAAAEAAAAqACEAAAAAAAEAAAAqACMAAAABAAAAABAqACQAAAABAAAAADAqACYAAAAAAAEAAADg/yQAAAAAAAQAAGDq/ycAAAAAAAMAAADq/ygAAAAAAAQAAADp/yIAAAABAAAAADDp/xwAAAAAAAMAADDp/xsAAAAAAAQAADDq/xwAAAABAAIAACDq/xsAAAAAAAAAAAABAAEAAAAAAAEAAAABAAIAAAAAAAEAAAABAAMAAAABAAAAACACAAEAAAABAAEAAAACAAIAAAABAAAAACAAAAAAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAIAAAAAAAEAAAAAAP//AAABAAEAAGAAAAMAAAAAAAEAAAAAAAQAAAAAAAEAAAAAAAYAAAAAAAMAAAAAAAcAAAAAAAQAAAAAAAUAAAAAAAIAAAABAP//AAABAAEAAGABAAAAAAAAAAEAAAACAP//AAABAAAAAAACAAAAAAABAAEAAAAlACoAAAAAAAQAAHAmACoAAAAAAAMAAHAnACoAAAAAAAIAAHAoACkAAAABAAAAABAoACoAAAAAAAEAAAApACgAAAABAAAAABApACkAAAABAAEAAAApACoAAAABAAEAAAApACsAAAABAAAAADAqACcAAAABAAAAAGAqACgAAAABAAAAACAqACsAAAABAAAAAAAqACwAAAABAAAAAEAsACEAAAAAAAEAABAsACYAAAAAAAEAAAAsACgAAAABAAAAADAsACsAAAABAAAAABAtACEAAAAAAAEAABAtACYAAAAAAAEAAAAtACkAAAABAAEAABAtACoAAAABAAEAABAuACIAAAABAAAAADAuACUAAAABAAAAABAuACoAAAAAAAEAABAvACMAAAABAAEAABAvACQAAAABAAEAABAvACoAAAAAAAIAAGAwACQAAAAAAAEAABAwACoAAAAAAAMAAGAxACQAAAAAAAIAAGAyACQAAAAAAAMAAGAzACQAAAAAAAQAAGA0ACQAAAAAAAQAAHA1ACQAAAAAAAMAAHA2ACQAAAAAAAIAAHA3ACMAAAABAAAAABA3ACQAAAAAAAEAAAAsACMAAAABAAAAAAAsACQAAAABAAAAACAsACcAAAABAAAAAHAsACwAAAABAAAAAFAtACgAAAABAAAAAAAtACsAAAABAAAAACAuACEAAAABAAAAAHAuACYAAAABAAAAAFAuACkAAAABAAAAAAAvACIAAAABAAAAAAAvACUAAAABAAAAACAwACMAAAABAAAAAAAxACoAAAAAAAQAAGArACMAAAAAAAEAAAArACQAAAAAAAEAAAArACEAAAAAAAEAAAArACYAAAAAAAEAAAArACcAAAABAAEAAGArACwAAAABAAEAAEAlAB4AAAAAAAQAAHAmAB4AAAAAAAMAAHAnAB4AAAAAAAIAAHAoAB0AAAABAAAAABAoAB4AAAAAAAEAAAApABwAAAABAAAAABApAB0AAAABAAEAAAApAB4AAAABAAEAAAApAB8AAAABAAAAADAqABsAAAABAAAAAGAqABwAAAABAAAAACAqAB8AAAABAAAAAAAqACAAAAABAAAAAEArABsAAAABAAEAAGArACAAAAABAAEAAEAsABsAAAABAAAAAHAsABwAAAABAAAAADAsAB8AAAABAAAAABAsACAAAAABAAAAAFAtABwAAAABAAAAAAAtAB0AAAABAAEAABAtAB4AAAABAAEAABAtAB8AAAABAAAAACAuAB0AAAABAAAAAAAuAB4AAAAAAAEAABAvAB4AAAAAAAIAAGAwAB4AAAAAAAMAAGAxAB4AAAAAAAQAAGA4ACIAAAABAAAAABA4ACMAAAABAAEAAAA4ACQAAAABAAEAAAA4ACUAAAABAAAAADA5ACEAAAABAAAAAGA5ACIAAAABAAAAACA5ACUAAAABAAAAAAA5ACYAAAABAAAAAEA6ACEAAAABAAEAAGA6ACYAAAABAAEAAEA7ACEAAAABAAAAAHA7ACIAAAABAAAAADA7ACUAAAABAAAAABA7ACYAAAABAAAAAFA8ACIAAAABAAAAAAA8ACMAAAABAAEAABA8ACQAAAABAAEAABA8ACUAAAABAAAAACA9ACMAAAABAAAAAAA9ACQAAAAAAAEAABA+ACQAAAAAAAIAAGA/ACQAAAAAAAMAAGBAACQAAAAAAAQAAGAWACQAAAAAAAQAAHAXACQAAAAAAAMAAHAYACQAAAAAAAIAAHAZACMAAAABAAAAABAZACQAAAAAAAEAAAAaACIAAAABAAAAABAaACMAAAABAAEAAAAaACQAAAABAAEAAAAaACUAAAABAAAAADAbACEAAAABAAAAAGAbACIAAAABAAAAACAbACUAAAABAAAAAAAbACYAAAABAAAAAEAcACEAAAABAAEAAGAcACYAAAABAAEAAEAdACEAAAABAAAAAHAdACIAAAABAAAAADAdACUAAAABAAAAABAdACYAAAABAAAAAFAeACIAAAABAAAAAAAeACMAAAABAAEAABAeACQAAAABAAEAABAeACUAAAABAAAAACAfACMAAAABAAAAAAAfACQAAAAAAAEAABAgACQAAAAAAAIAAGAhACQAAAAAAAMAAGAiACQAAAAAAAQAAGARABoAAAABAAAAADASABoAAAAAAAEAAAASABsAAAABAAAAADATABsAAAAAAAEAAAATABoAAAABAAAAAAATABwAAAAAAAIAAAATAB0AAAAAAAMAAAATAB4AAAAAAAQAAAARABkAAAAAAAAAAADp/wsAAAAAAAQAAFDq/wsAAAAAAAMAAFDr/wsAAAAAAAIAAFDs/woAAAABAAAAABDs/wsAAAABAAAAACDt/woAAAAAAAEAAFDt/wwAAAABAAAAADDu/wkAAAABAAAAABDu/woAAAAAAAEAAADu/wwAAAAAAAEAAADu/w0AAAAAAAEAAADu/w4AAAAAAAEAAADu/w8AAAAAAAEAAADv/wkAAAABAAEAAGDv/woAAAABAAAAACDv/wwAAAABAAAAAADv/w0AAAAAAAEAAADv/w4AAAAAAAIAAADw/wgAAAABAAAAABDw/wkAAAABAAAAACDw/w0AAAABAAAAACDx/wgAAAABAAEAAGDy/wgAAAABAAEAAGDz/wgAAAABAAEAAGD0/wgAAAABAAAAAAD2/wkAAAAAAAIAAHD3/wkAAAAAAAEAAHDv/w8AAAAAAAMAAADv/xAAAAAAAAQAAADu/xAAAAAAAAIAAADu/xEAAAAAAAMAAADu/xIAAAAAAAQAAAD5/wkAAAAAAAQAAGD4/wkAAAAAAAMAAGD1/wkAAAAAAAMAAHD0/wkAAAAAAAQAAHDf/+//AAABAAAAABDf//D/AAABAAEAABDf//H/AAABAAEAABDg/+//AAABAAAAAADg//D/AAABAAEAAADg//H/AAABAAEAAADg//L/AAAAAAEAAADg//P/AAABAAEAABDg//T/AAABAAEAABDh//L/AAAAAAEAAADh//P/AAAAAAEAAADh//T/AAABAAEAAADi//L/AAAAAAEAAADi//P/AAABAAAAACDj//L/AAAAAAEAAADk//L/AAAAAAEAAADl//X/AAAAAAEAAADl//b/AAAAAAIAAADm//X/AAAAAAEAAADm//b/AAAAAAIAAADn//X/AAAAAAEAAADn//b/AAAAAAIAAADo//X/AAAAAAEAAADo//b/AAAAAAIAAADp//X/AAAAAAIAACDp//b/AAAAAAIAAADq//X/AAABAAAAAADq//b/AAABAAAAACDn//P/AAABAAAAAADn//T/AAAAAAEAAADm//P/AAAAAAEAAADm//T/AAAAAAEAAADl//P/AAABAAEAABDl//T/AAAAAAEAAADg//X/AAAAAAEAAADg//b/AAAAAAIAAADg//f/AAABAAAAADDh//X/AAAAAAEAAADh//b/AAAAAAEAAADh//f/AAAAAAAAACDi//X/AAAAAAEAAADi//b/AAAAAAIAAADi//f/AAABAAAAACDf//L/AAABAAAAADDj//X/AAAAAAEAAADk//X/AAAAAAEAAADl//L/AAAAAAEAAADm//L/AAAAAAEAAADm//H/AAABAAAAAADl//H/AAAAAAEAAADk//H/AAABAAAAABDf//X/AAAAAAEAAADe//X/AAAAAAEAAADd//X/AAAAAAEAAADc//X/AAABAAAAABDc//b/AAAAAAEAAADc//f/AAAAAAEAAADb//r/AAABAAAAAADb//v/AAABAAEAAADb//z/AAAAAAEAAADc//z/AAABAAAAAADf//r/AAABAAEAABDg//r/AAABAAAAAADa//z/AAABAAEAABDa//v/AAABAAEAABDa//r/AAABAAAAABDb//3/AAAAAAEAAADa//3/AAABAAAAADDc//3/AAAAAAEAAADd//7/AAABAAEAAADd////AAABAAAAACDc////AAAAAAEAAADb////AAABAAEAABDb//7/AAABAAEAABDc/wAAAAABAAEAAADb/wAAAAABAAEAABDc/wEAAAABAAAAACDb/wEAAAABAAAAADDc//7/AAAAAAEAAADd//3/AAAAAAAAAADe//3/AAABAAAAAADf//j/AAABAAAAAADe//f/AAABAAAAAADd//b/AAAAAAEAAADe//j/AAABAAEAABDd//f/AAAAAAEAAADZ//j/AAABAAAAABDb//f/AAAAAAEAAADb//b/AAABAAAAABDn//n/AAABAAAAAADn//r/AAABAAAAADDo//r/AAAAAAEAAADo//v/AAABAAAAADDp//v/AAAAAAEAAADq//v/AAAAAAEAAADq//z/AAABAAAAACDp//z/AAAAAAEAAADp//3/AAAAAAIAAADp//r/AAABAAAAAADr//v/AAAAAAEAAADs//v/AAAAAAEAAADt//v/AAABAAAAAADZ//n/AAABAAAAACDY//n/AAABAAAAABDY//r/AAABAAAAACDX//r/AAAAAAEAAADW//r/AAABAAAAABDW//v/AAABAAEAABDo//T/AAABAAAAAADk//T/AAABAAAAABDW//z/AAAAAAMAAADW//3/AAAAAAIAAADX//v/AAAAAAEAAADX//z/AAAAAAIAAADm//j/AAAAAAAAAADm//n/AAABAAAAADDj//b/AAAAAAAAACDk//b/AAAAAAAAACDf//b/AAAAAAAAACDe//b/AAAAAAAAACDg//v/AAAAAAIAAADg//z/AAAAAAMAAADg//3/AAAAAAQAAADf//n/AAAAAAIAAADa//f/AAABAAAAABDX//3/AAAAAAMAAADW//7/AAAAAAMAAADa//j/AAAAAAEAAADp//7/AAAAAAMAAADp////AAAAAAQAAAA=")
+tile_set = ExtResource("9_n1xg1")
+
+[node name="eye_tiles" type="TileMapLayer" parent="y_order/world"]
+y_sort_enabled = true
+position = Vector2(-264, -120)
+tile_map_data = PackedByteArray("AAADAP//AAACAAcAAAAEAAAAAAAEAAYAAAD7/wMAAAACAAcAAAD8/wQAAAAEAAYAABD4//z/AQAAAAAAABD6//3/AAACAAcAABAYAAYAAAACAAcAAAAaAAUAAQAAAAAAABDy/xcAAAAHAAYAAAD0/xkAAAACAAcAABAkABcAAAAEAAYAABAnABMAAAAHAAYAAAAoABcAAAACAAcAAAAnABYAAAAEAAYAAAAoABoAAAACAAcAABAZAO7/AAACAAcAABAbAO//AAAHAAYAAAAXAO//AAAEAAYAAAAVAPH/AAAHAAYAAAAXAPT/AAAEAAYAABAaAPT/AAACAAcAABAPAO7/AQAAAAAAABAQAPD/AAACAAcAAAD7/+//AAAEAAYAAAAAAPD/AAACAAcAAAACAPH/AAACAAcAAADy//P/AAAEAAYAAAAAAO3/AAACAAcAABAHABkAAAACAAcAABAJABsAAAAHAAYAAAALABgAAAACAAcAAAAMABkAAAACAAcAAADx/ycAAAACAAcAABD1/yMAAAAEAAYAAAD3/yUAAQAAAAAAABANACUAAAACAAcAAAAWACYAAAACAAcAAAA0AAIAAAACAAcAABAyAAUAAAAEAAYAABAyAP7/AAAEAAYAAAAzAP//AAAEAAYAAAApAPX/AAACAAcAAAA0ABAAAAACAAcAABDl/wUAAAAHAAYAAADk/wcAAQAAAAAAABDj////AAACAAcAAADi/wAAAAACAAcAAADg/w8AAAACAAcAAADj/xEAAAACAAcAAADi/xIAAAAEAAYAAADe/xIAAAAEAAYAABDj/wwAAAACAAcAABDd//n/AQAAAAAAABDg/yYAAQAAAAAAABDi/x4AAQAAAAAAABDk/yIAAAAHAAYAAAAAAAAAAAACAAAAAAAmACMAAAAEAAYAABAvACMAAAAEAAYAAAAmACQAAAACAAcAABAnACIAAAAHAAYAABAoACEAAAAEAAYAABApACAAAAACAAcAABAsACAAAAACAAcAAAAtACEAAAAEAAYAAAAuACIAAAAHAAYAAAAuACUAAAAEAAYAAAAvACQAAAACAAcAAAAnACUAAAAEAAYAABAtACYAAAACAAcAAAAoACYAAAACAAcAABArAB8AAAAGAAEAAAArACAAAAAGAAIAAAArACEAAAAGAAMAAAArACIAAAAGAAQAAAArACMAAAAGAAUAAAA=")
+tile_set = ExtResource("9_n1xg1")
+
+[node name="collision" type="TileMapLayer" parent="y_order/world"]
+y_sort_enabled = true
+position = Vector2(-264, -120)
+tile_set = ExtResource("7_4yua0")
+script = ExtResource("8_bwsrp")
+
+[node name="world" type="Node2D" parent="y_order/world" node_paths=PackedStringArray("target", "children")]
 y_sort_enabled = true
 script = ExtResource("40_yu80x")
-manager = NodePath("../../../LoopManager")
-idx = 3
+idx = 1
 target = NodePath("..")
-children = [NodePath("../blood_tiles"), NodePath("../eye_tiles"), NodePath("../collision"), NodePath("../material_blood")]
-dupe_nodes = [null, null, null, null, null, null, null, null]
+children = [NodePath("../blood_tiles"), NodePath("../eye_tiles"), NodePath("../collision")]
 do_not_loop = true
 keep_child_nodes = true
 metadata/_custom_type_script = "uid://bnajku7ggsr2q"
 
 [editable path="camera"]
-[editable path="worldd/medamaude_effect"]
+[editable path="y_order/medamaude_effect"]

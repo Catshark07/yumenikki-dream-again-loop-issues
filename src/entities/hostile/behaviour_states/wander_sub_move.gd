@@ -11,7 +11,6 @@ func _state_physics_update(_delta: float) -> void:
 			(sentient as NavSentient).nav_agent.get_next_path_position() - sentient.global_position)
 		
 		sentient.vel_input = sentient.direction
-		print(fsm.context, " -- ", sentient.vel_input)
 	
 	else:
 		request_transition_to("wander_idle")

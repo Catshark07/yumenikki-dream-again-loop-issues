@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="11_qwdne"]
 [ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="12_d6ort"]
 [ext_resource type="Texture2D" uid="uid://bnhc6qe0cfq5v" path="res://src/images/ui/menu_game_settings.png" id="13_qwdne"]
-[ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_manager.gd" id="16_p7cap"]
+[ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_region.gd" id="16_p7cap"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ttrd8"]
 

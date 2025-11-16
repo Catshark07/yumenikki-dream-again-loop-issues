@@ -19,7 +19,7 @@ static var main_viewport: Viewport
 
 static func quit(): 
 	on_quit()
-	await GameManager.screen_transition.fade_in()
+	await GameManager.screen_transition.fade(0, 1)
 	
 	if Game.game_manager != null:
 		Game.game_manager.process_mode = Node.PROCESS_MODE_DISABLED

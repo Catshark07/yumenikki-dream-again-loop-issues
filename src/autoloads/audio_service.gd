@@ -3,7 +3,7 @@ extends SoundPlayer
 
 func _ready() -> void:
 	super()
-	bus = "Master"
+	bus = Audio.BUS_ENV
 	
 func _notification(what: int) -> void: 
 	if 	what == NOTIFICATION_WM_WINDOW_FOCUS_IN or \

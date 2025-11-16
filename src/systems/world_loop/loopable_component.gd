@@ -9,7 +9,7 @@ extends Node2D
 @export_tool_button("Update Properties") var update_props = update_duplicates
 
 const LOOPABLE_ID := &"loop_components"
-@export var manager: LoopManager
+@export var region: LoopRegion
 @export_storage var idx: int = 0
 
 # - the nodes and their properties.
@@ -32,9 +32,9 @@ const LOOPABLE_ID := &"loop_components"
 @export var do_not_update: 				bool = true:
 	set(no_update):
 		do_not_update = no_update
-		if manager == null: return
-		if no_update:	 	Utils.disconnect_from_signal(update_duplicates, manager.update_dupe_nodes)
-		else:				Utils.connect_to_signal		(update_duplicates, manager.update_dupe_nodes)
+		if region == null: return
+		if no_update:	 	Utils.disconnect_from_signal(update_duplicates, region.update_dupe_nodes)
+		else:				Utils.connect_to_signal		(update_duplicates, region.update_dupe_nodes)
 @export var do_not_include_occlusions: 	bool = false
 
 @export var keep_child_nodes: 			bool = false
@@ -44,30 +44,27 @@ const LOOPABLE_ID := &"loop_components"
 @export var world_size: Vector2:
 	set = __set_size
 
-# - signals
-
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_PREDELETE:
-			if 	manager != null:
-				manager.loop_objects[idx] = null
-
-func loopable_setup(_manager: LoopManager) -> void:
-	manager 	= _manager
-
+			if 	region != null:
+				region.loop_objects[idx] = null
 func _ready() -> void:
 	self.y_sort_enabled = true
 	do_not_update = do_not_update
-	
+
 func _enter_tree() -> void:	
 	Utils.u_add_to_group(self, LOOPABLE_ID)
 	target 		= self.get_parent()
 	children 	= target.get_children()
 	children.remove_at(children.find(self))
-	
 func _exit_tree() -> void: 	
 	Utils.u_remove_from_group(self, LOOPABLE_ID)
-		
+	
+func assign_region(_region: LoopRegion) -> void:
+	if region != null: region.loop_objects[idx] = null
+	region 	= _region
+
 func setup_loop_nodes() -> void:
 	# - we clear and free the old duplicated nodes list.
 	if do_not_dupe or !(target is CanvasItem) : return
@@ -138,7 +135,6 @@ func update_duplicates() -> void:
 				if occlusions[i] == null: continue
 				occlusions[i].rect.size = world_size * 1.25
 				occlusions[i].rect.position = -occlusions[i].rect.size / 2
-
 func update_loop_nodes_list(_loop_node) -> void:
 	if _loop_node in dupe_nodes:
 		dupe_nodes[dupe_nodes.find(_loop_node)] = null
@@ -150,4 +146,8 @@ func __set_size(_size: Vector2) -> void:
 	
 	for i in dupe_nodes.size():
 		if 	dupe_nodes[i] != null:
-			dupe_nodes[i].global_position = target.global_position + world_size * manager.LOOP_UNIT_VECTOR[i]
+			dupe_nodes[i].global_position = target.global_position + world_size * region.LOOP_UNIT_VECTOR[i]
+			
+# - misc.
+func disable_loop() -> void: 	do_not_loop = true
+func enable_loop() -> void: 	do_not_loop = false

@@ -1,11 +1,11 @@
 @tool
 @icon("res://addons/miscallenous/editor/loop_manager.png")
 
-class_name LoopManager
+class_name LoopRegion
 extends Node2D
 
 @export_group("Loop Component Updates and Setups.")
-@export_tool_button("Update Collection.") 					var update_loopables_collection := update_loopable_collection
+@export_tool_button("Update Collection (+ Set As Region).") var update_loopables_collection := update_loopable_collection
 @export_tool_button("Update Loop Duplicate Info.") 			var update_loopables_world_size := update_loopable_world_size
 @export_tool_button("Update Loop Duplicates' Properties.") 	var update_loopables  			:= update_loopable_components
 @export_tool_button("Setup Components.") 					var setup_loopables  	 		:= setup_loopable_components
@@ -97,7 +97,7 @@ func update_loopable_collection() -> void:
 	for l in range(loop_objects.size()):
 		var loopable: LoopableComponent = loop_objects[l]
 		if 	loopable == null: continue
-		loopable.loopable_setup(self)
+		loopable.assign_region(self)
 		loopable.idx = l
 		
 func update_loopable_world_size() -> void:

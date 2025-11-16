@@ -11,6 +11,8 @@ signal about_to_free
 signal freed
 signal entered
 
+var manager: SceneManager
+
 func set_node_active(active: Node.ProcessMode) -> void:
 	self.set_process_mode.call_deferred(active)
 

@@ -16,6 +16,11 @@ static func get_bus_volume(_bus_name: String) -> float:
 	if (AudioServer.get_bus_index(_bus_name)) >= 0:
 		return AudioServer.get_bus_volume_db(AudioServer.get_bus_index(_bus_name))
 	return 0
+	
+static func get_bus_effect_count(_bus_name: String) -> int:
+	if (AudioServer.get_bus_index(_bus_name)) >= 0:
+		return AudioServer.get_bus_effect_count(AudioServer.get_bus_index(_bus_name))
+	return -1 
 
 static func adjust_bus_effect(_bus_name: String, _fx_indx: int, _fx_prop: String, _new_val: Variant):
 	if ((AudioServer.get_bus_index(_bus_name)) >= 0 and 

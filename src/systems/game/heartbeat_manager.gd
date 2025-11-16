@@ -14,7 +14,7 @@ func _setup(_sb: SentientBase = null) -> void:
 	sound_player.play()
 	
 func _update(delta: float) -> void:
-	bpm = sentient.components.get_component_by_name(Player_YN.COMP_MENTAL).bpm
+	bpm = sentient.components.get_component_by_name(Player_YN.Components.MENTAL).bpm
 	
 	sound_player.set_volume(lerpf(
 		sound_player.volume_db, clampf((sound_player.ZERO_VOLUME_DB + 2 * (bpm - 60.0)), sound_player.ZERO_VOLUME_DB ,2), 

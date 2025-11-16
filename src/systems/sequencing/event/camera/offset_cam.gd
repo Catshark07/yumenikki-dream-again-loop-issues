@@ -1,4 +1,4 @@
-class_name OffsetCamera 
+class_name EVN_OffsetCam 
 extends Event
 
 @export var offset: Vector2

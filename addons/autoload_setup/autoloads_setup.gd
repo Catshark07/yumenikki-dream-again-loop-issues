@@ -4,6 +4,7 @@ extends EditorPlugin
 
 const SCRIPT_REFERENCES: Dictionary[String, String] = {
 	"Game" 				: "res://src/game/game.gd",
+	"SceneManager" 		: "res://src/autoloads/scene_manager.gd",
 	"Music" 			: "res://src/autoloads/bgm_player_music.gd",
 	"Ambience" 			: "res://src/autoloads/bgm_player_amb.gd",
 	"AudioService" 		: "res://src/autoloads/audio_service.gd",

@@ -30,39 +30,51 @@ rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="on_interact" type="Node" parent="."]
+[node name="on_interact" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("2_lea3f")
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("wait"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 
-[node name="request_cutscene_start" type="Node" parent="on_interact"]
+[node name="request_cutscene_start" type="Node" parent="on_interact" node_paths=PackedStringArray("next")]
 script = ExtResource("3_e2ltu")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="play_sound" type="Node" parent="on_interact"]
+[node name="play_sound" type="Node" parent="on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("4_who8r")
 sound = ExtResource("5_67jxd")
 pitch = 0.8
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../wait")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait" type="Node" parent="on_interact"]
+[node name="wait" type="Node" parent="on_interact" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("6_orvon")
 seconds = 0.5
+prev = NodePath("../play_sound")
+next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("scene_traversal")]
+[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("scene_traversal", "prev", "next")]
 script = ExtResource("5_76or2")
-scene_traversal = NodePath("scene_traversal")
+scene_traversal = NodePath("traversal")
+prev = NodePath("../wait")
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="scene_traversal" type="Node" parent="on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
+[node name="traversal" type="Node" parent="on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("7_4eec8")
 spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
-[node name="request_cutscene_end" type="Node" parent="on_interact"]
+[node name="request_cutscene_end" type="Node" parent="on_interact" node_paths=PackedStringArray("prev")]
 script = ExtResource("3_e2ltu")
 event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="spawn_point" type="Node2D" parent="." node_paths=PackedStringArray("parent_instead_of_self")]

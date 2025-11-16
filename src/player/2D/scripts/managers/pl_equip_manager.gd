@@ -25,7 +25,7 @@ func _setup(_sb: SentientBase = null) -> void:
 func equip(_pl: Player, _effect: PLEffect, _skip: bool = false) -> void:
 	if _effect == null or _effect == effect_data or _effect in IGNORE: return
 	if _effect:
-		_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
+		_pl.components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(_pl, true)
 			
 		deequip(_pl)
 		effect_data = _effect
@@ -55,7 +55,7 @@ func deequip(_pl: Player, _skip: bool = false) -> void:
 
 func change_effect(_pl: Player, _new_effect: PLEffect, _skip: bool = false) -> void:
 	if _new_effect == null: return
-	_pl.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(_pl, true)
+	_pl.components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(_pl, true)
 	equip(_pl, _new_effect, _skip) 
 
 func _physics_update(_delta: float) -> void:
@@ -69,5 +69,5 @@ func _input_pass(event: InputEvent) -> void:
 		if !equipped: 	
 			change_effect(sentient, Player.Instance.equipment_favourite)
 		else:	
-			sentient.components.get_component_by_name(Player_YN.COMP_ACTION).cancel_action(sentient, true)		
+			sentient.components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(sentient, true)		
 			deequip(sentient)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=44 format=4 uid="uid://b64kqcppbs87c"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_qwl4r"]
-[ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_manager.gd" id="2_d40q4"]
+[ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_region.gd" id="2_d40q4"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="3_43bly"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="4_k18mo"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="5_k18mo"]
@@ -43,7 +43,6 @@ shader_parameter/dirX = 1.0
 shader_parameter/dirY = -1.0
 shader_parameter/scroll_speed = 0.07999999821184
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.145
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
@@ -56,7 +55,6 @@ shader_parameter/dirX = -0.29999998956915996
 shader_parameter/dirY = 0.4000000208616801
 shader_parameter/scroll_speed = 0.05999999865888
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.145
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
@@ -76,7 +74,6 @@ shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.145
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/dirX = -0.29999998956915996
@@ -260,7 +257,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="scene_traversal" type="Node" parent="y_order/to_neon_world/on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("23_r77i7")
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "neo_lobby"
+connection_id = "ne_neon"
 spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
@@ -268,19 +265,21 @@ metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 position = Vector2(0, 12)
 script = ExtResource("24_x7hfp")
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "neo_lobby"
+connection_id = "ne_neon"
 parent_instead_of_self = NodePath("..")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="renderer" type="Sprite2D" parent="y_order/to_neon_world"]
 texture = ExtResource("24_1xj0q")
 hframes = 8
+frame = 6
 script = ExtResource("26_yqiac")
 autoplay = true
 loop = true
 fps = 12.0
 frame_dimensions = Vector2i(17, 30)
 frame_h_count = 8
+progress = 6
 
 [node name="shadow_renderer" type="Sprite2D" parent="y_order/to_neon_world/renderer"]
 show_behind_parent = true
@@ -321,10 +320,10 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AADS/zQAAAAAABUAAAAOAC8AAAAAABUAAAAJAC8AAAAAABUAAAATAC8AAAAAABUAAAA+ABEAAAAAABUAAAAyADIAAAAAABUAAADG/xAAAAAAABUAAADS//f/AAAAABUAAADe/wQAAAAAABAAAAD+/wkAAAAAABAAAAAmAAQAAAAAABAAAADe/yMAAAAAABAAAAA=")
 tile_set = ExtResource("7_m6sco")
 
-[node name="world" type="Node2D" parent="y_order/world" node_paths=PackedStringArray("manager", "target", "children", "dupe_nodes", "occlusions")]
+[node name="world" type="Node2D" parent="y_order/world" node_paths=PackedStringArray("region", "target", "children", "dupe_nodes", "occlusions")]
 y_sort_enabled = true
 script = ExtResource("28_1xj0q")
-manager = NodePath("../../../LoopManager")
+region = NodePath("../../../LoopManager")
 idx = 1
 target = NodePath("..")
 children = [NodePath("../floor"), NodePath("../walls"), NodePath("../wall_overlays"), NodePath("../cacti")]

@@ -4,4 +4,3 @@ extends Event
 
 func _execute() -> void:
 	await Game.main_tree.create_timer(seconds, true, true, true).timeout
-	print("RAH")
