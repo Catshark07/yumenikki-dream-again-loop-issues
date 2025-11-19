@@ -62,7 +62,9 @@ func _exit_tree() -> void:
 	Utils.u_remove_from_group(self, LOOPABLE_ID)
 	
 func assign_region(_region: LoopRegion) -> void:
-	if region != null: region.loop_objects[idx] = null
+	if 	region != null: 
+		if region != _region: 	region.loop_objects[idx] = null
+	
 	region 	= _region
 
 func setup_loop_nodes() -> void:
@@ -121,12 +123,12 @@ func update_duplicates() -> void:
 		if children.size() > 0: 
 			for c in children.size():
 				var child = Utils.get_child_node_or_null(dupe_node, children[c].name)
+				if child == null: continue
 				for p in properties:
 					if child.get_indexed(p) == null: continue
 					child.set_indexed(p, children[c].get_indexed(p))
 				
 		else:
-			
 			for p in properties:
 				if target.get_indexed(p) == null: continue
 				dupe_node.set_indexed(p, target.get_indexed(p))	

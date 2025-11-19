@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dx5nmm2v31jug"
-path="res://.godot/imported/hell_2.png-dc2bc78b1e7029cc7e6b0ff9951a6361.ctex"
+uid="uid://cni20upoexetl"
+path="res://.godot/imported/bubble_exhale.png-04bc7438b03f5b7803692a5de3699ffe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/entities/sentients/hell/hell_2.png"
-dest_files=["res://.godot/imported/hell_2.png-dc2bc78b1e7029cc7e6b0ff9951a6361.ctex"]
+source_file="res://src/player/2D/bubble_exhale.png"
+dest_files=["res://.godot/imported/bubble_exhale.png-04bc7438b03f5b7803692a5de3699ffe.ctex"]
 
 [params]
 

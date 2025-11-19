@@ -179,8 +179,9 @@ z_index = 5
 position = Vector2(0, -24)
 texture = ExtResource("17_cin7d")
 
-[node name="sprite_manager" type="Node" parent="sb_components"]
+[node name="sprite_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("sprite_container")]
 script = ExtResource("13_p5dbe")
+sprite_container = NodePath("../../sprite_container")
 metadata/_custom_type_script = "uid://bgisym1hdeqgt"
 
 [node name="sprint_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("stamina_fsm")]

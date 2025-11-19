@@ -68,7 +68,8 @@ texture = ExtResource("1_ca1uo")
 0:2/animation_frame_2/duration = 1.0
 0:2/animation_frame_3/duration = 1.0
 0:2/0 = 0
-0:2/0/z_index = 1
+0:2/0/texture_origin = Vector2i(0, -8)
+0:2/0/z_index = -2
 11:0/0 = 0
 11:0/0/z_index = -1
 11:0/0/custom_data_0 = 2
@@ -94,6 +95,16 @@ texture = ExtResource("1_ca1uo")
 10:1/0 = 0
 15:5/0 = 0
 14:5/0 = 0
+0:0/size_in_atlas = Vector2i(1, 2)
+0:0/animation_speed = 5.0
+0:0/animation_mode = 1
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -8)
+0:0/0/z_index = -2
 
 [resource]
 custom_data_layer_0/name = "material"

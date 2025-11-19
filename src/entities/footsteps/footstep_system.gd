@@ -5,52 +5,11 @@ extends SBComponent
 # one more thing: make a ground_material resource that holds a list
 # of all random sound effects for the ground.
 
-static var default_footstep: mat = mat.NULL
-@export var transparent_surfaces := {
-	mat.NULL 		: true,
-	mat.CONCRETE 	: false,
-	mat.WOOD		: false,
-	mat.SNOW 		: false,
-	mat.GRASS 		: false,
-	mat.MUD 		: false,
-	mat.BLOOD 		: false,
-	mat.WATER 		: true,
-	mat.CLOTH 		: false,
-	mat.GLASS 		: true,
-	mat.DIRT_FLESH 	: false,
-}
+const DEFAULT_FOOTSTEP: AudioStream = preload("res://src/audio/se/footstep_null-1.wav")
+const DEFAULT_FOOTSTEP_MAT: FootstepSet = preload("res://src/audio/footsteps/null.tres")
+static var default_footstep_mat: FootstepSet = DEFAULT_FOOTSTEP_MAT
 
-enum mat {
-	NULL 		= 0,
-	CONCRETE 	= 1,
-	WOOD 		= 2,
-	SNOW 		= 3,
-	GRASS 		= 4,
-	MUD 		= 5,
-	BLOOD 		= 6,
-	WATER 		= 7,
-	CLOTH		= 8,
-	GLASS		= 9,
-	DIRT_FLESH 	= 10,
-	GRAVEL 		= 11
-	}
-var curr_material: mat
-var GROUND_MAT_DICT := {
-	mat.NULL 		: preload("res://src/audio/footsteps/null.tres"), 		# --- 0
-	mat.CONCRETE 	: preload("res://src/audio/footsteps/concrete.tres"),	# --- 1
-	mat.WOOD		: preload("res://src/audio/footsteps/wood.tres"),		# --- 2
-	mat.SNOW 		: preload("res://src/audio/footsteps/snow.tres"),		# --- 3
-	mat.GRASS 		: preload("res://src/audio/footsteps/grass.tres"),		# --- 4
-	mat.MUD 		: preload("res://src/audio/footsteps/blood.tres"),		# --- 5
-	mat.BLOOD 		: preload("res://src/audio/footsteps/blood.tres"),		# --- 6
-	mat.WATER 		: preload("res://src/audio/footsteps/water.tres"),		# --- 7
-	mat.CLOTH 		: preload("res://src/audio/footsteps/cloth.tres"),		# --- 8
-	mat.GLASS 		: preload("res://src/audio/footsteps/glass.tres"),		# --- 9
-	mat.DIRT_FLESH 	: preload("res://src/audio/footsteps/dirt_flesh.tres"),	# --- 10
-	mat.GRAVEL 		: preload("res://src/audio/footsteps/gravel.tres"),	# --- 11
-	}
-
-var DEFAULT_FOOTSTEP: AudioStreamWAV = preload("res://src/audio/se/footstep_null-1.wav")
+var curr_set: FootstepSet
 var curr_anim: CompressedTexture2D = preload("res://src/entities/footsteps/default.png")
 
 var footstep_se_player: SoundPlayer2D
@@ -79,16 +38,14 @@ func _setup(_sentient: SentientBase = null) -> void:
 	area.body_shape_exited.connect(_on_body_shape_exited)
 	area.body_shape_entered.connect(_on_body_shape_entered)
 	
-	curr_material = default_footstep
-	sentient.shadow_renderer.visible = transparent_surfaces[curr_material]
+	curr_set = default_footstep_mat
+	sentient.shadow_renderer.visible = !curr_set.transparent_tile
 	footstep_se_player.max_distance = 250
 
 func initate_footstep() -> void:  
-	var sounds_set: FootstepSet = GROUND_MAT_DICT[curr_material]
-	
-	curr_anim = sounds_set.footstep_anim
+	curr_anim = curr_set.footstep_anim
 	spawn_footstep_fx()
-	play_footstep_sound(sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP)
+	play_footstep_sound(curr_set.pick_random() if curr_set.size() > 0 else DEFAULT_FOOTSTEP)
 func spawn_footstep_fx() -> void: 
 	if Optimization.footstep_instances < Optimization.FOOTSTEP_MAX_INSTANCES:
 		var footstep_fx := FootstepDust.new(curr_anim)
@@ -111,7 +68,7 @@ func _on_body_shape_entered(
 			multiple_floors.append(_body)
 								
 		scan_ground_material()				
-		sentient.shadow_renderer.visible = !transparent_surfaces[curr_material]
+		sentient.shadow_renderer.visible = !curr_set.transparent_tile
 				
 func _on_body_shape_exited(
 	_body_rid: RID, 
@@ -126,7 +83,7 @@ func _on_body_shape_exited(
 				scan_ground_material()
 				
 				if  multiple_floors.is_empty():
-					curr_material = default_footstep
+					curr_set = default_footstep_mat
 					floor_priority = null
 					sentient.shadow_renderer.visible = false
 					
@@ -135,7 +92,7 @@ func scan_ground_material() -> void:
 		if floors.z_index > greatest_index: 
 			greatest_index = floors.z_index
 			floor_priority = floors
-			curr_material = floor_priority.ground_material
+			curr_set = floor_priority.get_footstep_material()
 			break
 		
 class FootstepDust:

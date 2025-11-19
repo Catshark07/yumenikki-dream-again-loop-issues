@@ -70,8 +70,8 @@ func _setup() -> void:
 	
 	global_screen_effect.environment.glow_enabled = bloom
 	
-	screen_transition.		fade(1, 0)
-	secondary_transition.	fade(1, 0)
+	screen_transition.		fade(ScreenTransition.DEFAULT_GRADIENT, 1, 0)
+	secondary_transition.	fade(ScreenTransition.DEFAULT_GRADIENT, 1, 0)
 	
 func update(_delta: float) -> void: 
 	game_fsm._update(_delta)

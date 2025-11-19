@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dwst4o7pf4ye7"]
+[gd_scene load_steps=65 format=3 uid="uid://dwst4o7pf4ye7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_gl3nc"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_jd4xj"]
@@ -44,6 +44,7 @@
 [ext_resource type="AudioStream" uid="uid://cxqdtr5pli1p5" path="res://src/audio/se/phone_beep.wav" id="31_4br25"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="31_103tn"]
 [ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="32_rjleq"]
+[ext_resource type="Resource" uid="uid://btkw5t3ocufl" path="res://src/audio/footsteps/null.tres" id="33_1jqpe"]
 [ext_resource type="Texture2D" uid="uid://cav1kw6450fm0" path="res://src/player/2D/madotsuki/display/default/sleep.png" id="36_0pnw5"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="36_dehmq"]
 [ext_resource type="AudioStream" uid="uid://umly1e8go6f7" path="res://src/audio/amb/flies_buzz.ogg" id="37_nq133"]
@@ -278,7 +279,7 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nq133"]
 size = Vector2(16, 16)
 
-[sub_resource type="Resource" id="Resource_nq133"]
+[sub_resource type="Resource" id="Resource_dehmq"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("36_dehmq")
@@ -296,7 +297,6 @@ shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/uv_rotation_speed = 1.38
@@ -309,7 +309,6 @@ shader_parameter/flicker_speed = 2.035
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4gftm"]
 shader = ExtResource("4_qaqf1")
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
@@ -545,13 +544,14 @@ next = NodePath("../play_sound_foley")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="play_sound_foley" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("23_fvhu0")
 sound = ExtResource("21_rjleq")
 prev = NodePath("../music_fadeout")
 next = NodePath("../set_player_inactive")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_player_inactive" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+[node name="set_player_inactive" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("17_t2xer")
 node = NodePath("../../../../../balcony/_/madotsuki")
@@ -566,9 +566,11 @@ property_info = {
 }
 property_value = 0
 new_value = 4
+prev = NodePath("../play_sound_foley")
+next = NodePath("../set_player_invisible")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_player_invisible" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node")]
+[node name="set_player_invisible" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("17_t2xer")
 node = NodePath("../../../../../balcony/_/madotsuki")
@@ -583,6 +585,8 @@ property_info = {
 }
 property_value = true
 new_value = false
+prev = NodePath("../set_player_inactive")
+next = NodePath("../play_animation")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="play_animation" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("node", "prev", "next")]
@@ -668,7 +672,7 @@ custom_linked_pointers = true
 next = NodePath("")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="raise_flag" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("node")]
+[node name="raise_flag" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("node", "next")]
 process_mode = 4
 script = ExtResource("17_t2xer")
 node = NodePath("../../../../persistent_sleep")
@@ -687,6 +691,7 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "persist": true
 })
+next = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="request_cutscene_start" type="Node" parent="room/bed/OnInteract/else/once" node_paths=PackedStringArray("prev", "next")]
@@ -824,9 +829,12 @@ metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 [node name="balcony" parent="." instance=ExtResource("7_33y2f")]
 position = Vector2(80, 136)
 
+[node name="material_concrete" parent="balcony/_" index="2"]
+ground_material = ExtResource("33_1jqpe")
+
 [node name="madotsuki" parent="balcony/_" index="4" instance=ExtResource("10_p0cyb")]
 position = Vector2(104, 168)
-values = SubResource("Resource_nq133")
+values = SubResource("Resource_dehmq")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="to_room" type="Area2D" parent="balcony" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
@@ -927,7 +935,7 @@ order = [NodePath("panorama"), NodePath("BGM")]
 front = NodePath("panorama")
 back = NodePath("BGM")
 
-[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("next")]
+[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "next")]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_filter = 0
@@ -935,6 +943,8 @@ canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 script = ExtResource("18_jd4xj")
+subviewport = NodePath("subviewport")
+pivot = NodePath("pivot")
 next = NodePath("../BGM")
 
 [node name="Dusk" type="Sprite2D" parent="on_initial/panorama"]
@@ -946,7 +956,18 @@ texture = ExtResource("4_n1yad")
 position = Vector2(248, 128)
 texture = ExtResource("4_kxofn")
 
+[node name="pivot" type="Marker2D" parent="on_initial/panorama"]
+
+[node name="subviewport" type="SubViewport" parent="on_initial/panorama"]
+own_world_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+
 [node name="BGM" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
+process_mode = 4
 script = ExtResource("15_lejej")
 stream = ExtResource("16_sau16")
 pitch = 0.7
@@ -957,15 +978,17 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 script = ExtResource("13_160am")
 
 [node name="play_rain_amb_muffle" type="Node" parent="."]
+process_mode = 4
 script = ExtResource("15_lejej")
-music_bus = 1
 stream = ExtResource("18_vphfh")
+music_bus = 1
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_rain_amb" type="Node" parent="."]
+process_mode = 4
 script = ExtResource("15_lejej")
-music_bus = 1
 stream = ExtResource("17_sau16")
+music_bus = 1
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [editable path="camera"]

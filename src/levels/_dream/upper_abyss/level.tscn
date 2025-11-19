@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://hx52e5i78byf"]
+[gd_scene load_steps=49 format=4 uid="uid://hx52e5i78byf"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_6knvu"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="2_h8r0l"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bel8k7h7lfio5" path="res://src/levels/_dream/upper_abyss/sprites/bubble_small.png" id="11_gap0c"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="11_s1u5h"]
 [ext_resource type="PackedScene" uid="uid://c1crevnw4c26l" path="res://src/levels/_dream/upper_abyss/entities/medium_jellyfish.tscn" id="12_3veyl"]
+[ext_resource type="PackedScene" uid="uid://cgokhdfsfcksy" path="res://src/player/2D/bubbles.tscn" id="12_yd7mj"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="14_wlpfk"]
 [ext_resource type="TileSet" uid="uid://du5agmvlu6p41" path="res://src/levels/_dream/upper_abyss/upper_abyss.tres" id="15_idx74"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="17_uike6"]
@@ -24,6 +25,7 @@
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="22_4xmih"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="22_purwu"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="24_4xmih"]
+[ext_resource type="Script" uid="uid://cokcpecitxber" path="res://src/systems/sequencing/event/audio/set_bus_effects.gd" id="25_4xmih"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_purwu"]
 
@@ -55,7 +57,6 @@ shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/dirX = 1.0
@@ -153,7 +154,7 @@ turbulence_noise_scale = 8.0
 turbulence_influence_min = 0.02
 turbulence_influence_max = 0.07
 
-[sub_resource type="Resource" id="Resource_4xmih"]
+[sub_resource type="Resource" id="Resource_yd7mj"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("11_s1u5h")
@@ -165,9 +166,13 @@ shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.05
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_2k60w"]
 
 [node name="upper_abyss" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_6knvu")
@@ -232,12 +237,23 @@ process_material = SubResource("ParticleProcessMaterial_5ote5")
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="door" parent="y_order" instance=ExtResource("17_uike6")]
+[node name="to_docks" parent="y_order" instance=ExtResource("17_uike6")]
 position = Vector2(208, 72)
+
+[node name="traversal" parent="y_order/to_docks/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://b7ixvvfnudrtd"
+connection_id = "docks_path"
+
+[node name="spawn_point" parent="y_order/to_docks" index="1"]
+scene_path = "uid://b7ixvvfnudrtd"
+connection_id = "docks_path"
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("2_tq601")]
 position = Vector2(240, 144)
-values = SubResource("Resource_4xmih")
+values = SubResource("Resource_yd7mj")
+
+[node name="bubbles" parent="y_order/madotsuki/sprite_container" index="3" instance=ExtResource("12_yd7mj")]
+z_index = 1
 
 [node name="world" type="Node2D" parent="y_order"]
 
@@ -307,34 +323,52 @@ metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("2_h8r0l")
-order = [NodePath("bgm"), NodePath("panorama")]
+order = [NodePath("bgm"), NodePath("panorama"), NodePath("set_environment_muffled")]
 front = NodePath("bgm")
-back = NodePath("panorama")
+back = NodePath("set_environment_muffled")
 
 [node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
+process_mode = 4
 script = ExtResource("24_4xmih")
 stream = ExtResource("3_fpoo2")
 pitch = 0.8
 next = NodePath("../panorama")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("prev")]
+[node name="panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "prev", "next")]
+script = ExtResource("2_s1u5h")
+subviewport = NodePath("subviewport")
+pivot = NodePath("pivot")
+prev = NodePath("../bgm")
+next = NodePath("../set_environment_muffled")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="pivot" type="Marker2D" parent="on_initial/panorama"]
+
+[node name="subviewport" type="SubViewport" parent="on_initial/panorama"]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_filter = 0
 canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
-script = ExtResource("2_s1u5h")
-prev = NodePath("../bgm")
 
-[node name="panorama" type="TextureRect" parent="on_initial/panorama"]
+[node name="panorama" type="TextureRect" parent="on_initial/panorama/subviewport"]
 material = SubResource("ShaderMaterial_101a1")
 offset_right = 480.0
 offset_bottom = 270.0
 texture = ExtResource("5_4xmih")
 
+[node name="set_environment_muffled" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
+script = ExtResource("25_4xmih")
+bus_name = "ENVIRONMENT"
+bus_effects = Array[AudioEffect]([SubResource("AudioEffectLowPassFilter_2k60w")])
+prev = NodePath("../panorama")
+metadata/_custom_type_script = "uid://cokcpecitxber"
+
 [node name="on_free" type="Node" parent="."]
 script = ExtResource("2_h8r0l")
 
 [editable path="camera_handler"]
+[editable path="y_order/to_docks"]
+[editable path="y_order/madotsuki"]

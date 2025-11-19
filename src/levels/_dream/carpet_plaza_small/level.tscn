@@ -1,10 +1,11 @@
-[gd_scene load_steps=27 format=4 uid="uid://b6i5pb6sb3k7u"]
+[gd_scene load_steps=28 format=4 uid="uid://b6i5pb6sb3k7u"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_0p3g1"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_vpy4h"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="3_evm5a"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="4_icfgu"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="5_cucml"]
+[ext_resource type="Resource" uid="uid://dckhwskiv5dqb" path="res://src/audio/footsteps/cloth.tres" id="5_fbe1s"]
 [ext_resource type="TileSet" uid="uid://bkcgvm5skhdni" path="res://src/levels/__ignore/tile_set/world_tile_sets/carpet_plaza.tres" id="7_366jw"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="8_5ojlw"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="9_evm5a"]
@@ -26,12 +27,12 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o1cqx"]
 
-[sub_resource type="Resource" id="Resource_cucml"]
+[sub_resource type="Resource" id="Resource_td5s7"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("9_evm5a")
 
-[sub_resource type="Resource" id="Resource_366jw"]
+[sub_resource type="Resource" id="Resource_30jih"]
 resource_local_to_scene = true
 resource_name = "sb_variables"
 script = ExtResource("11_icfgu")
@@ -58,7 +59,7 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAIACcAAAAAAAEAAAAJACcAAAACAAIAAAAHACcAAAACAAIAABASAC0AAAACAAIAABATAC0AAAAAAAEAAAAUAC0AAAACAAIAAAAWACkAAAACAAIAABAXACkAAAAAAAEAAAAYACkAAAACAAIAAAAGAC0AAAACAAIAABAHAC0AAAAAAAEAAAAIAC0AAAACAAIAAAAAADIAAAACAAIAABABADIAAAAAAAEAAAACADIAAAACAAIAAAAfACkAAAACAAIAABAgACkAAAAAAAEAAAAhACkAAAACAAIAAAAMACoAAAAAAAEAAAAMACsAAAAAAAIAAAANACsAAAAAAAIAAAAOACsAAAAAAAIAAAAOACoAAAAAAAEAAAAOACkAAAAAAAIAACANACkAAAAAAAIAACAMACkAAAAAAAIAACANACoAAAAAAAEAAAAPACkAAAACAAEAACAPACsAAAACAAEAAAAPACoAAAACAAIAAAALACoAAAACAAIAABALACkAAAACAAEAADALACsAAAACAAEAABAJADAAAAACAAEAADAJADEAAAACAAIAABAJADIAAAACAAEAABAKADAAAAAAAAIAACAKADEAAAAAAAEAAAAKADIAAAAAAAIAAAALADAAAAAAAAIAACALADEAAAAAAAEAAAALADIAAAAAAAIAAAAMADAAAAAAAAIAACAMADEAAAAAAAEAAAAMADIAAAAAAAIAAAANADAAAAACAAEAACANADEAAAACAAIAAAANADIAAAACAAEAAAA=")
 tile_set = ExtResource("3_evm5a")
 script = ExtResource("4_icfgu")
-ground_material = 8
+ground_material = ExtResource("5_fbe1s")
 metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
 [node name="spikes" type="TileMapLayer" parent="y_order"]
@@ -73,22 +74,22 @@ tile_set = ExtResource("7_366jw")
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("8_5ojlw")]
 position = Vector2(80, 640)
-values = SubResource("Resource_cucml")
+values = SubResource("Resource_td5s7")
 
 [node name="hell_spawn" parent="y_order" instance=ExtResource("9_jb0mk")]
 position = Vector2(488, 696)
-values = SubResource("Resource_366jw")
+values = SubResource("Resource_30jih")
 
 [node name="sprite_renderer" parent="y_order/hell_spawn" index="0"]
 texture = ExtResource("10_iuqtm")
-hframes = 4
-frame = 1
+hframes = 8
+frame = 7
 autoplay = true
 loop = true
-fps = 5.0
-frame_dimensions = Vector2i(18, 26)
-frame_h_count = 4
-progress = 1
+fps = 8.0
+frame_dimensions = Vector2i(32, 32)
+frame_h_count = 8
+progress = 7
 
 [node name="to_carpet_plaza" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(128, 864)

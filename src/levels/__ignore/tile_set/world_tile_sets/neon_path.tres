@@ -6,7 +6,7 @@
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2uj8c"]
 texture = ExtResource("1_ke71q")
-0:2/animation_speed = 5.0
+0:2/animation_speed = 7.0
 0:2/animation_frame_0/duration = 1.0
 0:2/animation_frame_1/duration = 1.0
 0:2/animation_frame_2/duration = 1.0
@@ -16,7 +16,7 @@ texture = ExtResource("1_ke71q")
 0:2/0/z_index = -1
 0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:2/0/custom_data_0 = ExtResource("2_11ovu")
-0:1/animation_speed = 5.0
+0:1/animation_speed = 7.0
 0:1/animation_frame_0/duration = 1.0
 0:1/animation_frame_1/duration = 1.0
 0:1/animation_frame_2/duration = 1.0

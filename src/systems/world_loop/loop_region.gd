@@ -11,8 +11,8 @@ extends Node2D
 @export_tool_button("Setup Components.") 					var setup_loopables  	 		:= setup_loopable_components
 
 @export_group("Drawing Options.")
-@export var draw_colour: Color = Color(Color.PALE_VIOLET_RED, 0.2)
-@export_tool_button("Update Boundaries Draw.") 				var redraw   := 	redraw_boundaries
+@export var safe_zone_colour: 	Color = Color("db709333")
+@export var region_colour: 		Color = Color("969bd93f")
 
 #@export_group("Loop Component Visibility.")
 #@export_tool_button("Show All Duplicates") var show_dupes
@@ -31,46 +31,17 @@ const SAFE_ZONE = Vector2(550, 350)
 @export var world_size: Vector2 = Vector2(100, 100):
 	set = set_world_size
 
-# - detection nodes.
-@export var loop_objects_detect: Area2D
-@export var shape_detect: CollisionShape2D
-
 # - signals.
 signal update_dupe_nodes
-
-func redraw_boundaries() -> void: 
-	shape_detect.queue_redraw()
 
 # -- 
 func _ready() -> void: 
 	update_loopable_collection()
-	loop_objects_detect	= Utils.get_child_node_or_null(self, "loop_objects_detect")
-	
-	if 	loop_objects_detect == null:
-		
-		loop_objects_detect = Utils.add_child_node(self, Area2D.new(), "loop_objects_detect")
-		shape_detect 		= Utils.add_child_node(loop_objects_detect, CollisionShape2D.new(), "detect_shape")
-		shape_detect.shape = RectangleShape2D.new()
-		
-		loop_objects_detect.set_collision_mask_value(1, false)
-		loop_objects_detect.set_collision_mask_value(7, true)
 
-	shape_detect = Utils.get_child_node_or_null(loop_objects_detect, "detect_shape")
-	loop_objects_detect.set_meta("_edit_lock_", true)
-	shape_detect.		set_meta("_edit_lock_", true)
-	
-	var draw_safe_zone = func draw_safezone(): 
-		if Engine.is_editor_hint():
-			shape_detect.draw_rect(
-				Rect2(
-					-(world_size + SAFE_ZONE * 2) / 2, 
-					world_size + SAFE_ZONE * 2), draw_colour)
 
-	Utils.connect_to_signal(
-		draw_safe_zone, shape_detect.draw)
 	
 func _physics_process(_delta: float) -> void:
-	if Engine.is_editor_hint(): (shape_detect.shape as RectangleShape2D).size = world_size
+	if Engine.is_editor_hint(): queue_redraw()
 	else: 						update_dupe_nodes.emit()
 		
 	for l in range(loop_objects.size()):
@@ -83,7 +54,15 @@ func _physics_process(_delta: float) -> void:
 			
 			loopable.target.global_position.x = wrap(loopable.target.global_position.x, min_pos.x, max_pos.x)
 			loopable.target.global_position.y = wrap(loopable.target.global_position.y, min_pos.y, max_pos.y)
-									
+func _draw() -> void:
+	if Engine.is_editor_hint(): 
+		# - safe zone.
+		draw_rect(Rect2(-(world_size + SAFE_ZONE * 2) / 2, world_size + SAFE_ZONE * 2), safe_zone_colour)
+				
+		# region size.
+		draw_rect(Rect2(-(world_size) / 2, world_size), region_colour)
+
+# --- 									
 func set_world_size(_size: Vector2) -> void:
 	world_size = _size.round()
 	for loopable: LoopableComponent in loop_objects:
@@ -99,11 +78,8 @@ func update_loopable_collection() -> void:
 		if 	loopable == null: continue
 		loopable.assign_region(self)
 		loopable.idx = l
-		
 func update_loopable_world_size() -> void:
 	set_world_size.call_deferred(world_size)
-
-	
 func update_loopable_components() -> void: 
 	update_dupe_nodes.emit()
 

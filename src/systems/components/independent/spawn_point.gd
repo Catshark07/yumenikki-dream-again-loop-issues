@@ -18,7 +18,6 @@ func _enter_tree() -> void: Utils.u_add_to_group(self, "spawn_points")
 func _exit_tree() -> void: 	Utils.u_remove_from_group(self, "spawn_points")
 	
 func _ready() -> void:		
-	self.name = "spawn_point"
 	set_process(false)
 	if Engine.is_editor_hint(): queue_redraw()
 	

@@ -18,10 +18,8 @@ signal player_enter_handle(_pl: Player)
 signal player_exit_handle(_pl: Player)
 
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
-	
-	set_collision_layer_value(1, false)
-	set_collision_mask_value(1, false)
+	set_collision_layer_value	(1, false)
+	set_collision_mask_value	(1, false)
 
 	rect = Utils.get_child_node_or_null(self, "rect")
 	

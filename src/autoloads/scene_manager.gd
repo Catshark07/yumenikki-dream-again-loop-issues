@@ -113,7 +113,7 @@ func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_out: bool
 			GameManager.change_to_state("CHANGING_SCENES")
 			scene_stack.queue_pop()
 			
-			if _fade_in: await GameManager.screen_transition.fade(0, 1)
+			if _fade_in: await GameManager.screen_transition.fade(ScreenTransition.DEFAULT_GRADIENT, 0, 1)
 			Game.scene_unloaded.emit()
 			
 			handle_scene_pop()
@@ -121,7 +121,7 @@ func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_out: bool
 			await load_scene(_scene)
 			Game.scene_loaded.emit()
 			
-			if _fade_out: GameManager.screen_transition.fade(1, 0)
+			if _fade_out: GameManager.screen_transition.fade(ScreenTransition.DEFAULT_GRADIENT, 1, 0)
 			GameManager.secondary_transition.fade_progress = 0
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")

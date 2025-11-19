@@ -1,7 +1,10 @@
 class_name ScreenTransition
 extends TextureRect
 
-const DEFAULT_SHADER: Shader = preload("res://src/shaders/transition/tr_fade.gdshader")
+const DEFAULT_SHADER: Shader 		= preload("res://src/shaders/transition/tr_fade.gdshader")
+const DEFAULT_GRADIENT: Gradient 	= preload("res://src/main/default_transition_gradient.tres")
+
+var gradient: Gradient
 var default_texture: GradientTexture1D
 
 var fade_in_shader: 	ShaderMaterial
@@ -22,7 +25,7 @@ var speed: float = 1
 func _ready() -> void:
 	default_texture = GradientTexture1D.new()
 	default_texture.gradient = Gradient.new()
-	default_texture.gradient.colors = PackedColorArray([Color.BLACK])
+	default_texture.gradient.colors = PackedColorArray([Color.WHITE])
 	
 	texture = default_texture
 	
@@ -42,9 +45,11 @@ func _ready() -> void:
 	self.visible = false
 
 func fade(
+	_gradient: Gradient = DEFAULT_GRADIENT,
 	_start_progress: float = 1,
 	_end_progress: float = 0) -> void:
 		self.visible = true 
+		self.gradient = _gradient
 		
 		if fade_tween != null: fade_tween.kill()
 		fade_tween = self.create_tween()
@@ -62,6 +67,7 @@ func fade(
 func set_fade_progress(_progress):
 	fade_progress = _progress
 	self.material.set_shader_parameter("progress", fade_progress)
+	self.modulate = gradient.sample(fade_progress)
 	
 	if _progress <= 0:
 		self.visible = false 

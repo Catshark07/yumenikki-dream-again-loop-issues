@@ -1,3 +1,6 @@
+@tool
+
+class_name EVN_ScreenTransition
 extends Event
 
 @export_category("Screen Fade Properties.")
@@ -8,6 +11,7 @@ extends Event
 @export var fade_speed: float = 1
 @export var a: float = 0
 @export var b: float = 1
+@export var gradient: Gradient = preload("res://src/main/default_transition_gradient.tres").duplicate()
 
 @export_group("Tween properties")
 @export var transition: Tween.TransitionType = Tween.TRANS_LINEAR
@@ -21,5 +25,5 @@ func _execute() -> void:
 		ease)
 
 	match fade_type:
-		ScreenTransition.fade_type.FADE_IN	: await GameManager.secondary_transition.fade(a, b)
-		ScreenTransition.fade_type.FADE_OUT	: await GameManager.secondary_transition.fade(b, a)
+		ScreenTransition.fade_type.FADE_IN	: await GameManager.secondary_transition.fade(gradient, a, b)
+		ScreenTransition.fade_type.FADE_OUT	: await GameManager.secondary_transition.fade(gradient, b, a)
