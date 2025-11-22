@@ -32,10 +32,10 @@ extends GameScene
 
 func _initialize() -> void:
 	super()
-	version_label.text = ProjectSettings.get_setting(\"application/config/version\")
+	version_label.text = str(\"VERSION: \", ProjectSettings.get_setting(\"application/config/version\"))
 	
-	button_credits.pressed.connect(func(): credits_panel.visible = true)
-	button_quit.pressed.connect(func(): Application.quit())
+	button_credits.pressed.	connect(func(): credits_panel.visible = true)
+	button_quit.pressed.	connect(func(): Application.quit())
 	credits_go_back.pressed.connect(func(): credits_panel.visible = false)
 	
 "
@@ -50,9 +50,11 @@ shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.01999999955296
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 
 [sub_resource type="Gradient" id="Gradient_d7jyh"]
 offsets = PackedFloat32Array(0, 0.32534248, 0.739726, 1)
@@ -71,7 +73,6 @@ noise = SubResource("FastNoiseLite_msekq")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_37vgk"]
 shader = ExtResource("3_uj1l6")
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/opacity = 1.0

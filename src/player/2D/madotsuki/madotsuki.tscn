@@ -176,7 +176,7 @@ shape = SubResource("CapsuleShape2D_riukl")
 [node name="prompt" type="Sprite2D" parent="sb_components/interaction_manager"]
 visible = false
 z_index = 5
-position = Vector2(0, -24)
+position = Vector2(0, -20)
 texture = ExtResource("17_cin7d")
 
 [node name="sprite_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("sprite_container")]

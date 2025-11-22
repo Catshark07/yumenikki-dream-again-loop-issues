@@ -10,7 +10,7 @@ extends Node2D
 @export_group("Flags.")
 @export var parent_instead_of_self: Node = self
 @export var as_sibling: bool = true
-@export var spawn_dir: Vector2 = Vector2(0, 1)
+@export var heading: SentientBase.compass_headings = SentientBase.compass_headings.SOUTH
 
 @onready var spawn_texture: Texture2D = load("res://src/systems/components/independent/pl_spawn.png")
 	

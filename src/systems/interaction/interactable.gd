@@ -6,14 +6,18 @@ extends AreaRegion
 @export_group("Flags")
 @export var secret: 		bool = false
 @export var only_once: 		bool = false
-@export var can_interact: 	bool = true
+@export var can_interact: 	bool = true:
+	set(_can_interact): 
+		can_interact = _can_interact
+		set_collision_layer_value(2, _can_interact)
 
-@export_group("Area Triggers")
-@export var area: 			bool = false:
+@export var area: 			bool = true:
 	set(_a): 
 		area = _a
 		if centre_trigger: 	set_collision_mask_value(32, _a)
 		else:				set_collision_mask_value(31, _a)
+@export_group("Area Triggers")
+@export var area_trgger: 	bool = false
 @export var centre_trigger:	bool = false:
 	set(_centre):
 		centre_trigger = _centre
@@ -30,6 +34,7 @@ signal success
 
 func _ready() -> void:	
 	super() 
+	set_collision_layer_value(2, can_interact)
 	
 func _setup() -> void:
 	set_physics_process(false)
@@ -46,5 +51,5 @@ func interact() -> void:
 		interacted.emit()
 func _interact() -> void: pass
 
-func _handle_player_enter() -> void: if area: 
-	self.interact()
+func _handle_player_enter() -> void: 
+	if area_trgger: self.interact()

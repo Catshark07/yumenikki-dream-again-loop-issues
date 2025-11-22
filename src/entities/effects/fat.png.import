@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2i2m5q4tuxrv"
-path="res://.godot/imported/teleportation_maze.png-00c6172716ba83255ec56f33230f3aba.ctex"
+uid="uid://dqttixev2blgt"
+path="res://.godot/imported/fat.png-c401e7e854272efad94706c9aef54740.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/__ignore/tile_atlas/teleportation_maze.png"
-dest_files=["res://.godot/imported/teleportation_maze.png-00c6172716ba83255ec56f33230f3aba.ctex"]
+source_file="res://src/entities/effects/fat.png"
+dest_files=["res://.godot/imported/fat.png-c401e7e854272efad94706c9aef54740.ctex"]
 
 [params]
 

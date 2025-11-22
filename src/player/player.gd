@@ -83,14 +83,13 @@ class Instance:
 		door_listener.do_on_notify(func(): 
 			
 			for points: SpawnPoint in Utils.get_group_arr("spawn_points"):
-				if points.scene_path.is_empty(): continue
+				if points == null or points.scene_path.is_empty(): continue
 
 				if  load(points.scene_path) == SceneManager.prev_scene_resource and \
 					door_went_flag and \
 					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id:
 						
-						teleport_player(points.global_position, points.spawn_dir, true)
-						print("hooray")
+						teleport_player(points.global_position, points.heading, true)
 						
 						if points.parent_instead_of_self != null:
 							if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
@@ -111,10 +110,10 @@ class Instance:
 				if get_pl(): (get_pl() as Player_YN).equip(equipment_pending), "SCENE_CHANGE_SUCCESS"
 		)
 
-	static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:
+	static func teleport_player(_pos: Vector2, _heading: SentientBase.compass_headings, w_camera: bool = false) -> void:
 		if get_pl():
 			get_pl().global_position = _pos
-			get_pl().direction = (_dir)
+			get_pl().heading = _heading
 			if w_camera and CameraHolder.instance.initial_target == get_pl(): 
 				CameraHolder.instance.global_position = get_pl().global_position
 

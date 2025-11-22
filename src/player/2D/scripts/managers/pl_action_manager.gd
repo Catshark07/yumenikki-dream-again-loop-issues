@@ -2,7 +2,7 @@ class_name PLActionManager
 extends SBComponent
 
 # - actions
-const PINCH_ACTION: PLAction = preload("res://src/player/2D/madotsuki/actions/hold_to_pinch.tres")
+const PINCH_HOLD_ACTION: PLAction = preload("res://src/player/2D/madotsuki/actions/_default/hold_to_pinch.tres")
 
 var curr: 	PLAction
 var emote: 	PLAction:
@@ -11,7 +11,7 @@ var emote: 	PLAction:
 # - other props
 @export var cooldown_timer: Timer
 var cooldown: float = 1.5
-var in_cooldown: bool = false
+var is_cooldown: 	bool = false
 
 # - signals
 signal did_something
@@ -25,7 +25,7 @@ func _setup(_sb: SentientBase = null) -> void:
 	cooldown_timer.wait_time 	= cooldown
 	
 	Utils.connect_to_signal(restrict_action, did_something)
-	Utils.connect_to_signal(func(): in_cooldown = false, cooldown_timer.timeout)
+	Utils.connect_to_signal(func(): is_cooldown = false, cooldown_timer.timeout)
 
 func _update(_delta: float) -> void: 			
 	if curr != null: curr._action_update(sentient, _delta)
@@ -35,8 +35,7 @@ func _physics_update(_delta: float) -> void:
 func _input_pass(_event: InputEvent) -> void: 
 	if curr != null:  curr._action_input(sentient, _event)
 	
-	
-	elif	Input.is_action_just_pressed("pl_emote"): perform_action(sentient, emote)
+	if	Input.is_action_just_pressed("pl_emote"): perform_action(sentient, emote)
 	elif 	Input.is_action_just_pressed("pl_primary_action"): 
 		if !sentient.components.get_component_by_name(Player_YN.Components.EQUIP).effect_data: return	
 		sentient.components.get_component_by_name(Player_YN.Components.EQUIP).effect_data._primary_action(sentient)
@@ -45,7 +44,7 @@ func _input_pass(_event: InputEvent) -> void:
 		sentient.components.get_component_by_name(Player_YN.Components.EQUIP).effect_data._secondary_action(sentient)
 
 func perform_action(_pl: Player, _action: PLAction) -> void:
-	if in_cooldown: return 
+	if is_cooldown: return 
 	if curr != null:
 		cancel_action(sentient)
 		return
@@ -68,7 +67,7 @@ func cancel_action(_pl: Player, _force: bool = false) -> void:
 	curr = null
 
 func restrict_action() -> void:
-	in_cooldown = true
+	is_cooldown = true
 	cooldown_timer.start()
 
 func empty_action() -> void: curr = null

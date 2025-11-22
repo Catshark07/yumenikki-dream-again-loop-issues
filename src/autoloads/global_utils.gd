@@ -35,6 +35,7 @@ func add_child_node(
 			push("Child node or Parent node do not exist!")
 			return
 			
+		
 		if !_parent_node.has_node(_child_node_name):
 			_parent_node.add_child(_child_node, true)
 			_child_node.name 	= _child_node_name

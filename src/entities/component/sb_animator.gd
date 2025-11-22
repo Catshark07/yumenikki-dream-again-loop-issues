@@ -3,6 +3,8 @@ extends SBComponent
 
 var can_play: bool = true
 
+signal finished
+
 # --- components ---
 var animation_player: AnimationPlayer
 var sprite_renderer: Sprite2D
@@ -25,6 +27,7 @@ var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	animation_player = get_node("animation_player")
+	animation_player.animation_finished.connect(finished.emit)
 				
 func _update(_delta: float) -> void:
 

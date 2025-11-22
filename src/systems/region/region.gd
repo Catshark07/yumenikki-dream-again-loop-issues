@@ -11,8 +11,6 @@ extends Area2D
 			if rect: rect.debug_color = _colour
 
 var region_priority: int = 0
-var shape: Shape2D:
-	get: return rect.shape
 
 signal player_enter_handle(_pl: Player)
 signal player_exit_handle(_pl: Player)

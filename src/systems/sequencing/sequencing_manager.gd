@@ -32,3 +32,8 @@ static func create_sequence(_name: String, _skip_invalid: bool = true, _wait_fin
 	seq.wait_til_finished 		= _wait_finish
 	Utils.connect_to_signal(seq.free, seq.finished, ConnectFlags.CONNECT_ONE_SHOT)
 	return seq 
+	
+static func add_event(_seq: Sequence, _event: Event, _name: String, _wait_til_finished: bool = true) -> void:
+	_event.name = _name
+	_event.wait_til_finished = _wait_til_finished
+	_seq.add_child(_event)

@@ -3,7 +3,7 @@ extends Control
 var finished_preloading_content: bool = false
 var is_editor: bool = false
 
-const GAME_VER := "pre_alpha_02"
+const GAME_VER := "DEMO"
 
 # - scene paths
 const INITIAL_SCENE 		:= "res://src/scenes/initial_scene.tscn" 		# - 0
@@ -98,6 +98,7 @@ func _process(delta: float) -> void:
 	SequencerManager.	_update(delta)
 	SceneManager.		_update(delta)
 	game_manager.		update(delta)
+	
 func _physics_process(delta: float) -> void:
 	InputManager.		_physics_update(delta)
 	SequencerManager.	_physics_update(delta)

@@ -7,6 +7,8 @@
 
 [sub_resource type="Resource" id="Resource_p5r5g"]
 script = ExtResource("4_si061")
+sprite_override = "uid://bn8kykhfx2pk4"
+emote = ""
 walk_multi = 1.06
 sneak_multi = 0.79
 can_sprint = false

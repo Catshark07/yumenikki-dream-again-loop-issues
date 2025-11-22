@@ -49,8 +49,8 @@ func _physics_process(_delta: float) -> void:
 		if loopable == null or loopable.do_not_loop: continue
 		if loopable.target is CanvasItem and !loopable.do_not_loop:
 			
-			var min_pos = -world_size / 2 + self.global_position
-			var max_pos =  world_size / 2 + self.global_position
+			var min_pos = -self.world_size / 2 + self.global_position
+			var max_pos =  self.world_size / 2 + self.global_position
 			
 			loopable.target.global_position.x = wrap(loopable.target.global_position.x, min_pos.x, max_pos.x)
 			loopable.target.global_position.y = wrap(loopable.target.global_position.y, min_pos.y, max_pos.y)
@@ -85,7 +85,7 @@ func update_loopable_components() -> void:
 
 func setup_loopable_components() -> void: 
 	for i: LoopableComponent in loop_objects:
-		i.setup_loop_nodes()
+		i.setup_loop_nodes(world_size)
 		set_world_size(world_size)
 
 	

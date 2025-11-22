@@ -7,18 +7,19 @@
 [ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/entities/effects/_template_effect_collect.tscn" id="4_cofr7"]
 [ext_resource type="Resource" uid="uid://ncax1yyo23go" path="res://src/player/2D/madotsuki/effects/neon/neon.tres" id="6_6m5s6"]
 
-[sub_resource type="Resource" id="Resource_c74sf"]
+[sub_resource type="Resource" id="Resource_6m5s6"]
 resource_local_to_scene = true
 resource_name = "sb_variables"
 script = ExtResource("2_6m5s6")
 
 [node name="nasu" instance=ExtResource("1_vfmhg")]
-values = SubResource("Resource_c74sf")
+values = SubResource("Resource_6m5s6")
 
 [node name="sprite_renderer" parent="." index="0"]
 position = Vector2(0, 0)
 texture = ExtResource("2_vfmhg")
 hframes = 4
+frame = 3
 script = ExtResource("3_cofr7")
 autoplay = true
 loop = true
@@ -27,6 +28,7 @@ end_frame = false
 fps = 5.0
 frame_dimensions = Vector2i(24, 24)
 frame_h_count = 4
+progress = 3
 
 [node name="shadow_renderer" parent="." index="1"]
 visible = false
@@ -38,6 +40,8 @@ initial_state = NodePath("WANDER")
 children = [NodePath("../sprite_renderer"), NodePath("../shadow_renderer"), NodePath("../sb_components"), NodePath("../coll"), NodePath("../nav"), NodePath("../stance_fsm"), NodePath("../behaviour_fsm"), NodePath("../sound_player"), NodePath("../neon_effect")]
 
 [node name="neon_effect" parent="." index="9" instance=ExtResource("4_cofr7")]
+collision_layer = 2147483650
+collision_mask = 3221225472
 
 [node name="on_interact" parent="neon_effect" index="0" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4

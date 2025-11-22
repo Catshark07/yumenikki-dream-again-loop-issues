@@ -6,6 +6,7 @@ extends Entity
 @export var values: SBVariables = SBVariables.new():
 	get = get_values,
 	set = set_values
+
 # - input
 signal input_vector(_input: Vector2)
 var desired_vel: Vector2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://dl25joalnmaxt"]
+[gd_scene load_steps=44 format=4 uid="uid://dl25joalnmaxt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_0iw03"]
 [ext_resource type="Shader" uid="uid://dhykg54peq185" path="res://src/shaders/panorama/radial.gdshader" id="2_6vasg"]
@@ -14,13 +14,15 @@
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="14_25aso"]
 [ext_resource type="PackedScene" uid="uid://brssxovackb8b" path="res://src/levels/__ignore/animated_door.tscn" id="14_f8lfk"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="15_f8lfk"]
+[ext_resource type="Resource" uid="uid://c4wqh7wudu65x" path="res://src/audio/footsteps/wood.tres" id="15_jxym7"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="16_ksvw7"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="17_scjaa"]
 [ext_resource type="PackedScene" uid="uid://cijogi38yfo57" path="res://src/levels/__ignore/nexus_door.tscn" id="18_25aso"]
-[ext_resource type="Texture2D" uid="uid://dqeshbkbbqv3j" path="res://src/levels/__ignore/doors/door_snow.png" id="20_2xg7o"]
 [ext_resource type="Texture2D" uid="uid://3i5qno0o7ib8" path="res://src/levels/__ignore/doors/door_forest.png" id="20_feke8"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="21_1rd4d"]
+[ext_resource type="Texture2D" uid="uid://cua8v3f5c3bwi" path="res://src/levels/__ignore/doors/door_eyeball.png" id="21_feke8"]
 [ext_resource type="Texture2D" uid="uid://dkxu0pw6gxo3f" path="res://src/levels/__ignore/doors/door_mural.png" id="22_0iw03"]
+[ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="22_1rd4d"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="24_f8lfk"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="26_feke8"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="27_1rd4d"]
@@ -60,10 +62,19 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_rtj6g"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="Resource" id="Resource_feke8"]
+[sub_resource type="Resource" id="Resource_jxym7"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("12_ksvw7")
+
+[sub_resource type="Gradient" id="Gradient_jxym7"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_25aso"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_f8lfk"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xra6u"]
 shader = ExtResource("7_25aso")
@@ -139,7 +150,7 @@ y_sort_enabled = true
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("10_scjaa")]
 position = Vector2(232, 128)
-values = SubResource("Resource_feke8")
+values = SubResource("Resource_jxym7")
 
 [node name="walls" type="TileMapLayer" parent="y_order"]
 visible = false
@@ -161,11 +172,12 @@ script = ExtResource("15_f8lfk")
 tile_map_data = PackedByteArray("AAABAB4AAAAAAAEAAAABAB8AAAAAAAEAAAAAAB4AAAAAAAEAAAD//x4AAAAAAAEAAAD+/x4AAAAAAAEAAAD+/x8AAAAAAAEAAAD//x8AAAAAAAEAAAAAAB8AAAAAAAEAAAACAB8AAAAAAAEAAAACAB4AAAAAAAEAAAD9/x4AAAAAAAEAAAD8/x4AAAAAAAEAAAD7/x4AAAAAAAEAAAD7/x0AAAAAAAEAAAD6/x0AAAAAAAEAAAD8/x0AAAAAAAEAAAD5/x0AAAAAAAEAAAD4/x0AAAAAAAEAAAD4/xwAAAAAAAEAAAD5/xwAAAAAAAEAAAD6/xwAAAAAAAEAAAD3/xwAAAAAAAEAAAD2/xwAAAAAAAEAAAD2/xsAAAAAAAEAAAD3/xsAAAAAAAEAAAD1/xsAAAAAAAEAAAD0/xsAAAAAAAEAAADz/xsAAAAAAAEAAADz/xoAAAAAAAEAAADy/xoAAAAAAAEAAAD0/xoAAAAAAAEAAAD1/xoAAAAAAAEAAADy/xsAAAAAAAEAAADy/xkAAAAAAAEAAADx/xkAAAAAAAEAAADx/xoAAAAAAAEAAADw/xkAAAAAAAEAAADw/xgAAAAAAAEAAADv/xgAAAAAAAEAAADu/xgAAAAAAAEAAADu/xcAAAAAAAEAAADv/xcAAAAAAAEAAADu/xYAAAAAAAEAAADs/xcAAAAAAAEAAADt/xUAAAAAAAEAAADt/xYAAAAAAAEAAADt/xcAAAAAAAEAAADs/xYAAAAAAAEAAADs/xUAAAAAAAEAAADs/xQAAAAAAAEAAADs/xMAAAAAAAEAAADr/xMAAAAAAAEAAADr/xQAAAAAAAEAAADr/xUAAAAAAAEAAADq/xMAAAAAAAEAAADq/xIAAAAAAAEAAADr/xIAAAAAAAEAAADp/xIAAAAAAAEAAADo/xIAAAAAAAEAAADn/xIAAAAAAAEAAADp/xEAAAAAAAEAAADq/xEAAAAAAAEAAADq/xAAAAAAAAEAAADp/xAAAAAAAAEAAADo/xAAAAAAAAEAAADn/w4AAAAAAAEAAADn/w8AAAAAAAEAAADp/w4AAAAAAAEAAADp/w8AAAAAAAEAAADn/w0AAAAAAAEAAADn/wwAAAAAAAEAAADm/wsAAAAAAAEAAADm/woAAAAAAAEAAADm/wkAAAAAAAEAAADo/wsAAAAAAAEAAADo/wwAAAAAAAEAAADo/w0AAAAAAAEAAADo/w4AAAAAAAEAAADo/w8AAAAAAAEAAADo/woAAAAAAAEAAADo/wkAAAAAAAEAAADo/wgAAAAAAAEAAADl/wgAAAAAAAEAAADk/wcAAAAAAAEAAADk/wYAAAAAAAEAAADl/wUAAAAAAAEAAADm/wUAAAAAAAEAAADn/wUAAAAAAAEAAADo/wUAAAAAAAEAAADp/wUAAAAAAAEAAADq/wUAAAAAAAEAAADr/wUAAAAAAAEAAADq/wcAAAAAAAEAAADr/wYAAAAAAAEAAADp/wcAAAAAAAEAAADo/wYAAAAAAAEAAADn/wYAAAAAAAEAAADm/wYAAAAAAAEAAADl/wYAAAAAAAEAAADl/wcAAAAAAAEAAADm/wcAAAAAAAEAAADm/wgAAAAAAAEAAADn/wgAAAAAAAEAAADn/wcAAAAAAAEAAADo/wcAAAAAAAEAAADn/wkAAAAAAAEAAADn/woAAAAAAAEAAADn/wsAAAAAAAEAAADp/wYAAAAAAAEAAADq/wYAAAAAAAEAAADs/wUAAAAAAAEAAADt/wUAAAAAAAEAAADu/wUAAAAAAAEAAADv/wUAAAAAAAEAAADw/wUAAAAAAAEAAADw/wQAAAAAAAEAAADv/wQAAAAAAAEAAADx/wQAAAAAAAEAAADy/wQAAAAAAAEAAADz/wQAAAAAAAEAAAD0/wQAAAAAAAEAAAD1/wQAAAAAAAEAAADv/wcAAAAAAAEAAADw/wcAAAAAAAEAAADv/wYAAAAAAAEAAADy/wgAAAAAAAEAAADx/wgAAAAAAAEAAADz/wgAAAAAAAEAAAD0/wgAAAAAAAEAAAD1/wgAAAAAAAEAAAD2/wgAAAAAAAEAAAD2/wYAAAAAAAEAAAD2/wcAAAAAAAEAAAD1/wUAAAAAAAEAAAD0/wYAAAAAAAEAAAD0/wUAAAAAAAEAAADz/wUAAAAAAAEAAADy/wUAAAAAAAEAAADx/wUAAAAAAAEAAADx/wYAAAAAAAEAAADw/wYAAAAAAAEAAADx/wcAAAAAAAEAAADy/wcAAAAAAAEAAADy/wYAAAAAAAEAAADz/wYAAAAAAAEAAADz/wcAAAAAAAEAAAD0/wcAAAAAAAEAAAD1/wcAAAAAAAEAAAD1/wYAAAAAAAEAAAD3/wgAAAAAAAEAAAD4/wgAAAAAAAEAAAD5/wgAAAAAAAEAAAD6/wgAAAAAAAEAAAD7/wgAAAAAAAEAAAD7/wcAAAAAAAEAAAD6/wcAAAAAAAEAAAD8/wcAAAAAAAEAAAD8/wYAAAAAAAEAAAD7/wYAAAAAAAEAAAD7/wUAAAAAAAEAAAD8/wUAAAAAAAEAAAD9/wUAAAAAAAEAAAD9/wYAAAAAAAEAAAD6/wUAAAAAAAEAAAD5/wUAAAAAAAEAAAD4/wUAAAAAAAEAAAD+/wUAAAAAAAEAAAD//wUAAAAAAAEAAAAAAAUAAAAAAAEAAAABAAUAAAAAAAEAAAACAAUAAAAAAAEAAAADAAUAAAAAAAEAAAAEAAUAAAAAAAEAAAAFAAUAAAAAAAEAAAAFAAYAAAAAAAEAAAAEAAYAAAAAAAEAAAAFAAcAAAAAAAEAAAAGAAYAAAAAAAEAAAAHAAYAAAAAAAEAAAAGAAcAAAAAAAEAAAAGAAgAAAAAAAEAAAAFAAkAAAAAAAEAAAAFAAoAAAAAAAEAAAAEAAsAAAAAAAEAAAADAAwAAAAAAAEAAAAGAAsAAAAAAAEAAAAGAAwAAAAAAAEAAAAEAAwAAAAAAAEAAAAEAA0AAAAAAAEAAAADAA0AAAAAAAEAAAADAA4AAAAAAAEAAAADAA8AAAAAAAEAAAADABAAAAAAAAEAAAADABEAAAAAAAEAAAAEABEAAAAAAAEAAAAEABIAAAAAAAEAAAAEABMAAAAAAAEAAAAFABMAAAAAAAEAAAAFABIAAAAAAAEAAAAFABQAAAAAAAEAAAAFABUAAAAAAAEAAAAGABUAAAAAAAEAAAAGABQAAAAAAAEAAAAFABYAAAAAAAEAAAAEABcAAAAAAAEAAAAEABgAAAAAAAEAAAAFABcAAAAAAAEAAAAAABcAAAAAAAEAAAABABcAAAAAAAEAAAAAABgAAAAAAAEAAAAAABkAAAAAAAEAAAD//xkAAAAAAAEAAAD//xoAAAAAAAEAAAD8/xcAAAAAAAEAAAD9/xcAAAAAAAEAAAD9/xYAAAAAAAEAAAD+/xYAAAAAAAEAAAD+/xUAAAAAAAEAAAD+/xQAAAAAAAEAAAD+/xMAAAAAAAEAAAD9/xMAAAAAAAEAAAD+/xIAAAAAAAEAAAD//xIAAAAAAAEAAAD//xEAAAAAAAEAAAAAABEAAAAAAAEAAAAAABAAAAAAAAEAAAABABAAAAAAAAEAAAACABAAAAAAAAEAAAACAA8AAAAAAAEAAAABAA8AAAAAAAEAAAACAA4AAAAAAAEAAAD8/xgAAAAAAAEAAAABABYAAAAAAAEAAAABABUAAAAAAAEAAAABABQAAAAAAAEAAAAAABQAAAAAAAEAAAD//xQAAAAAAAEAAAD//xUAAAAAAAEAAAACABYAAAAAAAEAAAACABUAAAAAAAEAAAADABQAAAAAAAEAAAACABIAAAAAAAEAAAACABEAAAAAAAEAAAABABEAAAAAAAEAAAABABIAAAAAAAEAAAAAABIAAAAAAAEAAAAAABMAAAAAAAEAAAD//xMAAAAAAAEAAAABABMAAAAAAAEAAAACABMAAAAAAAEAAAACABQAAAAAAAEAAAADABMAAAAAAAEAAAADABIAAAAAAAEAAAAFAAwAAAAAAAEAAAAFAAsAAAAAAAEAAAAGAA0AAAAAAAEAAAAHAA4AAAAAAAEAAAAIAA4AAAAAAAEAAAAJAA4AAAAAAAEAAAAKAA4AAAAAAAEAAAALAA4AAAAAAAEAAAAMAA4AAAAAAAEAAAANAA0AAAAAAAEAAAAOAAwAAAAAAAEAAAAPAAwAAAAAAAEAAAAQAA0AAAAAAAEAAAARAA0AAAAAAAEAAAASAA0AAAAAAAEAAAATAA0AAAAAAAEAAAAUAA0AAAAAAAEAAAAVAA0AAAAAAAEAAAAWAA0AAAAAAAEAAAAWAAwAAAAAAAEAAAAVAAoAAAAAAAEAAAAVAAsAAAAAAAEAAAAUAAoAAAAAAAEAAAAUAAsAAAAAAAEAAAATAAsAAAAAAAEAAAASAAsAAAAAAAEAAAARAAsAAAAAAAEAAAAQAAsAAAAAAAEAAAAQAAoAAAAAAAEAAAASAAcAAAAAAAEAAAATAAcAAAAAAAEAAAAUAAcAAAAAAAEAAAAVAAcAAAAAAAEAAAAWAAcAAAAAAAEAAAAXAAcAAAAAAAEAAAAYAAcAAAAAAAEAAAAZAAgAAAAAAAEAAAAaAAgAAAAAAAEAAAAbAAgAAAAAAAEAAAAcAAgAAAAAAAEAAAAdAAgAAAAAAAEAAAAeAAgAAAAAAAEAAAAfAAkAAAAAAAEAAAAgAAkAAAAAAAEAAAAhAAkAAAAAAAEAAAAiAAkAAAAAAAEAAAAjAAkAAAAAAAEAAAAkAAkAAAAAAAEAAAAlAAkAAAAAAAEAAAAmAAkAAAAAAAEAAAAnAAkAAAAAAAEAAAAoAAkAAAAAAAEAAAApAAkAAAAAAAEAAAAqAAkAAAAAAAEAAAApAAcAAAAAAAEAAAAoAAYAAAAAAAEAAAAnAAYAAAAAAAEAAAAmAAUAAAAAAAEAAAAlAAQAAAAAAAEAAAAmAAQAAAAAAAEAAAAnAAUAAAAAAAEAAAAoAAUAAAAAAAEAAAApAAUAAAAAAAEAAAApAAQAAAAAAAEAAAApAAMAAAAAAAEAAAApAAIAAAAAAAEAAAApAAEAAAAAAAEAAAApAAAAAAAAAAEAAAApAP//AAAAAAEAAAAsAAAAAAAAAAEAAAAsAAEAAAAAAAEAAAAsAAIAAAAAAAEAAAArAAIAAAAAAAEAAAArAAMAAAAAAAEAAAArAAQAAAAAAAEAAAAqAAQAAAAAAAEAAAAqAAUAAAAAAAEAAAArAAUAAAAAAAEAAAAsAAUAAAAAAAEAAAAsAAQAAAAAAAEAAAAtAAQAAAAAAAEAAAAuAAQAAAAAAAEAAAAuAAMAAAAAAAEAAAAvAAMAAAAAAAEAAAAvAAIAAAAAAAEAAAAxAAYAAAAAAAEAAAAwAAYAAAAAAAEAAAAwAAcAAAAAAAEAAAAvAAcAAAAAAAEAAAAuAAcAAAAAAAEAAAAuAAYAAAAAAAEAAAAuAAUAAAAAAAEAAAAtAAYAAAAAAAEAAAAtAAcAAAAAAAEAAAAuAAgAAAAAAAEAAAAtAAgAAAAAAAEAAAAsAAgAAAAAAAEAAAArAAgAAAAAAAEAAAAiAAcAAAAAAAEAAAAhAAcAAAAAAAEAAAAgAAcAAAAAAAEAAAAfAAcAAAAAAAEAAAAeAAcAAAAAAAEAAAAdAAcAAAAAAAEAAAAcAAcAAAAAAAEAAAAbAAcAAAAAAAEAAAAaAAcAAAAAAAEAAAAZAAcAAAAAAAEAAAAiAAgAAAAAAAEAAAAjAAgAAAAAAAEAAAAkAAgAAAAAAAEAAAAhAAgAAAAAAAEAAAAgAAgAAAAAAAEAAAAfAAgAAAAAAAEAAAAlAAgAAAAAAAEAAAAmAAgAAAAAAAEAAAAnAAgAAAAAAAEAAAAoAAgAAAAAAAEAAAApAAgAAAAAAAEAAAAqAAgAAAAAAAEAAAArAAcAAAAAAAEAAAArAAYAAAAAAAEAAAAqAAcAAAAAAAEAAAAsAAcAAAAAAAEAAAAsAAYAAAAAAAEAAAApAAYAAAAAAAEAAAAaAP3/AAAAAAEAAAAaAP7/AAAAAAEAAAAaAPz/AAAAAAEAAAAbAPv/AAAAAAEAAAAcAPv/AAAAAAEAAAAdAPv/AAAAAAEAAAAfAP3/AAAAAAEAAAAfAP7/AAAAAAEAAAAeAPz/AAAAAAEAAAAeAP7/AAAAAAEAAAAdAP//AAAAAAEAAAAcAP//AAAAAAEAAAAbAP7/AAAAAAEAAAAdAP3/AAAAAAEAAAAdAPz/AAAAAAEAAAAcAPz/AAAAAAEAAAAbAPz/AAAAAAEAAAAbAP3/AAAAAAEAAAAcAP3/AAAAAAEAAAAcAP7/AAAAAAEAAAAdAP7/AAAAAAEAAAAeAP3/AAAAAAEAAAAcAAAAAAAAAAEAAAAcAAEAAAAAAAEAAAAbAAAAAAAAAAEAAAAbAAEAAAAAAAEAAAAbAAIAAAAAAAEAAAAaAAEAAAAAAAEAAAAaAAIAAAAAAAEAAAAaAAMAAAAAAAEAAAAZAAMAAAAAAAEAAAAZAAQAAAAAAAEAAAAYAAQAAAAAAAEAAAAYAAMAAAAAAAEAAAAYAAUAAAAAAAEAAAAXAAQAAAAAAAEAAAAXAAUAAAAAAAEAAAAXAAYAAAAAAAEAAAAYAAYAAAAAAAEAAAAZAAYAAAAAAAEAAAAWAAUAAAAAAAEAAAAWAAYAAAAAAAEAAAAVAAYAAAAAAAEAAAAUAAYAAAAAAAEAAAATAAYAAAAAAAEAAAASAAYAAAAAAAEAAAASAAUAAAAAAAEAAAAPAAQAAAAAAAEAAAAPAAMAAAAAAAEAAAAPAAIAAAAAAAEAAAAPAAEAAAAAAAEAAAAPAAAAAAAAAAEAAAAPAP//AAAAAAEAAAAPAP7/AAAAAAEAAAAOAAAAAAAAAAEAAAAOAAEAAAAAAAEAAAAOAAIAAAAAAAEAAAAOAAMAAAAAAAEAAAAOAAQAAAAAAAEAAAANAAQAAAAAAAEAAAAMAAQAAAAAAAEAAAALAAQAAAAAAAEAAAAKAAUAAAAAAAEAAAAJAAUAAAAAAAEAAAARAP3/AAAAAAEAAAARAPz/AAAAAAEAAAARAPv/AAAAAAEAAAAQAPr/AAAAAAEAAAAPAPn/AAAAAAEAAAAOAPn/AAAAAAEAAAANAPn/AAAAAAEAAAAMAP3/AAAAAAEAAAANAP3/AAAAAAEAAAAOAP3/AAAAAAEAAAAMAPz/AAAAAAEAAAALAPv/AAAAAAEAAAAKAPv/AAAAAAEAAAAJAPv/AAAAAAEAAAAJAPr/AAAAAAEAAAAKAPr/AAAAAAEAAAALAPr/AAAAAAEAAAAMAPr/AAAAAAEAAAD///v/AAAAAAEAAAD///z/AAAAAAEAAAD+//z/AAAAAAEAAAD+//3/AAAAAAEAAAD///3/AAAAAAEAAAD///7/AAAAAAEAAAAAAP7/AAAAAAEAAAABAP7/AAAAAAEAAAABAP3/AAAAAAEAAAACAP3/AAAAAAEAAAADAP3/AAAAAAEAAAADAPz/AAAAAAEAAAAEAPz/AAAAAAEAAAAFAPz/AAAAAAEAAAAGAPz/AAAAAAEAAAAGAPv/AAAAAAEAAAAHAPv/AAAAAAEAAAAIAPv/AAAAAAEAAAAFAPv/AAAAAAEAAAACAPz/AAAAAAEAAAACAPv/AAAAAAEAAAABAPv/AAAAAAEAAAAAAPv/AAAAAAEAAAAAAPz/AAAAAAEAAAAAAP3/AAAAAAEAAAABAPz/AAAAAAEAAAAQAP3/AAAAAAEAAAAPAPz/AAAAAAEAAAAPAPv/AAAAAAEAAAAPAPr/AAAAAAEAAAAOAPr/AAAAAAEAAAANAPr/AAAAAAEAAAANAPv/AAAAAAEAAAAMAPv/AAAAAAEAAAANAPz/AAAAAAEAAAAOAPz/AAAAAAEAAAAOAPv/AAAAAAEAAAAQAPv/AAAAAAEAAAAQAPz/AAAAAAEAAAAPAP3/AAAAAAEAAAAIAAYAAAAAAAEAAAANAAoAAAAAAAEAAAAKAAYAAAAAAAEAAAAJAAYAAAAAAAEAAAAJAAcAAAAAAAEAAAAIAAcAAAAAAAEAAAAHAAcAAAAAAAEAAAAHAAgAAAAAAAEAAAAHAAkAAAAAAAEAAAAGAAkAAAAAAAEAAAAGAAoAAAAAAAEAAAAHAA0AAAAAAAEAAAAIAA0AAAAAAAEAAAAIAAkAAAAAAAEAAAAIAAgAAAAAAAEAAAAJAAgAAAAAAAEAAAAJAAkAAAAAAAEAAAAJAA0AAAAAAAEAAAAKAA0AAAAAAAEAAAAKAAoAAAAAAAEAAAAKAAkAAAAAAAEAAAAKAAgAAAAAAAEAAAAKAAcAAAAAAAEAAAALAAoAAAAAAAEAAAALAAsAAAAAAAEAAAALAA0AAAAAAAEAAAAMAA0AAAAAAAEAAAAMAAwAAAAAAAEAAAAMAAsAAAAAAAEAAAAMAAoAAAAAAAEAAAANAAsAAAAAAAEAAAANAAwAAAAAAAEAAAAOAAsAAAAAAAEAAAAOAAoAAAAAAAEAAAAPAAoAAAAAAAEAAAAPAAsAAAAAAAEAAAAHAAwAAAAAAAEAAAAQAAwAAAAAAAEAAAARAAwAAAAAAAEAAAASAAwAAAAAAAEAAAATAAwAAAAAAAEAAAAUAAwAAAAAAAEAAAAVAAwAAAAAAAEAAAAPAA4AAAAAAAEAAAAPAA8AAAAAAAEAAAAQAA8AAAAAAAEAAAAQAA4AAAAAAAEAAAARAA4AAAAAAAEAAAAQABAAAAAAAAEAAAAQABEAAAAAAAEAAAAGABwAAAAAAAEAAAAFABwAAAAAAAEAAAAEABwAAAAAAAEAAAADABwAAAAAAAEAAAADAB0AAAAAAAEAAAACAB0AAAAAAAEAAAADAB4AAAAAAAEAAAAEAB4AAAAAAAEAAAAEAB8AAAAAAAEAAAAFAB8AAAAAAAEAAAAGAB4AAAAAAAEAAAAFAB4AAAAAAAEAAAAFAB0AAAAAAAEAAAAGAB0AAAAAAAEAAAAEAB0AAAAAAAEAAAADAB8AAAAAAAEAAAAGAB8AAAAAAAEAAAAHAB8AAAAAAAEAAAAHAB4AAAAAAAEAAAAGABsAAAAAAAEAAAAGABoAAAAAAAEAAAAHABoAAAAAAAEAAAAHABsAAAAAAAEAAAAHABkAAAAAAAEAAAAIABkAAAAAAAEAAAAIABoAAAAAAAEAAAAIABgAAAAAAAEAAAAIABcAAAAAAAEAAAAJABcAAAAAAAEAAAAJABgAAAAAAAEAAAAJABYAAAAAAAEAAAAKABYAAAAAAAEAAAAKABcAAAAAAAEAAAAKABUAAAAAAAEAAAALABUAAAAAAAEAAAALABQAAAAAAAEAAAAMABQAAAAAAAEAAAAMABMAAAAAAAEAAAAMABIAAAAAAAEAAAANABIAAAAAAAEAAAANABEAAAAAAAEAAAAOABEAAAAAAAEAAAAPABEAAAAAAAEAAAAPABAAAAAAAAEAAAAOABAAAAAAAAEAAAARABEAAAAAAAEAAAARABIAAAAAAAEAAAAQABIAAAAAAAEAAAARABMAAAAAAAEAAAARABQAAAAAAAEAAAARABUAAAAAAAEAAAARABYAAAAAAAEAAAASABUAAAAAAAEAAAASABQAAAAAAAEAAAAQABUAAAAAAAEAAAAPABUAAAAAAAEAAAAOABUAAAAAAAEAAAANABYAAAAAAAEAAAANABcAAAAAAAEAAAAOABgAAAAAAAEAAAAPABkAAAAAAAEAAAAQABkAAAAAAAEAAAARABgAAAAAAAEAAAASABcAAAAAAAEAAAASABYAAAAAAAEAAAARABcAAAAAAAEAAAAQABcAAAAAAAEAAAAQABgAAAAAAAEAAAAPABgAAAAAAAEAAAAPABcAAAAAAAEAAAAPABYAAAAAAAEAAAAQABYAAAAAAAEAAAAOABYAAAAAAAEAAAAOABcAAAAAAAEAAAAXAA0AAAAAAAEAAAAYAA4AAAAAAAEAAAAZAA8AAAAAAAEAAAAYABAAAAAAAAEAAAAXAA8AAAAAAAEAAAAWAA4AAAAAAAEAAAAZABEAAAAAAAEAAAAZABIAAAAAAAEAAAAZABMAAAAAAAEAAAAZABQAAAAAAAEAAAAaABQAAAAAAAEAAAAbABQAAAAAAAEAAAAcABUAAAAAAAEAAAAeABUAAAAAAAEAAAAfABQAAAAAAAEAAAAfABMAAAAAAAEAAAAfABIAAAAAAAEAAAAfABEAAAAAAAEAAAAfABAAAAAAAAEAAAAeAA8AAAAAAAEAAAAdAA8AAAAAAAEAAAAcAA8AAAAAAAEAAAAbAA8AAAAAAAEAAAAaABAAAAAAAAEAAAAdABYAAAAAAAEAAAAcABcAAAAAAAEAAAAbABYAAAAAAAEAAAAaABcAAAAAAAEAAAAaABgAAAAAAAEAAAAZABkAAAAAAAEAAAAYABkAAAAAAAEAAAAXABoAAAAAAAEAAAAWABoAAAAAAAEAAAAVABsAAAAAAAEAAAATABwAAAAAAAEAAAATAB0AAAAAAAEAAAAUABwAAAAAAAEAAAAUAB8AAAAAAAEAAAAUACAAAAAAAAEAAAAUACEAAAAAAAEAAAATACEAAAAAAAEAAAATACIAAAAAAAEAAAAVAB8AAAAAAAEAAAAVAB4AAAAAAAEAAAAWAB4AAAAAAAEAAAAXAB8AAAAAAAEAAAAXACAAAAAAAAEAAAAXACEAAAAAAAEAAAAXACIAAAAAAAEAAAAXACMAAAAAAAEAAAAaACIAAAAAAAEAAAAaACEAAAAAAAEAAAAaACAAAAAAAAEAAAAaAB8AAAAAAAEAAAAdACEAAAAAAAEAAAAdACIAAAAAAAEAAAAdACAAAAAAAAEAAAAdAB8AAAAAAAEAAAAcAB4AAAAAAAEAAAAcAB0AAAAAAAEAAAAcABwAAAAAAAEAAAAcABsAAAAAAAEAAAAbABoAAAAAAAEAAAAbABkAAAAAAAEAAAAbAB4AAAAAAAEAAAAZAB8AAAAAAAEAAAAYAB8AAAAAAAEAAAAWAB0AAAAAAAEAAAAWABwAAAAAAAEAAAAaABwAAAAAAAEAAAAaABsAAAAAAAEAAAAaABoAAAAAAAEAAAAaABkAAAAAAAEAAAAZABoAAAAAAAEAAAAYABoAAAAAAAEAAAAYABsAAAAAAAEAAAAXABsAAAAAAAEAAAAWABsAAAAAAAEAAAAXABwAAAAAAAEAAAAXAB0AAAAAAAEAAAAXAB4AAAAAAAEAAAAYAB4AAAAAAAEAAAAYAB0AAAAAAAEAAAAYABwAAAAAAAEAAAAZABwAAAAAAAEAAAAZABsAAAAAAAEAAAAZAB0AAAAAAAEAAAAZAB4AAAAAAAEAAAAaAB4AAAAAAAEAAAAaAB0AAAAAAAEAAAAbAB0AAAAAAAEAAAAbABwAAAAAAAEAAAAbABsAAAAAAAEAAAAdABIAAAAAAAEAAAAdABEAAAAAAAEAAAAdABAAAAAAAAEAAAAcABAAAAAAAAEAAAAbABAAAAAAAAEAAAAbABEAAAAAAAEAAAAaABEAAAAAAAEAAAAaABIAAAAAAAEAAAAaABMAAAAAAAEAAAAbABMAAAAAAAEAAAAbABIAAAAAAAEAAAAcABIAAAAAAAEAAAAcABEAAAAAAAEAAAAcABMAAAAAAAEAAAAcABQAAAAAAAEAAAAdABQAAAAAAAEAAAAdABMAAAAAAAEAAAAeABMAAAAAAAEAAAAeABIAAAAAAAEAAAAeABEAAAAAAAEAAAAeABAAAAAAAAEAAAAeABQAAAAAAAEAAAAdABUAAAAAAAEAAAAcABYAAAAAAAEAAAAbABcAAAAAAAEAAAAbABgAAAAAAAEAAAAZABAAAAAAAAEAAAAYAA8AAAAAAAEAAAAXAA4AAAAAAAEAAAAtAAUAAAAAAAEAAAARAAUAAAAAAAEAAAAQAAUAAAAAAAEAAAAPAAUAAAAAAAEAAAAOAAUAAAAAAAEAAAANAAUAAAAAAAEAAAAMAAUAAAAAAAEAAAALAAUAAAAAAAEAAAALAAcAAAAAAAEAAAALAAgAAAAAAAEAAAALAAkAAAAAAAEAAAAMAAkAAAAAAAEAAAAMAAgAAAAAAAEAAAANAAgAAAAAAAEAAAAOAAgAAAAAAAEAAAAOAAcAAAAAAAEAAAAPAAcAAAAAAAEAAAAQAAcAAAAAAAEAAAAQAAYAAAAAAAEAAAARAAcAAAAAAAEAAAARAAgAAAAAAAEAAAAQAAgAAAAAAAEAAAAPAAgAAAAAAAEAAAAOAAkAAAAAAAEAAAAPAAkAAAAAAAEAAAAQAAkAAAAAAAEAAAANAAkAAAAAAAEAAAARAAYAAAAAAAEAAAAPAAYAAAAAAAEAAAAOAAYAAAAAAAEAAAANAAcAAAAAAAEAAAAMAAcAAAAAAAEAAAANAAYAAAAAAAEAAAAMAAYAAAAAAAEAAAALAAYAAAAAAAEAAAA=")
 tile_set = ExtResource("16_ksvw7")
 script = ExtResource("17_scjaa")
-ground_material = 2
+ground_material = ExtResource("15_jxym7")
 metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
 [node name="apartment" parent="y_order" instance=ExtResource("14_f8lfk")]
 position = Vector2(232, 104)
+collision_layer = 2147483650
 
 [node name="on_interact" parent="y_order/apartment" index="1" node_paths=PackedStringArray("order", "front", "back")]
 order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("wait"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
@@ -192,55 +204,19 @@ next = NodePath("../travel_to_scene")
 prev = NodePath("../wait")
 next = NodePath("../request_cutscene_end")
 
+[node name="scene_traversal" parent="y_order/apartment/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://dwst4o7pf4ye7"
+
 [node name="request_cutscene_end" parent="y_order/apartment/on_interact" index="5" node_paths=PackedStringArray("prev")]
 prev = NodePath("../travel_to_scene")
 
-[node name="snow_world" parent="y_order" instance=ExtResource("18_25aso")]
-process_mode = 0
-position = Vector2(0, -88)
-collision_layer = 2147483648
-collision_mask = 2147483648
-
-[node name="on_interact" parent="y_order/snow_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
-front = NodePath("request_cutscene_start")
-back = NodePath("travel_to_scene")
-
-[node name="request_cutscene_start" parent="y_order/snow_world/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/snow_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/snow_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
-animation_sheet = null
-skip = true
-prev = NodePath("../play_sound")
-next = NodePath("../screen_fade_in")
-
-[node name="screen_fade_in" parent="y_order/snow_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-prev = NodePath("../play_animation")
-next = NodePath("../play_nexus_enter")
-
-[node name="play_nexus_enter" parent="y_order/snow_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../screen_fade_in")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/snow_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../play_nexus_enter")
-
-[node name="renderer" parent="y_order/snow_world" index="2"]
-texture = ExtResource("20_2xg7o")
-hframes = 1
-frame_h_count = 1
+[node name="spawn_point" parent="y_order/apartment" index="2"]
+scene_path = "uid://dwst4o7pf4ye7"
 
 [node name="mural_world" parent="y_order" instance=ExtResource("18_25aso")]
 process_mode = 0
 position = Vector2(-352, 80)
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 
 [node name="on_interact" parent="y_order/mural_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
@@ -263,6 +239,8 @@ prev = NodePath("../play_sound")
 next = NodePath("../screen_fade_in")
 
 [node name="screen_fade_in" parent="y_order/mural_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+gradient = SubResource("Gradient_jxym7")
 prev = NodePath("../play_animation")
 next = NodePath("../play_nexus_enter")
 
@@ -274,6 +252,14 @@ next = NodePath("../travel_to_scene")
 [node name="travel_to_scene" parent="y_order/mural_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
 prev = NodePath("../play_nexus_enter")
 
+[node name="scene_traversal" parent="y_order/mural_world/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://d4buml4tyobvm"
+connection_id = "nexus"
+
+[node name="spawn_point" parent="y_order/mural_world" index="1"]
+scene_path = "uid://d4buml4tyobvm"
+connection_id = "nexus"
+
 [node name="renderer" parent="y_order/mural_world" index="2"]
 texture = ExtResource("22_0iw03")
 hframes = 1
@@ -282,7 +268,7 @@ frame_h_count = 1
 [node name="neon_world" parent="y_order" instance=ExtResource("18_25aso")]
 process_mode = 0
 position = Vector2(720, 56)
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 
 [node name="on_interact" parent="y_order/neon_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
@@ -305,6 +291,8 @@ prev = NodePath("../play_sound")
 next = NodePath("../screen_fade_in")
 
 [node name="screen_fade_in" parent="y_order/neon_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+gradient = SubResource("Gradient_25aso")
 prev = NodePath("../play_animation")
 next = NodePath("../play_nexus_enter")
 
@@ -318,11 +306,11 @@ prev = NodePath("../play_nexus_enter")
 
 [node name="scene_traversal" parent="y_order/neon_world/on_interact/travel_to_scene" index="0"]
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "neon"
+connection_id = "nexus"
 
 [node name="spawn_point" parent="y_order/neon_world" index="1"]
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "neon"
+connection_id = "nexus"
 
 [node name="renderer" parent="y_order/neon_world" index="2"]
 texture = ExtResource("27_scjaa")
@@ -338,7 +326,7 @@ progress = 1
 [node name="forest_world" parent="y_order" instance=ExtResource("18_25aso")]
 process_mode = 0
 position = Vector2(448, -72)
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 
 [node name="on_interact" parent="y_order/forest_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
@@ -361,6 +349,8 @@ prev = NodePath("../play_sound")
 next = NodePath("../screen_fade_in")
 
 [node name="screen_fade_in" parent="y_order/forest_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+gradient = SubResource("Gradient_f8lfk")
 prev = NodePath("../play_animation")
 next = NodePath("../play_nexus_enter")
 
@@ -374,14 +364,118 @@ prev = NodePath("../play_nexus_enter")
 
 [node name="scene_traversal" parent="y_order/forest_world/on_interact/travel_to_scene" index="0"]
 scene_path = "uid://j0sat4n1ufx1"
-connection_id = "forest"
+connection_id = "nexus"
 
 [node name="spawn_point" parent="y_order/forest_world" index="1"]
 scene_path = "uid://j0sat4n1ufx1"
-connection_id = "forest"
+connection_id = "nexus"
 
 [node name="renderer" parent="y_order/forest_world" index="2"]
 texture = ExtResource("20_feke8")
+hframes = 1
+script = ExtResource("21_1rd4d")
+frame_h_count = 1
+
+[node name="eyeball_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
+position = Vector2(64, 448)
+collision_layer = 2147483650
+
+[node name="on_interact" parent="y_order/eyeball_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
+front = NodePath("request_cutscene_start")
+back = NodePath("travel_to_scene")
+
+[node name="request_cutscene_start" parent="y_order/eyeball_world/on_interact" index="0" node_paths=PackedStringArray("next")]
+next = NodePath("../play_sound")
+
+[node name="play_sound" parent="y_order/eyeball_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../play_animation")
+
+[node name="play_animation" parent="y_order/eyeball_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+animation_sheet = null
+skip = true
+prev = NodePath("../play_sound")
+next = NodePath("../screen_fade_in")
+
+[node name="screen_fade_in" parent="y_order/eyeball_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+gradient = SubResource("Gradient_f8lfk")
+prev = NodePath("../play_animation")
+next = NodePath("../play_nexus_enter")
+
+[node name="play_nexus_enter" parent="y_order/eyeball_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+prev = NodePath("../screen_fade_in")
+next = NodePath("../travel_to_scene")
+
+[node name="travel_to_scene" parent="y_order/eyeball_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
+prev = NodePath("../play_nexus_enter")
+
+[node name="scene_traversal" parent="y_order/eyeball_world/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://j0sat4n1ufx1"
+connection_id = "forest"
+
+[node name="spawn_point" parent="y_order/eyeball_world" index="1"]
+scene_path = "uid://j0sat4n1ufx1"
+connection_id = "forest"
+
+[node name="renderer" parent="y_order/eyeball_world" index="2"]
+texture = ExtResource("21_feke8")
+hframes = 1
+script = ExtResource("21_1rd4d")
+frame_h_count = 1
+
+[node name="numbers_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 0
+position = Vector2(0, -72)
+collision_layer = 2147483650
+
+[node name="on_interact" parent="y_order/numbers_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
+front = NodePath("request_cutscene_start")
+back = NodePath("travel_to_scene")
+
+[node name="request_cutscene_start" parent="y_order/numbers_world/on_interact" index="0" node_paths=PackedStringArray("next")]
+next = NodePath("../play_sound")
+
+[node name="play_sound" parent="y_order/numbers_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../play_animation")
+
+[node name="play_animation" parent="y_order/numbers_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+animation_sheet = null
+skip = true
+prev = NodePath("../play_sound")
+next = NodePath("../screen_fade_in")
+
+[node name="screen_fade_in" parent="y_order/numbers_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+gradient = SubResource("Gradient_f8lfk")
+prev = NodePath("../play_animation")
+next = NodePath("../play_nexus_enter")
+
+[node name="play_nexus_enter" parent="y_order/numbers_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+prev = NodePath("../screen_fade_in")
+next = NodePath("../travel_to_scene")
+
+[node name="travel_to_scene" parent="y_order/numbers_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
+prev = NodePath("../play_nexus_enter")
+
+[node name="scene_traversal" parent="y_order/numbers_world/on_interact/travel_to_scene" index="0"]
+scene_path = "uid://j0sat4n1ufx1"
+connection_id = "forest"
+
+[node name="spawn_point" parent="y_order/numbers_world" index="1"]
+scene_path = "uid://j0sat4n1ufx1"
+connection_id = "forest"
+
+[node name="renderer" parent="y_order/numbers_world" index="2"]
+texture = ExtResource("22_1rd4d")
 hframes = 1
 script = ExtResource("21_1rd4d")
 frame_h_count = 1
@@ -456,7 +550,8 @@ script = ExtResource("26_feke8")
 
 [editable path="camera"]
 [editable path="y_order/apartment"]
-[editable path="y_order/snow_world"]
 [editable path="y_order/mural_world"]
 [editable path="y_order/neon_world"]
 [editable path="y_order/forest_world"]
+[editable path="y_order/eyeball_world"]
+[editable path="y_order/numbers_world"]

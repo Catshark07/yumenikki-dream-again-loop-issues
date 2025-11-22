@@ -95,12 +95,13 @@ scroll_active = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
 bbcode_enabled = true
-text = "-> Luff 		([url]https://linktr.ee/xluffx[/url])
--> SILAS ROE 	([url]https://linktr.ee/silas.roe[/url])
+text = "-> Luff 			([url]https://linktr.ee/xluffx[/url])
+-> SILAS ROE 		([url]https://linktr.ee/silas.roe[/url])
 -> Madoxy 		([url]https://madoxy.neocities.org[/url])
 -> -1 			([url]https://youtube.com/@-1_void/[/url])
 -> Fronexe		([url]https://fronexe.itch.io/[/url])
--> [REDACTED]"
+-> [REDACTED]
+-> TirzaBoi: 		([url]https://linktr.ee/TirzaBoi [/url])"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0

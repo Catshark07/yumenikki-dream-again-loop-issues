@@ -10,7 +10,7 @@ var can_exit: bool = false
 
 func _action_update(_pl: Player, _delta: float) -> void: 
 	if !can_exit:
-		can_exit = !_pl.components.get_component_by_name(Player_YN.Components.ACTION).in_cooldown
+		can_exit = !_pl.components.get_component_by_name(Player_YN.Components.ACTION).is_cooldown
 	
 	if 	can_exit and \
 		(_pl.desired_speed > 0 or Input.is_action_just_pressed("pl_emote")):

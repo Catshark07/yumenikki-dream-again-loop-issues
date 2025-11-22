@@ -1,10 +1,11 @@
-[gd_scene load_steps=30 format=4 uid="uid://cs8yn56f0t60a"]
+[gd_scene load_steps=31 format=4 uid="uid://cs8yn56f0t60a"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_qwdro"]
 [ext_resource type="TileSet" uid="uid://bxbyiqlq3ywcr" path="res://src/levels/__ignore/tile_set/world_tile_sets/wilderness.tres" id="2_rpni3"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="4_bj2m2"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_giq7r"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="5_wyy24"]
+[ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="6_4hobq"]
 [ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="9_s3soc"]
 [ext_resource type="TileSet" uid="uid://b67lflhmdyfdh" path="res://src/levels/__ignore/tile_set/world_tile_sets/barracks.tres" id="10_lej3i"]
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="14_8fsi7"]
@@ -23,7 +24,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eo7o0"]
 
-[sub_resource type="Resource" id="Resource_lej3i"]
+[sub_resource type="Resource" id="Resource_03p8s"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("5_wyy24")
@@ -100,9 +101,18 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AABTADgAAAARAAEAAAA=")
 tile_set = ExtResource("10_lej3i")
 
+[node name="world" type="Node2D" parent="infinite_wilderness/world" node_paths=PackedStringArray("target", "children")]
+y_sort_enabled = true
+script = ExtResource("6_4hobq")
+target = NodePath("..")
+children = [NodePath("../sand"), NodePath("../bushes"), NodePath("../rocks"), NodePath("../cubes")]
+do_not_loop = true
+do_not_dupe = true
+metadata/_custom_type_script = "uid://bnajku7ggsr2q"
+
 [node name="madotsuki" parent="infinite_wilderness" instance=ExtResource("4_bj2m2")]
 position = Vector2(2048, 1180)
-values = SubResource("Resource_lej3i")
+values = SubResource("Resource_03p8s")
 
 [node name="pl_loop" parent="infinite_wilderness/madotsuki" index="11" node_paths=PackedStringArray("region")]
 region = NodePath("../../LoopRegion")
