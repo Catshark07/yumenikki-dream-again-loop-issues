@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd57ui48qj2ao"
-path="res://.godot/imported/pinch.png-939510ef4ed1637b4c118284854afcf8.ctex"
+uid="uid://s2nqqie2idyj"
+path="res://.godot/imported/teleport_maze.png-46fbc099f67589d1cc4471f635da1d02.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/player/2D/madotsuki/display/default/pinch.png"
-dest_files=["res://.godot/imported/pinch.png-939510ef4ed1637b4c118284854afcf8.ctex"]
+source_file="res://src/images/panorama/teleport_maze.png"
+dest_files=["res://.godot/imported/teleport_maze.png-46fbc099f67589d1cc4471f635da1d02.ctex"]
 
 [params]
 

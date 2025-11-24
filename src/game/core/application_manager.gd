@@ -48,15 +48,6 @@ static func viewport_setup() -> void:
 	viewport_length = get_viewport_height()
 	viewport_content_scale = ProjectSettings.get("display/window/stretch/scale")
 
-	main_window.focus_exited.connect(func(): 
-		Game.main_tree.paused = true
-		Music.stream_paused = true
-		Ambience.stream_paused = true)
-	main_window.focus_entered.connect(func(): 
-		Game.main_tree.paused = false
-		Music.stream_paused = false
-		Ambience.stream_paused = false)
-
 static func window_setup() -> void:
 	Engine.max_fps = 60
 	ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_repeat", CanvasItem.TEXTURE_REPEAT_MIRROR)
@@ -65,8 +56,17 @@ static func window_setup() -> void:
 	
 	main_window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 	main_window.position = DisplayServer.screen_get_size(DisplayServer.get_primary_screen()) / 2 - main_window.size / 2 
-	
 	main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	
+	main_window.focus_exited.connect(func(): 
+		pause()
+		Music.		stream_paused = true
+		Ambience.	stream_paused = true)
+	main_window.focus_entered.connect(func(): 
+		resume()
+		Music.		stream_paused = false
+		Ambience.	stream_paused = false)
+	
 static func change_window_mode(new_mode: Window.Mode) -> void: main_window.mode = new_mode
 static func set_window_borderless(_brd: bool = true) -> void: main_window.borderless = _brd
 

@@ -4,6 +4,9 @@ extends Event
 enum MUSIC_BUS {MUSIC, AMBIENCE}
 @export var music_bus: MUSIC_BUS
 
+func _init(_bus: MUSIC_BUS = MUSIC_BUS.MUSIC) -> void:
+	music_bus = _bus
+
 func _execute() -> void:
 	match music_bus:
 		MUSIC_BUS.MUSIC: 	Music.		stop()

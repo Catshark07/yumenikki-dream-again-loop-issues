@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://ecdj87dihdcc"]
+[gd_resource type="TileSet" load_steps=10 format=3 uid="uid://ecdj87dihdcc"]
 
 [ext_resource type="PackedScene" uid="uid://3rcijpl4bfm4" path="res://src/entities/sentients/barracks/pirori.tscn" id="1_vnqxg"]
 [ext_resource type="PackedScene" uid="uid://dqmxnyvau3174" path="res://src/entities/sentients/neon/bird.tscn" id="2_08xbd"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://by08lkihfhbib" path="res://src/entities/sentients/neon/radio_head.tscn" id="4_jjmgy"]
 [ext_resource type="PackedScene" uid="uid://b8eu1o1atphpg" path="res://src/entities/sentients/neon/slime.tscn" id="5_kfo0k"]
 [ext_resource type="PackedScene" uid="uid://bsfvkxpr18ml" path="res://src/entities/sentients/neon/tongue.tscn" id="6_8y1fr"]
+[ext_resource type="PackedScene" uid="uid://cnq4rqusaasbs" path="res://src/entities/sentients/teleport_maze/long_head.tscn" id="7_vnjwh"]
+[ext_resource type="PackedScene" uid="uid://ch75jxgwep7lu" path="res://src/entities/sentients/teleport_maze/short_head.tscn" id="8_jjmgy"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_f3nga"]
 resource_name = "sentients"
@@ -15,6 +17,8 @@ scenes/3/scene = ExtResource("3_vnjwh")
 scenes/4/scene = ExtResource("4_jjmgy")
 scenes/5/scene = ExtResource("5_kfo0k")
 scenes/6/scene = ExtResource("6_8y1fr")
+scenes/7/scene = ExtResource("7_vnjwh")
+scenes/8/scene = ExtResource("8_jjmgy")
 
 [resource]
 sources/0 = SubResource("TileSetScenesCollectionSource_f3nga")

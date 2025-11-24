@@ -122,7 +122,7 @@ func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_out: bool
 			Game.scene_loaded.emit()
 			
 			if _fade_out: GameManager.screen_transition.fade(ScreenTransition.DEFAULT_GRADIENT, 1, 0)
-			GameManager.secondary_transition.fade_progress = 0
+			GameManager.secondary_transition.visible = false
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
 			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", _scene.resource_path)

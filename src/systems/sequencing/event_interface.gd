@@ -5,6 +5,8 @@ extends Node
 signal finished
 signal cancelled
 
+const BASE_SCRIPT := preload("res://src/systems/sequencing/event_interface.gd")
+
 # template pusherr line:
 # printerr("EVENT - {NAME} :: {WARNING}!")
 

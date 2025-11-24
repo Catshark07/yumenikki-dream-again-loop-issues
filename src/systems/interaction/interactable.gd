@@ -17,11 +17,16 @@ extends AreaRegion
 		if centre_trigger: 	set_collision_mask_value(32, _a)
 		else:				set_collision_mask_value(31, _a)
 @export_group("Area Triggers")
-@export var area_trgger: 	bool = false
+@export var area_trgger: 	bool = false:
+	set(_trigger):
+		area_trgger = _trigger
+		if _trigger and area: 	
+			set_collision_mask_value(32, !_trigger)
+			set_collision_mask_value(31, _trigger)
 @export var centre_trigger:	bool = false:
-	set(_centre):
-		centre_trigger = _centre
-		if _centre and area: 	
+	set(_trigger):
+		centre_trigger = _trigger
+		if _trigger and area: 	
 			set_collision_mask_value(31, false)
 			set_collision_mask_value(32, true)
 		elif area: 					
@@ -52,4 +57,4 @@ func interact() -> void:
 func _interact() -> void: pass
 
 func _handle_player_enter() -> void: 
-	if area_trgger: self.interact()
+	if area_trgger or centre_trigger: self.interact()

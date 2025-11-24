@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PLAction" load_steps=2 format=3 uid="uid://ntn8qr1ree32"]
+
+[ext_resource type="Script" uid="uid://gqxupngqpt0n" path="res://src/player/2D/scripts/actions/pl_action.gd" id="1_ouwf8"]
+
+[resource]
+script = ExtResource("1_ouwf8")
+metadata/_custom_type_script = "uid://gqxupngqpt0n"

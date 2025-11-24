@@ -104,7 +104,7 @@ func assign_region(_region: LoopRegion) -> void:
 	
 	region 	= _region
 
-func setup_loop_nodes(_world_size) -> void:
+func setup_loop_nodes(_world_size: Vector2) -> void:
 	# - we clear and free the old duplicated nodes list.
 	if do_not_dupe or !(target is CanvasItem) : return
 	children 	= target.get_children()
@@ -152,14 +152,10 @@ func setup_loop_nodes(_world_size) -> void:
 				
 				if 	occlusions[i] == null:
 					occlusions[i] = Utils.add_child_node(dupe_nodes[i], VisibleOnScreenNotifier2D.new(), "occlusion")
-				
-				occlusions[i].rect.size = _world_size * 1.25
-				occlusions[i].rect.position = -occlusions[i].rect.size / 2
-				
-				
-	update_duplicates()
+
+	update_duplicates(_world_size)
 	
-func update_duplicates() -> void: 
+func update_duplicates(_world_size: Vector2) -> void: 
 	for i in range(dupe_nodes.size()):
 		var dupe_node = dupe_nodes[i]
 		
@@ -170,16 +166,15 @@ func update_duplicates() -> void:
 				for p in properties:
 					if child.get_indexed(p) == null: continue
 					child.set_indexed(p, children[c].get_indexed(p))
-				
 		else:
 			for p in properties:
 				if target.get_indexed(p) == null: continue
 				dupe_node.set_indexed(p, target.get_indexed(p))	
 			
-			if !do_not_include_occlusions:
-				if occlusions[i] == null: continue
-				occlusions[i].rect.size = world_size * 1.25
-				occlusions[i].rect.position = -occlusions[i].rect.size / 2
+		if !do_not_include_occlusions:
+			if occlusions[i] == null: continue
+			occlusions[i].rect.size = _world_size * 1.25
+			occlusions[i].rect.position = -occlusions[i].rect.size / 2
 func update_loop_nodes_list(_loop_node) -> void:
 	if _loop_node in dupe_nodes:
 		dupe_nodes[dupe_nodes.find(_loop_node)] = null

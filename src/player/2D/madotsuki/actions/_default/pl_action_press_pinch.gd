@@ -15,5 +15,8 @@ func _perform(_pl: Player) -> void:
 	finished.emit()
 	
 	var seq = SequencerManager.create_sequence("go_to_real_world")
+	var invoke_global_event := EVN_InvokeGlobalEvent.new("CUTSCENE_START_REQUEST")
+	var stop_bgm 			:= Evn
+	seq.add_child(invoke_global_event)
 	
 	

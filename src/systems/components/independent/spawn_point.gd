@@ -12,7 +12,7 @@ extends Node2D
 @export var as_sibling: bool = true
 @export var heading: SentientBase.compass_headings = SentientBase.compass_headings.SOUTH
 
-@onready var spawn_texture: Texture2D = load("res://src/systems/components/independent/pl_spawn.png")
+const TEXTURE: Texture2D = preload("res://src/systems/components/independent/pl_spawn.png")
 	
 func _enter_tree() -> void: Utils.u_add_to_group(self, "spawn_points")
 func _exit_tree() -> void: 	Utils.u_remove_from_group(self, "spawn_points")
@@ -24,5 +24,5 @@ func _ready() -> void:
 func _draw() -> void:
 	if Engine.is_editor_hint():
 		draw_texture(
-			spawn_texture, 
-			-spawn_texture.get_size() / 2 - Vector2(0, 8), Color(modulate, 0.5))
+			TEXTURE, 
+			-TEXTURE.get_size() / 2 - Vector2(0, 8), Color(modulate, 0.5))

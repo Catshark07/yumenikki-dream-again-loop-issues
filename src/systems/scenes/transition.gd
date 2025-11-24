@@ -20,9 +20,11 @@ enum fade_type {FADE_IN, FADE_OUT}
 # - transition animation properties.
 var transition_type: 	Tween.TransitionType = Tween.TRANS_LINEAR
 var ease_type: 			Tween.EaseType = Tween.EASE_OUT
-var speed: float = 1
+var duration: float = 1
 
 func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
 	default_texture = GradientTexture1D.new()
 	default_texture.gradient = Gradient.new()
 	default_texture.gradient.colors = PackedColorArray([Color.WHITE])
@@ -47,7 +49,8 @@ func _ready() -> void:
 func fade(
 	_gradient: Gradient = DEFAULT_GRADIENT,
 	_start_progress: float = 1,
-	_end_progress: float = 0) -> void:
+	_end_progress: float = 0,
+	_hide_if_alpha_zero: bool = true) -> void:
 		self.visible = true 
 		self.gradient = _gradient
 		
@@ -60,26 +63,26 @@ func fade(
 			set_fade_progress,
 			_start_progress, 
 			_end_progress, 
-			(1.0 / speed) if speed > 0.0 else 1.0).set_trans(transition_type).set_ease(ease_type)
+			duration).set_trans(transition_type).set_ease(ease_type)
 			
 		await fade_tween.finished
+		
+		if _hide_if_alpha_zero and fade_progress <= 0:
+			if modulate.a <= 0: self.visible = false
 			
-func set_fade_progress(_progress):
+func set_fade_progress(_progress: float):
 	fade_progress = _progress
 	self.material.set_shader_parameter("progress", fade_progress)
 	self.modulate = gradient.sample(fade_progress)
 	
-	if _progress <= 0:
-		self.visible = false 
-
 func set_transition(
-	_speed: float = 1,
+	_duration: float = 1,
 	_custom_shader: ShaderMaterial = null,
 	_transition: Tween.TransitionType = Tween.TRANS_LINEAR,
 	_ease: Tween.EaseType = Tween.EASE_OUT) -> void: 
 		self.transition_type 	= _transition
 		self.ease_type 			= _ease
-		self.speed				= _speed
+		self.duration				= _duration
 		
 		if _custom_shader == null: self.material = default_shader
 		else: self.material = _custom_shader

@@ -9,16 +9,16 @@ var priority: int = 0
 var marked_invalid: PackedInt32Array
 var bail_requested: 				bool = false
 
-@export_tool_button("Re-initialize Sequence Order") var reinitialize: Callable = initialize
-@export_tool_button("Let all (children) events wait.") 		var let_events_wait: Callable = let_children_await
+@export_tool_button("Re-initialize Sequence Order") 		var reinitialize: 		Callable = initialize
+@export_tool_button("Let all (children) events wait.") 		var let_events_wait: 	Callable = let_children_await
 @export_tool_button("Let all (children) events instant.") 	var let_events_instant: Callable = let_children_instant
 @export_group("Sequence Flags.")
 
 @export var skip_invalid_events: 	bool = false
 @export var async: 					bool = false
 
-@export var front: Event
-@export var back: Event
+@export var front: Node
+@export var back:  Node
 
 # - signals
 signal success
@@ -42,8 +42,8 @@ func initialize() -> void:
 
 	for i: int in range(order.size()):
 		var j := i + 1
-		var _curr: 	Event = order[i]
-		var _next: 	Event  = null
+		var _curr: 	Node = order[i]
+		var _next: 	Node  = null
 		
 		if j < order.size():
 			_next = order[j]
@@ -76,12 +76,10 @@ func _execute() -> void:
 				continue
 			
 			curr.end()
-		
 		if 	bail_requested: 
 			break	
 		
-		if curr.has_next(): 
-			curr = curr.next
+		if curr.has_next(): curr = curr.next
 		else:				break
 		
 	end()
