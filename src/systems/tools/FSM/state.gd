@@ -22,6 +22,9 @@ func setup() -> void:
 		if t == null: continue
 		transitions_dict[t.name.to_lower()] = t
 	_setup()
+	set_process			(false)
+	set_physics_process	(false)
+
 func state_enter() -> void: 
 	if has_entered: return
 	has_entered = true
@@ -39,10 +42,6 @@ func state_physics_update(_delta: float) -> void: _state_physics_update(_delta)
 func state_update(_delta: float) -> void: _state_update(_delta)
 func state_input(_event: InputEvent) -> void: _state_input(_event)
 	
-func _init() -> void:
-	set_process(false)
-	set_physics_process(false)
-
 # - virtual
 func _setup() -> void:	pass
 func _state_enter() -> void: pass

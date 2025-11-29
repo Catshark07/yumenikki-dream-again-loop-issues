@@ -20,6 +20,10 @@ const MAX_STAMINA:	 		float =  5
 const STAMINA_DRAIN: 		float = .78
 const STAMINA_REGEN: 		float = .8
 
+const ERR_SOUNDS := [
+	preload("res://src/audio/se/voice_mado_no-1.WAV"), 
+	preload("res://src/audio/se/voice_mado_no-2.WAV")]
+
 #endregion ---- data variables ----
 
 # ---- signals ----
@@ -85,19 +89,15 @@ class Instance:
 			for points: SpawnPoint in Utils.get_group_arr("spawn_points"):
 				if points == null or points.scene_path.is_empty(): continue
 
+				# if we found a spawn point 
 				if  load(points.scene_path) == SceneManager.prev_scene_resource and \
 					door_went_flag and \
 					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id:
 						
 						teleport_player(points.global_position, points.heading, true)
-						
-						if points.parent_instead_of_self != null:
-							if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
-							else: _pl.reparent(points.parent_instead_of_self)
-
-						else:
-							if points.as_sibling: _pl.reparent(points.get_parent())
-							else: _pl.reparent(points)
+					
+						if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
+						else: _pl.reparent(points.parent_instead_of_self)
 						
 						door_went_flag = false
 						break,

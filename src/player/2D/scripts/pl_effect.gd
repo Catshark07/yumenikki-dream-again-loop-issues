@@ -55,7 +55,7 @@ func _effect_phys_update(_pl: Player, _delta: float) -> void:
 	
 func _primary_action	(_pl: Player) -> void: 
 	if override_primary_action == null: return
-	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_pl, override_primary_action)
+	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(override_primary_action, _pl)
 func _secondary_action	(_pl: Player) -> void: 
 	if override_secondary_action == null: return
-	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_pl, override_secondary_action)
+	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(override_secondary_action, _pl)

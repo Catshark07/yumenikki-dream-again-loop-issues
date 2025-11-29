@@ -43,7 +43,6 @@ func _setup(_sentient: SentientBase = null) -> void:
 	area.body_shape_entered.connect(_on_body_shape_entered)
 	
 	curr_set = default_footstep_mat
-	print(default_footstep_mat)
 	sentient.shadow_renderer.visible = !curr_set.transparent_tile
 	footstep_se_player.max_distance = 250
 
@@ -68,7 +67,6 @@ func _on_body_shape_entered(
 	_body: Node2D, 
 	_body_shape_index: int, 
 	_local_shape_index: int) -> void:
-		
 		if _body is FootstepTileMap:
 			multiple_floors.append(_body)
 								
@@ -86,6 +84,7 @@ func _on_body_shape_exited(
 				multiple_floors.remove_at(multiple_floors.find(_body)) 
 				greatest_index = -50
 				scan_ground_material()
+				sentient.shadow_renderer.visible = !curr_set.transparent_tile
 				
 				if  multiple_floors.is_empty():
 					curr_set = default_footstep_mat

@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://dwst4o7pf4ye7"]
+[gd_scene load_steps=66 format=3 uid="uid://dwst4o7pf4ye7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_gl3nc"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="4_jd4xj"]
@@ -43,7 +43,6 @@
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_t6xd2"]
 [ext_resource type="AudioStream" uid="uid://cxqdtr5pli1p5" path="res://src/audio/se/phone_beep.wav" id="31_4br25"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="31_103tn"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="32_rjleq"]
 [ext_resource type="Resource" uid="uid://btkw5t3ocufl" path="res://src/audio/footsteps/null.tres" id="33_1jqpe"]
 [ext_resource type="Texture2D" uid="uid://cav1kw6450fm0" path="res://src/player/2D/madotsuki/display/default/sleep.png" id="36_0pnw5"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="36_dehmq"]
@@ -273,6 +272,12 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_777kg"]
 size = Vector2(16, 32)
 
+[sub_resource type="Gradient" id="Gradient_nq133"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_1jqpe"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohce6"]
 size = Vector2(16, 16)
 
@@ -392,16 +397,11 @@ front = NodePath("travel_to_balcony")
 back = NodePath("travel_to_balcony")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to_balcony" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene/post_cutscene" node_paths=PackedStringArray("scene_traversal")]
+[node name="travel_to_balcony" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene/post_cutscene" node_paths=PackedStringArray("spawn_point")]
+process_mode = 4
 script = ExtResource("31_103tn")
-scene_traversal = NodePath("to_balcony")
-skip_spawn_point = true
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="to_balcony" type="Node" parent="room/animation_ui/digital_clock/invoke_post_cutscene/post_cutscene/travel_to_balcony"]
-script = ExtResource("32_rjleq")
 scene_path = "uid://dl7sdjmo0vbkt"
-connection_id = "dreaming_enter"
+spawn_point = NodePath("../../../../../room_spawn")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="cutscene" type="AnimationPlayer" parent="room"]
@@ -450,19 +450,26 @@ script = ExtResource("17_vphfh")
 event = NodePath("../../../../../play_rain_amb_muffle")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="exit" type="Node" parent="room/deadzone/in_room"]
+[node name="exit" type="Node" parent="room/deadzone/in_room" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("13_160am")
+order = [NodePath("amb")]
+front = NodePath("amb")
+back = NodePath("amb")
+
+[node name="amb" type="Node" parent="room/deadzone/in_room/exit" node_paths=PackedStringArray("event")]
+script = ExtResource("17_vphfh")
+event = NodePath("../../../../../play_rain_amb")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="to_balcony" type="Area2D" parent="room" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
 position = Vector2(152, 160)
-collision_layer = 2684354560
-collision_mask = 2684354560
+collision_layer = 2684354562
+collision_mask = 3758096384
 script = ExtResource("9_xma33")
 spawn_point = NodePath("spawn_point")
 target_door = NodePath("../../balcony/to_room")
 parallel = true
 secret = true
-area = true
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
@@ -478,7 +485,7 @@ parent_instead_of_self = NodePath("..")
 
 [node name="bed" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
 position = Vector2(216, 96)
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("12_rbx1l")
 rect = NodePath("rect")
@@ -532,7 +539,9 @@ next = NodePath("../fade_in")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="fade_in" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("15_l7mt1")
+gradient = SubResource("Gradient_nq133")
 prev = NodePath("../change_cam_target")
 next = NodePath("../music_fadeout")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -644,8 +653,10 @@ next = NodePath("../fade_out")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="fade_out" type="Node" parent="room/bed/OnInteract/if_melatonin_took" node_paths=PackedStringArray("prev")]
+process_mode = 4
 script = ExtResource("15_l7mt1")
 fade_type = 1
+gradient = SubResource("Gradient_1jqpe")
 prev = NodePath("../play_animation")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -744,7 +755,7 @@ metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="melatonin_pills" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
 position = Vector2(120, 72)
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("12_rbx1l")
 rect = NodePath("rect")
@@ -764,7 +775,7 @@ metadata/_custom_type_script = "uid://0li2ud4tbkf5"
 
 [node name="illegible_note" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
 position = Vector2(168, 120)
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("12_rbx1l")
 rect = NodePath("rect")
@@ -789,7 +800,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="note" type="Area2D" parent="room" node_paths=PackedStringArray("rect")]
 position = Vector2(120, 136)
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("12_rbx1l")
 rect = NodePath("rect")
@@ -826,6 +837,14 @@ event_id = "CUTSCENE_END_REQUEST"
 prev = NodePath("../read")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
+[node name="room_spawn" type="Node2D" parent="room" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(184, 88)
+script = ExtResource("10_rxu3j")
+scene_path = "uid://dl7sdjmo0vbkt"
+parent_instead_of_self = NodePath(".")
+heading = 2
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
 [node name="balcony" parent="." instance=ExtResource("7_33y2f")]
 position = Vector2(80, 136)
 
@@ -839,14 +858,13 @@ metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="to_room" type="Area2D" parent="balcony" node_paths=PackedStringArray("spawn_point", "target_door", "rect")]
 position = Vector2(104, 152)
-collision_layer = 2684354560
-collision_mask = 2684354560
+collision_layer = 2684354562
+collision_mask = 3758096384
 script = ExtResource("9_xma33")
 spawn_point = NodePath("spawn_point")
 target_door = NodePath("../../room/to_balcony")
 parallel = true
 secret = true
-area = true
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
@@ -872,27 +890,6 @@ metadata/_custom_type_script = "uid://btgm8okupfro7"
 [node name="rect" type="CollisionShape2D" parent="balcony/deadzone"]
 shape = SubResource("RectangleShape2D_8p0b5")
 debug_color = Color(0.2, 0, 0.7, 0.2)
-
-[node name="in_balcony" type="Node" parent="balcony/deadzone" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
-process_mode = 4
-script = ExtResource("8_njcb1")
-enter_sequence = NodePath("enter")
-exit_sequence = NodePath("exit")
-metadata/_custom_type_script = "uid://f4sb25g3gpic"
-
-[node name="enter" type="Node" parent="balcony/deadzone/in_balcony" node_paths=PackedStringArray("order", "front", "back")]
-script = ExtResource("13_160am")
-order = [NodePath("amb")]
-front = NodePath("amb")
-back = NodePath("amb")
-
-[node name="amb" type="Node" parent="balcony/deadzone/in_balcony/enter" node_paths=PackedStringArray("event")]
-script = ExtResource("17_vphfh")
-event = NodePath("../../../../../play_rain_amb")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="exit" type="Node" parent="balcony/deadzone/in_balcony"]
-script = ExtResource("13_160am")
 
 [node name="lens_flare" type="TextureRect" parent="balcony"]
 material = SubResource("ShaderMaterial_777kg")

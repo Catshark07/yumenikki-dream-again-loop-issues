@@ -36,8 +36,8 @@ func play_sound(
 	set_music_dict(curr_music, _stream, _vol, _pitch)
 	
 	if same_as_previous():
-		tween_pitch(get_bgm_pitch(), self.pitch_scale)
-		tween_volume(get_bgm_volume(), self.volume_db)
+		tween_pitch(self.pitch_scale, get_bgm_pitch())
+		tween_volume(self.volume_db, get_bgm_volume())
 	
 	else:
 		set_pitch(get_bgm_pitch())
@@ -61,7 +61,7 @@ func get_bgm_pitch() -> float:  		return curr_music["pitch"]
 func get_bgm_stream() -> AudioStream: 	return curr_music["stream"]
 
 # ---- setters ----
-func tween_pitch(_pitch: float, _from: float = self.pitch_scale) -> void:
+func tween_pitch(_from: float, _pitch: float) -> void:
 	if pitch_tween != null: pitch_tween.kill()
 	pitch_tween = self.create_tween()	
 	pitch_tween.tween_method(set_pitch, _from, _pitch, 1)

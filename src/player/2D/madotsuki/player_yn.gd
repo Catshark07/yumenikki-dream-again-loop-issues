@@ -62,13 +62,14 @@ func _physics_update(_delta: float) -> void:
 	if fsm: fsm._physics_update(_delta)
 	if global_components != null: global_components._physics_update(_delta)
 func _sb_input(event: InputEvent) -> void:
+	if Input.is_physical_key_pressed(KEY_Q): perform_action(PLActionManager.PINCH_PRESS_ACTION)
 	if components != null: 	components._input_pass(event)
 	if fsm != null: 		fsm._input_pass(event)
 	
-func perform_action(_action: PLAction) -> void: 
-	components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_action, self)
+func perform_action(_action: PLAction) -> void:
+	components.get_component_by_name(Components.ACTION).perform_action(self, _action)
 func cancel_action(_action: PLAction = action) -> void: 
-	components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(_action, self)
+	components.get_component_by_name(Components.ACTION).cancel_action(self, _action)
 
 func equip(_effect: PLEffect, _skip: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").equip(self, _effect, _skip)

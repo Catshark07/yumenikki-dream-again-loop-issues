@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/silas_mazesifter.ogg-c2e8875a89efa9f0a9f878c7
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

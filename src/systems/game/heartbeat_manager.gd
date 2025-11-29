@@ -17,7 +17,7 @@ func _update(delta: float) -> void:
 	bpm = sentient.components.get_component_by_name(Player_YN.Components.MENTAL).bpm
 	
 	sound_player.set_volume(lerpf(
-		sound_player.volume_db, clampf((sound_player.ZERO_VOLUME_DB + 2 * (bpm - 60.0)), sound_player.ZERO_VOLUME_DB ,2), 
+		sound_player.volume_db, clampf((sound_player.ZERO_VOLUME_DB + 3 * (bpm - 60.0)), sound_player.ZERO_VOLUME_DB ,12), 
 		delta * 3.2))
 	sound_player.set_pitch(lerpf(
 		sound_player.pitch_scale, 1 + (0.007 * (bpm - 60)), 

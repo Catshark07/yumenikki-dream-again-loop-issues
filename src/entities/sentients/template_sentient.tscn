@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://sahjehrg3n8o" path="res://src/entities/hostile/behaviour_states/follow.gd" id="15_icb7j"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="17_21guf"]
 
-[sub_resource type="Resource" id="Resource_vfpfq"]
+[sub_resource type="Resource" id="Resource_2w8np"]
 resource_local_to_scene = true
 resource_name = "sb_variables"
 script = ExtResource("2_2w8np")
@@ -38,9 +38,15 @@ script = ExtResource("1_l8d6l")
 nav_agent = NodePath("nav")
 stance_fsm = NodePath("stance_fsm")
 behaviour_fsm = NodePath("behaviour_fsm")
-values = SubResource("Resource_vfpfq")
+values = SubResource("Resource_2w8np")
 sprite_renderer = NodePath("sprite_renderer")
 shadow_renderer = NodePath("shadow_renderer")
+
+[node name="shadow_renderer" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_18lqh")
+position = Vector2(0, 16)
+texture = ExtResource("2_xd2xn")
+offset = Vector2(0, -24)
 
 [node name="sprite_renderer" type="Sprite2D" parent="."]
 position = Vector2(0, -1)
@@ -48,12 +54,6 @@ texture = ExtResource("3_l8d6l")
 script = ExtResource("4_ausy4")
 frame_dimensions = Vector2i(20, 26)
 metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
-
-[node name="shadow_renderer" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_18lqh")
-position = Vector2(0, 16)
-texture = ExtResource("2_xd2xn")
-offset = Vector2(0, -24)
 
 [node name="sb_components" type="Node2D" parent="."]
 script = ExtResource("5_33g5e")

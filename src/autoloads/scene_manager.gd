@@ -56,8 +56,8 @@ func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void:
 	if ResourceLoader.exists(_scene.resource_path) and _scene.can_instantiate():
 		var scene_instance: SceneNode
 		scene_load_err_check = ResourceLoader.load_threaded_request(_scene.resource_path)
-		load_requested = true
-		bg_load_finished = false
+		load_requested 		= true
+		bg_load_finished 	= false
 		
 		result = await handle_scene_resource_load(_scene)
 				
@@ -71,13 +71,14 @@ func load_scene(_scene: PackedScene, _push_to_stack: bool = true) -> void:
 			
 			EventManager.invoke_event("SCENE_LOADED", _scene)
 					
-		load_requested = false
-		bg_load_finished = true
+		load_requested 		= false
+		bg_load_finished 	= true
 		
 		print_rich(str("[color=yellow]SceneManager // Load Status: %s [/color]" % scene_load_status))
 		print_rich("[color=yellow]SceneManager // Loading :: Loading Scene was a success![/color]")
 
-	else: curr_scene_resource = null
+	else: 
+		curr_scene_resource = null
 
 func handle_scene_push(_scene_node: SceneNode) -> void:
 	# - bail out in case we were already taken care of.

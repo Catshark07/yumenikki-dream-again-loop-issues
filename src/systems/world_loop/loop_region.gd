@@ -27,7 +27,11 @@ const LOOP_UNIT_VECTOR := [
 const SAFE_ZONE = Vector2(550, 350)
 
 @export_group("Info.")
-@export var loop_objects: Array[Node]
+@export var loop_objects: Array[Node]:
+	set(_objs): 
+		loop_objects = _objs
+		if _objs.is_empty(): 	self.process_mode = Node.PROCESS_MODE_DISABLED
+		else:					self.process_mode = Node.PROCESS_MODE_INHERIT
 @export var world_size: Vector2 = Vector2(100, 100):
 	set = set_world_size
 
@@ -38,7 +42,6 @@ signal update_dupe_nodes
 func _ready() -> void: 
 	update_loopable_collection()
 
-
 	
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): queue_redraw()
@@ -47,6 +50,7 @@ func _physics_process(_delta: float) -> void:
 	for l in range(loop_objects.size()):
 		var loopable: LoopableComponent = loop_objects[l] 
 		if loopable == null or loopable.do_not_loop: continue
+		
 		if loopable.target is CanvasItem and !loopable.do_not_loop:
 			
 			var min_pos = -self.world_size / 2 + self.global_position
@@ -87,5 +91,8 @@ func setup_loopable_components() -> void:
 	for i: LoopableComponent in loop_objects:
 		i.setup_loop_nodes(world_size)
 		set_world_size(world_size)
-
+	
+	# TODO: rework..
+	# band-aid fix.
+	update_loopable_collection()
 	

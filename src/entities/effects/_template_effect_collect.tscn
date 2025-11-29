@@ -16,7 +16,7 @@
 size = Vector2(16, 16)
 
 [node name="effect_collectable" type="Area2D" node_paths=PackedStringArray("rect")]
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("1_b3i0q")
 secret = true
@@ -24,12 +24,18 @@ rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="on_interact" type="Node" parent="."]
+[node name="on_interact" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("2_cnxb5")
+order = [NodePath("effect_sequence")]
+front = NodePath("effect_sequence")
+back = NodePath("effect_sequence")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="effect_sequence" type="Node" parent="on_interact"]
+[node name="effect_sequence" type="Node" parent="on_interact" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("3_6xq3u")
+order = [NodePath("request_cutscene_start"), NodePath("append_effect"), NodePath("play_sound"), NodePath("notification"), NodePath("set_interactable_inactive"), NodePath("wait_seconds"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="request_cutscene_start" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next")]
@@ -38,27 +44,29 @@ event_id = "CUTSCENE_START_REQUEST"
 next = NodePath("../append_effect")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="append_effect" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
+[node name="append_effect" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("3_ksobs")
-next = NodePath("../play_sound")
 prev = NodePath("../request_cutscene_start")
+next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_sound" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
+[node name="play_sound" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("3_rhkvi")
 sound = ExtResource("4_a8id6")
-next = NodePath("../notification")
 prev = NodePath("../append_effect")
+next = NodePath("../notification")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="notification" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
+[node name="notification" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("5_a8id6")
-texts = PackedStringArray("[wave]you got an effect! access the inventory (ALT KEY) to use your effect.[/wave]")
-next = NodePath("../set_interactable_inactive")
+texts = PackedStringArray("[wave amp=2]you got an effect! access the inventory (ALT KEY) to use your effect.[/wave]")
+sound_override = null
 prev = NodePath("../play_sound")
+next = NodePath("../set_interactable_inactive")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="set_interactable_inactive" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("node", "next", "prev")]
+[node name="set_interactable_inactive" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("9_55c36")
 node = NodePath("../../..")
@@ -72,15 +80,15 @@ property_info = {
 "usage": 4102
 }
 property_value = true
-next = NodePath("../wait_seconds")
 prev = NodePath("../notification")
+next = NodePath("../wait_seconds")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait_seconds" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("next", "prev")]
+[node name="wait_seconds" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("9_rhkvi")
 seconds = 0.25
-next = NodePath("../request_cutscene_end")
 prev = NodePath("../set_interactable_inactive")
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="request_cutscene_end" type="Node" parent="on_interact/effect_sequence" node_paths=PackedStringArray("prev")]

@@ -276,9 +276,7 @@ class STRAT_FOLLOW_SENTIENT:
 		player = Player.Instance.get_pl()
 		
 	func _follow(_cam: CameraHolder, point: Vector2) -> void:
-		if player == null: 
-			print("AASASAS")
-			return
+		if player == null:  return
 		look_ahead = look_ahead.lerp(
 			(player.velocity * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 
 			Game.get_real_delta() * _cam.follow_speed)

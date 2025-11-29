@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=45 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="2_f263f"]
@@ -33,10 +33,9 @@
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="29_1qwjo"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_cin7d"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
-[ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="32_57bvo"]
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="35_bfa5j"]
 
-[sub_resource type="Resource" id="Resource_bfa5j"]
+[sub_resource type="Resource" id="Resource_57bvo"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("2_f263f")
@@ -100,7 +99,7 @@ motion_mode = 1
 script = ExtResource("1_wub1p")
 stamina_fsm = NodePath("stamina_fsm")
 fsm = NodePath("stance_fsm")
-values = SubResource("Resource_bfa5j")
+values = SubResource("Resource_57bvo")
 sprite_renderer = NodePath("sprite_container/sprite_renderer")
 shadow_renderer = NodePath("sprite_container/shadow_renderer")
 
@@ -272,11 +271,6 @@ offset_top = -48.0
 offset_right = 24.0
 color = Color(1, 1, 1, 0)
 metadata/_edit_use_anchors_ = true
-
-[node name="on_screen" type="VisibleOnScreenEnabler2D" parent="sprite_container"]
-position = Vector2(0, 6)
-enable_node_path = NodePath("../sprite_renderer")
-script = ExtResource("32_57bvo")
 
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)

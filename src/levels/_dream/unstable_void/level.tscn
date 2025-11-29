@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://5qpf265bummq"]
+[gd_scene load_steps=36 format=4 uid="uid://5qpf265bummq"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_kphg3"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="5_t6avo"]
@@ -16,7 +16,6 @@
 [ext_resource type="TileSet" uid="uid://b771j363m3vqt" path="res://src/levels/_dream/unstable_void/tilesets/unstable_void.tres" id="13_g7klr"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="13_x281e"]
 [ext_resource type="Shader" uid="uid://b0qym6r6rs7ns" path="res://src/shaders/panorama/linear_additive.gdshader" id="14_2an1m"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="14_3n4c2"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="14_jyk7i"]
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="15_0x8fy"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="15_m7ymn"]
@@ -45,7 +44,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 offsets = PackedFloat32Array(0, 0.492492, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="Resource" id="Resource_v86w6"]
+[sub_resource type="Resource" id="Resource_orbtw"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("5_t6avo")
@@ -124,7 +123,7 @@ y_sort_enabled = true
 
 [node name="mado" parent="y_order" instance=ExtResource("8_22psq")]
 position = Vector2(768, -80)
-values = SubResource("Resource_v86w6")
+values = SubResource("Resource_orbtw")
 
 [node name="concrete" type="TileMapLayer" parent="y_order"]
 y_sort_enabled = true
@@ -200,17 +199,13 @@ front = NodePath("scene_travel")
 back = NodePath("scene_travel")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="scene_travel" type="Node" parent="y_order/to_teleport_maze/on_tile_press" node_paths=PackedStringArray("scene_traversal")]
+[node name="scene_travel" type="Node" parent="y_order/to_teleport_maze/on_tile_press" node_paths=PackedStringArray("spawn_point")]
+process_mode = 4
 script = ExtResource("13_x281e")
-scene_traversal = NodePath("teleport_maze")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="teleport_maze" type="Node" parent="y_order/to_teleport_maze/on_tile_press/scene_travel" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("14_3n4c2")
 scene_path = "uid://dnuf6dan0x8o"
 connection_id = "maze"
-spawn_point = NodePath("../../../spawn_point")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+spawn_point = NodePath("../../spawn_point")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="spawn_point" type="Node2D" parent="y_order/to_teleport_maze" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 16)

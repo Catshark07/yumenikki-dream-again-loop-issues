@@ -11,6 +11,9 @@ var was_playing: bool = false
 const ZERO_VOLUME_LIN 	= 0
 const ZERO_VOLUME_DB 	= -80
 
+var vol_max_clamp: float = INF
+var vol_min_clamp 
+
 @export var muted: bool = false
 @export var affected_by_timescale: bool = false:
 	set(_is_affected):

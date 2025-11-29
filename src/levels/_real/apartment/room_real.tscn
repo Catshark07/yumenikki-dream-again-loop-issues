@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://dp6063trlnao1"]
+[gd_scene load_steps=11 format=4 uid="uid://dp6063trlnao1"]
 
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="2_vslin"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="3_ctgje"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://bior84yl5ty0u" path="res://src/levels/__ignore/tile_set/world_tile_sets/apartment_real.tres" id="5_61pj8"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="5_q8kej"]
 [ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/2D/madotsuki/effects/earring/glow.png" id="6_vslin"]
+[ext_resource type="Resource" uid="uid://c4wqh7wudu65x" path="res://src/audio/footsteps/wood.tres" id="7_78d3e"]
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="11_qnweu"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="12_hio25"]
 
@@ -50,7 +51,7 @@ script = ExtResource("3_ctgje")
 tile_map_data = PackedByteArray("AAAJAAYAAAAAAAEAAAAJAAcAAAAAAAEAAAAJAAgAAAAAAAEAAAAJAAkAAAAAAAEAAAAJAAoAAAAAAAEAAAAKAAYAAAAAAAEAAAAKAAcAAAAAAAEAAAAKAAgAAAAAAAEAAAAKAAkAAAAAAAEAAAAKAAoAAAAAAAEAAAALAAUAAAAAAAEAAAALAAYAAAAAAAEAAAALAAcAAAAAAAEAAAALAAgAAAAAAAEAAAAMAAUAAAAAAAEAAAAMAAYAAAAAAAEAAAAMAAcAAAAAAAEAAAAMAAgAAAAAAAEAAAANAAUAAAAAAAEAAAANAAYAAAAAAAEAAAANAAcAAAAAAAEAAAANAAgAAAAAAAEAAAAOAAUAAAAAAAEAAAAOAAYAAAAAAAEAAAAOAAcAAAAAAAEAAAAOAAgAAAAAAAEAAAAGAAQAAAAAAAEAAAAGAAUAAAAAAAEAAAAGAAYAAAAAAAEAAAAGAAcAAAAAAAEAAAAGAAgAAAAAAAEAAAAHAAMAAAAAAAEAAAAHAAQAAAAAAAEAAAAHAAUAAAAAAAEAAAAHAAYAAAAAAAEAAAAHAAcAAAAAAAEAAAAHAAgAAAAAAAEAAAAIAAMAAAAAAAEAAAAIAAQAAAAAAAEAAAAIAAUAAAAAAAEAAAAIAAYAAAAAAAEAAAAIAAcAAAAAAAEAAAAIAAgAAAAAAAEAAAAJAAMAAAAAAAEAAAAJAAQAAAAAAAEAAAAJAAUAAAAAAAEAAAAKAAMAAAAAAAEAAAAKAAQAAAAAAAEAAAAKAAUAAAAAAAEAAAALAAMAAAAAAAEAAAALAAQAAAAAAAEAAAAMAAMAAAAAAAEAAAAMAAQAAAAAAAEAAAANAAMAAAAAAAEAAAANAAQAAAAAAAEAAAAOAAQAAAAAAAEAAAA=")
 tile_set = ExtResource("4_78d3e")
 script = ExtResource("5_q8kej")
-ground_material = 2
+ground_material = ExtResource("7_78d3e")
 metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
 [node name="wall" type="TileMapLayer" parent="."]

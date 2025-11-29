@@ -19,6 +19,9 @@ func _init(init_state: State = null) -> void: initial_state = init_state
 
 # - initial
 func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
+	set_process			(false)
+	set_physics_process	(false)
+	
 	if track_state_changes:
 		state_changed.connect(
 			func(_state): print(self, " - State changed! [%s] --> [%s]" % [curr_state, _state]))

@@ -88,23 +88,22 @@ y_sort_enabled = true
 
 [node name="to_docks" parent="entrance_section" instance=ExtResource("10_idt0i")]
 position = Vector2(-312, -479)
-collision_layer = 2147483650
 
-[node name="traversal" parent="entrance_section/to_docks/on_interact/travel_to_scene" index="0"]
+[node name="travel_to_scene" parent="entrance_section/to_docks/on_interact" index="3"]
+process_mode = 4
 scene_path = "uid://b7ixvvfnudrtd"
-connection_id = "bike_path"
+connection_id = "fat"
 
 [node name="spawn_point" parent="entrance_section/to_docks" index="1"]
 scene_path = "uid://b7ixvvfnudrtd"
-connection_id = "bike_path"
+connection_id = "fat"
 
 [node name="to_nexus" parent="entrance_section" instance=ExtResource("10_idt0i")]
 position = Vector2(184, 49)
-collision_layer = 2147483650
 
-[node name="traversal" parent="entrance_section/to_nexus/on_interact/travel_to_scene" index="0"]
+[node name="travel_to_scene" parent="entrance_section/to_nexus/on_interact" index="3"]
+process_mode = 4
 scene_path = "uid://dl25joalnmaxt"
-connection_id = "nexus"
 
 [node name="spawn_point" parent="entrance_section/to_nexus" index="1"]
 scene_path = "uid://dl25joalnmaxt"
@@ -131,10 +130,10 @@ tile_set = ExtResource("7_fgp7h")
 script = ExtResource("8_140ey")
 
 [node name="madotsuki" parent="entrance_section" instance=ExtResource("5_5chxp")]
-position = Vector2(-728, -192)
+position = Vector2(128, 88)
 values = SubResource("Resource_fgp7h")
 
-[node name="CamDeadzone" type="Area2D" parent="entrance_section" node_paths=PackedStringArray("rect")]
+[node name="main_deadzone" type="Area2D" parent="entrance_section" node_paths=PackedStringArray("rect")]
 process_mode = 3
 position = Vector2(-1416, -536)
 collision_layer = 0
@@ -143,45 +142,45 @@ script = ExtResource("12_vxiyi")
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
-[node name="rect" type="CollisionShape2D" parent="entrance_section/CamDeadzone"]
+[node name="rect" type="CollisionShape2D" parent="entrance_section/main_deadzone"]
 position = Vector2(1304, 756)
 shape = SubResource("RectangleShape2D_2l745")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("13_u3o2y")
-order = [NodePath("BGMPlayer"), NodePath("EVN_Panorama")]
+order = [NodePath("bgm"), NodePath("panorama")]
 skip_invalid_events = true
-front = NodePath("BGMPlayer")
-back = NodePath("EVN_Panorama")
+front = NodePath("bgm")
+back = NodePath("panorama")
 
-[node name="BGMPlayer" type="AudioStreamPlayer" parent="on_initial" node_paths=PackedStringArray("next")]
+[node name="bgm" type="AudioStreamPlayer" parent="on_initial" node_paths=PackedStringArray("next")]
 process_mode = 4
 stream = ExtResource("3_5chxp")
 script = ExtResource("11_ubshi")
 stream = ExtResource("3_5chxp")
 pitch = 0.4
-next = NodePath("../EVN_Panorama")
+next = NodePath("../panorama")
 metadata/_custom_type_script = "uid://6mnvgdp8l4t7"
 
-[node name="EVN_Panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "prev")]
+[node name="panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "prev")]
 script = ExtResource("11_dgdtf")
 texture_filter = 1
 subviewport = NodePath("subviewport")
 pivot = NodePath("pivot")
-prev = NodePath("../BGMPlayer")
+prev = NodePath("../bgm")
 metadata/_custom_type_script = "uid://dxx2gbg56i1ts"
 
-[node name="pivot" type="Marker2D" parent="on_initial/EVN_Panorama"]
+[node name="pivot" type="Marker2D" parent="on_initial/panorama"]
 
-[node name="subviewport" type="SubViewport" parent="on_initial/EVN_Panorama"]
+[node name="subviewport" type="SubViewport" parent="on_initial/panorama"]
 own_world_3d = true
 transparent_bg = true
 canvas_item_default_texture_repeat = 2
 size = Vector2i(480, 270)
 size_2d_override = Vector2i(480, 270)
 
-[node name="bg" type="TextureRect" parent="on_initial/EVN_Panorama/subviewport"]
+[node name="bg" type="TextureRect" parent="on_initial/panorama/subviewport"]
 material = SubResource("ShaderMaterial_fgp7h")
 custom_minimum_size = Vector2(480, 270)
 offset_right = 480.0
@@ -189,7 +188,7 @@ offset_bottom = 305.0
 texture = ExtResource("15_7ashv")
 stretch_mode = 6
 
-[node name="layer_3" type="TextureRect" parent="on_initial/EVN_Panorama/subviewport"]
+[node name="layer_3" type="TextureRect" parent="on_initial/panorama/subviewport"]
 material = SubResource("ShaderMaterial_1q3ts")
 custom_minimum_size = Vector2(480, 270)
 offset_right = 480.0
@@ -197,7 +196,7 @@ offset_bottom = 305.0
 texture = ExtResource("14_ubshi")
 stretch_mode = 6
 
-[node name="layer_2" type="TextureRect" parent="on_initial/EVN_Panorama/subviewport"]
+[node name="layer_2" type="TextureRect" parent="on_initial/panorama/subviewport"]
 material = SubResource("ShaderMaterial_2l745")
 custom_minimum_size = Vector2(480, 270)
 offset_right = 480.0

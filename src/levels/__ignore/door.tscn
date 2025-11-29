@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bku0eqinjwowa"]
+[gd_scene load_steps=15 format=3 uid="uid://bku0eqinjwowa"]
 
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="1_2hf7w"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="1_cv7t1"]
@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="5_67jxd"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="5_76or2"]
 [ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="6_orvon"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="7_4eec8"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="7_tckbb"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="8_bxvt1"]
 
@@ -23,7 +22,7 @@ size = Vector2(16, 8)
 size = Vector2(16, 16)
 
 [node name="door_interactable" type="Area2D" node_paths=PackedStringArray("rect")]
-collision_layer = 2147483648
+collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("1_cv7t1")
 rect = NodePath("rect")
@@ -59,17 +58,12 @@ prev = NodePath("../play_sound")
 next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("scene_traversal", "prev", "next")]
+[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("spawn_point", "prev", "next")]
 script = ExtResource("5_76or2")
-scene_traversal = NodePath("traversal")
+spawn_point = NodePath("../../spawn_point")
 prev = NodePath("../wait")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="traversal" type="Node" parent="on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("7_4eec8")
-spawn_point = NodePath("../../../spawn_point")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
 [node name="request_cutscene_end" type="Node" parent="on_interact" node_paths=PackedStringArray("prev")]
 script = ExtResource("3_e2ltu")

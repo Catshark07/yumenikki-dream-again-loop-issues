@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="7_uopdy"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="8_5blm1"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="8_pggeg"]
-[ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="9_o1qdx"]
+[ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_visible.gd" id="9_o1qdx"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="10_cvqvi"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="11_rxjs4"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="12_1bbrq"]

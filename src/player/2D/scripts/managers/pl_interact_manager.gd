@@ -20,10 +20,6 @@ var prompt_tween: Tween
 var closest_interactable_threshold: float = 100
 var interactables: Array[Interactable] 
 
-const ERR_SOUNDS := [
-	preload("res://src/audio/se/voice_mado_no-1.WAV"), 
-	preload("res://src/audio/se/voice_mado_no-2.WAV")]
-
 func _ready() -> void:
 	prompt_icon = $prompt
 	field = $field
@@ -79,7 +75,7 @@ func handle_interaction(_choice: int = 0) -> void:
 	
 		if 	curr_interactable is Interactable : 
 			Utils.connect_to_signal(
-				AudioService.play_sound.bind(ERR_SOUNDS.pick_random()), 
+				AudioService.play_sound.bind(Player.ERR_SOUNDS.pick_random()), 
 				curr_interactable.fail, 
 				CONNECT_ONE_SHOT)
 					

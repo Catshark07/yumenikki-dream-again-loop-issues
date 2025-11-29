@@ -37,8 +37,9 @@ signal typing_finished
 signal finished
 
 func _ready() -> void:
-	set_process(false)
-	set_physics_process(false)
+	set_process			(false)
+	set_physics_process	(false)
+	set_process_input	(false)
 func _setup(_manager: MessageDisplayManager) -> void:
 	manager = _manager
 	visible = false

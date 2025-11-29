@@ -4,8 +4,9 @@ extends Component
 var sentient: SentientBase
 
 func _ready() -> void:
-	set_process(false)
-	set_physics_process(false)
+	set_process			(false)
+	set_physics_process	(false)
+	set_process_input	(false)
 	
 	var sb_component_receiver = get_parent()
 	if !sb_component_receiver is SBComponentReceiver: return

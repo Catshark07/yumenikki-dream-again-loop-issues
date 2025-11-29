@@ -8,8 +8,12 @@ extends Node2D
 @export var connection_id: String = "default"
 
 @export_group("Flags.")
-@export var parent_instead_of_self: Node = self
+@export var parent_instead_of_self: Node = self:
+	set(_parent_instead): 
+		if _parent_instead != null: parent_instead_of_self = _parent_instead
+		else:						parent_instead_of_self = self
 @export var as_sibling: bool = true
+@export_subgroup("Direction")
 @export var heading: SentientBase.compass_headings = SentientBase.compass_headings.SOUTH
 
 const TEXTURE: Texture2D = preload("res://src/systems/components/independent/pl_spawn.png")

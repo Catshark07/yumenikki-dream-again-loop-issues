@@ -15,9 +15,9 @@ const PROPERTIES_SAVER_ID := "save_properties"
 @export var global_data: bool = false
 
 func _ready() -> void:
-	set_process(false)
-	set_process_input(false)
-	set_physics_process(false)	
+	set_process			(false)
+	set_physics_process	(false)
+	set_process_input	(false)
 
 	if Engine.is_editor_hint():
 		__set_skip_save(skip_save)

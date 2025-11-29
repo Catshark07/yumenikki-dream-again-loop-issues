@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://j0sat4n1ufx1"]
+[gd_scene load_steps=33 format=4 uid="uid://j0sat4n1ufx1"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_c40ge"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_7tkwx"]
@@ -21,7 +21,6 @@
 [ext_resource type="AudioStream" uid="uid://csycwkjx38vti" path="res://src/audio/bgm/world_forest.WAV" id="9_y0igy"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="10_5by3o"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="10_28cgd"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="10_ro7kg"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="11_5by3o"]
 [ext_resource type="PackedScene" uid="uid://cijogi38yfo57" path="res://src/levels/__ignore/nexus_door.tscn" id="16_nldne"]
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="17_jlvt6"]
@@ -38,7 +37,7 @@ size = Vector2(48, 16)
 [sub_resource type="Gradient" id="Gradient_x4j1l"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
-[sub_resource type="Resource" id="Resource_nldne"]
+[sub_resource type="Resource" id="Resource_f1egb"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("8_pk6p4")
@@ -128,25 +127,18 @@ custom_linked_pointers = true
 next = NodePath("../else_if_pl_moving_north")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="travel_to" type="Node" parent="y_order/to_carpet_plaza/sequence_region/enter/if_pl_moving_north" node_paths=PackedStringArray("scene_traversal")]
+[node name="travel_to" type="Node" parent="y_order/to_carpet_plaza/sequence_region/enter/if_pl_moving_north" node_paths=PackedStringArray("spawn_point")]
 process_mode = 4
 script = ExtResource("9_qfuug")
-scene_traversal = NodePath("to_carpet_plaza")
+scene_path = "uid://b6i5pb6sb3k7u"
+spawn_point = NodePath("spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="to_carpet_plaza" type="Node" parent="y_order/to_carpet_plaza/sequence_region/enter/if_pl_moving_north/travel_to" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("10_ro7kg")
-scene_path = "uid://b6i5pb6sb3k7u"
-connection_id = "carpet"
-spawn_point = NodePath("spawn_point")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
-
-[node name="spawn_point" type="Node2D" parent="y_order/to_carpet_plaza/sequence_region/enter/if_pl_moving_north/travel_to/to_carpet_plaza" node_paths=PackedStringArray("parent_instead_of_self")]
+[node name="spawn_point" type="Node2D" parent="y_order/to_carpet_plaza/sequence_region/enter/if_pl_moving_north/travel_to" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(1824, -824)
 script = ExtResource("6_ro7kg")
 scene_path = "uid://b6i5pb6sb3k7u"
-connection_id = "carpet"
-parent_instead_of_self = NodePath("../../../../../../../world")
+parent_instead_of_self = NodePath("../../../../../../world")
 as_sibling = false
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -159,46 +151,15 @@ prev = NodePath("../if_pl_moving_north")
 script = ExtResource("11_5by3o")
 
 [node name="forest_world" parent="y_order" instance=ExtResource("16_nldne")]
-process_mode = 0
 position = Vector2(312, 112)
 collision_layer = 2147483650
 
-[node name="on_interact" parent="y_order/forest_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
-front = NodePath("request_cutscene_start")
-back = NodePath("travel_to_scene")
-
-[node name="request_cutscene_start" parent="y_order/forest_world/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/forest_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/forest_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+[node name="play_animation" parent="y_order/forest_world/on_interact" index="2"]
 animation_sheet = null
 skip = true
-prev = NodePath("../play_sound")
-next = NodePath("../screen_fade_in")
 
-[node name="screen_fade_in" parent="y_order/forest_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
+[node name="screen_fade_in" parent="y_order/forest_world/on_interact" index="3"]
 gradient = SubResource("Gradient_x4j1l")
-prev = NodePath("../play_animation")
-next = NodePath("../play_nexus_enter")
-
-[node name="play_nexus_enter" parent="y_order/forest_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../screen_fade_in")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/forest_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../play_nexus_enter")
-
-[node name="scene_traversal" parent="y_order/forest_world/on_interact/travel_to_scene" index="0"]
-scene_path = "uid://dl25joalnmaxt"
-connection_id = "nexus"
 
 [node name="spawn_point" parent="y_order/forest_world" index="1"]
 scene_path = "uid://dl25joalnmaxt"
@@ -573,7 +534,7 @@ rect = Rect2(-2570, -2570, 5140, 5140)
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("2_gvb5c")]
 position = Vector2(312, 128)
-values = SubResource("Resource_nldne")
+values = SubResource("Resource_f1egb")
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("11_5by3o")

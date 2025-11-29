@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://dcqheuccc0ijo" path="res://src/audio/bgm/aztec_rave.WAV" id="4_vekgu"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="5_gnfva"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="5_lxcif"]
+[ext_resource type="AudioStream" uid="uid://6otokm14w81o" path="res://src/audio/bgm/wind.ogg" id="5_s6v3h"]
 [ext_resource type="Script" uid="uid://bhphmk5huga7w" path="res://src/systems/sequencing/event/actors/change_default_footstep.gd" id="6_4voyd"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="6_i5mah"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="6_u0dtb"]
@@ -30,7 +31,6 @@
 [ext_resource type="AudioStream" uid="uid://cb2fdrumb6tkd" path="res://src/audio/se/se_riser-3.wav" id="24_p8i86"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="24_tyh57"]
 [ext_resource type="Script" uid="uid://cvb48ow8p04j8" path="res://src/systems/sequencing/event/call_external_event.gd" id="24_u0dtb"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="25_p8i86"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="26_e2uv0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_51idx"]
@@ -93,13 +93,13 @@ wet = 0.45
 [sub_resource type="Gradient" id="Gradient_pfxes"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_u0dtb"]
+[sub_resource type="Resource" id="Resource_wc2p7"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("9_4k51g")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0dtb"]
-size = Vector2(16, 16)
+size = Vector2(16, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cycpv"]
 size = Vector2(16, 16)
@@ -122,7 +122,7 @@ metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("2_3vo2y")
-order = [NodePath("bgm"), NodePath("panorama"), NodePath("set_footstep_to_concrete"), NodePath("set_environment_reverb")]
+order = [NodePath("bgm"), NodePath("amb"), NodePath("panorama"), NodePath("set_footstep_to_concrete"), NodePath("set_environment_reverb")]
 skip_invalid_events = true
 front = NodePath("bgm")
 back = NodePath("set_environment_reverb")
@@ -132,6 +132,17 @@ process_mode = 4
 script = ExtResource("3_87573")
 stream = ExtResource("4_vekgu")
 pitch = 0.5
+next = NodePath("../amb")
+metadata/_custom_type_script = "uid://ctqw6a8qsvnv4"
+
+[node name="amb" type="Node" parent="on_initial" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+script = ExtResource("3_87573")
+stream = ExtResource("5_s6v3h")
+music_bus = 1
+vol = 0.1
+pitch = 1.35
+prev = NodePath("../bgm")
 next = NodePath("../panorama")
 metadata/_custom_type_script = "uid://ctqw6a8qsvnv4"
 
@@ -139,7 +150,7 @@ metadata/_custom_type_script = "uid://ctqw6a8qsvnv4"
 script = ExtResource("5_lxcif")
 subviewport = NodePath("subviewport")
 pivot = NodePath("pivot")
-prev = NodePath("../bgm")
+prev = NodePath("../amb")
 next = NodePath("../set_footstep_to_concrete")
 metadata/_custom_type_script = "uid://dxx2gbg56i1ts"
 
@@ -233,7 +244,7 @@ metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
 process_mode = 4
 script = ExtResource("3_ty5kw")
 sound = ExtResource("4_a17gy")
-pitch = 1.2000000000000002
+pitch = 1.5
 prev = NodePath("../transition_in")
 next = NodePath("../transition_out")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
@@ -284,8 +295,8 @@ tile_set = ExtResource("4_u0wti")
 [node name="teleports" type="Node2D" parent="."]
 
 [node name="madotsuki" parent="teleports" instance=ExtResource("8_p7bb4")]
-position = Vector2(304, 32)
-values = SubResource("Resource_u0dtb")
+position = Vector2(360, 0)
+values = SubResource("Resource_wc2p7")
 
 [node name="A" type="Node2D" parent="teleports"]
 
@@ -300,6 +311,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/A/a_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -354,6 +366,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/A/a_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -410,6 +423,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/B/b_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -464,6 +478,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/B/b_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -520,6 +535,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/C/c_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -574,6 +590,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/C/c_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -628,6 +645,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/C/c_3"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -682,6 +700,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/C/c_4"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -738,6 +757,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/D/d_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -792,6 +812,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/D/d_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -848,6 +869,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/E/e_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -902,6 +924,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/E/e_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -958,6 +981,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/F/f_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1012,6 +1036,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/F/f_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1066,6 +1091,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/F/f_3"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1120,6 +1146,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/F/f_4"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1176,6 +1203,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/G/g_1"]
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1230,6 +1258,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/G/g_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1286,6 +1315,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/H/h_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1340,6 +1370,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/H/h_2"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1396,6 +1427,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/I/i_1"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_u0dtb")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1451,6 +1483,7 @@ rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="rect" type="CollisionShape2D" parent="teleports/to_unstable_void"]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_cycpv")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -1502,18 +1535,14 @@ prev = NodePath("../transition_in")
 next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
 
-[node name="travel_to_scene" type="Node" parent="teleports/to_unstable_void/on_interact" node_paths=PackedStringArray("scene_traversal", "prev")]
+[node name="travel_to_scene" type="Node" parent="teleports/to_unstable_void/on_interact" node_paths=PackedStringArray("spawn_point", "prev")]
+process_mode = 4
 script = ExtResource("24_tyh57")
-scene_traversal = NodePath("scene_travel")
-prev = NodePath("../transition_out")
-metadata/_custom_type_script = "uid://c0ymap76lrhgr"
-
-[node name="scene_travel" type="Node" parent="teleports/to_unstable_void/on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("25_p8i86")
 scene_path = "uid://5qpf265bummq"
 connection_id = "maze"
-spawn_point = NodePath("../../../spawn")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+spawn_point = NodePath("../../spawn")
+prev = NodePath("../transition_out")
+metadata/_custom_type_script = "uid://c0ymap76lrhgr"
 
 [node name="spawn" type="Node2D" parent="teleports/to_unstable_void" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(-8, -32)

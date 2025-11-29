@@ -58,6 +58,8 @@ texture = ExtResource("1_o4nfu")
 3:0/0/z_index = -1
 4:0/0 = 0
 4:0/0/z_index = -1
+8:0/size_in_atlas = Vector2i(7, 9)
+8:0/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1

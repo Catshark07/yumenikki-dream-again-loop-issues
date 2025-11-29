@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://dl25joalnmaxt"]
+[gd_scene load_steps=45 format=4 uid="uid://dl25joalnmaxt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_0iw03"]
 [ext_resource type="Shader" uid="uid://dhykg54peq185" path="res://src/shaders/panorama/radial.gdshader" id="2_6vasg"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://cua8v3f5c3bwi" path="res://src/levels/__ignore/doors/door_eyeball.png" id="21_feke8"]
 [ext_resource type="Texture2D" uid="uid://dkxu0pw6gxo3f" path="res://src/levels/__ignore/doors/door_mural.png" id="22_0iw03"]
 [ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="22_1rd4d"]
+[ext_resource type="Texture2D" uid="uid://cycu3tgkj5mjl" path="res://src/levels/__ignore/doors/door_dark.png" id="24_25aso"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="24_f8lfk"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="26_feke8"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="27_1rd4d"]
@@ -62,7 +63,7 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_rtj6g"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="Resource" id="Resource_jxym7"]
+[sub_resource type="Resource" id="Resource_25aso"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("12_ksvw7")
@@ -150,7 +151,7 @@ y_sort_enabled = true
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("10_scjaa")]
 position = Vector2(232, 128)
-values = SubResource("Resource_jxym7")
+values = SubResource("Resource_25aso")
 
 [node name="walls" type="TileMapLayer" parent="y_order"]
 visible = false
@@ -177,88 +178,33 @@ metadata/_custom_type_script = "uid://pksfkcvcsgx7"
 
 [node name="apartment" parent="y_order" instance=ExtResource("14_f8lfk")]
 position = Vector2(232, 104)
-collision_layer = 2147483650
 
-[node name="on_interact" parent="y_order/apartment" index="1" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("wait"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
-front = NodePath("request_cutscene_start")
-back = NodePath("request_cutscene_end")
+[node name="travel_to_scene" parent="y_order/apartment/on_interact" index="4"]
+scene_path = "uid://dl7sdjmo0vbkt"
 
-[node name="request_cutscene_start" parent="y_order/apartment/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/apartment/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/apartment/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
-prev = NodePath("../play_sound")
-next = NodePath("../wait")
-
-[node name="wait" parent="y_order/apartment/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-prev = NodePath("../play_animation")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/apartment/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-prev = NodePath("../wait")
-next = NodePath("../request_cutscene_end")
-
-[node name="scene_traversal" parent="y_order/apartment/on_interact/travel_to_scene" index="0"]
-scene_path = "uid://dwst4o7pf4ye7"
-
-[node name="request_cutscene_end" parent="y_order/apartment/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../travel_to_scene")
-
-[node name="spawn_point" parent="y_order/apartment" index="2"]
-scene_path = "uid://dwst4o7pf4ye7"
+[node name="spawn_point" parent="y_order/apartment" index="1"]
+scene_path = "uid://dl7sdjmo0vbkt"
 
 [node name="mural_world" parent="y_order" instance=ExtResource("18_25aso")]
-process_mode = 0
 position = Vector2(-352, 80)
 collision_layer = 2147483650
 collision_mask = 2147483648
 
-[node name="on_interact" parent="y_order/mural_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
-front = NodePath("request_cutscene_start")
-back = NodePath("travel_to_scene")
+[node name="play_sound" parent="y_order/mural_world/on_interact" index="1"]
+wait_til_finished = true
 
-[node name="request_cutscene_start" parent="y_order/mural_world/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/mural_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/mural_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+[node name="play_animation" parent="y_order/mural_world/on_interact" index="2"]
 animation_sheet = null
 skip = true
-prev = NodePath("../play_sound")
-next = NodePath("../screen_fade_in")
 
-[node name="screen_fade_in" parent="y_order/mural_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
+[node name="screen_fade_in" parent="y_order/mural_world/on_interact" index="3"]
 gradient = SubResource("Gradient_jxym7")
-prev = NodePath("../play_animation")
-next = NodePath("../play_nexus_enter")
 
-[node name="play_nexus_enter" parent="y_order/mural_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../screen_fade_in")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/mural_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../play_nexus_enter")
-
-[node name="scene_traversal" parent="y_order/mural_world/on_interact/travel_to_scene" index="0"]
+[node name="travel_to_scene" parent="y_order/mural_world/on_interact" index="5"]
 scene_path = "uid://d4buml4tyobvm"
-connection_id = "nexus"
 
 [node name="spawn_point" parent="y_order/mural_world" index="1"]
 scene_path = "uid://d4buml4tyobvm"
-connection_id = "nexus"
 
 [node name="renderer" parent="y_order/mural_world" index="2"]
 texture = ExtResource("22_0iw03")
@@ -266,109 +212,55 @@ hframes = 1
 frame_h_count = 1
 
 [node name="neon_world" parent="y_order" instance=ExtResource("18_25aso")]
-process_mode = 0
 position = Vector2(720, 56)
 collision_layer = 2147483650
 collision_mask = 2147483648
 
-[node name="on_interact" parent="y_order/neon_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
-front = NodePath("request_cutscene_start")
-back = NodePath("travel_to_scene")
+[node name="play_sound" parent="y_order/neon_world/on_interact" index="1"]
+wait_til_finished = true
 
-[node name="request_cutscene_start" parent="y_order/neon_world/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/neon_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/neon_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+[node name="play_animation" parent="y_order/neon_world/on_interact" index="2"]
 animation_sheet = null
 skip = true
-prev = NodePath("../play_sound")
-next = NodePath("../screen_fade_in")
 
-[node name="screen_fade_in" parent="y_order/neon_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
+[node name="screen_fade_in" parent="y_order/neon_world/on_interact" index="3"]
 gradient = SubResource("Gradient_25aso")
-prev = NodePath("../play_animation")
-next = NodePath("../play_nexus_enter")
 
-[node name="play_nexus_enter" parent="y_order/neon_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../screen_fade_in")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/neon_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../play_nexus_enter")
-
-[node name="scene_traversal" parent="y_order/neon_world/on_interact/travel_to_scene" index="0"]
+[node name="travel_to_scene" parent="y_order/neon_world/on_interact" index="5"]
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "nexus"
 
 [node name="spawn_point" parent="y_order/neon_world" index="1"]
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "nexus"
 
 [node name="renderer" parent="y_order/neon_world" index="2"]
 texture = ExtResource("27_scjaa")
 hframes = 3
-frame = 1
 autoplay = true
 loop = true
 end_frame = false
 fps = 5.0
 frame_h_count = 3
-progress = 1
 
 [node name="forest_world" parent="y_order" instance=ExtResource("18_25aso")]
-process_mode = 0
 position = Vector2(448, -72)
 collision_layer = 2147483650
 collision_mask = 2147483648
 
-[node name="on_interact" parent="y_order/forest_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
-front = NodePath("request_cutscene_start")
-back = NodePath("travel_to_scene")
+[node name="play_sound" parent="y_order/forest_world/on_interact" index="1"]
+wait_til_finished = true
 
-[node name="request_cutscene_start" parent="y_order/forest_world/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/forest_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/forest_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+[node name="play_animation" parent="y_order/forest_world/on_interact" index="2"]
 animation_sheet = null
 skip = true
-prev = NodePath("../play_sound")
-next = NodePath("../screen_fade_in")
 
-[node name="screen_fade_in" parent="y_order/forest_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
+[node name="screen_fade_in" parent="y_order/forest_world/on_interact" index="3"]
 gradient = SubResource("Gradient_f8lfk")
-prev = NodePath("../play_animation")
-next = NodePath("../play_nexus_enter")
 
-[node name="play_nexus_enter" parent="y_order/forest_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../screen_fade_in")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/forest_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../play_nexus_enter")
-
-[node name="scene_traversal" parent="y_order/forest_world/on_interact/travel_to_scene" index="0"]
+[node name="travel_to_scene" parent="y_order/forest_world/on_interact" index="5"]
 scene_path = "uid://j0sat4n1ufx1"
-connection_id = "nexus"
 
 [node name="spawn_point" parent="y_order/forest_world" index="1"]
 scene_path = "uid://j0sat4n1ufx1"
-connection_id = "nexus"
 
 [node name="renderer" parent="y_order/forest_world" index="2"]
 texture = ExtResource("20_feke8")
@@ -377,50 +269,24 @@ script = ExtResource("21_1rd4d")
 frame_h_count = 1
 
 [node name="eyeball_world" parent="y_order" instance=ExtResource("18_25aso")]
-process_mode = 0
 position = Vector2(64, 448)
 collision_layer = 2147483650
 
-[node name="on_interact" parent="y_order/eyeball_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
-front = NodePath("request_cutscene_start")
-back = NodePath("travel_to_scene")
+[node name="play_sound" parent="y_order/eyeball_world/on_interact" index="1"]
+wait_til_finished = true
 
-[node name="request_cutscene_start" parent="y_order/eyeball_world/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/eyeball_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/eyeball_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+[node name="play_animation" parent="y_order/eyeball_world/on_interact" index="2"]
 animation_sheet = null
 skip = true
-prev = NodePath("../play_sound")
-next = NodePath("../screen_fade_in")
 
-[node name="screen_fade_in" parent="y_order/eyeball_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
+[node name="screen_fade_in" parent="y_order/eyeball_world/on_interact" index="3"]
 gradient = SubResource("Gradient_f8lfk")
-prev = NodePath("../play_animation")
-next = NodePath("../play_nexus_enter")
 
-[node name="play_nexus_enter" parent="y_order/eyeball_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../screen_fade_in")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/eyeball_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../play_nexus_enter")
-
-[node name="scene_traversal" parent="y_order/eyeball_world/on_interact/travel_to_scene" index="0"]
-scene_path = "uid://j0sat4n1ufx1"
-connection_id = "forest"
+[node name="travel_to_scene" parent="y_order/eyeball_world/on_interact" index="5"]
+scene_path = "uid://b67q2b5hm6tsu"
 
 [node name="spawn_point" parent="y_order/eyeball_world" index="1"]
-scene_path = "uid://j0sat4n1ufx1"
-connection_id = "forest"
+scene_path = "uid://b67q2b5hm6tsu"
 
 [node name="renderer" parent="y_order/eyeball_world" index="2"]
 texture = ExtResource("21_feke8")
@@ -429,53 +295,53 @@ script = ExtResource("21_1rd4d")
 frame_h_count = 1
 
 [node name="numbers_world" parent="y_order" instance=ExtResource("18_25aso")]
-process_mode = 0
 position = Vector2(0, -72)
 collision_layer = 2147483650
 
-[node name="on_interact" parent="y_order/numbers_world" index="0" node_paths=PackedStringArray("order", "front", "back")]
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
-front = NodePath("request_cutscene_start")
-back = NodePath("travel_to_scene")
+[node name="play_sound" parent="y_order/numbers_world/on_interact" index="1"]
+wait_til_finished = true
 
-[node name="request_cutscene_start" parent="y_order/numbers_world/on_interact" index="0" node_paths=PackedStringArray("next")]
-next = NodePath("../play_sound")
-
-[node name="play_sound" parent="y_order/numbers_world/on_interact" index="1" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../play_animation")
-
-[node name="play_animation" parent="y_order/numbers_world/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+[node name="play_animation" parent="y_order/numbers_world/on_interact" index="2"]
 animation_sheet = null
 skip = true
-prev = NodePath("../play_sound")
-next = NodePath("../screen_fade_in")
 
-[node name="screen_fade_in" parent="y_order/numbers_world/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
+[node name="screen_fade_in" parent="y_order/numbers_world/on_interact" index="3"]
 gradient = SubResource("Gradient_f8lfk")
-prev = NodePath("../play_animation")
-next = NodePath("../play_nexus_enter")
 
-[node name="play_nexus_enter" parent="y_order/numbers_world/on_interact" index="4" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-prev = NodePath("../screen_fade_in")
-next = NodePath("../travel_to_scene")
-
-[node name="travel_to_scene" parent="y_order/numbers_world/on_interact" index="5" node_paths=PackedStringArray("prev")]
-prev = NodePath("../play_nexus_enter")
-
-[node name="scene_traversal" parent="y_order/numbers_world/on_interact/travel_to_scene" index="0"]
-scene_path = "uid://j0sat4n1ufx1"
-connection_id = "forest"
+[node name="travel_to_scene" parent="y_order/numbers_world/on_interact" index="5"]
+scene_path = "uid://dnjvpl85u4jl8"
 
 [node name="spawn_point" parent="y_order/numbers_world" index="1"]
-scene_path = "uid://j0sat4n1ufx1"
-connection_id = "forest"
+scene_path = "uid://dnjvpl85u4jl8"
 
 [node name="renderer" parent="y_order/numbers_world" index="2"]
 texture = ExtResource("22_1rd4d")
+hframes = 1
+script = ExtResource("21_1rd4d")
+frame_h_count = 1
+
+[node name="dark_world" parent="y_order" instance=ExtResource("18_25aso")]
+position = Vector2(240, 336)
+collision_layer = 2147483650
+
+[node name="play_sound" parent="y_order/dark_world/on_interact" index="1"]
+wait_til_finished = true
+
+[node name="play_animation" parent="y_order/dark_world/on_interact" index="2"]
+animation_sheet = null
+skip = true
+
+[node name="screen_fade_in" parent="y_order/dark_world/on_interact" index="3"]
+gradient = SubResource("Gradient_f8lfk")
+
+[node name="travel_to_scene" parent="y_order/dark_world/on_interact" index="5"]
+scene_path = "uid://ct8ji25wno2g0"
+
+[node name="spawn_point" parent="y_order/dark_world" index="1"]
+scene_path = "uid://ct8ji25wno2g0"
+
+[node name="renderer" parent="y_order/dark_world" index="2"]
+texture = ExtResource("24_25aso")
 hframes = 1
 script = ExtResource("21_1rd4d")
 frame_h_count = 1
@@ -555,3 +421,4 @@ script = ExtResource("26_feke8")
 [editable path="y_order/forest_world"]
 [editable path="y_order/eyeball_world"]
 [editable path="y_order/numbers_world"]
+[editable path="y_order/dark_world"]

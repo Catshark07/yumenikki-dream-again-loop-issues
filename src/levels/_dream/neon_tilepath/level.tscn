@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://qe3q4hhevgdu"]
+[gd_scene load_steps=44 format=4 uid="uid://qe3q4hhevgdu"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_h75dg"]
 [ext_resource type="TileSet" uid="uid://cdwf1q5unkp6r" path="res://src/levels/__ignore/tile_set/world_tile_sets/neon_path.tres" id="2_cnnt0"]
@@ -69,11 +69,6 @@ shader_parameter/progress = 0.0
 offsets = PackedFloat32Array(0, 0.49375, 1)
 colors = PackedColorArray(0.91, 0, 0.18200026, 0, 0.91394824, 0, 0.18283296, 1, 0, 0, 0, 1)
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_dkxgw"]
-vertices = PackedVector2Array(174, 102, 138, 102, 138, 74, 174, 74)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(128, 112, 184, 112, 184, 64, 128, 64)])
-
 [node name="neon_tilepath" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_h75dg")
 seq_initial = NodePath("on_initial")
@@ -90,7 +85,7 @@ y_sort_enabled = true
 
 [node name="to_neon" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(40, 40)
-collision_layer = 1073741824
+collision_layer = 1073741826
 collision_mask = 1073741824
 script = ExtResource("11_ld25y")
 rect = NodePath("rect")
@@ -129,9 +124,8 @@ prev = NodePath("../play_sound")
 next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_neon/on_interact" node_paths=PackedStringArray("scene_traversal", "prev")]
+[node name="travel_to_scene" type="Node" parent="y_order/to_neon/on_interact" node_paths=PackedStringArray("prev")]
 script = ExtResource("16_rwgou")
-scene_traversal = NodePath("scene_traversal")
 prev = NodePath("../wait")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -184,17 +178,19 @@ values = SubResource("Resource_q6nc8")
 [node name="sprite_renderer" parent="y_order/hell_spawn" index="0"]
 texture = ExtResource("26_oscw5")
 hframes = 8
+frame = 2
 autoplay = true
 loop = true
 fps = 8.0
 frame_dimensions = Vector2i(32, 32)
 frame_h_count = 8
+progress = 2
 
 [node name="sb_loop" parent="y_order/hell_spawn" index="8" node_paths=PackedStringArray("children")]
 children = [NodePath("../sprite_renderer"), NodePath("../shadow_renderer"), NodePath("../sb_components"), NodePath("../coll"), NodePath("../nav"), NodePath("../stance_fsm"), NodePath("../behaviour_fsm"), NodePath("../sound_player"), NodePath("../hell_warp")]
 
 [node name="hell_warp" type="Area2D" parent="y_order/hell_spawn" node_paths=PackedStringArray("rect")]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 0
 script = ExtResource("11_ld25y")
 rect = NodePath("rect")
@@ -207,25 +203,26 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="on_interact" type="Node" parent="y_order/hell_spawn/hell_warp" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("12_wof8k")
-order = [NodePath("seq_1")]
-front = NodePath("seq_1")
-back = NodePath("seq_1")
+order = [NodePath("enter_hell"), NodePath("travel_to")]
+front = NodePath("enter_hell")
+back = NodePath("travel_to")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="seq_1" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact" node_paths=PackedStringArray("order", "front", "back")]
+[node name="enter_hell" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact" node_paths=PackedStringArray("order", "front", "back", "next")]
 script = ExtResource("23_r4jb6")
 order = [NodePath("stop_bgm"), NodePath("play_sound"), NodePath("pulse_red")]
 front = NodePath("stop_bgm")
 back = NodePath("pulse_red")
+next = NodePath("../travel_to")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="stop_bgm" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/seq_1" node_paths=PackedStringArray("next")]
+[node name="stop_bgm" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/enter_hell" node_paths=PackedStringArray("next")]
 script = ExtResource("28_oscw5")
 wait_til_finished = false
 next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://bknmv5i3gcx3x"
 
-[node name="play_sound" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/seq_1" node_paths=PackedStringArray("prev", "next")]
+[node name="play_sound" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/enter_hell" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("14_rwgou")
 sound = ExtResource("28_1nxn6")
@@ -234,7 +231,7 @@ prev = NodePath("../stop_bgm")
 next = NodePath("../pulse_red")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="pulse_red" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/seq_1" node_paths=PackedStringArray("prev")]
+[node name="pulse_red" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/enter_hell" node_paths=PackedStringArray("prev")]
 process_mode = 4
 script = ExtResource("28_8drgh")
 fade_shader = SubResource("ShaderMaterial_l3fjv")
@@ -242,10 +239,18 @@ gradient = SubResource("Gradient_ehiec")
 prev = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
 
-[node name="hell_spawn_wander_region" type="NavigationRegion2D" parent="y_order"]
-position = Vector2(800, 712)
-navigation_polygon = SubResource("NavigationPolygon_dkxgw")
-navigation_layers = 2
+[node name="travel_to" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact" node_paths=PackedStringArray("spawn_point", "prev")]
+script = ExtResource("16_rwgou")
+scene_path = "uid://m50bp6u4vgts"
+connection_id = "hell"
+spawn_point = NodePath("../../spawn_point")
+prev = NodePath("../enter_hell")
+metadata/_custom_type_script = "uid://c0ymap76lrhgr"
+
+[node name="spawn_point" type="Node2D" parent="y_order/hell_spawn/hell_warp" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("12_odkte")
+parent_instead_of_self = NodePath(".")
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="damned_spawn" type="Node2D" parent="y_order" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(832, 1272)

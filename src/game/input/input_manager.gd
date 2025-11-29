@@ -23,10 +23,10 @@ static func request_curr_controller_change(_controller: InputController) -> void
 static func _update(_delta: float) -> void:
 	
 	direction_vector_4 = Vector4i(
-		int(Input.is_action_pressed("pl_move_right")) | int(Input.is_action_pressed("ui_right")),
-		int(Input.is_action_pressed("pl_move_down")) | int(Input.is_action_pressed("ui_down")),
-		int(Input.is_action_pressed("pl_move_left")) | int(Input.is_action_pressed("ui_left")),
-		int(Input.is_action_pressed("pl_move_up")) | int(Input.is_action_pressed("ui_up"))
+		int(Input.is_action_pressed("pl_move_right")) | int(Input.is_action_pressed("ui_right")), # pos x.
+		int(Input.is_action_pressed("pl_move_down")) | int(Input.is_action_pressed("ui_down")), # pos y.
+		int(Input.is_action_pressed("pl_move_left")) | int(Input.is_action_pressed("ui_left")), # neg x
+		int(Input.is_action_pressed("pl_move_up")) | int(Input.is_action_pressed("ui_up"))      # neg y
 		)
 	
 	dir_input = Vector2i(

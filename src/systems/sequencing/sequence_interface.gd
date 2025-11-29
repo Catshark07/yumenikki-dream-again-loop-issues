@@ -57,7 +57,6 @@ func _execute() -> void:
 	reset()
 	# - if the sequence is not valid, we halt and not run it.
 	if !_validate():
-		printerr("SEQUENCE %s :: Sequence halted due to invalid events!" % (self.name)) 
 		return
 	
 	# - we iterate thru the events..
@@ -104,7 +103,7 @@ func _validate() -> bool:
 			if skip_invalid_events: marked_invalid.append(event.get_instance_id()) # - we mark invalid events to be skipped.
 			else:
 				fail.emit()
-				printerr("SEQUENCE %s :: Event error: %s!" % [self.name, event.name])
+				printerr("SEQUENCE %s :: Sequence halted. Event error: %s!" % [self.name, event.name])
 				return false # - we halt the sequence if the sequence if we won't skip any invalid events.
 
 		if event.has_next(): event = event.next
@@ -112,7 +111,6 @@ func _validate() -> bool:
 	
 	success.emit()	
 	return true
-
 func reset() -> void: 
 	var curr = front
 	
@@ -133,3 +131,8 @@ func let_children_await() -> void:
 func let_children_instant() -> void:
 	for i: Event in order:
 		if i != null: i.wait_til_finished = false
+
+# -- 
+func append(_event: Event, _id_name: String) -> void: 
+	Utils.add_child_node(self, _event, _id_name)
+	order.append(_event)

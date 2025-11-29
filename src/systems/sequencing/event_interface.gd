@@ -74,7 +74,7 @@ func end() -> void:
 
 # -- internal
 func __call_finished() -> void:
-	finished.emit()
+	if is_inside_tree(): finished.emit()
 
 func has_next() -> bool: return next != null
 func has_prev() -> bool: return prev != null

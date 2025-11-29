@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/luff_yta_title.ogg-b1e729b7f8c5a8a8c2676c2707
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

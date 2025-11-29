@@ -5,7 +5,6 @@ extends AreaRegion
 
 # --- clamps the camera to the deadzone rect.
 var in_deadzone: bool = false
-@export var area: Area2D
 
 func _ready() -> void:
 	super()

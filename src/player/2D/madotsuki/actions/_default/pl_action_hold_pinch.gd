@@ -10,10 +10,15 @@ func _perform(_pl: Player) -> void:
 	if DreamManager.global_dream_state != DreamManager.state.DREAM:
 		finished.emit()
 		return
-	
 	pinch_progress = 0
+	
+	_pl.vel_input = Vector2.ZERO
+	_pl.dir_input = Vector2.ZERO
+	_pl.velocity = Vector2.ZERO
+	
 	_pl.deequip_effect()
 	_pl.force_change_state("action")
+	
 	_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).play_animation(pinch_animation, 0)
 	
 func _action_update			(_pl: Player, _delta: float) -> void:

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FootstepSet" load_steps=7 format=3 uid="uid://uiv8d2iir7xm"]
+
+[ext_resource type="Texture2D" uid="uid://b3ubvq54l072p" path="res://src/entities/footsteps/default.png" id="1_06fh6"]
+[ext_resource type="AudioStream" uid="uid://br56kunsjjvf" path="res://src/audio/se/footstep_sand--01.wav" id="1_w7xdx"]
+[ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="2_7ecn3"]
+[ext_resource type="AudioStream" uid="uid://bu83qx4kjop61" path="res://src/audio/se/footstep_sand--02.wav" id="2_vyrb6"]
+[ext_resource type="AudioStream" uid="uid://cxmc03up3b5jd" path="res://src/audio/se/footstep_sand--03.wav" id="3_hdc5e"]
+[ext_resource type="AudioStream" uid="uid://cfox3pijqe1au" path="res://src/audio/se/footstep_sand--04.wav" id="4_1qe40"]
+
+[resource]
+script = ExtResource("2_7ecn3")
+arr = [ExtResource("1_w7xdx"), ExtResource("2_vyrb6"), ExtResource("3_hdc5e"), ExtResource("4_1qe40")]
+metadata/_custom_type_script = "uid://dl740w6e37l11"

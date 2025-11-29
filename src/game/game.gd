@@ -71,9 +71,9 @@ func _ready() -> void:
 	PhysicsServer2D.set_active(false)
 	ProjectSettings.set_setting("application/config/version", GAME_VER)
 	
-	set_process(false)
-	set_physics_process(false)
-	set_process_input(false)
+	set_process			(false)
+	set_physics_process	(false)
+	set_process_input	(false)
 	
 	game_manager.					_setup()
 	game_manager.global_components.	_setup()
