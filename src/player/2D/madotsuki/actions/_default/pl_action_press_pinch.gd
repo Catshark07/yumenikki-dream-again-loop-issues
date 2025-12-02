@@ -1,34 +1,38 @@
 extends PLAction
 
 @export var pinch_animation: StringName = &"action/pinch"
+@export var deequip_effect: bool = true
 @export_file("*.tscn") var return_location: String = "res://src/levels/_real/apartment/level.tscn"
 
 func _perform(_pl: Player) -> void:
 	if DreamManager.global_dream_state != DreamManager.state.DREAM:
-		finished.emit()
 		return
 	
-	if SceneManager.curr_scene_resource.resource_path == return_location:
-		AudioService.play_sound.bind(Player.ERR_SOUNDS.pick_random()) 
+	if load(SceneManager.curr_scene_resource.resource_path) == load(return_location):
+		
+		AudioService.play_sound(Player.ERR_SOUNDS.pick_random()) 
 		return
 
+	EventManager.invoke_event("CUTSCENE_START_REQUEST")
 	_pl.vel_input = Vector2.ZERO
 	_pl.dir_input = Vector2.ZERO
 	_pl.velocity = Vector2.ZERO
 	
-	_pl.deequip_effect()
+	if deequip_effect: _pl.deequip_effect()
 	_pl.force_change_state("action")
 	
 	_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).play_animation(pinch_animation, 1)
 	await _pl.components.get_component_by_name(Player_YN.Components.ANIMATION).finished
-	finished.emit()
+	_pl._freeze()
 	
 	var seq = SequencerManager.create_sequence("go_to_real_world")
-	var stop_bgm 			:= EVN_StopBGM.new()
-	var wait_one_sec 		:= EVN_WaitSeconds.new(.5)
+	var cam_offset 			:= EVN_ZoomCamera.new(2, Tween.EASE_IN, Tween.TRANS_CUBIC, 2.5)
+	var transition 			:= EVN_ScreenTransition.new(ScreenTransition.fade_type.FADE_IN)
+	var wait 				:= EVN_WaitSeconds.new(1)
 	
-	seq.append(stop_bgm, "stop_bgm")
-	seq.append(wait_one_sec, "wait_half_sec")
+	seq.append(cam_offset, 	"cam_offset", false)
+	seq.append(transition, 	"transition")
+	seq.append(wait, 		"wait")
 	
 	SequencerManager.invoke(seq)
 	await seq.finished

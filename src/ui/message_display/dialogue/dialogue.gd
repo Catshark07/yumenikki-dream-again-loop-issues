@@ -24,7 +24,7 @@ func open(
 	if next_button != null: 
 		next_button.visible = true
 		next_button.grab_focus()
-	super(_position, _sound, _speed, _font_colour)
+	super(_position, _sound, _speed, _font_colour, _panel_style)
 	
 func close() -> void: 
 	if next_button != null: next_button.visible = false

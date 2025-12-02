@@ -10,4 +10,3 @@ func _init(_id: String = "", ..._params: Array[Variant]) -> void:
 
 func _execute() -> void: 
 	EventManager.invoke_event(event_id, params)
-	super()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://b64kqcppbs87c"]
+[gd_scene load_steps=48 format=4 uid="uid://b64kqcppbs87c"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_qwl4r"]
 [ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_region.gd" id="2_d40q4"]
@@ -20,10 +20,13 @@
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="17_iu8ri"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="18_1xj0q"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="19_3pw42"]
+[ext_resource type="AudioStream" uid="uid://dso8pw0y7eu6k" path="res://src/audio/se/teleport_maze.WAV" id="19_r675a"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="20_3bpb3"]
+[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="20_gfby6"]
+[ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="21_r77i7"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="21_r675a"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="22_gfby6"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="23_r77i7"]
+[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="22_x7hfp"]
 [ext_resource type="Texture2D" uid="uid://dr7epkj3kmyai" path="res://src/levels/__ignore/doors/door_neo_lobby.png" id="24_1xj0q"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="24_x7hfp"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="26_yqiac"]
@@ -33,9 +36,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ckqe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4yoie"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qwl4r"]
-size = Vector2(2688, 1280)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jnl7y"]
 shader = ExtResource("5_k18mo")
@@ -89,6 +89,14 @@ _limits = [0.0, 1.5, 0.0, 1.0]
 _data = [Vector2(0, 0.31229234), 0.0, 0.0, 0, 0, Vector2(0.074285716, 1.4460132), 0.0, 0.0, 0, 0, Vector2(0.170588, 0.75767), 0.0, 0.0, 0, 0, Vector2(0.27714285, 1.0249169), 0.0, 0.0, 0, 0, Vector2(0.46857142, 0.25830567), 1.0971493, 1.0971493, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 6
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_28hxj"]
+shader = ExtResource("21_r77i7")
+shader_parameter/progress = 0.0
+
+[sub_resource type="Gradient" id="Gradient_yqiac"]
+offsets = PackedFloat32Array(0, 0.21451104, 0.41955835, 0.6845426, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.8532224, 0, 0, 0.132, 0.48677072, 0, 0.7373294, 0.504, 0.7351037, 0.71126455, 0, 0.8294013, 1, 1, 1, 1)
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_45h0u"]
 blend_mode = 2
 
@@ -98,7 +106,7 @@ size = Vector2(16, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4eec8"]
 size = Vector2(16, 16)
 
-[sub_resource type="Resource" id="Resource_3pw42"]
+[sub_resource type="Resource" id="Resource_qryfo"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("17_c3l5u")
@@ -111,22 +119,12 @@ load_transition = SubResource("ShaderMaterial_2ckqe")
 unload_transition = SubResource("ShaderMaterial_4yoie")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="LoopManager" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects", "loop_objects_detect", "shape_detect")]
+[node name="LoopManager" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects")]
 position = Vector2(40, 384)
 script = ExtResource("2_d40q4")
-loop_objects = [NodePath("../y_order/world/madotsuki/pl_loop"), null]
+loop_objects = [NodePath("../y_order/world/world"), NodePath("../y_order/world/madotsuki/pl_loop")]
 world_size = Vector2(2688, 1280)
-loop_objects_detect = NodePath("loop_objects_detect")
-shape_detect = NodePath("loop_objects_detect/detect_shape")
 metadata/_custom_type_script = "uid://desxt7tbq37sf"
-
-[node name="loop_objects_detect" type="Area2D" parent="LoopManager"]
-collision_mask = 64
-metadata/_edit_lock_ = true
-
-[node name="detect_shape" type="CollisionShape2D" parent="LoopManager/loop_objects_detect"]
-shape = SubResource("RectangleShape2D_qwl4r")
-metadata/_edit_lock_ = true
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("3_43bly")
@@ -214,7 +212,7 @@ script = ExtResource("9_k18mo")
 
 [node name="to_neon_world" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(200, 224)
-collision_layer = 1073741824
+collision_layer = 1073741826
 collision_mask = 1073741824
 script = ExtResource("17_iu8ri")
 rect = NodePath("rect")
@@ -224,7 +222,7 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 [node name="on_interact" type="Node" parent="y_order/to_neon_world" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("18_1xj0q")
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("travel_to_scene")]
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_sound_teleport"), NodePath("transition"), NodePath("wait"), NodePath("travel_to_scene")]
 front = NodePath("request_cutscene_start")
 back = NodePath("travel_to_scene")
 
@@ -239,43 +237,62 @@ process_mode = 4
 script = ExtResource("20_3bpb3")
 sound = ExtResource("21_r675a")
 pitch = 0.8
-wait_til_finished = false
 prev = NodePath("../request_cutscene_start")
+next = NodePath("../play_sound_teleport")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="play_sound_teleport" type="Node" parent="y_order/to_neon_world/on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+script = ExtResource("20_3bpb3")
+sound = ExtResource("19_r675a")
+wait_til_finished = false
+prev = NodePath("../play_sound")
+next = NodePath("../transition")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="transition" type="Node" parent="y_order/to_neon_world/on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+script = ExtResource("20_gfby6")
+fade_shader = SubResource("ShaderMaterial_28hxj")
+duration = 2.0
+gradient = SubResource("Gradient_yqiac")
+prev = NodePath("../play_sound_teleport")
+next = NodePath("../wait")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="wait" type="Node" parent="y_order/to_neon_world/on_interact" node_paths=PackedStringArray("prev", "next")]
+script = ExtResource("22_x7hfp")
+seconds = 0.5
+prev = NodePath("../transition")
 next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_neon_world/on_interact" node_paths=PackedStringArray("scene_traversal", "prev")]
+[node name="travel_to_scene" type="Node" parent="y_order/to_neon_world/on_interact" node_paths=PackedStringArray("spawn_point", "prev")]
+process_mode = 4
 script = ExtResource("22_gfby6")
-scene_traversal = NodePath("scene_traversal")
-prev = NodePath("../play_sound")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="scene_traversal" type="Node" parent="y_order/to_neon_world/on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("23_r77i7")
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "ne_neon"
-spawn_point = NodePath("../../../spawn_point")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+spawn_point = NodePath("../../spawn_point")
+prev = NodePath("../wait")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="spawn_point" type="Node2D" parent="y_order/to_neon_world" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 12)
 script = ExtResource("24_x7hfp")
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "ne_neon"
 parent_instead_of_self = NodePath("..")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="renderer" type="Sprite2D" parent="y_order/to_neon_world"]
 texture = ExtResource("24_1xj0q")
 hframes = 8
-frame = 4
+frame = 1
 script = ExtResource("26_yqiac")
 autoplay = true
 loop = true
 fps = 12.0
 frame_dimensions = Vector2i(17, 30)
 frame_h_count = 8
-progress = 4
+progress = 1
 
 [node name="shadow_renderer" type="Sprite2D" parent="y_order/to_neon_world/renderer"]
 show_behind_parent = true
@@ -320,9 +337,8 @@ tile_set = ExtResource("7_m6sco")
 y_sort_enabled = true
 script = ExtResource("28_1xj0q")
 region = NodePath("../../../LoopManager")
-idx = 1
 target = NodePath("..")
-children = [NodePath("../floor"), NodePath("../walls"), NodePath("../wall_overlays"), NodePath("../cacti")]
+children = [NodePath("../floor"), NodePath("../walls"), NodePath("../wall_overlays"), NodePath("../cacti"), NodePath("../madotsuki")]
 dupe_nodes = [NodePath("loop_world_0"), NodePath("loop_world_1"), NodePath("loop_world_2"), NodePath("loop_world_3"), NodePath("loop_world_4"), NodePath("loop_world_5"), NodePath("loop_world_6"), NodePath("loop_world_7")]
 occlusions = [NodePath("loop_world_0/occlusion"), NodePath("loop_world_1/occlusion"), NodePath("loop_world_2/occlusion"), NodePath("loop_world_3/occlusion"), NodePath("loop_world_4/occlusion"), NodePath("loop_world_5/occlusion"), NodePath("loop_world_6/occlusion"), NodePath("loop_world_7/occlusion")]
 do_not_loop = true
@@ -588,8 +604,8 @@ rect = Rect2(-1680, -800, 3360, 1600)
 
 [node name="madotsuki" parent="y_order/world" instance=ExtResource("16_k6h8g")]
 position = Vector2(200, 296)
-values = SubResource("Resource_3pw42")
+values = SubResource("Resource_qryfo")
 
 [node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("11_0ec7f")]
-position = Vector2(40, 160)
+position = Vector2(200, 296)
 initial_target = NodePath("../y_order/world/madotsuki")

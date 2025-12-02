@@ -65,7 +65,7 @@ world_size = Vector2(2720, 2240)
 metadata/_custom_type_script = "uid://desxt7tbq37sf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_66mxq")]
-position = Vector2(24, 1368)
+position = Vector2(624, 400)
 initial_target = NodePath("../y_order/madotsuki")
 
 [node name="stars" type="CPUParticles2D" parent="camera/marker/camera" index="4"]
@@ -81,10 +81,10 @@ scale_amount_curve = SubResource("Curve_y1f6q")
 y_sort_enabled = true
 
 [node name="dark_door" parent="y_order" instance=ExtResource("9_4l7um")]
+process_mode = 3
 position = Vector2(560, 144)
 
 [node name="travel_to_scene" parent="y_order/dark_door/on_interact" index="3"]
-process_mode = 4
 scene_path = "uid://dl25joalnmaxt"
 
 [node name="spawn_point" parent="y_order/dark_door" index="1"]
@@ -96,6 +96,7 @@ hframes = 1
 frame_h_count = 1
 
 [node name="wilderness_gate" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(776, 1080)
 collision_layer = 2
 collision_mask = 2147483648
@@ -129,7 +130,6 @@ parent_instead_of_self = NodePath("..")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="rect" type="CollisionShape2D" parent="y_order/wilderness_gate"]
-position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_eclfr")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
@@ -315,7 +315,7 @@ position = Vector2(1044, 680)
 rect = Rect2(-1700, -1400, 3400, 2800)
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("2_0gjmk")]
-position = Vector2(24, 1368)
+position = Vector2(776, 240)
 values = SubResource("Resource_lxt01")
 
 [node name="dark_overlay" type="CanvasModulate" parent="."]

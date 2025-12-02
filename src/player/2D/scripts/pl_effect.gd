@@ -33,16 +33,16 @@ func _apply(_pl: Player) -> void:
 		ResourceLoader.exists(player_component_prefab) and 
 		load(player_component_prefab).can_instantiate()):
 			
-			var prefab_instance: PLEffectComponent = load(player_component_prefab).instantiate()
+			player_component = load(player_component_prefab).instantiate()
 			
-			prefab_instance.name = "effect" + self.name
-			prefab_instance.effect_data = self
+			player_component.name = "effect" + self.name
+			player_component.effect_data = self
 			
-			_pl.components.get_component_by_name(Player_YN.Components.EQUIP).effect_prefab = prefab_instance 			
+			_pl.components.get_component_by_name(Player_YN.Components.EQUIP).effect_prefab = player_component 			
 			_pl.components.get_component_by_name(Player_YN.Components.EQUIP).add_child(
 				_pl.components.get_component_by_name(Player_YN.Components.EQUIP).effect_prefab)
 			
-			prefab_instance._enter(_pl)
+			player_component._enter(_pl)
 func _unapply(_pl: Player) -> void: pass
 
 
@@ -55,7 +55,7 @@ func _effect_phys_update(_pl: Player, _delta: float) -> void:
 	
 func _primary_action	(_pl: Player) -> void: 
 	if override_primary_action == null: return
-	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(override_primary_action, _pl)
+	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_pl, override_primary_action)
 func _secondary_action	(_pl: Player) -> void: 
 	if override_secondary_action == null: return
-	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(override_secondary_action, _pl)
+	_pl.components.get_component_by_name(Player_YN.Components.ACTION).perform_action(_pl, override_secondary_action)

@@ -3,8 +3,12 @@
 class_name Player_YN 
 extends Player
 
+
 # - dependencies.
+@export_category("Top-down Exclusive")
 @export var stamina_fsm: FSM
+@export var can_pinch: bool = true
+
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
@@ -62,22 +66,28 @@ func _physics_update(_delta: float) -> void:
 	if fsm: fsm._physics_update(_delta)
 	if global_components != null: global_components._physics_update(_delta)
 func _sb_input(event: InputEvent) -> void:
-	if Input.is_physical_key_pressed(KEY_Q): perform_action(PLActionManager.PINCH_PRESS_ACTION)
+	if Input.is_physical_key_pressed(KEY_Q) and can_pinch: 
+		perform_action(PLActionManager.PINCH_PRESS_ACTION)
+		
 	if components != null: 	components._input_pass(event)
 	if fsm != null: 		fsm._input_pass(event)
 	
 func perform_action(_action: PLAction) -> void:
+	if components.bypass or !components.get_component_by_name(Components.ACTION).active: return
 	components.get_component_by_name(Components.ACTION).perform_action(self, _action)
 func cancel_action(_action: PLAction = action) -> void: 
+	if components.bypass or !components.get_component_by_name(Components.ACTION).active: return
 	components.get_component_by_name(Components.ACTION).cancel_action(self, _action)
 
 func equip(_effect: PLEffect, _skip: bool = false) -> void: 
-	components.get_component_by_name("equip_manager").equip(self, _effect, _skip)
+	if components.bypass or !components.get_component_by_name(Components.EQUIP).active: return
+	components.get_component_by_name(Components.EQUIP).equip(self, _effect, _skip)
 func deequip_effect() -> void: 
-	components.get_component_by_name("equip_manager").deequip(self)
+	if components.bypass or !components.get_component_by_name(Components.EQUIP).active: return
+	components.get_component_by_name(Components.EQUIP).deequip(self)
 
 func get_behaviour() -> PLBehaviour: 
-	return components.get_component_by_name("equip_manager").behaviour
+	return components.get_component_by_name(Components.EQUIP).behaviour
 
 func play_sound(_sound: AudioStreamWAV, _vol: float, _pitch: float) -> void:
 	if sound_player != null: sound_player.play_sound(_sound, _vol, _pitch)
@@ -91,9 +101,9 @@ func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 # - misc.
 func get_values() -> SBVariables:
 	if  components != null and \
-		components.has_component_by_name(Player_YN.Components.EQUIP) and \
-		components.get_component_by_name(Player_YN.Components.EQUIP).effect_values != null:
-			return components.get_component_by_name(Player_YN.Components.EQUIP).effect_values
+		components.has_component_by_name(Components.EQUIP) and \
+		components.get_component_by_name(Components.EQUIP).effect_values != null:
+			return components.get_component_by_name(Components.EQUIP).effect_values
 	else:
 		return super()
 

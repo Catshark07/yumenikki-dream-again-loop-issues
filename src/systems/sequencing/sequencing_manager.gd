@@ -1,6 +1,7 @@
 class_name SequencerManager
 extends Game.GameSubClass
 
+const PRINT_ID := "SEQUENCE MANAGER:: "
 static var curr: Sequence
 
 static func invoke(_seq: Sequence, _force_continue: bool = false) -> void:
@@ -26,6 +27,11 @@ static func cancel() -> void:
 	curr.cancel()
 	await curr.cancelled
 	
+#static func _update(_delta: float) -> void:
+	#if curr != null:
+	#pass
+	#
+	
 static func create_sequence(_name: String, _skip_invalid: bool = true, _wait_finish: bool = true) -> Sequence: 
 	var seq = Sequence.new()
 	seq.name 					= _name 
@@ -36,8 +42,3 @@ static func create_sequence(_name: String, _skip_invalid: bool = true, _wait_fin
 	Utils.connect_to_signal(seq.queue_free, seq.finished, ConnectFlags.CONNECT_ONE_SHOT)
 	
 	return seq 
-	
-static func add_event(_seq: Sequence, _event: Event, _name: String, _wait_til_finished: bool = true) -> void:
-	_event.name = _name
-	_event.wait_til_finished = _wait_til_finished
-	_seq.add_child(_event)

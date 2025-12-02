@@ -18,10 +18,10 @@ y_sort_enabled = true
 
 [node name="black" type="ColorRect" parent="."]
 z_index = -3
-offset_left = -88.0
-offset_top = -40.0
-offset_right = 408.0
-offset_bottom = 248.0
+offset_left = -240.0
+offset_top = -192.0
+offset_right = 624.0
+offset_bottom = 368.0
 color = Color(0, 0, 0, 1)
 
 [node name="modulate" type="ColorRect" parent="."]

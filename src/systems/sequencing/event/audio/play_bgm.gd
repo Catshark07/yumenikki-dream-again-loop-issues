@@ -10,6 +10,7 @@ enum MUSIC_BUS {MUSIC, AMBIENCE}
 @export_group("Volume and Pitch")
 @export_range(0, 1, .1) var vol: float = 1
 @export_range(0.1 , 2, .01) var pitch: float = 1
+@export var abrupt: bool = false
 
 # -- tests
 @export_group("Test Audio")
@@ -18,8 +19,8 @@ enum MUSIC_BUS {MUSIC, AMBIENCE}
 
 func _execute() -> void:	
 	match music_bus:
-		MUSIC_BUS.MUSIC: 	Music.		play_sound(stream, linear_to_db(vol), pitch)
-		MUSIC_BUS.AMBIENCE: Ambience.	play_sound(stream, linear_to_db(vol), pitch) 
+		MUSIC_BUS.MUSIC: 	Music.		play_sound(stream, linear_to_db(vol), pitch, abrupt)
+		MUSIC_BUS.AMBIENCE: Ambience.	play_sound(stream, linear_to_db(vol), pitch, abrupt) 
 
 func play_test_audio() -> void:	AudioService.play_test_audio_from("BGM", stream, vol, pitch)
 func stop_test_audio() -> void: AudioService.stop()

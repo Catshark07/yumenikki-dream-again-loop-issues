@@ -87,8 +87,8 @@ size = Vector3(0.56, 1.06, 0.445)
 predelay_msec = 500.0
 room_size = 0.3
 damping = 0.2
-dry = 0.35
-wet = 0.45
+dry = 0.65
+wet = 0.2
 
 [sub_resource type="Gradient" id="Gradient_pfxes"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
@@ -259,7 +259,7 @@ prev = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
 
 [node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("7_pfxes")]
-position = Vector2(304, 32)
+position = Vector2(360, 0)
 initial_target = NodePath("../teleports/madotsuki")
 
 [node name="cam_wiggle" type="Node" parent="camera_handler/marker/camera/components_receiver" index="0"]
@@ -301,6 +301,7 @@ values = SubResource("Resource_wc2p7")
 [node name="A" type="Node2D" parent="teleports"]
 
 [node name="a_1" type="Area2D" parent="teleports/A" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(200, 88)
 collision_layer = 2
 collision_mask = 2147483648
@@ -334,7 +335,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(728, 8)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -356,6 +356,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="a_2" type="Area2D" parent="teleports/A" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(952, 104)
 collision_layer = 2
 collision_mask = 2147483648
@@ -389,7 +390,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(-728, -24)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -413,6 +413,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="B" type="Node2D" parent="teleports"]
 
 [node name="b_1" type="Area2D" parent="teleports/B" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(856, 88)
 collision_layer = 2
 collision_mask = 2147483648
@@ -446,7 +447,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(-664, 64)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -468,6 +468,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="b_2" type="Area2D" parent="teleports/B" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(168, 152)
 collision_layer = 2
 collision_mask = 2147483648
@@ -501,7 +502,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(712, -72)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -525,6 +525,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="C" type="Node2D" parent="teleports"]
 
 [node name="c_1" type="Area2D" parent="teleports/C" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(280, 152)
 collision_layer = 2
 collision_mask = 2147483648
@@ -558,7 +559,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(1320, 336)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -580,6 +580,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="c_2" type="Area2D" parent="teleports/C" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(1576, 504)
 collision_layer = 2
 collision_mask = 2147483648
@@ -613,7 +614,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(-1312, -352)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -635,6 +635,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="c_3" type="Area2D" parent="teleports/C" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(136, 216)
 collision_layer = 2
 collision_mask = 2147483648
@@ -668,7 +669,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(864, 448)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -690,6 +690,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="c_4" type="Area2D" parent="teleports/C" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(984, 664)
 collision_layer = 2
 collision_mask = 2147483648
@@ -723,7 +724,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(-832, -464)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -747,6 +747,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="D" type="Node2D" parent="teleports"]
 
 [node name="d_1" type="Area2D" parent="teleports/D" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(1752, 424)
 collision_layer = 2
 collision_mask = 2147483648
@@ -780,7 +781,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(-1112, -104)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -802,6 +802,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="d_2" type="Area2D" parent="teleports/D" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(664, 328)
 collision_layer = 2
 collision_mask = 2147483648
@@ -835,7 +836,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(1072, 96)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -859,6 +859,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="E" type="Node2D" parent="teleports"]
 
 [node name="e_1" type="Area2D" parent="teleports/E" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(568, 344)
 collision_layer = 2
 collision_mask = 2147483648
@@ -890,9 +891,8 @@ metadata/_custom_type_script = "uid://cvb48ow8p04j8"
 [node name="teleport_pl" type="Node" parent="teleports/E/e_1/on_tile_press" node_paths=PackedStringArray("sentient", "marker_A", "marker_B", "prev", "next")]
 process_mode = 1
 script = ExtResource("24_cycpv")
-dis_vector = Vector2i(-416, 184)
+dis_vector = Vector2i(-408, 184)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -904,7 +904,7 @@ metadata/_custom_type_script = "uid://qo665eecfxcw"
 position = Vector2(568, 344)
 
 [node name="marker_B" type="Marker2D" parent="teleports/E/e_1/on_tile_press/teleport_pl"]
-position = Vector2(152, 528)
+position = Vector2(160, 528)
 
 [node name="end_cutscene" type="Node" parent="teleports/E/e_1/on_tile_press" node_paths=PackedStringArray("prev")]
 process_mode = 4
@@ -914,6 +914,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="e_2" type="Area2D" parent="teleports/E" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(136, 536)
 collision_layer = 2
 collision_mask = 2147483648
@@ -947,7 +948,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(448, -200)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -971,6 +971,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="F" type="Node2D" parent="teleports"]
 
 [node name="f_1" type="Area2D" parent="teleports/F" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(264, 472)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1004,7 +1005,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(688, 264)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1026,6 +1026,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="f_2" type="Area2D" parent="teleports/F" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(968, 760)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1059,7 +1060,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(-688, -280)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1081,6 +1081,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="f_3" type="Area2D" parent="teleports/F" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(360, 520)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1114,7 +1115,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(552, 72)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1136,6 +1136,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="f_4" type="Area2D" parent="teleports/F" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(920, 616)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1167,9 +1168,8 @@ metadata/_custom_type_script = "uid://cvb48ow8p04j8"
 [node name="teleport_pl" type="Node" parent="teleports/F/f_4/on_tile_press" node_paths=PackedStringArray("sentient", "marker_A", "marker_B", "prev", "next")]
 process_mode = 1
 script = ExtResource("24_cycpv")
-dis_vector = Vector2i(-576, -104)
+dis_vector = Vector2i(-584, -104)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1181,7 +1181,7 @@ metadata/_custom_type_script = "uid://qo665eecfxcw"
 position = Vector2(920, 616)
 
 [node name="marker_B" type="Marker2D" parent="teleports/F/f_4/on_tile_press/teleport_pl"]
-position = Vector2(344, 512)
+position = Vector2(336, 512)
 
 [node name="end_cutscene" type="Node" parent="teleports/F/f_4/on_tile_press" node_paths=PackedStringArray("prev")]
 process_mode = 4
@@ -1193,6 +1193,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="G" type="Node2D" parent="teleports"]
 
 [node name="g_1" type="Area2D" parent="teleports/G" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(872, 568)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1224,9 +1225,8 @@ metadata/_custom_type_script = "uid://cvb48ow8p04j8"
 [node name="teleport_pl" type="Node" parent="teleports/G/g_1/on_tile_press" node_paths=PackedStringArray("sentient", "marker_A", "marker_B", "prev", "next")]
 process_mode = 1
 script = ExtResource("24_cycpv")
-dis_vector = Vector2i(-672, 56)
+dis_vector = Vector2i(-664, 56)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1238,7 +1238,7 @@ metadata/_custom_type_script = "uid://qo665eecfxcw"
 position = Vector2(872, 568)
 
 [node name="marker_B" type="Marker2D" parent="teleports/G/g_1/on_tile_press/teleport_pl"]
-position = Vector2(200, 624)
+position = Vector2(208, 624)
 
 [node name="end_cutscene" type="Node" parent="teleports/G/g_1/on_tile_press" node_paths=PackedStringArray("prev")]
 process_mode = 4
@@ -1248,6 +1248,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="g_2" type="Area2D" parent="teleports/G" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(184, 632)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1281,7 +1282,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(712, -56)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1305,6 +1305,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="H" type="Node2D" parent="teleports"]
 
 [node name="h_1" type="Area2D" parent="teleports/H" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(408, 616)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1338,7 +1339,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(944, 320)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1360,6 +1360,7 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="h_2" type="Area2D" parent="teleports/H" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(1368, 952)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1391,9 +1392,8 @@ metadata/_custom_type_script = "uid://cvb48ow8p04j8"
 [node name="teleport_pl" type="Node" parent="teleports/H/h_2/on_tile_press" node_paths=PackedStringArray("sentient", "marker_A", "marker_B", "prev", "next")]
 process_mode = 1
 script = ExtResource("24_cycpv")
-dis_vector = Vector2i(-976, -336)
+dis_vector = Vector2i(-984, -336)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1405,7 +1405,7 @@ metadata/_custom_type_script = "uid://qo665eecfxcw"
 position = Vector2(1368, 952)
 
 [node name="marker_B" type="Marker2D" parent="teleports/H/h_2/on_tile_press/teleport_pl"]
-position = Vector2(392, 616)
+position = Vector2(384, 616)
 
 [node name="end_cutscene" type="Node" parent="teleports/H/h_2/on_tile_press" node_paths=PackedStringArray("prev")]
 process_mode = 4
@@ -1417,6 +1417,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 [node name="I" type="Node2D" parent="teleports"]
 
 [node name="i_1" type="Area2D" parent="teleports/I" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(1304, 904)
 collision_layer = 2
 collision_mask = 2147483648
@@ -1450,7 +1451,6 @@ process_mode = 1
 script = ExtResource("24_cycpv")
 dis_vector = Vector2i(128, 80)
 sentient = NodePath("../../../../madotsuki")
-heading = 4
 change_heading = true
 marker_A = NodePath("marker_A")
 marker_B = NodePath("marker_B")
@@ -1472,12 +1472,12 @@ prev = NodePath("../teleport_pl")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="to_unstable_void" type="Area2D" parent="teleports" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(1496, 1040)
 collision_layer = 2
 collision_mask = 2147483648
 script = ExtResource("5_gnfva")
 secret = true
-area_trgger = true
 centre_trigger = true
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"

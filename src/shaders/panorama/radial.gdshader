@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+#include "res://src/shaders/_include/general_base.gdshaderinc"
+
 uniform float uv_rotation_speed = 5.;
 uniform vec2 uv_rotation_pivot = vec2(0.5);
 
@@ -21,7 +23,7 @@ void fragment()
     uv *= get2dRotationMatrix(radians(TIME * uv_rotation_speed)); // rotate
     uv += uv_rotation_pivot; // move origin back
 
-    COLOR = texture(TEXTURE, uv); // use calculated uv
+    COLOR = texture(TEXTURE, uv) * overlay_modulate; // use calculated uv
 }
 
 // credit: FencerDevLog.

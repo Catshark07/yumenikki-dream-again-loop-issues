@@ -104,7 +104,7 @@ class Keybind:
 		"pl_primary_action"		: [ KEY_Z ],
 		"pl_secondary_action" 	: [ KEY_X ],
 		
-		"pl_inventory" 		: [ KEY_ALT, KEY_SPACE ],
+		"pl_inventory" 		: [ KEY_ALT ],
 		}
 	
 	func _init() -> void:

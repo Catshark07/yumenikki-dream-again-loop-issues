@@ -16,14 +16,30 @@ extends Event
 
 @export_group("Tween properties")
 @export var transition: Tween.TransitionType = Tween.TRANS_LINEAR
-@export var ease: Tween.EaseType = Tween.EASE_OUT
+@export var ease_type: Tween.EaseType = Tween.EASE_OUT
+
+var force_quit_timer: SceneTreeTimer
+
+func _init(
+	_fade: ScreenTransition.fade_type = ScreenTransition.fade_type.FADE_IN, 
+	_a: float = 0, 
+	_b: float = 1, 
+	_duration: float = 1, 
+	_trans: Tween.TransitionType = Tween.TRANS_LINEAR, 
+	_ease: Tween.EaseType = Tween.EASE_OUT) -> void:
+		fade_type 	= _fade
+		a 			= _a
+		b 			= _b
+		duration 	= _duration
+		transition 	= _trans
+		ease_type 		= _ease
 
 func _execute() -> void:
 	GameManager.secondary_transition.set_transition(
 		duration,
 		fade_shader,
 		transition,
-		ease)
+		ease_type)
 
 	match fade_type:
 		ScreenTransition.fade_type.FADE_IN	: await GameManager.secondary_transition.fade(gradient, a, b, hide_if_alpha_zero)

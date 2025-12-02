@@ -11,8 +11,9 @@ extends Node2D
 @export_tool_button("Setup Components.") 					var setup_loopables  	 		:= setup_loopable_components
 
 @export_group("Drawing Options.")
-@export var safe_zone_colour: 	Color = Color("db709333")
-@export var region_colour: 		Color = Color("969bd93f")
+@export var safe_zone_colour: 	Color = Color("76b4001d")
+@export var region_colour: 		Color = Color("327aae5e")
+@export var omitted_colour:		Color = Color("25293271")
 
 #@export_group("Loop Component Visibility.")
 #@export_tool_button("Show All Duplicates") var show_dupes
@@ -65,6 +66,7 @@ func _draw() -> void:
 				
 		# region size.
 		draw_rect(Rect2(-(world_size) / 2, world_size), region_colour)
+		draw_rect(Rect2(-(world_size) / 2 + SAFE_ZONE / 4, world_size - SAFE_ZONE / 2), omitted_colour)
 
 # --- 									
 func set_world_size(_size: Vector2) -> void:
@@ -94,5 +96,5 @@ func setup_loopable_components() -> void:
 	
 	# TODO: rework..
 	# band-aid fix.
-	update_loopable_collection()
+	update_loopable_collection.call_deferred()
 	

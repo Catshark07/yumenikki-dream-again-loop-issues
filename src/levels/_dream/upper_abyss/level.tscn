@@ -155,7 +155,7 @@ turbulence_noise_scale = 8.0
 turbulence_influence_min = 0.02
 turbulence_influence_max = 0.07
 
-[sub_resource type="Resource" id="Resource_2k60w"]
+[sub_resource type="Resource" id="Resource_ko0ej"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("11_s1u5h")
@@ -239,17 +239,15 @@ process_material = SubResource("ParticleProcessMaterial_5ote5")
 y_sort_enabled = true
 
 [node name="to_docks" parent="y_order" instance=ExtResource("17_uike6")]
+process_mode = 3
 position = Vector2(208, 72)
-collision_layer = 2147483650
 collision_mask = 3221225472
 
-[node name="traversal" parent="y_order/to_docks/on_interact/travel_to_scene" index="0"]
+[node name="travel_to_scene" parent="y_order/to_docks/on_interact" index="3"]
 scene_path = "uid://b7ixvvfnudrtd"
-connection_id = "docks"
 
 [node name="spawn_point" parent="y_order/to_docks" index="1"]
 scene_path = "uid://b7ixvvfnudrtd"
-connection_id = "docks"
 
 [node name="renderer" parent="y_order/to_docks" index="2"]
 texture = ExtResource("10_ko0ej")
@@ -258,10 +256,13 @@ frame_h_count = 1
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("2_tq601")]
 position = Vector2(240, 144)
-values = SubResource("Resource_2k60w")
+values = SubResource("Resource_ko0ej")
 
-[node name="bubbles" parent="y_order/madotsuki/sprite_container" index="3" instance=ExtResource("12_yd7mj")]
+[node name="bubbles" parent="y_order/madotsuki/sprite_container" index="2" instance=ExtResource("12_yd7mj")]
 z_index = 1
+
+[node name="pl_loop" parent="y_order/madotsuki" index="11" node_paths=PackedStringArray("children")]
+children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
 
 [node name="world" type="Node2D" parent="y_order"]
 

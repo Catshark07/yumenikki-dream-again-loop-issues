@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://btg3e240ltjxx"]
+[gd_scene load_steps=38 format=3 uid="uid://btg3e240ltjxx"]
 
 [ext_resource type="Texture2D" uid="uid://je4i3rhyniaw" path="res://src/images/panorama/morning_sun.png" id="2_6sr68"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_uj1l6"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_button.gd" id="10_d7jyh"]
 [ext_resource type="LabelSettings" uid="uid://dbxux4dchsxxt" path="res://src/global_label_settings.tres" id="11_vexp4"]
 [ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="12_msekq"]
+[ext_resource type="Script" uid="uid://bvqa07cv77e0q" path="res://src/systems/sequencing/sequence/game/on_button_press.gd" id="12_ppdc2"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="13_37vgk"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="14_d7jyh"]
 [ext_resource type="AudioStream" uid="uid://qlkbvjfnvqll" path="res://src/audio/bgm/may_yta_candlebath.ogg" id="15_d7jyh"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="15_vexp4"]
@@ -79,6 +81,7 @@ shader_parameter/opacity = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_ppdc2")
 shader_parameter/scroll_speed = 0.01499999687072999
 shader_parameter/gradient = SubResource("GradientTexture2D_vexp4")
+shader_parameter/rot_radians = 0.0
 shader_parameter/ray_strength = 1.225
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jissf"]
@@ -95,7 +98,7 @@ fill_to = Vector2(1, 0.7)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ppdc2"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7jyh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -105,7 +108,7 @@ shader_parameter/angle = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_d7jyh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_msekq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7o6ls"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -115,7 +118,7 @@ shader_parameter/angle = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_vexp4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppdc2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_46psg"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -125,7 +128,7 @@ shader_parameter/angle = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_msekq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_riren"]
 shader = ExtResource("7_dwoed")
 shader_parameter/first_color = Color(0, 0, 0, 1)
 shader_parameter/second_color = Color(0, 0, 0, 0)
@@ -252,7 +255,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/new_game/main_container"]
-material = SubResource("ShaderMaterial_d7jyh")
+material = SubResource("ShaderMaterial_wx1ft")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
@@ -376,6 +379,20 @@ shortcut_feedback = true
 shortcut_in_tooltip = true
 script = null
 
+[node name="on_button_press" type="Node" parent="ui/theme_applier/menu/new_game" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
+script = ExtResource("12_ppdc2")
+order = [NodePath("go_to_prologue")]
+front = NodePath("go_to_prologue")
+back = NodePath("go_to_prologue")
+metadata/_custom_type_script = "uid://bvqa07cv77e0q"
+
+[node name="go_to_prologue" type="Node" parent="ui/theme_applier/menu/new_game/on_button_press"]
+process_mode = 4
+script = ExtResource("13_37vgk")
+scene_path = "uid://bv5x4rpikgrho"
+metadata/_custom_type_script = "uid://c0ymap76lrhgr"
+
 [node name="credits" type="Control" parent="ui/theme_applier/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display")]
 custom_minimum_size = Vector2(60, 18)
 layout_mode = 2
@@ -402,7 +419,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/credits/main_container"]
-material = SubResource("ShaderMaterial_msekq")
+material = SubResource("ShaderMaterial_7o6ls")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
@@ -552,7 +569,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/quit_to_desktop/main_container"]
-material = SubResource("ShaderMaterial_ppdc2")
+material = SubResource("ShaderMaterial_46psg")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
@@ -716,7 +733,7 @@ offset_bottom = -18.0
 mouse_filter = 2
 
 [node name="display_bg" type="ColorRect" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container"]
-material = SubResource("ShaderMaterial_wx1ft")
+material = SubResource("ShaderMaterial_riren")
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2

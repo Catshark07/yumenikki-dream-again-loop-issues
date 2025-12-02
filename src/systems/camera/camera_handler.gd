@@ -125,7 +125,7 @@ func set_follow_strategy(strat: STRAT_FOLLOW):
 func set_zoom(_zoom: float) -> void:
 	zoom = _zoom
 	cam.zoom = Vector2(_zoom, _zoom)
-func set_cam_limit(_up: float, _down: float, _right: float, _left: float) -> void: 
+func set_cam_limit(_up: int, _down: int, _right: int, _left: int) -> void: 
 	cam.limit_top = _up
 	cam.limit_bottom = _down
 	cam.limit_right = _right
@@ -164,6 +164,7 @@ func lerp_offset(_offset: Vector2, _ease: Tween.EaseType, _trans: Tween.Transiti
 	offset_tween.set_trans(_trans)
 	
 	offset_tween.tween_method(set_offset, offset, _offset, _dur)
+	await offset_tween.finished
 func lerp_zoom(_zoom: float, _ease: Tween.EaseType, _trans: Tween.TransitionType,  _dur: int) -> void:
 	if zoom_tween: zoom_tween.kill()
 	zoom_tween = marker.create_tween()
@@ -172,6 +173,7 @@ func lerp_zoom(_zoom: float, _ease: Tween.EaseType, _trans: Tween.TransitionType
 	zoom_tween.set_trans(_trans)
 	
 	zoom_tween.tween_method(set_zoom, zoom, _zoom, _dur)
+	await zoom_tween.finished
 
 # ---- shake ----
 func shake(_magnitude: float, _speed: float, _dur: float) -> void: 

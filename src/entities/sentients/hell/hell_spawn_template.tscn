@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://d2oedgst7bbj2"]
+[gd_scene load_steps=35 format=3 uid="uid://d2oedgst7bbj2"]
 
 [ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="1_msj25"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/entities/sb_variables.gd" id="2_qq2br"]
@@ -28,10 +28,9 @@
 [ext_resource type="Script" uid="uid://bknmv5i3gcx3x" path="res://src/systems/sequencing/event/audio/stop_bgm.gd" id="25_44u6n"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="26_wth1a"]
 [ext_resource type="AudioStream" uid="uid://t2otpiwgcxxf" path="res://src/audio/se/se_warp.wav" id="27_7lht0"]
-[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="28_phrrf"]
-[ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="29_k0yu5"]
+[ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="29_nfn48"]
 
-[sub_resource type="Resource" id="Resource_wvkxd"]
+[sub_resource type="Resource" id="Resource_nfn48"]
 resource_local_to_scene = true
 resource_name = "sb_variables"
 script = ExtResource("2_qq2br")
@@ -45,20 +44,16 @@ size = Vector2(13, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7ttc"]
 size = Vector2(16, 16)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fsbo"]
-shader = ExtResource("29_k0yu5")
-shader_parameter/progress = 0.0
-
-[sub_resource type="Gradient" id="Gradient_egpdt"]
-offsets = PackedFloat32Array(0, 0.1829653, 1)
-colors = PackedColorArray(0.91, 0, 0.18200026, 0, 0.91394824, 0, 0.18283296, 1, 0, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_w2ffn"]
+offsets = PackedFloat32Array(0, 0.24921136, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1)
 
 [node name="hellspawn" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm", "sprite_renderer", "shadow_renderer")]
 script = ExtResource("1_msj25")
 nav_agent = NodePath("nav")
 stance_fsm = NodePath("stance_fsm")
 behaviour_fsm = NodePath("behaviour_fsm")
-values = SubResource("Resource_wvkxd")
+values = SubResource("Resource_nfn48")
 sprite_renderer = NodePath("sprite_renderer")
 shadow_renderer = NodePath("shadow_renderer")
 
@@ -181,23 +176,24 @@ metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 y_sort_enabled = true
 script = ExtResource("21_y4e4a")
 target = NodePath("..")
-children = [NodePath("../shadow_renderer"), NodePath("../sprite_renderer"), NodePath("../sb_components"), NodePath("../coll"), NodePath("../nav"), NodePath("../stance_fsm"), NodePath("../behaviour_fsm"), NodePath("../sound_player"), NodePath("../to_hell")]
+children = [NodePath("../shadow_renderer"), NodePath("../sprite_renderer"), NodePath("../sb_components"), NodePath("../coll"), NodePath("../nav"), NodePath("../stance_fsm"), NodePath("../behaviour_fsm"), NodePath("../sound_player"), NodePath("../hell_interaction")]
 do_not_dupe = true
 do_not_include_occlusions = true
 metadata/_custom_type_script = "uid://bnajku7ggsr2q"
 
-[node name="to_hell" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
+[node name="hell_interaction" type="Area2D" parent="." node_paths=PackedStringArray("rect")]
+process_mode = 3
 collision_layer = 2
 collision_mask = 1073741824
 script = ExtResource("22_nfn48")
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="rect" type="CollisionShape2D" parent="to_hell"]
+[node name="rect" type="CollisionShape2D" parent="hell_interaction"]
 shape = SubResource("RectangleShape2D_m7ttc")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="on_interact" type="Node" parent="to_hell" node_paths=PackedStringArray("order", "front", "back")]
+[node name="on_interact" type="Node" parent="hell_interaction" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("23_w2ffn")
 order = [NodePath("request_cutscene_start"), NodePath("hell_enter_trans")]
@@ -205,13 +201,13 @@ front = NodePath("request_cutscene_start")
 back = NodePath("hell_enter_trans")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="request_cutscene_start" type="Node" parent="to_hell/on_interact" node_paths=PackedStringArray("next")]
+[node name="request_cutscene_start" type="Node" parent="hell_interaction/on_interact" node_paths=PackedStringArray("next")]
 script = ExtResource("24_w2ffn")
 event_id = "CUTSCENE_START_REQUEST"
 next = NodePath("../hell_enter_trans")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="hell_enter_trans" type="Node" parent="to_hell/on_interact" node_paths=PackedStringArray("order", "front", "back", "prev")]
+[node name="hell_enter_trans" type="Node" parent="hell_interaction/on_interact" node_paths=PackedStringArray("order", "front", "back", "prev")]
 script = ExtResource("24_wvkxd")
 order = [NodePath("stop_bgm"), NodePath("play_sound"), NodePath("pulse_red")]
 front = NodePath("stop_bgm")
@@ -219,13 +215,13 @@ back = NodePath("pulse_red")
 prev = NodePath("../request_cutscene_start")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="stop_bgm" type="Node" parent="to_hell/on_interact/hell_enter_trans" node_paths=PackedStringArray("next")]
+[node name="stop_bgm" type="Node" parent="hell_interaction/on_interact/hell_enter_trans" node_paths=PackedStringArray("next")]
 script = ExtResource("25_44u6n")
 wait_til_finished = false
 next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://bknmv5i3gcx3x"
 
-[node name="play_sound" type="Node" parent="to_hell/on_interact/hell_enter_trans" node_paths=PackedStringArray("prev", "next")]
+[node name="play_sound" type="Node" parent="hell_interaction/on_interact/hell_enter_trans" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("26_wth1a")
 sound = ExtResource("27_7lht0")
@@ -234,10 +230,9 @@ prev = NodePath("../stop_bgm")
 next = NodePath("../pulse_red")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="pulse_red" type="Node" parent="to_hell/on_interact/hell_enter_trans" node_paths=PackedStringArray("prev")]
+[node name="pulse_red" type="Node" parent="hell_interaction/on_interact/hell_enter_trans" node_paths=PackedStringArray("prev")]
 process_mode = 4
-script = ExtResource("28_phrrf")
-fade_shader = SubResource("ShaderMaterial_0fsbo")
-gradient = SubResource("Gradient_egpdt")
+script = ExtResource("29_nfn48")
+gradient = SubResource("Gradient_w2ffn")
 prev = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://d4mfbplpq5p5d"

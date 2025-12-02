@@ -59,10 +59,6 @@ const COR_NODES = [0, 2, 5, 7]
 		for i in range(dupe_nodes.size()):
 			if i in COR_NODES and dupe_nodes[i] != null: dupe_nodes[i].visible = !_hide
 
-var centre_row_visible: bool = false
-var centre_col_visible: bool = false
-var centre_cor_visible: bool = false
-
 @export_subgroup("Misc.")
 @export var do_not_include_occlusions: 	bool = false
 @export var keep_child_nodes: 			bool = false
@@ -82,18 +78,18 @@ func _ready() -> void:
 	do_not_update = do_not_update
 	
 	# TODO: needs ton of work.
-	if !Engine.is_editor_hint():
-		for i in range(occlusions.size()):
-			
-			var occlusion = occlusions[i]
-			var dupe_node = dupe_nodes[i]
-			
-			if dupe_node != null and occlusion != null:
-				
-				Utils.connect_to_signal(__hide_line_dupe_nodes.bind(i, true), 	occlusion.screen_exited)
-				Utils.connect_to_signal(__hide_line_dupe_nodes.bind(i, false), 	occlusion.screen_entered)
-				
-			__hide_line_dupe_nodes(-1, true)
+	#if !Engine.is_editor_hint():
+		#for i in range(occlusions.size()):
+			#
+			#var occlusion = occlusions[i]
+			#var dupe_node = dupe_nodes[i]
+			#
+			#if dupe_node != null and occlusion != null:
+				#
+				#Utils.connect_to_signal(__hide_line_dupe_nodes.bind(i, true), 	occlusion.screen_exited)
+				#Utils.connect_to_signal(__hide_line_dupe_nodes.bind(i, false), 	occlusion.screen_entered)
+				#
+			#__hide_line_dupe_nodes(-1, true)
 
 func _enter_tree() -> void:	
 	Utils.u_add_to_group(self, LOOPABLE_ID)
@@ -124,32 +120,36 @@ func setup_loop_nodes(_world_size: Vector2) -> void:
 		
 		# - we get any dupes already existent.
 		# - if it already exists, then skip it.
-		var potential_dupe = Utils.get_child_node_or_null(self, "loop_%s_%s" % [target.name, i])
-		if 		potential_dupe != null and dupe_nodes.has(potential_dupe): 	continue
-		elif 	potential_dupe != null: dupe_nodes[i] = potential_dupe; 	continue
+		var dupe = Utils.get_child_node_or_null(self, "loop_%s_%s" % [target.name, i])
+		
+		if 		dupe != null or dupe_nodes.has(dupe): 	
+			dupe_nodes[i] = dupe
+			continue
 		
 		# -- 
 		if 	first_dupe == null:
 			first_dupe = Utils.add_child_node(self, target.duplicate(), "loop_%s_%s" % [target.name, i])
 			first_dupe.visible = true
-			potential_dupe = first_dupe
+			dupe = first_dupe
 		else:
-			potential_dupe = Utils.add_child_node(self, first_dupe.duplicate(), "loop_%s_%s" % [target.name, i])
+			dupe = Utils.add_child_node(self, first_dupe.duplicate(), "loop_%s_%s" % [target.name, i])
 		
-		if !keep_child_nodes: for c in potential_dupe.get_children(): c.queue_free() 
+		if keep_child_nodes: 
+			var duped_loop: LoopableComponent = dupe.get_node_or_null(str(self.name))
+			if	duped_loop in dupe.get_children(): 
+				duped_loop.region = null
+				duped_loop.free()
 		else: 
-			var potential_duped_loop: LoopableComponent = potential_dupe.get_node_or_null(str(self.name))
-			if	potential_duped_loop in potential_dupe.get_children(): 
-				potential_duped_loop.region = null
-				potential_duped_loop.free()
-				
-		for c in potential_dupe.get_children(): 
+			for c in dupe.get_children(): c.free() 
+	
+		for c in dupe.get_children(): 
 			c.owner = self.owner
 			c.set_meta("_edit_lock_", true)
 			
-		dupe_nodes[i] = potential_dupe
+		dupe_nodes[i] = dupe
 		dupe_nodes[i].set_meta("_edit_lock_", true)
 		
+	# -- oclussions.
 	if !do_not_include_occlusions:
 		for i in range(8):
 			if 	dupe_nodes[i] != null:
@@ -157,7 +157,10 @@ func setup_loop_nodes(_world_size: Vector2) -> void:
 				
 				if 	occlusions[i] == null:
 					occlusions[i] = Utils.add_child_node(dupe_nodes[i], VisibleOnScreenNotifier2D.new(), "occlusion")
+				
+				occlusions[i].self_modulate.a = 0.2
 	update_duplicates()
+	__set_size(_world_size)
 	
 func update_duplicates() -> void: 
 	for i in range(dupe_nodes.size()):
@@ -190,33 +193,33 @@ func __set_size(_size: Vector2) -> void:
 			if 	occlusions[i] == null: continue
 			occlusions[i].rect.size = _size * 1.25
 			occlusions[i].rect.position = -occlusions[i].rect.size / 2
-func __hide_line_dupe_nodes(_idx: int, _hide: bool = true) -> void:
-	var dupes_idx = []
-	var node = null
-	if (_idx in ROW_NODES or _idx == -1) and !hide_centre_row: 		dupes_idx.append_array(ROW_NODES)
-	if (_idx in COL_NODES or _idx == -1) and !hide_centre_column: 	dupes_idx.append_array(COL_NODES)
-	if (_idx in COR_NODES or _idx == -1) and !hide_corner_entries: 	dupes_idx.append_array(COR_NODES)
-	
-	for i in dupes_idx:
-		for k in children: 
-			
-			if k != null: 
-				node = Utils.get_child_node_or_null(dupe_nodes[i], k.name)
-				if node == null: return
-				
-				match _hide:
-					true: 	node.hide()
-					false: 	node.show()
-func __hide_dupe_nodes(_idx: int, _hide: bool = true) -> void:
-	for k in children: 
-		if k != null: 
-			var node = Utils.get_child_node_or_null(dupe_nodes[_idx], k.name)
-			if node == null: 
-				return
-			
-			match _hide:
-				true: 	node.hide()
-				false: 	node.show()
+#func __hide_line_dupe_nodes(_idx: int, _hide: bool = true) -> void:
+	#var dupes_idx = []
+	#var node = null
+	#if (_idx in ROW_NODES or _idx == -1) and !hide_centre_row: 		dupes_idx.append_array(ROW_NODES)
+	#if (_idx in COL_NODES or _idx == -1) and !hide_centre_column: 	dupes_idx.append_array(COL_NODES)
+	#if (_idx in COR_NODES or _idx == -1) and !hide_corner_entries: 	dupes_idx.append_array(COR_NODES)
+	#
+	#for i in dupes_idx:
+		#for k in children: 
+			#
+			#if k != null: 
+				#node = Utils.get_child_node_or_null(dupe_nodes[i], k.name)
+				#if node == null: return
+				#
+				#match _hide:
+					#true: 	node.hide()
+					#false: 	node.show()
+#func __hide_dupe_nodes(_idx: int, _hide: bool = true) -> void:
+	#for k in children: 
+		#if k != null: 
+			#var node = Utils.get_child_node_or_null(dupe_nodes[_idx], k.name)
+			#if node == null: 
+				#return
+			#
+			#match _hide:
+				#true: 	if !occlusions[_idx].is_on_screen(): node.hide()
+				#false: 	node.show()
 
 # - misc.
 func disable_loop() -> void: 	do_not_loop = true

@@ -72,7 +72,7 @@ seamless = true
 [sub_resource type="Gradient" id="Gradient_ldcx7"]
 colors = PackedColorArray(1, 1, 1, 0.533333, 1, 1, 1, 0.0177778)
 
-[sub_resource type="Resource" id="Resource_ldcx7"]
+[sub_resource type="Resource" id="Resource_8w5wg"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("10_f2u12")
@@ -269,7 +269,7 @@ connection_id = "A_section"
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("7_3ko4r")]
 position = Vector2(-208, 256)
-values = SubResource("Resource_ldcx7")
+values = SubResource("Resource_8w5wg")
 
 [node name="meadows_tiles" type="TileMapLayer" parent="y_order"]
 z_index = 1
@@ -414,7 +414,7 @@ metadata/_custom_type_script = "uid://vk574kc3l7av"
 
 [node name="notification" type="Node" parent="y_order/concealed_bike/hidden_bike/on_interact/prompt/yes" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("15_8vi0b")
-texts = PackedStringArray("[wave]you got an effect! access the inventory (ALT KEY) to use your effect.[/wave]")
+texts = PackedStringArray("[wave amp=2]you got an effect! access the inventory (ALT KEY) to use your effect.[/wave]")
 sound_override = null
 prev = NodePath("../play_sound")
 next = NodePath("../set_interactable_inactive")

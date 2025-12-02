@@ -3,8 +3,6 @@ extends Node
 
 var ignore_warnings: bool = true
 
-signal node_entered_grouo	(node, group_id)
-signal node_exited_group	(node, group_id)
 
 func is_within_exclusive(_num: float, _min: float, _max: float) -> bool:
 	return ((_num < _min) and (_num > _max))
@@ -61,7 +59,7 @@ func get_child_node_or_null(
 func connect_to_signal(
 	_conectee: Callable,
 	_signal: Signal,
-	_flags: Object.ConnectFlags = 0,
+	_flags: int = 0,
 	_allow_lambda: bool = true) -> void:
 	
 	if _signal.is_connected(_conectee):
@@ -88,7 +86,6 @@ func u_add_to_group(_node: Node, _name: String, _persist: bool = false) -> void:
 		push("GLOBAL UTILS: Node %s is already in group %s!" % [_node, _name])
 		return
 	_node.add_to_group(_name, _persist)
-	node_entered_grouo.emit()
 func u_remove_from_group(_node: Node, _name: String) -> void:
 	if 	_node.is_in_group(_name):
 		_node.remove_from_group(_name)

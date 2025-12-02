@@ -1,6 +1,8 @@
 class_name BGMPlayer
 extends SoundPlayer
 
+enum BUS {MUSIC, AMBIENCE, ALL}
+
 ## The 'Music Container' is going to act as a 
 ## container for any ambience stream player instances.
 const MUSIC_DICT := {
@@ -23,12 +25,11 @@ func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	scene_change_request_listener.do_on_notify(fade_out, "SCENE_CHANGE_REQUEST")
-
 func play_sound(
 	_stream: AudioStream, 
 	_vol: 	float = 1, 
 	_pitch: float = 1,
-	_forget_after: bool = false) -> void:
+	_abrupt: bool = false) -> void:
 	
 	if playing: set_music_dict(pending_music, _stream, _vol, _pitch)
 		
@@ -43,7 +44,8 @@ func play_sound(
 		set_pitch(get_bgm_pitch())
 		set_stream(get_bgm_stream()) 
 		
-		fade_in()
+		if _abrupt: volume_db = get_bgm_volume()
+		else:		fade_in()			
 		self.play()
 
 func set_music_dict(
@@ -72,8 +74,11 @@ func tween_volume(_from: float, _vol: float) -> void:
 	volume_db = _from
 	vol_tween.tween_method(set_volume, _from, _vol, 2)
 
+	await vol_tween.finished
 func fade_in() -> void: 	tween_volume(ZERO_VOLUME_DB, get_bgm_volume())
-func fade_out() -> void: 	tween_volume(get_bgm_volume(), ZERO_VOLUME_DB)
+func fade_out() -> void: 	
+	await tween_volume(get_bgm_volume(), ZERO_VOLUME_DB)
+	stream = null
 
 # ---- logic ----
 func same_as_previous() -> bool: 

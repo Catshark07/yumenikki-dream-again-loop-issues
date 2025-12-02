@@ -1,3 +1,4 @@
+@tool
 extends SceneNode
 
 # -- 
@@ -32,7 +33,7 @@ func _ready() -> void:
 	
 	timer.autostart = false
 	timer.one_shot = true
-	timer.wait_time = 15
+	timer.wait_time = 10
 	
 	Utils.connect_to_signal(
 		func(): SceneManager.change_scene_to(load(Game.MENU_SCENE)), 

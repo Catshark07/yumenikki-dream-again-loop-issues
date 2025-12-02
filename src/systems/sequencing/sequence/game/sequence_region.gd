@@ -18,8 +18,8 @@ func _ready() -> void:
 	if exit_sequence == null: exit_sequence = Utils.add_child_node(self, Sequence.new(), "exit")
 	
 	if area_region != null and area_region is AreaRegion:
-		
-		(area_region as AreaRegion).player_enter_handle.connect(func(_pl): enter_sequence._execute())
-		(area_region as AreaRegion).player_exit_handle.connect(func(_pl): exit_sequence._execute())
+		Utils.connect_to_signal(__execute_enter, (area_region as AreaRegion).player_enter)
+		Utils.connect_to_signal(__execute_exit, (area_region as AreaRegion).player_exit)
 
-	process_mode = Node.PROCESS_MODE_DISABLED
+func __execute_enter() -> void:  	if enter_sequence != null: enter_sequence.execute()
+func __execute_exit() -> void:  	if exit_sequence != null: exit_sequence.execute()

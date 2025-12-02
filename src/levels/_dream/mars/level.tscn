@@ -114,9 +114,6 @@ seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
 load_transition = SubResource("ShaderMaterial_qwqwu")
 unload_transition = SubResource("ShaderMaterial_2vde5")
-scene_objects = Array[Object]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("10_dc5l0"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
-, Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("10_dc5l0"),"time_elapsed":0.0,"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"priority":0,"bail_requested":false,"skip_invalid_events":false,"print_debug":true,"deferred":true,"wait_til_finished":true,"skip_warning":false,"call_count":0,"call_limit":0)
-])
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("5_34rio")]

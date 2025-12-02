@@ -9,7 +9,7 @@ extends Event
 
 @export_group("Properties.")
 @export var sentient: SentientBase
-@export var heading: SentientBase.compass_headings
+@export var heading: SentientBase.compass_headings = SentientBase.compass_headings.SOUTH
 @export var change_heading: bool = false
 
 @export var marker_A: 	Marker2D
@@ -51,6 +51,6 @@ func _execute	() -> void:
 		true: 	sentient.global_position += Vector2(dis_vector)
 		_:		sentient.global_position = marker_B.global_position
 	
-	if change_heading: sentient.heading = heading
+	if change_heading: 		sentient.heading = heading
 func _validate() -> bool: 
 	return sentient != null

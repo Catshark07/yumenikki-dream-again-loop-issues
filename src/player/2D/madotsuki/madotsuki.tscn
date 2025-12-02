@@ -300,6 +300,6 @@ metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 y_sort_enabled = true
 script = ExtResource("35_bfa5j")
 target = NodePath("..")
-children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
+children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../sound_player")]
 do_not_dupe = true
 metadata/_custom_type_script = "uid://bnajku7ggsr2q"

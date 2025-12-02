@@ -67,6 +67,7 @@ func _input_pass(event: InputEvent) -> void:
 		
 	if Input.is_action_just_pressed("ui_favourite_effect"): 
 		if !equipped: 	
+			print(Player.Instance.equipment_favourite)
 			change_effect(sentient, Player.Instance.equipment_favourite)
 		else:	
 			sentient.components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(sentient, true)		

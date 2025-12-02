@@ -7,7 +7,7 @@ enum type {MESSAGE, DIALOGUE, PROMPT}
 @export_multiline var texts: PackedStringArray
 
 @export_group("Overrides.")
-@export var sound_override: AudioStream = MessageDisplay.DEFAULT_SOUND
+@export var sound_override: AudioStream = null
 @export var font_override: Font
 @export var font_colour_override: Color = Color.WHITE
 @export var speed_override: float = 1
@@ -32,6 +32,7 @@ func _execute() -> void:
 		type.PROMPT:  	
 			type_to_display 	= MessageDisplayManager.instance.prompt_display  
 			type_to_display.set_options(prompt_options, normal_colour, hover_colour, disabled_colour, press_colour)
+			Utils.connect_to_signal(prioritize_option_sequence, type_to_display.option_chosen)
 		
 	if hide_panel:  type_to_display.self_modulate.a = 0
 	else:			type_to_display.self_modulate.a = 1
@@ -45,6 +46,10 @@ func _execute() -> void:
 		panel_style_override)
 		
 	await type_to_display.finished
+	
+func prioritize_option_sequence(_seq: Sequence) -> void:
+	next = _seq
+	
 func _validate() -> bool:
 	return !texts.is_empty()
 

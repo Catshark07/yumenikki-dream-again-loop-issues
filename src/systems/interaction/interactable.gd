@@ -11,27 +11,21 @@ extends AreaRegion
 		can_interact = _can_interact
 		set_collision_layer_value(2, _can_interact)
 
-@export var area: 			bool = true:
-	set(_a): 
-		area = _a
-		if centre_trigger: 	set_collision_mask_value(32, _a)
-		else:				set_collision_mask_value(31, _a)
+@export var area: 			bool = true
 @export_group("Area Triggers")
 @export var area_trgger: 	bool = false:
 	set(_trigger):
 		area_trgger = _trigger
-		if _trigger and area: 	
-			set_collision_mask_value(32, !_trigger)
+		if area: 	
+			set_collision_mask_value(32, false)
 			set_collision_mask_value(31, _trigger)
 @export var centre_trigger:	bool = false:
 	set(_trigger):
 		centre_trigger = _trigger
-		if _trigger and area: 	
+		if area: 	
 			set_collision_mask_value(31, false)
-			set_collision_mask_value(32, true)
-		elif area: 					
-			set_collision_mask_value(31, true)
-			set_collision_mask_value(32, false)
+			set_collision_mask_value(32, _trigger)
+
 # - signals
 signal interacted
 signal fail
@@ -40,10 +34,11 @@ signal success
 func _ready() -> void:	
 	super() 
 	set_collision_layer_value(2, can_interact)
+	set_collision_mask_value(30, false)
 	
 func _setup() -> void:
-	set_physics_process(false)
-	set_process(false)
+	set_physics_process	(false)
+	set_process			(false)
 
 func interact() -> void:
 	if only_once and can_interact:
@@ -57,4 +52,5 @@ func interact() -> void:
 func _interact() -> void: pass
 
 func _handle_player_enter() -> void: 
-	if area_trgger or centre_trigger: self.interact()
+	if area_trgger or centre_trigger: 
+		self.interact()

@@ -20,6 +20,8 @@ var bail_requested: 				bool = false
 @export var front: Node
 @export var back:  Node
 
+var curr: Event
+
 # - signals
 signal success
 signal fail
@@ -42,8 +44,8 @@ func initialize() -> void:
 
 	for i: int in range(order.size()):
 		var j := i + 1
-		var _curr: 	Node = order[i]
-		var _next: 	Node  = null
+		var _curr: 	Event = order[i]
+		var _next: 	Event  = null
 		
 		if j < order.size():
 			_next = order[j]
@@ -60,13 +62,13 @@ func _execute() -> void:
 		return
 	
 	# - we iterate thru the events..
-	var curr = front
+	curr = front
 	while curr != null:
 		# - make sure that the child is of type Event.
 		if curr is Event:
 			
 			if curr.get_instance_id() in marked_invalid or curr.skip: 
-				if curr.has_next(): curr = curr.next
+				if curr.has_next() and curr != self: curr = curr.next
 				else:				break
 			
 			if !curr.is_active and !curr.is_finished: curr.execute() 
@@ -81,6 +83,7 @@ func _execute() -> void:
 		if curr.has_next(): curr = curr.next
 		else:				break
 		
+	curr = null
 	end()
 	
 func _cancel() -> void:
@@ -88,7 +91,7 @@ func _cancel() -> void:
 func _end() -> void: 
 	if 	bail_requested: 
 		bail_requested = false
-		cancelled.emit.call_deferred()
+		__call_canceled.call_deferred()
 			
 func _validate() -> bool:
 	# - we are going to validate that every single event is happy and satisifed:
@@ -133,6 +136,7 @@ func let_children_instant() -> void:
 		if i != null: i.wait_til_finished = false
 
 # -- 
-func append(_event: Event, _id_name: String) -> void: 
+func append(_event: Event, _id_name: String, _wait_til_finished: bool = true) -> void: 
 	Utils.add_child_node(self, _event, _id_name)
+	_event.wait_til_finished = _wait_til_finished
 	order.append(_event)

@@ -1,5 +1,6 @@
 @tool
 
+class_name EVN_SetProperty
 extends Event
 
 @export var node: Node

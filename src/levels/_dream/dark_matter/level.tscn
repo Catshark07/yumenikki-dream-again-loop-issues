@@ -73,11 +73,10 @@ shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 
-[node name="dark_matter" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
+[node name="dark_matter" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_lly3w")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_srb6u")
 unload_transition = SubResource("ShaderMaterial_feagi")
 

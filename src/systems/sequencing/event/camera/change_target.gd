@@ -1,3 +1,4 @@
+class_name EVN_CamChangeTarget
 extends Event
 
 @export var target: CanvasItem

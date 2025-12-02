@@ -5,7 +5,6 @@ const DEFAULT_SHADER: Shader 		= preload("res://src/shaders/transition/tr_fade.g
 const DEFAULT_GRADIENT: Gradient 	= preload("res://src/main/default_transition_gradient.tres")
 
 var gradient: Gradient
-var default_texture: GradientTexture1D
 
 var fade_in_shader: 	ShaderMaterial
 var fade_out_shader: 	ShaderMaterial
@@ -23,13 +22,12 @@ var ease_type: 			Tween.EaseType = Tween.EASE_OUT
 var duration: float = 1
 
 func _ready() -> void:
+	
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
-	default_texture = GradientTexture1D.new()
-	default_texture.gradient = Gradient.new()
-	default_texture.gradient.colors = PackedColorArray([Color.WHITE])
-	
-	texture = default_texture
+	texture = GradientTexture1D.new()
+	texture.gradient = Gradient.new()
+	texture.gradient.colors = PackedColorArray([Color.WHITE])
 	
 	self.z_index = 99
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -42,7 +40,7 @@ func _ready() -> void:
 	fade_in_shader = default_shader
 	fade_out_shader = default_shader
 	
-	self.size = Vector2(Application.get_viewport_dimens())
+	self.set_size.call_deferred(Vector2(Application.get_viewport_dimens()))
 	self.material = default_shader
 	self.visible = false
 

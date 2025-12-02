@@ -13,10 +13,9 @@ script = ExtResource("2_xbcqx")
 [node name="template_neutral" instance=ExtResource("1_rk1pp")]
 values = SubResource("Resource_xbcqx")
 
-[node name="sprite_renderer" parent="." index="0"]
+[node name="sprite_renderer" parent="." index="1"]
 texture = ExtResource("3_1rcer")
 hframes = 4
-frame = 3
 script = ExtResource("4_jtppu")
 autoplay = true
 loop = true
@@ -25,4 +24,9 @@ end_frame = false
 fps = 6.0
 frame_dimensions = Vector2i(16, 32)
 frame_h_count = 4
-progress = 3
+
+[node name="behaviour_fsm" parent="." index="6" node_paths=PackedStringArray("initial_state")]
+initial_state = NodePath("WANDER")
+
+[node name="sb_loop" parent="." index="8" node_paths=PackedStringArray("children")]
+children = [NodePath("../shadow_renderer"), NodePath("../sprite_renderer"), NodePath("../sb_components"), NodePath("../coll"), NodePath("../nav"), NodePath("../stance_fsm"), NodePath("../behaviour_fsm"), NodePath("../sound_player")]

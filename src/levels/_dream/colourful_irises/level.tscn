@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=4 uid="uid://b5h2bldsnmdsb"]
+[gd_scene load_steps=49 format=4 uid="uid://b5h2bldsnmdsb"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_vndl4"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="3_4yua0"]
@@ -6,21 +6,17 @@
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="5_bsomg"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_jx2yo"]
 [ext_resource type="Shader" uid="uid://b4qcyrwpo36fo" path="res://src/shaders/panorama/distortion_texture.gdshader" id="5_nqkx8"]
-[ext_resource type="Resource" uid="uid://ncax1yyo23go" path="res://src/player/2D/madotsuki/effects/neon/neon.tres" id="5_yu80x"]
 [ext_resource type="Texture2D" uid="uid://cm6iimafcot25" path="res://src/images/panorama/face.png" id="6_hdfwf"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="7_4yua0"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="7_gg2wt"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="8_bwsrp"]
-[ext_resource type="Resource" uid="uid://b3ej66fhp7a0e" path="res://src/player/2D/madotsuki/effects/cat/cat.tres" id="8_yu80x"]
 [ext_resource type="TileSet" uid="uid://b7vdcqrtnh77e" path="res://src/levels/__ignore/tile_set/world_tile_sets/colourful_irises.tres" id="9_n1xg1"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="9_q6f27"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="12_4yua0"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="13_3vpbd"]
-[ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/sequencing/sequence/game/sequence_region.gd" id="13_bwsrp"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="13_xm48m"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="14_8vxfw"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="15_s5ewf"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="16_v680p"]
 [ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/entities/effects/_template_effect_collect.tscn" id="17_bwsrp"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="18_3pj81"]
 [ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/2D/madotsuki/effects/medamude/medamaude.tres" id="18_epmdn"]
@@ -31,7 +27,8 @@
 [ext_resource type="AudioStream" uid="uid://cdmrrvgctc6n8" path="res://src/audio/se/se_phase.wav" id="21_y6rev"]
 [ext_resource type="Script" uid="uid://d1ojbn5jneejv" path="res://src/systems/sequencing/event/node/set_property.gd" id="22_r2b8w"]
 [ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/sequencing/event/message/open_message.gd" id="26_uoh1u"]
-[ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/sequencing/event/player/append_effect.gd" id="30_xqpjc"]
+[ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="29_wagwh"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="30_yu80x"]
 [ext_resource type="Script" uid="uid://b6ilkvabn22lp" path="res://src/systems/sequencing/sequence/conditional/if_expression.gd" id="32_l7mvp"]
 [ext_resource type="Script" uid="uid://cvb48ow8p04j8" path="res://src/systems/sequencing/event/call_external_event.gd" id="33_k1x66"]
 [ext_resource type="Script" uid="uid://0li2ud4tbkf5" path="res://src/systems/scenes/custom_properties.gd" id="34_k1x66"]
@@ -69,9 +66,6 @@ shader_parameter/texture_scroll = false
 shader_parameter/noise_strength = 0.89499997720097
 shader_parameter/noise_fwd = SubResource("NoiseTexture2D_uiuoe")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yu80x"]
-size = Vector2(1760, 1120)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bwsrp"]
 shader = ExtResource("3_4yua0")
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
@@ -83,12 +77,12 @@ shader = ExtResource("19_r2b8w")
 shader_parameter/progress = 0.0
 
 [sub_resource type="Gradient" id="Gradient_xqpjc"]
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vpbd"]
 size = Vector2(48, 16)
 
-[sub_resource type="Resource" id="Resource_phrqh"]
+[sub_resource type="Resource" id="Resource_uoujl"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("41_dswfw")
@@ -103,7 +97,7 @@ unload_transition = SubResource("ShaderMaterial_rlt31")
 [node name="show_ghost_hands" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back", "prev", "next")]
 process_mode = 4
 script = ExtResource("20_5siph")
-order = [NodePath("play_music"), NodePath("make_visible"), NodePath("play_music2"), NodePath("darken_screen_modulate")]
+order = [NodePath("play_music"), NodePath("make_visible"), NodePath("set_ghost_hands_collision"), NodePath("darken_screen_modulate")]
 front = NodePath("play_music")
 back = NodePath("darken_screen_modulate")
 prev = NodePath("../y_order/medamaude_effect/on_interact/screen_flash/flag_value")
@@ -136,10 +130,10 @@ property_value = false
 new_value = true
 wait_til_finished = false
 prev = NodePath("../play_music")
-next = NodePath("../play_music2")
+next = NodePath("../set_ghost_hands_collision")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_music2" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node", "prev", "next")]
+[node name="set_ghost_hands_collision" type="Node" parent="show_ghost_hands" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
 node = NodePath("../../y_order/ghost_hands")
@@ -175,35 +169,19 @@ property_info = {
 property_value = Color(0.967774, 0.682599, 0.715787, 1)
 new_value = Color(0.760746, 0.232616, 0.315769, 1)
 wait_til_finished = false
-prev = NodePath("../play_music2")
+prev = NodePath("../set_ghost_hands_collision")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("20_5siph")
-order = [NodePath("append_neon"), NodePath("append_cat"), NodePath("apply_panorama"), NodePath("if_medamaude_collected"), NodePath("else")]
-front = NodePath("append_neon")
+order = [NodePath("apply_panorama"), NodePath("if_medamaude_collected"), NodePath("else")]
+front = NodePath("apply_panorama")
 back = NodePath("else")
 
-[node name="append_neon" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
-process_mode = 4
-script = ExtResource("30_xqpjc")
-effect = ExtResource("5_yu80x")
-next = NodePath("../append_cat")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="append_cat" type="Node" parent="on_initial" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("30_xqpjc")
-effect = ExtResource("8_yu80x")
-prev = NodePath("../append_neon")
-next = NodePath("../apply_panorama")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="apply_panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "prev", "next")]
+[node name="apply_panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "next")]
 script = ExtResource("13_xm48m")
 subviewport = NodePath("subviewport")
 pivot = NodePath("pivot")
-prev = NodePath("../append_cat")
 next = NodePath("../if_medamaude_collected")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -262,17 +240,9 @@ script = ExtResource("20_5siph")
 
 [node name="LoopRegion" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects")]
 script = ExtResource("39_xqpjc")
-loop_objects = [null, NodePath("../y_order/world/world"), NodePath("../y_order/madotsuki/pl_loop")]
+loop_objects = [NodePath("../y_order/ghost_hands/dupes"), NodePath("../y_order/world/world"), NodePath("../y_order/madotsuki/pl_loop")]
 world_size = Vector2(1760, 1120)
 metadata/_custom_type_script = "uid://desxt7tbq37sf"
-
-[node name="loop_objects_detect" type="Area2D" parent="LoopRegion"]
-collision_mask = 64
-metadata/_edit_lock_ = true
-
-[node name="detect_shape" type="CollisionShape2D" parent="LoopRegion/loop_objects_detect"]
-shape = SubResource("RectangleShape2D_yu80x")
-metadata/_edit_lock_ = true
 
 [node name="medamaude_flag" type="Node" parent="." node_paths=PackedStringArray("properties_saver")]
 script = ExtResource("34_k1x66")
@@ -306,7 +276,7 @@ y_sort_enabled = true
 [node name="medamaude_effect" parent="y_order" instance=ExtResource("17_bwsrp")]
 position = Vector2(504, 392)
 collision_layer = 1610612738
-collision_mask = 1610612736
+collision_mask = 1073741824
 
 [node name="on_interact" parent="y_order/medamaude_effect" index="0" node_paths=PackedStringArray("order", "back")]
 process_mode = 4
@@ -319,18 +289,21 @@ next = NodePath("../screen_flash")
 [node name="append_effect" parent="y_order/medamaude_effect/on_interact/effect_sequence" index="1"]
 effect = ExtResource("18_epmdn")
 
-[node name="notification" parent="y_order/medamaude_effect/on_interact/effect_sequence" index="3"]
-texts = PackedStringArray()
-
 [node name="screen_flash" type="Node" parent="y_order/medamaude_effect/on_interact" index="1" node_paths=PackedStringArray("order", "front", "back", "prev")]
 script = ExtResource("20_5siph")
-order = [NodePath("flag_value"), NodePath("show_ghost_hands_ext"), NodePath("request_cutscene_start"), NodePath("flash_red"), NodePath("play_sound"), NodePath("notification"), NodePath("request_cutscene_end")]
-front = NodePath("flag_value")
+order = [NodePath("request_cutscene_start"), NodePath("flag_value"), NodePath("show_ghost_hands_ext"), NodePath("flash_red"), NodePath("play_sound"), NodePath("notification"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
 back = NodePath("request_cutscene_end")
 prev = NodePath("../effect_sequence")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="flag_value" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("node", "next")]
+[node name="request_cutscene_start" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("next")]
+script = ExtResource("18_y6rev")
+event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../flag_value")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="flag_value" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("node", "prev", "next")]
 process_mode = 4
 script = ExtResource("22_r2b8w")
 node = NodePath("../../../../../medamaude_flag")
@@ -349,31 +322,25 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "medamaude_found": true
 })
+prev = NodePath("../request_cutscene_start")
 next = NodePath("../show_ghost_hands_ext")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="show_ghost_hands_ext" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
+[node name="show_ghost_hands_ext" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("event", "prev", "next")]
 process_mode = 4
 script = ExtResource("33_k1x66")
+event = NodePath("../../../../../show_ghost_hands")
 prev = NodePath("../flag_value")
-next = NodePath("../request_cutscene_start")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="request_cutscene_start" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
-script = ExtResource("18_y6rev")
-event_id = "CUTSCENE_START_REQUEST"
-prev = NodePath("../show_ghost_hands_ext")
 next = NodePath("../flash_red")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="flash_red" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("18_3pj81")
-fade_type = 1
 fade_shader = SubResource("ShaderMaterial_uoh1u")
 gradient = SubResource("Gradient_xqpjc")
 wait_til_finished = false
-prev = NodePath("../request_cutscene_start")
+prev = NodePath("../show_ghost_hands_ext")
 next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -388,6 +355,8 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="notification" type="Node" parent="y_order/medamaude_effect/on_interact/screen_flash" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("26_uoh1u")
+texts = PackedStringArray("[shake amp=0.325](the air feels overwhelming...)[/shake]")
+sound_override = null
 font_colour_override = Color(0.786281, 0.154866, 0.357413, 1)
 prev = NodePath("../play_sound")
 next = NodePath("../request_cutscene_end")
@@ -399,44 +368,42 @@ event_id = "CUTSCENE_END_REQUEST"
 prev = NodePath("../notification")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="to_eyeball_world" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+[node name="to_footprint_path" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 position = Vector2(-184, -160)
 collision_layer = 2684354562
-collision_mask = 3758096384
+collision_mask = 2147483648
 script = ExtResource("7_gg2wt")
 secret = true
+centre_trigger = true
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="rect" type="CollisionShape2D" parent="y_order/to_eyeball_world"]
+[node name="rect" type="CollisionShape2D" parent="y_order/to_footprint_path"]
 shape = SubResource("RectangleShape2D_3vpbd")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="spawn_point" type="Node2D" parent="y_order/to_eyeball_world" node_paths=PackedStringArray("parent_instead_of_self")]
+[node name="spawn_point" type="Node2D" parent="y_order/to_footprint_path" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 16)
 script = ExtResource("12_4yua0")
-scene_path = "uid://b67q2b5hm6tsu"
-connection_id = "colourful_eyes"
+scene_path = "uid://bj5i2xd4ypqna"
+connection_id = "colourful_irises"
 parent_instead_of_self = NodePath("../..")
 as_sibling = false
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
-[node name="SequenceRegion" type="Node" parent="y_order/to_eyeball_world" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
-process_mode = 4
-script = ExtResource("13_bwsrp")
-enter_sequence = NodePath("enter")
-exit_sequence = NodePath("exit")
-metadata/_custom_type_script = "uid://f4sb25g3gpic"
-
-[node name="enter" type="Node" parent="y_order/to_eyeball_world/SequenceRegion" node_paths=PackedStringArray("order", "front", "back")]
-script = ExtResource("20_5siph")
+[node name="on_enter" type="Node" parent="y_order/to_footprint_path" node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("30_yu80x")
 order = [NodePath("if_pl_moving_north"), NodePath("else_if_pl_moving_north")]
 front = NodePath("if_pl_moving_north")
 back = NodePath("else_if_pl_moving_north")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="if_pl_moving_north" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter" node_paths=PackedStringArray("else_conditional", "order", "front", "back", "next")]
+[node name="if_pl_moving_north" type="Node" parent="y_order/to_footprint_path/on_enter" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
 script = ExtResource("32_l7mvp")
 expression = "pl.velocity.y < 0"
+input_objects = {
+"pl": NodePath("../../../madotsuki")
+}
 else_conditional = NodePath("../else_if_pl_moving_north")
 order = [NodePath("travel_to")]
 front = NodePath("travel_to")
@@ -445,25 +412,28 @@ custom_linked_pointers = true
 next = NodePath("../else_if_pl_moving_north")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="travel_to" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north"]
+[node name="travel_to" type="Node" parent="y_order/to_footprint_path/on_enter/if_pl_moving_north" node_paths=PackedStringArray("spawn_point")]
 process_mode = 4
 script = ExtResource("15_s5ewf")
+scene_path = "uid://bj5i2xd4ypqna"
+connection_id = "colourful_irises"
+spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="spawn" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter/if_pl_moving_north/travel_to" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("16_v680p")
-scene_path = "uid://b67q2b5hm6tsu"
-connection_id = "colourful_eyes"
-spawn_point = NodePath("../../../../../spawn_point")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
-
-[node name="else_if_pl_moving_north" type="Node" parent="y_order/to_eyeball_world/SequenceRegion/enter" node_paths=PackedStringArray("prev")]
+[node name="else_if_pl_moving_north" type="Node" parent="y_order/to_footprint_path/on_enter" node_paths=PackedStringArray("prev")]
 script = ExtResource("20_5siph")
 skip = true
 prev = NodePath("../if_pl_moving_north")
 
-[node name="exit" type="Node" parent="y_order/to_eyeball_world/SequenceRegion"]
-script = ExtResource("20_5siph")
+[node name="to_fly_swarm" parent="y_order" instance=ExtResource("29_wagwh")]
+position = Vector2(192, -424)
+
+[node name="travel_to_scene" parent="y_order/to_fly_swarm/on_interact" index="3"]
+process_mode = 4
+scene_path = "uid://clyak4figgq17"
+
+[node name="spawn_point" parent="y_order/to_fly_swarm" index="1"]
+scene_path = "uid://clyak4figgq17"
 
 [node name="ghost_hands" type="TileMapLayer" parent="y_order"]
 visible = false
@@ -859,8 +829,9 @@ metadata/_edit_lock_ = true
 rect = Rect2(-1100, -700, 2200, 1400)
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("40_uiuoe")]
-position = Vector2(-184, -144)
-values = SubResource("Resource_phrqh")
+position = Vector2(-176, -96)
+values = SubResource("Resource_uoujl")
 
 [editable path="camera"]
 [editable path="y_order/medamaude_effect"]
+[editable path="y_order/to_fly_swarm"]

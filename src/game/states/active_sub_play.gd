@@ -4,9 +4,14 @@ extends State
 
 var sentients_updated: bool = false
 var sentients: Array
+var player: Player
+
+@onready var player_updated := EventListener.new(self, "PLAYER_UPDATED")
 
 func _ready() -> void:
 	dream_component._setup()
+	player = Player.Instance.get_pl()
+	player_updated.do_on_notify(func(): player = EventManager.get_event_param("PLAYER_UPDATED")[0], "PLAYER_UPDATED")
 		
 func _state_enter() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
@@ -32,3 +37,5 @@ func _state_input(event: InputEvent) -> void:
 	dream_component._input_pass(event)
 	if Input.is_action_just_pressed("ui_esc_menu"):
 		GameManager.pause_options(true)
+		
+	if player != null: (player as Player_YN)._sb_input(event)

@@ -59,6 +59,7 @@ next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("spawn_point", "prev", "next")]
+process_mode = 4
 script = ExtResource("5_76or2")
 spawn_point = NodePath("../../spawn_point")
 prev = NodePath("../wait")

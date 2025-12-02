@@ -63,6 +63,7 @@ shader_parameter/opacity = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_02b03")
 shader_parameter/scroll_speed = 0.01499999687072999
 shader_parameter/gradient = SubResource("GradientTexture2D_d3oed")
+shader_parameter/rot_radians = 0.0
 shader_parameter/ray_strength = 1.615
 
 [sub_resource type="Curve" id="Curve_k40gg"]
@@ -136,7 +137,7 @@ unload_transition = SubResource("ShaderMaterial_02b03")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_3srwc")]
-position = Vector2(736, 880)
+position = Vector2(1080, -280)
 initial_target = NodePath("../y_order/madotsuki")
 
 [node name="overlay_3" parent="camera/marker/camera" index="2"]
@@ -159,10 +160,10 @@ color_ramp = SubResource("Gradient_gk1x3")
 y_sort_enabled = true
 
 [node name="to_numbers" parent="y_order" instance=ExtResource("20_w6cx3")]
+process_mode = 3
 position = Vector2(1144, -232)
 
 [node name="travel_to_scene" parent="y_order/to_numbers/on_interact" index="3"]
-process_mode = 4
 scene_path = "uid://dnjvpl85u4jl8"
 connection_id = "fat"
 
@@ -171,11 +172,11 @@ scene_path = "uid://dnjvpl85u4jl8"
 connection_id = "fat"
 
 [node name="to_meadows" parent="y_order" instance=ExtResource("20_w6cx3")]
+process_mode = 3
 position = Vector2(752, 824)
 collision_mask = 1073741824
 
 [node name="travel_to_scene" parent="y_order/to_meadows/on_interact" index="3"]
-process_mode = 4
 scene_path = "uid://bwnkls72smobx"
 connection_id = "A_section"
 
@@ -184,15 +185,15 @@ scene_path = "uid://bwnkls72smobx"
 connection_id = "A_section"
 
 [node name="to_upper_abyss" parent="y_order" instance=ExtResource("20_w6cx3")]
+process_mode = 3
 position = Vector2(1504, -528)
 collision_mask = 1073741824
 
 [node name="travel_to_scene" parent="y_order/to_upper_abyss/on_interact" index="3"]
-process_mode = 4
+scene_path = "uid://hx52e5i78byf"
 
 [node name="spawn_point" parent="y_order/to_upper_abyss" index="1"]
 scene_path = "uid://hx52e5i78byf"
-connection_id = "docks"
 
 [node name="renderer" parent="y_order/to_upper_abyss" index="2"]
 texture = ExtResource("5_hhe08")
@@ -234,16 +235,21 @@ tile_map_data = PackedByteArray("AAAOAAsAAAAAAAIAAAAcAAoAAAAAAAIAAAAoAAYAAAAAAAI
 tile_set = ExtResource("5_r8oj2")
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("6_4vx6f")]
-position = Vector2(736, 880)
+position = Vector2(528, 224)
 values = SubResource("Resource_o11tt")
 
 [node name="offset_cam_region" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(1168, 400)
 collision_layer = 1073741824
 collision_mask = 1073741824
 script = ExtResource("11_npwiy")
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
+
+[node name="rect" type="CollisionShape2D" parent="y_order/offset_cam_region"]
+shape = SubResource("RectangleShape2D_ru2n5")
+debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="SequenceRegion" type="Node" parent="y_order/offset_cam_region" node_paths=PackedStringArray("enter_sequence", "exit_sequence")]
 process_mode = 4
@@ -253,39 +259,31 @@ exit_sequence = NodePath("exit")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
 [node name="enter" type="Node" parent="y_order/offset_cam_region/SequenceRegion" node_paths=PackedStringArray("order", "front", "back")]
-process_mode = 4
 script = ExtResource("13_c8ign")
-order = [NodePath("Event")]
-front = NodePath("Event")
-back = NodePath("Event")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
+order = [NodePath("offset_to_creature")]
+front = NodePath("offset_to_creature")
+back = NodePath("offset_to_creature")
 
-[node name="Event" type="Node" parent="y_order/offset_cam_region/SequenceRegion/enter"]
+[node name="offset_to_creature" type="Node" parent="y_order/offset_cam_region/SequenceRegion/enter"]
 script = ExtResource("14_wl2ig")
 offset = Vector2(-80, 0)
 ease = 2
 trans = 3
-duration = 2
+duration = 1.5
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="exit" type="Node" parent="y_order/offset_cam_region/SequenceRegion" node_paths=PackedStringArray("order", "front", "back")]
-process_mode = 4
 script = ExtResource("13_c8ign")
-order = [NodePath("Event2")]
-front = NodePath("Event2")
-back = NodePath("Event2")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
+order = [NodePath("reset_offset")]
+front = NodePath("reset_offset")
+back = NodePath("reset_offset")
 
-[node name="Event2" type="Node" parent="y_order/offset_cam_region/SequenceRegion/exit"]
+[node name="reset_offset" type="Node" parent="y_order/offset_cam_region/SequenceRegion/exit"]
 script = ExtResource("14_wl2ig")
 ease = 2
 trans = 3
-duration = 2
+duration = 1.5
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="rect" type="CollisionShape2D" parent="y_order/offset_cam_region"]
-shape = SubResource("RectangleShape2D_ru2n5")
-debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="bike_deadzone" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 process_mode = 3
@@ -301,6 +299,7 @@ shape = SubResource("RectangleShape2D_5m4g7")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="fat_effect" parent="y_order" instance=ExtResource("23_vo2yk")]
+process_mode = 3
 position = Vector2(984, -312)
 
 [node name="on_interact" parent="y_order/fat_effect" index="0"]
@@ -326,16 +325,17 @@ frame_h_count = 3
 progress = 1
 
 [node name="to_mural" parent="y_order" instance=ExtResource("20_w6cx3")]
+process_mode = 3
 position = Vector2(16, 24)
 
 [node name="travel_to_scene" parent="y_order/to_mural/on_interact" index="3"]
-process_mode = 4
 scene_path = "uid://d4buml4tyobvm"
 
 [node name="spawn_point" parent="y_order/to_mural" index="1"]
 scene_path = "uid://d4buml4tyobvm"
 
 [node name="to_hell" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(1408, 552)
 collision_layer = 2
 collision_mask = 1073741824

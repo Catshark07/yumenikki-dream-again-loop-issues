@@ -80,6 +80,7 @@ property_info = {
 "usage": 4102
 }
 property_value = true
+new_value = false
 prev = NodePath("../notification")
 next = NodePath("../wait_seconds")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"

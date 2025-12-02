@@ -61,6 +61,7 @@ _data = {
 }
 
 [node name="animated_door" type="Area2D" node_paths=PackedStringArray("rect")]
+process_mode = 3
 collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("1_wnphj")
@@ -86,6 +87,7 @@ process_mode = 4
 script = ExtResource("4_t5c5s")
 sound = ExtResource("14_hs61y")
 pitch = 0.8
+wait_til_finished = false
 prev = NodePath("../request_cutscene_start")
 next = NodePath("../play_animation")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"

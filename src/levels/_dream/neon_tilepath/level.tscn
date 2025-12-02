@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://qe3q4hhevgdu"]
+[gd_scene load_steps=38 format=4 uid="uid://qe3q4hhevgdu"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_h75dg"]
 [ext_resource type="TileSet" uid="uid://cdwf1q5unkp6r" path="res://src/levels/__ignore/tile_set/world_tile_sets/neon_path.tres" id="2_cnnt0"]
@@ -7,14 +7,12 @@
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tile_set/_common_objs.tres" id="7_jfuuc"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="8_n43c4"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="9_r4jb6"]
-[ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="11_flct8"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="11_ld25y"]
 [ext_resource type="TileSet" uid="uid://dyssxbp7xitvm" path="res://src/levels/__ignore/tile_set/_footstep_material.tres" id="12_jfuuc"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="12_odkte"]
 [ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="12_tjyhi"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="12_wof8k"]
 [ext_resource type="Script" uid="uid://pksfkcvcsgx7" path="res://src/levels/__ignore/tilemap_footstep_setup.gd" id="13_n43c4"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="13_rwgou"]
 [ext_resource type="AudioStream" uid="uid://dwdh2uoc6ios2" path="res://src/audio/se/footstep_neonpath-pink.wav" id="14_kk0yh"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="14_rwgou"]
 [ext_resource type="AudioStream" uid="uid://d3l80gr2a7w6c" path="res://src/audio/se/footstep_neonpath-purple.WAV" id="15_8drgh"]
@@ -23,16 +21,14 @@
 [ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="16_8drgh"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="16_rwgou"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="17_2kx1l"]
-[ext_resource type="PackedScene" uid="uid://b4efdoikr5o84" path="res://src/entities/sentients/animated_sentient.tscn" id="20_ku0yl"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/entities/sb_variables.gd" id="21_ecvcv"]
+[ext_resource type="PackedScene" uid="uid://d2oedgst7bbj2" path="res://src/entities/sentients/hell/hell_spawn_template.tscn" id="22_hm0xu"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="23_r4jb6"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="24_flct8"]
 [ext_resource type="Texture2D" uid="uid://dx5nmm2v31jug" path="res://src/entities/sentients/hell/hell_2.png" id="26_oscw5"]
 [ext_resource type="AudioStream" uid="uid://t2otpiwgcxxf" path="res://src/audio/se/se_warp.wav" id="28_1nxn6"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="28_8drgh"]
-[ext_resource type="Script" uid="uid://bknmv5i3gcx3x" path="res://src/systems/sequencing/event/audio/stop_bgm.gd" id="28_oscw5"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="31_nuuri"]
-[ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="31_q6nc8"]
 [ext_resource type="AudioStream" uid="uid://b8n3oeuudnpvm" path="res://src/audio/bgm/world_snow.ogg" id="32_oscw5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ecvcv"]
@@ -42,32 +38,25 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kk0yh"]
 size = Vector2(16, 16)
 
+[sub_resource type="Gradient" id="Gradient_ru1bc"]
+offsets = PackedFloat32Array(0, 0.21135646, 0.5615142, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.646, 0.82957983, 6.9115755e-05, 0.6500822, 1, 0, 0, 0, 1)
+
 [sub_resource type="Resource" id="Resource_hm0xu"]
 script = ExtResource("16_8drgh")
 transparent_tile = true
 arr = [ExtResource("14_kk0yh"), ExtResource("15_8drgh")]
 metadata/_custom_type_script = "uid://dl740w6e37l11"
 
-[sub_resource type="Resource" id="Resource_oscw5"]
-resource_local_to_scene = true
-resource_name = "pl_variables"
-script = ExtResource("17_2kx1l")
-
-[sub_resource type="Resource" id="Resource_q6nc8"]
+[sub_resource type="Resource" id="Resource_1nxn6"]
 resource_local_to_scene = true
 resource_name = "sb_variables"
 script = ExtResource("21_ecvcv")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3be2"]
-size = Vector2(16, 16)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l3fjv"]
-shader = ExtResource("31_q6nc8")
-shader_parameter/progress = 0.0
-
-[sub_resource type="Gradient" id="Gradient_ehiec"]
-offsets = PackedFloat32Array(0, 0.49375, 1)
-colors = PackedColorArray(0.91, 0, 0.18200026, 0, 0.91394824, 0, 0.18283296, 1, 0, 0, 0, 1)
+[sub_resource type="Resource" id="Resource_ru1bc"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("17_2kx1l")
 
 [node name="neon_tilepath" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_h75dg")
@@ -84,6 +73,7 @@ initial_target = NodePath("../y_order/madotsuki")
 y_sort_enabled = true
 
 [node name="to_neon" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(40, 40)
 collision_layer = 1073741826
 collision_mask = 1073741824
@@ -98,7 +88,7 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="on_interact" type="Node" parent="y_order/to_neon" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("12_wof8k")
-order = [NodePath("request_cutscene"), NodePath("play_sound"), NodePath("wait"), NodePath("travel_to_scene")]
+order = [NodePath("request_cutscene"), NodePath("play_sound"), NodePath("transition"), NodePath("wait"), NodePath("travel_to_scene")]
 front = NodePath("request_cutscene")
 back = NodePath("travel_to_scene")
 
@@ -111,35 +101,38 @@ metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 [node name="play_sound" type="Node" parent="y_order/to_neon/on_interact" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("14_rwgou")
-sound = ExtResource("11_flct8")
-pitch = 0.8
+sound = ExtResource("28_1nxn6")
+wait_til_finished = false
 prev = NodePath("../request_cutscene")
+next = NodePath("../transition")
+metadata/_custom_type_script = "uid://vk574kc3l7av"
+
+[node name="transition" type="Node" parent="y_order/to_neon/on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+script = ExtResource("28_8drgh")
+gradient = SubResource("Gradient_ru1bc")
+prev = NodePath("../play_sound")
 next = NodePath("../wait")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
+metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
 
 [node name="wait" type="Node" parent="y_order/to_neon/on_interact" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("12_tjyhi")
 seconds = 0.5
-prev = NodePath("../play_sound")
+prev = NodePath("../transition")
 next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_neon/on_interact" node_paths=PackedStringArray("prev")]
+[node name="travel_to_scene" type="Node" parent="y_order/to_neon/on_interact" node_paths=PackedStringArray("spawn_point", "prev")]
+process_mode = 4
 script = ExtResource("16_rwgou")
+scene_path = "uid://u3rsjjgplr8e"
+spawn_point = NodePath("../../spawn_point")
 prev = NodePath("../wait")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="scene_traversal" type="Node" parent="y_order/to_neon/on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("13_rwgou")
-scene_path = "uid://u3rsjjgplr8e"
-connection_id = "neon_tile_path"
-spawn_point = NodePath("../../../spawn_point")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
 [node name="spawn_point" type="Node2D" parent="y_order/to_neon" node_paths=PackedStringArray("parent_instead_of_self")]
 script = ExtResource("12_odkte")
 scene_path = "uid://u3rsjjgplr8e"
-connection_id = "neon_tile_path"
 parent_instead_of_self = NodePath(".")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -167,90 +160,42 @@ tile_set = ExtResource("2_cnnt0")
 tile_map_data = PackedByteArray("AABnADkAAAAEAAsAAAACAAEAAAAHAAgAAAABAAEAAAAEAAYAAAADAAEAAAAGAAYAAAAAAAAAAAAEAAoAAAD/////AAAHAAoAAAD+//7/AAAGAAoAAAD9//3/AAAFAAoAAAD5//n/AAAEAAoAAAD6//r/AAAGAAoAAAD7//v/AAAHAAoAAAD8//z/AAAEAAoAAAD2//b/AAAFAAoAAAD3//f/AAAGAAoAAAD4//j/AAAHAAoAAAAOAPb/AAAFAAoAABANAPf/AAAGAAoAABAMAPj/AAAHAAoAABALAPn/AAAEAAoAABAKAPr/AAAGAAoAABAJAPv/AAAHAAoAABAIAPz/AAAEAAoAABAHAP3/AAAFAAoAABAGAP7/AAAGAAoAABAFAP//AAAHAAoAABAEAAAAAAAEAAoAABANAPb/AAAIAAEAAAAMAPb/AAAIAAEAAAALAPb/AAAIAAEAAAAKAPb/AAAIAAEAAAAJAPb/AAAIAAEAAAAIAPb/AAAIAAEAAAAHAPb/AAAIAAEAAAAGAPb/AAAIAAEAAAAFAPb/AAAIAAEAAAAEAPb/AAAIAAEAAAADAPb/AAAIAAEAAAACAPb/AAAIAAEAAAABAPb/AAAIAAEAAAAAAPb/AAAIAAEAAAD///b/AAAIAAEAAAD+//b/AAAIAAEAAAD9//b/AAAIAAEAAAD8//b/AAAIAAEAAAD7//b/AAAIAAEAAAD6//b/AAAIAAEAAAD5//b/AAAIAAEAAAD4//b/AAAIAAEAAAD3//b/AAAIAAEAAAABAP3/AAAIAAEAAAABAPz/AAAIAAEAAAABAPv/AAAIAAEAAAABAPr/AAAIAAEAAAABAPn/AAAIAAEAAAABAPj/AAAIAAEAAAABAPf/AAAIAAEAAAAAAPf/AAAIAAEAAAD///f/AAAIAAEAAAD+//f/AAAIAAEAAAD9//f/AAAIAAEAAAD8//f/AAAIAAEAAAD7//f/AAAIAAEAAAD6//f/AAAIAAEAAAD5//f/AAAIAAEAAAD4//f/AAAIAAEAAAD5//j/AAAIAAEAAAD6//j/AAAIAAEAAAD6//n/AAAIAAEAAAD7//n/AAAIAAEAAAD7//j/AAAIAAEAAAD8//j/AAAIAAEAAAD8//n/AAAIAAEAAAD8//r/AAAIAAEAAAD7//r/AAAIAAEAAAD8//v/AAAIAAEAAAD9//v/AAAIAAEAAAD9//r/AAAIAAEAAAD9//n/AAAIAAEAAAD9//j/AAAIAAEAAAD+//j/AAAIAAEAAAD+//n/AAAIAAEAAAD+//r/AAAIAAEAAAD+//v/AAAIAAEAAAD+//z/AAAIAAEAAAD9//z/AAAIAAEAAAD+//3/AAAIAAEAAAD///3/AAAIAAEAAAD///z/AAAIAAEAAAD///v/AAAIAAEAAAD///r/AAAIAAEAAAD///n/AAAIAAEAAAD///j/AAAIAAEAAAAAAPj/AAAIAAEAAAAAAPn/AAAIAAEAAAAAAPr/AAAIAAEAAAAAAPv/AAAIAAEAAAAAAPz/AAAIAAEAAAAAAP3/AAAIAAEAAAAAAP7/AAAIAAEAAAD///7/AAAIAAEAAAAAAP//AAAIAAEAAAABAP//AAAIAAEAAAABAP7/AAAIAAEAAAACAP7/AAAIAAEAAAACAP3/AAAIAAEAAAACAPz/AAAIAAEAAAACAPv/AAAIAAEAAAACAPr/AAAIAAEAAAACAPn/AAAIAAEAAAACAPj/AAAIAAEAAAACAPf/AAAIAAEAAAADAPf/AAAIAAEAAAADAPj/AAAIAAEAAAADAPn/AAAIAAEAAAADAPr/AAAIAAEAAAADAPv/AAAIAAEAAAADAPz/AAAIAAEAAAADAP3/AAAIAAEAAAADAP7/AAAIAAEAAAADAP//AAAIAAEAAAACAP//AAAIAAEAAAACAAAAAAAIAAEAAAABAAAAAAAIAAEAAAADAAAAAAAIAAEAAAAEAP//AAAIAAEAAAAEAP7/AAAIAAEAAAAEAP3/AAAIAAEAAAAEAPz/AAAIAAEAAAAEAPv/AAAIAAEAAAAEAPr/AAAIAAEAAAAEAPn/AAAIAAEAAAAEAPj/AAAIAAEAAAAEAPf/AAAIAAEAAAAFAPf/AAAIAAEAAAAFAPj/AAAIAAEAAAAFAPn/AAAIAAEAAAAFAPr/AAAIAAEAAAAFAPv/AAAIAAEAAAAFAPz/AAAIAAEAAAAFAP3/AAAIAAEAAAAFAP7/AAAIAAEAAAAGAP3/AAAIAAEAAAAGAPz/AAAIAAEAAAAGAPv/AAAIAAEAAAAGAPr/AAAIAAEAAAAGAPn/AAAIAAEAAAAGAPj/AAAIAAEAAAAGAPf/AAAIAAEAAAAHAPf/AAAIAAEAAAAHAPj/AAAIAAEAAAAHAPn/AAAIAAEAAAAHAPr/AAAIAAEAAAAHAPv/AAAIAAEAAAAHAPz/AAAIAAEAAAAIAPv/AAAIAAEAAAAIAPr/AAAIAAEAAAAIAPn/AAAIAAEAAAAIAPj/AAAIAAEAAAAIAPf/AAAIAAEAAAAJAPf/AAAIAAEAAAAJAPj/AAAIAAEAAAAJAPn/AAAIAAEAAAAJAPr/AAAIAAEAAAAKAPn/AAAIAAEAAAAKAPj/AAAIAAEAAAAKAPf/AAAIAAEAAAALAPf/AAAIAAEAAAALAPj/AAAIAAEAAAAMAPf/AAAIAAEAAAA=")
 tile_set = ExtResource("15_rwgou")
 
-[node name="madotsuki" parent="y_order" instance=ExtResource("6_rs7jf")]
-position = Vector2(80, 64)
-values = SubResource("Resource_oscw5")
+[node name="hellspawn" parent="y_order" instance=ExtResource("22_hm0xu")]
+position = Vector2(968, 800)
+values = SubResource("Resource_1nxn6")
 
-[node name="hell_spawn" parent="y_order" instance=ExtResource("20_ku0yl")]
-position = Vector2(952, 792)
-values = SubResource("Resource_q6nc8")
-
-[node name="sprite_renderer" parent="y_order/hell_spawn" index="0"]
+[node name="sprite_renderer" parent="y_order/hellspawn" index="1"]
 texture = ExtResource("26_oscw5")
-hframes = 8
-frame = 2
-autoplay = true
-loop = true
-fps = 8.0
-frame_dimensions = Vector2i(32, 32)
-frame_h_count = 8
-progress = 2
+frame = 5
+progress = 5
 
-[node name="sb_loop" parent="y_order/hell_spawn" index="8" node_paths=PackedStringArray("children")]
-children = [NodePath("../sprite_renderer"), NodePath("../shadow_renderer"), NodePath("../sb_components"), NodePath("../coll"), NodePath("../nav"), NodePath("../stance_fsm"), NodePath("../behaviour_fsm"), NodePath("../sound_player"), NodePath("../hell_warp")]
-
-[node name="hell_warp" type="Area2D" parent="y_order/hell_spawn" node_paths=PackedStringArray("rect")]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("11_ld25y")
-rect = NodePath("rect")
-metadata/_custom_type_script = "uid://bxh774473av7t"
-
-[node name="rect" type="CollisionShape2D" parent="y_order/hell_spawn/hell_warp"]
-shape = SubResource("RectangleShape2D_j3be2")
-debug_color = Color(0.2, 0, 0.7, 0.2)
-
-[node name="on_interact" type="Node" parent="y_order/hell_spawn/hell_warp" node_paths=PackedStringArray("order", "front", "back")]
-process_mode = 4
-script = ExtResource("12_wof8k")
-order = [NodePath("enter_hell"), NodePath("travel_to")]
-front = NodePath("enter_hell")
+[node name="on_interact" parent="y_order/hellspawn/hell_interaction" index="1" node_paths=PackedStringArray("order", "back")]
+order = [NodePath("request_cutscene_start"), NodePath("hell_enter_trans"), NodePath("travel_to")]
 back = NodePath("travel_to")
-metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="enter_hell" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact" node_paths=PackedStringArray("order", "front", "back", "next")]
-script = ExtResource("23_r4jb6")
-order = [NodePath("stop_bgm"), NodePath("play_sound"), NodePath("pulse_red")]
-front = NodePath("stop_bgm")
-back = NodePath("pulse_red")
+[node name="hell_enter_trans" parent="y_order/hellspawn/hell_interaction/on_interact" index="1" node_paths=PackedStringArray("next")]
 next = NodePath("../travel_to")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="stop_bgm" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/enter_hell" node_paths=PackedStringArray("next")]
-script = ExtResource("28_oscw5")
-wait_til_finished = false
-next = NodePath("../play_sound")
-metadata/_custom_type_script = "uid://bknmv5i3gcx3x"
-
-[node name="play_sound" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/enter_hell" node_paths=PackedStringArray("prev", "next")]
+[node name="travel_to" type="Node" parent="y_order/hellspawn/hell_interaction/on_interact" index="2" node_paths=PackedStringArray("spawn_point", "prev")]
 process_mode = 4
-script = ExtResource("14_rwgou")
-sound = ExtResource("28_1nxn6")
-wait_til_finished = false
-prev = NodePath("../stop_bgm")
-next = NodePath("../pulse_red")
-metadata/_custom_type_script = "uid://vk574kc3l7av"
-
-[node name="pulse_red" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact/enter_hell" node_paths=PackedStringArray("prev")]
-process_mode = 4
-script = ExtResource("28_8drgh")
-fade_shader = SubResource("ShaderMaterial_l3fjv")
-gradient = SubResource("Gradient_ehiec")
-prev = NodePath("../play_sound")
-metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
-
-[node name="travel_to" type="Node" parent="y_order/hell_spawn/hell_warp/on_interact" node_paths=PackedStringArray("spawn_point", "prev")]
 script = ExtResource("16_rwgou")
 scene_path = "uid://m50bp6u4vgts"
 connection_id = "hell"
-spawn_point = NodePath("../../spawn_point")
-prev = NodePath("../enter_hell")
+spawn_point = NodePath("../../../spawn")
+prev = NodePath("../hell_enter_trans")
 metadata/_custom_type_script = "uid://c0ymap76lrhgr"
 
-[node name="spawn_point" type="Node2D" parent="y_order/hell_spawn/hell_warp" node_paths=PackedStringArray("parent_instead_of_self")]
+[node name="spawn" type="Node2D" parent="y_order/hellspawn" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(0, 8)
 script = ExtResource("12_odkte")
+scene_path = "uid://m50bp6u4vgts"
+connection_id = "hell"
 parent_instead_of_self = NodePath(".")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="madotsuki" parent="y_order" instance=ExtResource("6_rs7jf")]
+position = Vector2(856, 744)
+values = SubResource("Resource_ru1bc")
 
 [node name="damned_spawn" type="Node2D" parent="y_order" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(832, 1272)
@@ -301,4 +246,4 @@ script = ExtResource("23_r4jb6")
 skip_invalid_events = true
 
 [editable path="camera"]
-[editable path="y_order/hell_spawn"]
+[editable path="y_order/hellspawn"]

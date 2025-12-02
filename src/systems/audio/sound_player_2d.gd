@@ -47,10 +47,10 @@ func unmute() -> void:
 	if was_playing: play()
 	volume_db = pre_mute_vol
 	pitch_scale = pre_mute_pit
-
-func _draw() -> void:
-	if Engine.is_editor_hint():
-		draw_circle(Vector2.ZERO, max_distance, Color(Color.RED, 0.05))
+#
+#func _draw() -> void:
+	#if Engine.is_editor_hint():
+		##draw_circle(Vector2.ZERO, max_distance, Color(Color.RED, 0.05))
 
 # ---- setters ----
 func set_timescale_factor(_fac: float) -> void: self.timescale_factor = _fac

@@ -10,12 +10,12 @@ var initial_screen_centre	: Vector2
 var screen_centre 			: Vector2
 var viewport_size 			: Vector2
 var eqn 					: Vector2
-var pivot					: Vector2
 
 static var instance: PanoramaSystem
 
 func _setup() -> void:
 	instance = self
+	panorama_rect.custom_minimum_size 	= MINIMUM_SIZE
 	panorama_rect.global_position = Vector2.ZERO
 	
 	viewport_size = Vector2(
@@ -31,11 +31,7 @@ func _physics_update(_delta: float) -> void:
 	RenderingServer.global_shader_parameter_set("uv_offset",  eqn)
 
 func apply_panorama(_panorama: SubViewport, _pivot: Vector2) -> void:
-	eqn = _pivot - Player.Instance.get_pos()
-	
-	panorama_rect.visible 				= true
+	eqn = ((Player.Instance.get_pos(true) - _pivot) / Application.get_viewport_dimens())
 	panorama_rect.texture 				= _panorama.get_texture()
-		
-	panorama_rect.custom_minimum_size 	= MINIMUM_SIZE
 func remove_panorama() -> void:
-	panorama_rect.visible = false
+	panorama_rect.texture 				= default_panorama_texture

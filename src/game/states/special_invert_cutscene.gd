@@ -32,3 +32,6 @@ func _state_exit() -> void:
 func _state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pl_inventory"): 
 		EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST")
+	
+	if 		Input.is_physical_key_pressed(KEY_Q): inventory.fsm.change_to_state("pink_petal")
+	elif 	Input.is_physical_key_pressed(KEY_E): inventory.fsm.change_to_state("white_petal")

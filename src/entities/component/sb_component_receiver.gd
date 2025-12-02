@@ -23,8 +23,8 @@ func _setup(_sb: SentientBase = null) -> void:
 			component._setup(_sb)
 
 # ---
-func _process(delta: float) -> void: pass
-func _physics_process(delta: float) -> void: pass
+func _process(_delta: float) -> void: pass
+func _physics_process(_delta: float) -> void: pass
 # --- 
 func _update(_delta: float) -> void:
 	if !bypass:

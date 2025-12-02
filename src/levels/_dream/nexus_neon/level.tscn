@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://u3rsjjgplr8e"]
+[gd_scene load_steps=46 format=4 uid="uid://u3rsjjgplr8e"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_qwl4r"]
 [ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_region.gd" id="2_d40q4"]
@@ -12,8 +12,10 @@
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="10_k0n33"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="11_0ec7f"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/sequencing/event/audio/play_sound.gd" id="12_6y5pn"]
+[ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="13_3o7mi"]
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="14_c4rmq"]
 [ext_resource type="TileSet" uid="uid://dsp3st1us0coc" path="res://src/levels/__ignore/tile_set/world_tile_sets/nexus_neon.tres" id="15_k0n33"]
+[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/sequencing/event/game/wait_seconds.gd" id="17_4h1xe"]
 [ext_resource type="Texture2D" uid="uid://dr7epkj3kmyai" path="res://src/levels/__ignore/doors/door_neo_lobby.png" id="17_k0n33"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="18_0ec7f"]
 [ext_resource type="AudioStream" uid="uid://dso8pw0y7eu6k" path="res://src/audio/se/teleport_maze.WAV" id="19_l5w3h"]
@@ -21,36 +23,59 @@
 [ext_resource type="Shader" uid="uid://dpwm2idnwpvaf" path="res://src/shaders/transition/tr_fade.gdshader" id="20_apyhi"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="20_k0n33"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="21_l5w3h"]
+[ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="22_1svi7"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="22_q76fj"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="23_3o7mi"]
 [ext_resource type="AudioStream" uid="uid://t2otpiwgcxxf" path="res://src/audio/se/se_warp.wav" id="24_4h1xe"]
 [ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="24_4p1rh"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="25_1svi7"]
+[ext_resource type="TileSet" uid="uid://ecdj87dihdcc" path="res://src/levels/__ignore/tile_set/_common_sentients.tres" id="27_6y5pn"]
+[ext_resource type="PackedScene" uid="uid://fq2keer08txb" path="res://src/entities/sentients/neon/nasu.tscn" id="27_apyhi"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="27_bm00s"]
+[ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/entities/sb_variables.gd" id="28_l5w3h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ckqe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4yoie"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3yblm"]
-vertices = PackedVector2Array(566, -278, 566, 598, -62, 598, -62, 470, -54, -6, -54, -278, -214, 372.09375, -214, 4.140625, -203.85938, -6, -123.61719, 470, -538, 470, -694, 470, -694, 394, -538, 394, -546, 246, -694, 246, -694, 170, -546, 170, 950, 246, 794, 246, 794, 170, 950, 170, -890, 182, -1158, 182, -1158, -14, -890, -14, -546, 22, -694, 22, -694, -54, -546, -54, 934, 22, 794, 22, 794, -54, 934, -54, -546, -202, -694, -202, -694, -278, -546, -278, 950, -202, 794, -202, 794, -278, 950, -278)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 5, 0), PackedInt32Array(6, 7, 8, 4, 3, 9), PackedInt32Array(10, 11, 12, 13), PackedInt32Array(14, 15, 16, 17), PackedInt32Array(18, 19, 20, 21), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(26, 27, 28, 29), PackedInt32Array(30, 31, 32, 33), PackedInt32Array(34, 35, 36, 37), PackedInt32Array(38, 39, 40, 41)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-704, -288, -704, -192, -536, -192, -536, -288), PackedVector2Array(-704, -64, -704, 32, -536, 32, -536, -64), PackedVector2Array(-704, 256, -536, 256, -536, 160, -704, 160), PackedVector2Array(-224, 0, -224, 376, -128, 480, -72, 480, -72, 608, 576, 608, 576, -288, -64, -288, -64, -16, -208, -16), PackedVector2Array(-704, 384, -528, 384, -528, 480, -704, 480), PackedVector2Array(-880, -24, -1168, -24, -1168, 192, -880, 192), PackedVector2Array(944, -64, 944, 32, 784, 32, 784, -64), PackedVector2Array(784, -288, 784, -192, 960, -192, 960, -288), PackedVector2Array(784, 160, 784, 256, 960, 256, 960, 160)])
+vertices = PackedVector2Array(-538, 470, -694, 470, -694, 394, -538, 394, 950, 470, 794, 470, 794, 394, 950, 394, -54, -6, 558, -166, 558, 398, -195, 398, -214, 372.65625, -54, -166, -214, 4.140625, -203.85938, -6, -546, 246, -694, 246, -694, 170, -546, 170, 950, 246, 794, 246, 794, 170, 950, 170, -546, 22, -694, 22, -694, -54, -546, -54, 934, 22, 794, 22, 794, -54, 934, -54)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11, 12), PackedInt32Array(8, 13, 9), PackedInt32Array(8, 12, 14, 15), PackedInt32Array(16, 17, 18, 19), PackedInt32Array(20, 21, 22, 23), PackedInt32Array(24, 25, 26, 27), PackedInt32Array(28, 29, 30, 31)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-704, -64, -704, 32, -536, 32, -536, -64), PackedVector2Array(-704, 256, -536, 256, -536, 160, -704, 160), PackedVector2Array(-224, 0, -224, 376, -200, 408, 568, 408, 568, -176, -64, -176, -64, -16, -208, -16), PackedVector2Array(-704, 384, -528, 384, -528, 480, -704, 480), PackedVector2Array(944, -64, 944, 32, 784, 32, 784, -64), PackedVector2Array(784, 160, 784, 256, 960, 256, 960, 160), PackedVector2Array(784, 384, 784, 480, 960, 480, 960, 384)])
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3yblm"]
 shader = ExtResource("20_apyhi")
 shader_parameter/progress = 0.0
 
 [sub_resource type="Gradient" id="Gradient_q76fj"]
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.21451104, 0.41955835, 0.6845426, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.8532224, 0, 0, 0.132, 0.48677072, 0, 0.7373294, 0.504, 0.7351037, 0.71126455, 0, 0.8294013, 1, 1, 1, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_45h0u"]
+blend_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
+size = Vector2(16, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4eec8"]
 size = Vector2(16, 16)
 
-[sub_resource type="Resource" id="Resource_a1ia0"]
+[sub_resource type="Gradient" id="Gradient_a1ia0"]
+offsets = PackedFloat32Array(0, 0.21135646, 0.5615142, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.646, 0.82957983, 6.9115755e-05, 0.6500822, 1, 0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_op2v1"]
+size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_3o7mi"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("10_k0n33")
+
+[sub_resource type="Resource" id="Resource_4h1xe"]
+resource_local_to_scene = true
+resource_name = "sb_variables"
+script = ExtResource("28_l5w3h")
 
 [node name="neon_world" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_qwl4r")
@@ -61,9 +86,9 @@ unload_transition = SubResource("ShaderMaterial_4yoie")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="LoopManager" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects")]
-position = Vector2(-168, 80)
+position = Vector2(-120, 192)
 script = ExtResource("2_d40q4")
-loop_objects = [NodePath("../y_order/world/world"), NodePath("../y_order/madotsuki/pl_loop")]
+loop_objects = [NodePath("../y_order/to_neo_lobby/renderer/spr_dupe"), NodePath("../y_order/world/world"), NodePath("../y_order/madotsuki/pl_loop"), NodePath("../y_order/nasu/sb_loop")]
 world_size = Vector2(2576, 1120)
 metadata/_custom_type_script = "uid://desxt7tbq37sf"
 
@@ -123,17 +148,40 @@ script = ExtResource("9_k18mo")
 navigation_polygon = SubResource("NavigationPolygon_3yblm")
 navigation_layers = 2
 
-[node name="to_neo_lobby" parent="y_order" instance=ExtResource("20_k0n33")]
+[node name="to_neo_lobby" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(-1296, -48)
+collision_layer = 2147483650
+collision_mask = 2147483648
+script = ExtResource("21_l5w3h")
 area = false
+rect = NodePath("rect")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="on_interact" parent="y_order/to_neo_lobby" index="0" node_paths=PackedStringArray("order")]
+[node name="on_interact" type="Node" parent="y_order/to_neo_lobby" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
+script = ExtResource("22_q76fj")
 order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_sound_teleport"), NodePath("transition"), NodePath("wait"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
+front = NodePath("request_cutscene_start")
+back = NodePath("request_cutscene_end")
 
-[node name="play_sound" parent="y_order/to_neo_lobby/on_interact" index="1" node_paths=PackedStringArray("next")]
+[node name="request_cutscene_start" type="Node" parent="y_order/to_neo_lobby/on_interact" node_paths=PackedStringArray("next")]
+script = ExtResource("23_3o7mi")
+event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../play_sound")
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="play_sound" type="Node" parent="y_order/to_neo_lobby/on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+script = ExtResource("12_6y5pn")
+sound = ExtResource("13_3o7mi")
+pitch = 0.8
+prev = NodePath("../request_cutscene_start")
 next = NodePath("../play_sound_teleport")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_sound_teleport" type="Node" parent="y_order/to_neo_lobby/on_interact" index="2" node_paths=PackedStringArray("prev", "next")]
+[node name="play_sound_teleport" type="Node" parent="y_order/to_neo_lobby/on_interact" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("12_6y5pn")
 sound = ExtResource("19_l5w3h")
@@ -142,53 +190,244 @@ prev = NodePath("../play_sound")
 next = NodePath("../transition")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="transition" type="Node" parent="y_order/to_neo_lobby/on_interact" index="3" node_paths=PackedStringArray("prev", "next")]
+[node name="transition" type="Node" parent="y_order/to_neo_lobby/on_interact" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("19_rfjdj")
 fade_shader = SubResource("ShaderMaterial_3yblm")
+duration = 2.0
 gradient = SubResource("Gradient_q76fj")
 prev = NodePath("../play_sound_teleport")
 next = NodePath("../wait")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait" parent="y_order/to_neo_lobby/on_interact" index="4" node_paths=PackedStringArray("prev")]
+[node name="wait" type="Node" parent="y_order/to_neo_lobby/on_interact" node_paths=PackedStringArray("prev", "next")]
+script = ExtResource("17_4h1xe")
+seconds = 0.5
 prev = NodePath("../transition")
+next = NodePath("../travel_to_scene")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" parent="y_order/to_neo_lobby/on_interact" index="5"]
+[node name="travel_to_scene" type="Node" parent="y_order/to_neo_lobby/on_interact" node_paths=PackedStringArray("spawn_point", "prev", "next")]
 process_mode = 4
-
-[node name="spawn_point" parent="y_order/to_neo_lobby" index="1"]
+script = ExtResource("25_1svi7")
 scene_path = "uid://b64kqcppbs87c"
-connection_id = "ne_neon"
+spawn_point = NodePath("../../spawn_point")
+prev = NodePath("../wait")
+next = NodePath("../request_cutscene_end")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="renderer" parent="y_order/to_neo_lobby" index="2"]
+[node name="request_cutscene_end" type="Node" parent="y_order/to_neo_lobby/on_interact" node_paths=PackedStringArray("prev")]
+script = ExtResource("23_3o7mi")
+event_id = "CUTSCENE_END_REQUEST"
+prev = NodePath("../travel_to_scene")
+metadata/_custom_type_script = "uid://dspsbq33tl0wa"
+
+[node name="spawn_point" type="Node2D" parent="y_order/to_neo_lobby" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(0, 12)
+script = ExtResource("27_bm00s")
+scene_path = "uid://b64kqcppbs87c"
+parent_instead_of_self = NodePath("..")
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="renderer" type="Sprite2D" parent="y_order/to_neo_lobby"]
 texture = ExtResource("17_k0n33")
 hframes = 8
-frame = 3
+frame = 7
 script = ExtResource("18_0ec7f")
 autoplay = true
 loop = true
-reverse = false
-end_frame = false
 fps = 12.0
+frame_dimensions = Vector2i(17, 30)
 frame_h_count = 8
-progress = 3
+progress = 7
+
+[node name="shadow_renderer" type="Sprite2D" parent="y_order/to_neo_lobby/renderer"]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_45h0u")
+position = Vector2(0, -8)
+texture = ExtResource("22_1svi7")
+
+[node name="spr_dupe" type="Node2D" parent="y_order/to_neo_lobby/renderer" node_paths=PackedStringArray("region", "target", "children", "dupe_nodes", "occlusions")]
+y_sort_enabled = true
+script = ExtResource("14_c4rmq")
+region = NodePath("../../../../LoopManager")
+target = NodePath("..")
+children = [NodePath("../shadow_renderer")]
+dupe_nodes = [NodePath("loop_renderer_0"), NodePath("loop_renderer_1"), NodePath("loop_renderer_2"), NodePath("loop_renderer_3"), NodePath("loop_renderer_4"), NodePath("loop_renderer_5"), NodePath("loop_renderer_6"), NodePath("loop_renderer_7")]
+occlusions = [NodePath("loop_renderer_0/occlusion"), NodePath("loop_renderer_1/occlusion"), NodePath("loop_renderer_2/occlusion"), NodePath("loop_renderer_3/occlusion"), NodePath("loop_renderer_4/occlusion"), NodePath("loop_renderer_5/occlusion"), NodePath("loop_renderer_6/occlusion"), NodePath("loop_renderer_7/occlusion")]
+do_not_loop = true
+world_size = Vector2(2576, 1120)
+metadata/_custom_type_script = "uid://bnajku7ggsr2q"
+
+[node name="loop_renderer_0" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(-2576, -1120)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_0"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="loop_renderer_1" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(0, -1120)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_1"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="loop_renderer_2" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(2576, -1120)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_2"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="loop_renderer_3" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(-2576, 0)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_3"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="loop_renderer_4" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(2576, 0)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_4"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="loop_renderer_5" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(-2576, 1120)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_5"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="loop_renderer_6" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(0, 1120)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_6"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="loop_renderer_7" type="Sprite2D" parent="y_order/to_neo_lobby/renderer/spr_dupe"]
+position = Vector2(2576, 1120)
+texture = ExtResource("17_k0n33")
+hframes = 8
+frame = 7
+script = ExtResource("18_0ec7f")
+autoplay = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 8
+progress = 7
+metadata/_edit_lock_ = true
+
+[node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/to_neo_lobby/renderer/spr_dupe/loop_renderer_7"]
+self_modulate = Color(1, 1, 1, 0.2)
+rect = Rect2(-1610, -700, 3220, 1400)
+
+[node name="coll" type="StaticBody2D" parent="y_order/to_neo_lobby"]
+position = Vector2(0, 12)
+
+[node name="shape" type="CollisionShape2D" parent="y_order/to_neo_lobby/coll"]
+shape = SubResource("RectangleShape2D_cv7t1")
+
+[node name="rect" type="CollisionShape2D" parent="y_order/to_neo_lobby"]
+shape = SubResource("RectangleShape2D_4eec8")
+debug_color = Color(0.9, 0, 0.7, 0.3)
 
 [node name="to_nexus" parent="y_order" instance=ExtResource("20_k0n33")]
+process_mode = 3
 position = Vector2(200, 216)
 area = false
 
 [node name="travel_to_scene" parent="y_order/to_nexus/on_interact" index="3"]
-process_mode = 4
 scene_path = "uid://dl25joalnmaxt"
 
 [node name="spawn_point" parent="y_order/to_nexus" index="1"]
 scene_path = "uid://dl25joalnmaxt"
-connection_id = "neon"
 
 [node name="renderer" parent="y_order/to_nexus" index="2"]
 texture = ExtResource("24_4p1rh")
 hframes = 3
+frame = 2
 script = ExtResource("18_0ec7f")
 autoplay = true
 loop = true
@@ -196,8 +435,10 @@ reverse = false
 end_frame = false
 fps = 6.0
 frame_h_count = 3
+progress = 2
 
 [node name="to_neon_tile_path" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
+process_mode = 3
 position = Vector2(-408, 352)
 collision_layer = 2147483650
 collision_mask = 2147483648
@@ -210,7 +451,7 @@ metadata/_custom_type_script = "uid://bxh774473av7t"
 [node name="on_interact" type="Node" parent="y_order/to_neon_tile_path" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("22_q76fj")
-order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("transition"), NodePath("travel_to_scene"), NodePath("request_cutscene_end")]
 front = NodePath("request_cutscene_start")
 back = NodePath("request_cutscene_end")
 
@@ -225,16 +466,25 @@ process_mode = 4
 script = ExtResource("12_6y5pn")
 sound = ExtResource("24_4h1xe")
 pitch = 0.8
+wait_til_finished = false
 prev = NodePath("../request_cutscene_start")
-next = NodePath("../travel_to_scene")
+next = NodePath("../transition")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="transition" type="Node" parent="y_order/to_neon_tile_path/on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
+script = ExtResource("19_rfjdj")
+gradient = SubResource("Gradient_a1ia0")
+prev = NodePath("../play_sound")
+next = NodePath("../travel_to_scene")
+metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
 
 [node name="travel_to_scene" type="Node" parent="y_order/to_neon_tile_path/on_interact" node_paths=PackedStringArray("spawn_point", "prev", "next")]
 process_mode = 4
 script = ExtResource("25_1svi7")
 scene_path = "uid://qe3q4hhevgdu"
 spawn_point = NodePath("../../spawn_point")
-prev = NodePath("../play_sound")
+prev = NodePath("../transition")
 next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -252,7 +502,7 @@ parent_instead_of_self = NodePath("..")
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="rect" type="CollisionShape2D" parent="y_order/to_neon_tile_path"]
-shape = SubResource("RectangleShape2D_4eec8")
+shape = SubResource("RectangleShape2D_op2v1")
 debug_color = Color(0.9, 0, 0.7, 0.3)
 
 [node name="world" type="Node2D" parent="y_order"]
@@ -271,6 +521,7 @@ tile_set = ExtResource("15_k0n33")
 y_sort_enabled = true
 script = ExtResource("14_c4rmq")
 region = NodePath("../../../LoopManager")
+idx = 1
 target = NodePath("..")
 children = [NodePath("../floor"), NodePath("../walls")]
 properties = PackedStringArray("tile_map_data")
@@ -298,6 +549,7 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_0"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="loop_world_1" type="Node2D" parent="y_order/world/world"]
@@ -317,6 +569,7 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_1"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="loop_world_2" type="Node2D" parent="y_order/world/world"]
@@ -336,6 +589,7 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_2"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="loop_world_3" type="Node2D" parent="y_order/world/world"]
@@ -355,6 +609,7 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_3"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="loop_world_4" type="Node2D" parent="y_order/world/world"]
@@ -374,6 +629,7 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_4"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="loop_world_5" type="Node2D" parent="y_order/world/world"]
@@ -393,6 +649,7 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_5"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="loop_world_6" type="Node2D" parent="y_order/world/world"]
@@ -412,6 +669,7 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_6"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="loop_world_7" type="Node2D" parent="y_order/world/world"]
@@ -431,15 +689,24 @@ tile_set = ExtResource("15_k0n33")
 metadata/_edit_lock_ = true
 
 [node name="occlusion" type="VisibleOnScreenNotifier2D" parent="y_order/world/world/loop_world_7"]
+self_modulate = Color(1, 1, 1, 0.2)
 rect = Rect2(-1610, -700, 3220, 1400)
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("9_k5b2m")]
-position = Vector2(-1224, -24)
-values = SubResource("Resource_a1ia0")
+position = Vector2(168, 160)
+values = SubResource("Resource_3o7mi")
+
+[node name="nasu" parent="y_order" instance=ExtResource("27_apyhi")]
+position = Vector2(832, 424)
+values = SubResource("Resource_4h1xe")
+
+[node name="sentients" type="TileMapLayer" parent="y_order"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAD7/wsAAAAAAAAABQAHAAMAAAAAAAAABQAaAPn/AAAAAAAAAgAcAAEAAAAAAAAAAwABAAAAAAAAAAAABAATAAEAAAAAAAAAAgAeABAAAAAAAAAABgAGABIAAAAAAAAAAwD5/xMAAAAAAAAABQD3/wUAAAAAAAAAAwAYABYAAAAAAAAAAwAdAAgAAAAAAAAAAgASAA8AAAAAAAAAAgAzAA0AAAAAAAAAAwA6AAwAAAAAAAAABgA1AP7/AAAAAAAABQDW/w0AAAAAAAAABgDc/w4AAAAAAAAAAgDb//3/AAAAAAAAAgDX/wAAAAAAAAAAAwAEAPn/AAAAAAAABAALAPz/AAAAAAAAAgA=")
+tile_set = ExtResource("27_6y5pn")
 
 [node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("11_0ec7f")]
-position = Vector2(-1224, -24)
+position = Vector2(-416, 400)
 initial_target = NodePath("../y_order/madotsuki")
 
-[editable path="y_order/to_neo_lobby"]
 [editable path="y_order/to_nexus"]

@@ -119,11 +119,11 @@ func change_scene_to(_scene: PackedScene, _fade_in: bool = true, _fade_out: bool
 			
 			handle_scene_pop()
 			await Game.main_tree.process_frame
-			await load_scene(_scene)
 			Game.scene_loaded.emit()
 			
 			if _fade_out: GameManager.screen_transition.fade(ScreenTransition.DEFAULT_GRADIENT, 1, 0)
 			GameManager.secondary_transition.visible = false
+			await load_scene(_scene)
 
 			print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
 			EventManager.invoke_event("SCENE_CHANGE_SUCCESS", _scene.resource_path)

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="YUME NIKKI - demake"
-config/version="DEMO"
+config/version="0.0.0"
 config/tags=PackedStringArray("concept", "fangame", "wip")
 run/main_scene="uid://l35l1wxusycr"
 config/features=PackedStringArray("4.5", "GL Compatibility")
@@ -21,6 +21,7 @@ config/windows_native_icon="res://game_icon.ico"
 
 [audio]
 
+buses/default_bus_layout=""
 general/2d_panning_strength=1.0
 general/3d_panning_strength=1.0
 

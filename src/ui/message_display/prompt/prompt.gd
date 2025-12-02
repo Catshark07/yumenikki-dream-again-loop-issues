@@ -2,6 +2,7 @@ class_name Prompt
 extends MessageDisplay
 
 @export var option_buttons: Array = []
+signal option_chosen(_seq)
 
 func set_options(
 	_opts: Dictionary[StringName, Sequence],
@@ -26,12 +27,21 @@ func set_options(
 		
 		Utils.connect_to_signal(
 			func(): 
-				manager.proceed_current_message_display()
-				SequencerManager.invoke(sequence),
+				option_chosen.emit(sequence)
+				manager.proceed_current_message_display(),
 				option_button.pressed, 
 				CONNECT_ONE_SHOT)
 		
-func _on_finish() -> void: pass
+func _on_finish() -> void: 
+	if MessageDisplayManager.instance.current_index < MessageDisplayManager.instance.texts.size() - 1:
+		super()
+		
+	else:
+		for o in option_buttons: o.visible = true
+	
+		if 	option_buttons.size() > 0: 
+			option_buttons[0].grab_focus()
+		
 		
 func close() -> void:
 	for i in option_buttons:
@@ -41,7 +51,6 @@ func close() -> void:
 	text_container.text = ""
 	finished.emit()
 	__close_animation()
-
 		
 func open(
 	_position: Vector2, 
@@ -51,12 +60,8 @@ func open(
 	_panel_style: StyleBoxTexture = DEFAULT_PANEL_STYLE) -> void:
 	
 	for o in option_buttons: o.visible = false
-	
 	super(_position, _sound, _speed, _font_colour, _panel_style)
-	await typing_finished
 	
-	for o in option_buttons: o.visible = true
 	
-	if 	option_buttons.size() > 0: 
-		option_buttons[0].grab_focus()
+
 	

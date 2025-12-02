@@ -28,6 +28,6 @@ func _state_exit() -> void:
 	Application.resume()
 	Application.main_window.gui_release_focus()
 
-func _state_input(event: InputEvent) -> void:
+func _state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_esc_menu"):
 		GameManager.pause_options(false)

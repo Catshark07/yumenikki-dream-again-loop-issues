@@ -84,7 +84,7 @@ func _setup(_manager: MessageDisplayManager) -> void:
 	
 	sub_container.split_offset = 150
 func _on_finish() -> void: 
-	typewriter_timer.wait_time = 1.25 + text.length() / 1000
+	typewriter_timer.wait_time = 1.25 + text.length() / 1000.0
 	typewriter_timer.start()
 	await typewriter_timer.timeout
 	manager.proceed_current_message_display()
@@ -147,10 +147,10 @@ func iterate_text	(_text: String) -> void:
 			text = return_parsed(_text)
 			text_container.text = _text
 
-			for char in text.length(): 
+			for c in text.length(): 
 				text_container.visible_characters += 1
 
-				match text[char]:
+				match text[c]:
 					".", "!", "?", ",", ";", ":" : 
 						typewriter_timer.wait_time = DEFAULT_PUNCTUATION_WAIT * speed
 					_: 	

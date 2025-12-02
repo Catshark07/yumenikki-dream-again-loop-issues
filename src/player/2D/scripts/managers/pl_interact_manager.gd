@@ -73,7 +73,7 @@ func handle_field() -> void:
 func handle_interaction(_choice: int = 0) -> void: 
 	if !cooldown and curr_interactable != null:
 	
-		if 	curr_interactable is Interactable : 
+		if 	curr_interactable is Interactable and curr_interactable.can_interact : 
 			Utils.connect_to_signal(
 				AudioService.play_sound.bind(Player.ERR_SOUNDS.pick_random()), 
 				curr_interactable.fail, 

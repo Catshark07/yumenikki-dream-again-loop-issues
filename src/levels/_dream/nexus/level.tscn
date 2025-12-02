@@ -63,11 +63,6 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_rtj6g"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="Resource" id="Resource_25aso"]
-resource_local_to_scene = true
-resource_name = "pl_variables"
-script = ExtResource("12_ksvw7")
-
 [sub_resource type="Gradient" id="Gradient_jxym7"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
@@ -76,6 +71,11 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_f8lfk"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_25aso"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("12_ksvw7")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xra6u"]
 shader = ExtResource("7_25aso")
@@ -149,10 +149,6 @@ color_ramp = SubResource("Gradient_rtj6g")
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="madotsuki" parent="y_order" instance=ExtResource("10_scjaa")]
-position = Vector2(232, 128)
-values = SubResource("Resource_25aso")
-
 [node name="walls" type="TileMapLayer" parent="y_order"]
 visible = false
 y_sort_enabled = true
@@ -181,11 +177,14 @@ position = Vector2(232, 104)
 
 [node name="travel_to_scene" parent="y_order/apartment/on_interact" index="4"]
 scene_path = "uid://dl7sdjmo0vbkt"
+connection_id = "nexus"
 
 [node name="spawn_point" parent="y_order/apartment" index="1"]
 scene_path = "uid://dl7sdjmo0vbkt"
+connection_id = "nexus"
 
 [node name="mural_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 3
 position = Vector2(-352, 80)
 collision_layer = 2147483650
 collision_mask = 2147483648
@@ -212,6 +211,7 @@ hframes = 1
 frame_h_count = 1
 
 [node name="neon_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 3
 position = Vector2(720, 56)
 collision_layer = 2147483650
 collision_mask = 2147483648
@@ -242,6 +242,7 @@ fps = 5.0
 frame_h_count = 3
 
 [node name="forest_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 3
 position = Vector2(448, -72)
 collision_layer = 2147483650
 collision_mask = 2147483648
@@ -269,6 +270,7 @@ script = ExtResource("21_1rd4d")
 frame_h_count = 1
 
 [node name="eyeball_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 3
 position = Vector2(64, 448)
 collision_layer = 2147483650
 
@@ -295,6 +297,7 @@ script = ExtResource("21_1rd4d")
 frame_h_count = 1
 
 [node name="numbers_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 3
 position = Vector2(0, -72)
 collision_layer = 2147483650
 
@@ -321,6 +324,7 @@ script = ExtResource("21_1rd4d")
 frame_h_count = 1
 
 [node name="dark_world" parent="y_order" instance=ExtResource("18_25aso")]
+process_mode = 3
 position = Vector2(240, 336)
 collision_layer = 2147483650
 
@@ -345,6 +349,10 @@ texture = ExtResource("24_25aso")
 hframes = 1
 script = ExtResource("21_1rd4d")
 frame_h_count = 1
+
+[node name="madotsuki" parent="y_order" instance=ExtResource("10_scjaa")]
+position = Vector2(232, 128)
+values = SubResource("Resource_25aso")
 
 [node name="spawn_point" type="Node2D" parent="y_order" node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(232, 128)

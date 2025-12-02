@@ -74,7 +74,7 @@ scroll_active = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
 bbcode_enabled = true
-text = "-> [rainbow speed=.3]thissmay[/rainbow] (me!!)"
+text = "-> [rainbow speed=.3]thissmay[/rainbow] ([url]https://linktr.ee/thissmay[/url])"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0

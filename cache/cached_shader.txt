@@ -20,6 +20,7 @@ res://src/shaders/panorama/linear.gdshader
 res://src/shaders/panorama/linear_additive.gdshader
 res://src/shaders/panorama/linear_fog.gdshader
 res://src/shaders/panorama/linear_fog_noadd.gdshader
+res://src/shaders/panorama/linear_mix.gdshader
 res://src/shaders/panorama/radial.gdshader
 res://src/shaders/panorama/radial_additive.gdshader
 res://src/shaders/screen_overlay/bw_invert_blur.gdshader
@@ -39,4 +40,4 @@ res://src/shaders/transition/tr_fade.gdshader
 res://src/shaders/transition/tr_pixelate.gdshader
 res://src/shaders/transition/tr_side.gdshader
 res://src/shaders/ui/button_texture_grad_mask.gdshader
-res://src/shaders/ui/heartbeat.gdshader
+res://src/shaders/ui/hud_bw_adjust.gdshader

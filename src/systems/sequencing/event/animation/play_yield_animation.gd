@@ -1,3 +1,4 @@
+class_name EVN_PlayAnimation
 extends Event
 
 @export var animator: AnimationPlayer

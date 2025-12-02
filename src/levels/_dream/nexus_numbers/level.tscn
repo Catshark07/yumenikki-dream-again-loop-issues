@@ -74,7 +74,7 @@ unload_transition = SubResource("ShaderMaterial_dgdtf")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_p5x5m")]
-position = Vector2(-728, -192)
+position = Vector2(72, 160)
 initial_target = NodePath("../entrance_section/madotsuki")
 
 [node name="Wiggle" type="Node" parent="camera/marker/camera/components_receiver" index="0"]
@@ -87,10 +87,10 @@ metadata/_custom_type_script = "uid://bptlrkdn0tpua"
 y_sort_enabled = true
 
 [node name="to_docks" parent="entrance_section" instance=ExtResource("10_idt0i")]
+process_mode = 3
 position = Vector2(-312, -479)
 
 [node name="travel_to_scene" parent="entrance_section/to_docks/on_interact" index="3"]
-process_mode = 4
 scene_path = "uid://b7ixvvfnudrtd"
 connection_id = "fat"
 
@@ -99,15 +99,14 @@ scene_path = "uid://b7ixvvfnudrtd"
 connection_id = "fat"
 
 [node name="to_nexus" parent="entrance_section" instance=ExtResource("10_idt0i")]
+process_mode = 3
 position = Vector2(184, 49)
 
 [node name="travel_to_scene" parent="entrance_section/to_nexus/on_interact" index="3"]
-process_mode = 4
 scene_path = "uid://dl25joalnmaxt"
 
 [node name="spawn_point" parent="entrance_section/to_nexus" index="1"]
 scene_path = "uid://dl25joalnmaxt"
-connection_id = "nexus"
 
 [node name="renderer" parent="entrance_section/to_nexus" index="2"]
 texture = ExtResource("11_vxiyi")
@@ -130,7 +129,7 @@ tile_set = ExtResource("7_fgp7h")
 script = ExtResource("8_140ey")
 
 [node name="madotsuki" parent="entrance_section" instance=ExtResource("5_5chxp")]
-position = Vector2(128, 88)
+position = Vector2(160, 96)
 values = SubResource("Resource_fgp7h")
 
 [node name="main_deadzone" type="Area2D" parent="entrance_section" node_paths=PackedStringArray("rect")]

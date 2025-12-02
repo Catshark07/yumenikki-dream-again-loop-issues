@@ -67,14 +67,15 @@ func cancel() -> void:
 	_cancel()
 	is_active = false
 	is_finished = true
+	__call_canceled.call_deferred()
 func end() -> void: 
 	_end()
 	is_active 	= false
 	is_finished = true
 
 # -- internal
-func __call_finished() -> void:
-	if is_inside_tree(): finished.emit()
+func __call_finished() -> void: if is_inside_tree(): finished.emit()
+func __call_canceled() -> void: if is_inside_tree(): cancelled.emit()
 
 func has_next() -> bool: return next != null
 func has_prev() -> bool: return prev != null
