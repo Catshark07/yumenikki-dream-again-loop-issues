@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/madoxy_46.ogg-edf12f19cadeca362964e1c57ea1691
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

@@ -1,13 +1,11 @@
 [gd_scene load_steps=11 format=4 uid="uid://b486t8w7yjtbh"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_g633e"]
-[ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="2_tnral"]
 [ext_resource type="AudioStream" uid="uid://dekaq6h380e0c" path="res://src/audio/bgm/world_white-desert-2.ogg" id="3_vl3hr"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_3po7v"]
 [ext_resource type="TileSet" uid="uid://dk0nqtall8ktp" path="res://src/levels/__ignore/tile_set/world_tile_sets/white_desert.tres" id="5_jkxhj"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_k6ady"]
-[ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="7_haxs4"]
-[ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="8_ri4w7"]
+[ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_visible.gd" id="8_ri4w7"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/region/cam_deadzone.gd" id="9_4ktj7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kbpab"]
@@ -33,23 +31,6 @@ script = ExtResource("8_ri4w7")
 metadata/_custom_type_script = "uid://bokon3yk8g4bw"
 
 [node name="desert" type="Node2D" parent="desert_region"]
-
-[node name="seamless_detector" parent="desert_region/desert" instance=ExtResource("7_haxs4")]
-position = Vector2(0, -176)
-expansion = Vector2i(80, 150)
-boundary_size = Vector2i(1760, 2656)
-
-[node name="up_loop" parent="desert_region/desert/seamless_detector" index="0"]
-position = Vector2(880, 2664)
-
-[node name="down_loop" parent="desert_region/desert/seamless_detector" index="1"]
-position = Vector2(880, -8)
-
-[node name="right_loop" parent="desert_region/desert/seamless_detector" index="2"]
-position = Vector2(1768, 1328)
-
-[node name="left_loop" parent="desert_region/desert/seamless_detector" index="3"]
-position = Vector2(-8, 1328)
 
 [node name="floor" type="TileMapLayer" parent="desert_region/desert"]
 z_index = -1
@@ -118,4 +99,3 @@ tile_map_data = PackedByteArray("AAAHABMAAAAJAA0AAAAHABQAAAAJAA4AAAAIABMAAAAJAA0
 tile_set = ExtResource("5_jkxhj")
 
 [editable path="camera"]
-[editable path="desert_region/desert/seamless_detector"]

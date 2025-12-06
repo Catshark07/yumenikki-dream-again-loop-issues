@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/silas_asphyxiation.ogg-133544532e4113a9313b1a
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

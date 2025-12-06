@@ -32,6 +32,7 @@ var row_within_bounds: bool = false
 func _ready() -> void: 
 	set_process(!Engine.is_editor_hint())
 	set_physics_process(false)
+	set_process_input(false)
 	texture_changed		.connect(format)
 	visibility_changed	.connect(set_process.bind(self.visible))
 	

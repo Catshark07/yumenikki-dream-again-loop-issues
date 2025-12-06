@@ -1,11 +1,18 @@
 class_name SoundPlayer
 extends AudioStreamPlayer
 
+# everything moving forward with this will use the LINEAR volume
+# and not DB.
+
 var pre_mute_vol: float = 0
 var pre_mute_pit: float = 1
 var was_playing: bool = false
 
-const ZERO_VOLUME = -80
+const ZERO_VOLUME_LIN 	= 0
+const ZERO_VOLUME_DB 	= -80
+
+var vol_max_clamp: float = INF
+var vol_min_clamp 
 
 @export var muted: bool = false
 @export var affected_by_timescale: bool = false:
@@ -29,28 +36,27 @@ func play_sound(
 		if ResourceLoader.exists(_stream.resource_path):
 			if playing: stop()
 			
-			stream = _stream
-			volume_db = linear_to_db(_vol)
-			pitch_scale = _pitch
+			stream 			= _stream
+			volume_linear 	= _vol
+			pitch_scale 	= _pitch
 			
 			play()
 			await finished
 func mute() -> void: 
-	pre_mute_vol = volume_db
-	pre_mute_pit = pitch_scale
-	volume_db = ZERO_VOLUME
+	pre_mute_vol 	= volume_linear
+	pre_mute_pit 	= pitch_scale
+	volume_linear 	= ZERO_VOLUME_LIN
 	
 func unmute() -> void:
-	volume_db = pre_mute_vol
-	pitch_scale = pre_mute_pit
+	volume_linear 	= pre_mute_vol
+	pitch_scale 	= pre_mute_pit
 
 # ---- setters ----
 func set_timescale_factor(_fac: float) -> void: self.timescale_factor = _fac
 
-func set_pitch(_pitch: float) -> void: self.pitch_scale = clampf(_pitch, 0.1, 5)
-func set_volume(_vol: float) -> void: 
-	_vol = clampf(_vol, 0, 1)
-	self.volume_db = linear_to_db(_vol)
+func set_pitch(_pitch: float) -> void: 			self.pitch_scale 	= clampf(_pitch, 0.1, 5)
+func set_volume(_db_vol: float) -> void:  		self.volume_db 		= clampf(_db_vol, ZERO_VOLUME_DB, 5)
+func set_volume_lin(_lin_vol: float) -> void:  	self.volume_linear 	= clampf(_lin_vol, ZERO_VOLUME_LIN, 2)
 
 # ---- getters ----
 func get_pitch() -> float: return self.pitch_scale

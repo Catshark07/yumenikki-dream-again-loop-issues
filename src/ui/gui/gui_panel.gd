@@ -22,7 +22,7 @@ var resize_tweener: Tween
 
 const MIN_SIZE := Vector2(60, 18)
 const DEFAULT_PANEL_DISPLAY_SHADER: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
-const DEFAULT_DISPLAY_BG_COLOR = Color(0,0,0,1)
+const DEFAULT_DISPLAY_BG_COLOR = Color(1,1,1,0)
 
 # ---- size control ----
 # ---- common vars ----

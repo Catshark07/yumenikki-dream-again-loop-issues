@@ -10,5 +10,4 @@ void fragment() {
 	float ratio = screen_width / screen_height;
 	float dist = distance(vec2(0.5, 0.5), vec2(mix(0.5, UV.x, ratio - .1), UV.y));
 	COLOR.a = step(1. - progress, dist);
-	COLOR.rgb = colour.rgb;
 }

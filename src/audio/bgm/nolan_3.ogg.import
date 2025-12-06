@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/nolan_3.ogg-417402aa2ca39b6d63bce9500b2987e3.
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

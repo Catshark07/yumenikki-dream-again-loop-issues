@@ -1,4 +1,5 @@
 @tool
+class_name EVN_CallFunction
 extends Event
 
 signal method_changed

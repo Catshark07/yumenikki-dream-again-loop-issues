@@ -16,11 +16,12 @@ func _ready() -> void:
 			"PLAYER_EQUIP")
 	effect_equip.do_on_notify(func(): effect_ind.progress = 0, "PLAYER_DEEQUIP")
 	
-	pl_stamina_change = EventListener.new(self, "PLAYER_STAMINA_CHANGE")
+	pl_stamina_change = EventListener.new(self, "PLAYER_STAMINA_CHANGE", "PLAYER_UPDATED")
 	pl_stamina_change.do_on_notify(
 		func():
-			stamina_bar.size.x = stamina_bar_size_x * \
-			EventManager.get_event_param("PLAYER_STAMINA_CHANGE")[0] / Player.MAX_STAMINA,
-			"PLAYER_STAMINA_CHANGE")
+			if Player.Instance.get_pl() != null:
+				stamina_bar.size.x = stamina_bar_size_x * \
+				Player.Instance.get_pl().stamina / Player.MAX_STAMINA,
+			"PLAYER_STAMINA_CHANGE", "PLAYER_UPDATED")
 
 		

@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_0vwvw"]
 [ext_resource type="Texture2D" uid="uid://b4gjcclvhphd7" path="res://src/images/panorama/earth.png" id="2_k5lwt"]
 [ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="2_kfc05"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_wwvai"]
 [ext_resource type="AudioStream" uid="uid://dxkjhkg5y4lav" path="res://src/audio/amb/amb_space_mission_control.ogg" id="3_7bfsl"]
 [ext_resource type="AudioStream" uid="uid://bm7y6qujkfypq" path="res://src/audio/bgm/madoxy_46.ogg" id="3_c4hgi"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_50osm"]

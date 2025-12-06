@@ -6,8 +6,9 @@ func _setup() -> void:
 	inventory._setup()
 
 func _state_enter() -> void: 
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Ambience.mute()
-	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 300)
+	Audio.adjust_bus_effect(Audio.BUS_DISTORTED, 1, "cutoff_hz", 300)
 	
 	Game.lerp_timescale(0.5)
 	GameManager.set_cinematic_bars(true)
@@ -18,7 +19,7 @@ func _state_enter() -> void:
 	if inventory != null: inventory._enter()
 func _state_exit() -> void: 	
 	Ambience.unmute()
-	Audio.adjust_bus_effect("Distorted", 1, "cutoff_hz", 16000)
+	Audio.adjust_bus_effect(Audio.BUS_DISTORTED, 1, "cutoff_hz", 16000)
 	
 	Game.lerp_timescale(1)
 	GameManager.set_cinematic_bars(false)
@@ -31,3 +32,6 @@ func _state_exit() -> void:
 func _state_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pl_inventory"): 
 		EventManager.invoke_event("SPECIAL_INVERT_END_REQUEST")
+	
+	if 		Input.is_physical_key_pressed(KEY_Q): inventory.fsm.change_to_state("pink_petal")
+	elif 	Input.is_physical_key_pressed(KEY_E): inventory.fsm.change_to_state("white_petal")

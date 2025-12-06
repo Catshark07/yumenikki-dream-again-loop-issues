@@ -1,6 +1,8 @@
 class_name FSM 
 extends Node
 
+@export var track_state_changes: bool = false
+
 var context: Node
 
 signal state_changed(_new_state)
@@ -17,6 +19,12 @@ func _init(init_state: State = null) -> void: initial_state = init_state
 
 # - initial
 func _setup(_owner: Node, _skip_initial_state_setup: bool = false) -> void:
+	set_process			(false)
+	set_physics_process	(false)
+	
+	if track_state_changes:
+		state_changed.connect(
+			func(_state): print(self, " - State changed! [%s] --> [%s]" % [curr_state, _state]))
 	context = _owner
 	
 	for states in self.get_children():
@@ -37,7 +45,7 @@ func change_to_state(_new: StringName) -> void:
 			return
 		
 		state_changed.emit(new_state)	
-		curr_state.state_exit()
+		if curr_state != null: curr_state.state_exit()
 		
 		prev_state = curr_state
 		curr_state = new_state

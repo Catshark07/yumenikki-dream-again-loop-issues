@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://b1cl2pgrbvduk"]
+[gd_scene load_steps=24 format=4 uid="uid://b1cl2pgrbvduk"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_cjh53"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_6f7a5"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bnih8dibcwojm" path="res://src/audio/bgm/poubuts_snow_world.mp3" id="3_u3y08"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_d44x6"]
 [ext_resource type="Texture2D" uid="uid://bsq21xlxdo1a3" path="res://src/levels/_dream/nexus_snow/snow.png" id="6_qohse"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="7_u3y08"]
 [ext_resource type="Texture2D" uid="uid://dqeshbkbbqv3j" path="res://src/levels/__ignore/doors/door_snow.png" id="8_64qtr"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="9_45x4p"]
 [ext_resource type="PackedScene" uid="uid://bku0eqinjwowa" path="res://src/levels/__ignore/door.tscn" id="10_45x4p"]
@@ -47,14 +48,18 @@ scale_curve = SubResource("CurveTexture_okesf")
 alpha_curve = SubResource("CurveTexture_6w5ny")
 turbulence_enabled = true
 
+[sub_resource type="Resource" id="Resource_u3y08"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("7_u3y08")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pwa1m"]
 size = Vector2(16, 16)
 
-[node name="snow_world" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free", "scene_objects")]
+[node name="snow_world" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_cjh53")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_u3y08")
 unload_transition = SubResource("ShaderMaterial_8naql")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
@@ -101,12 +106,17 @@ tile_set = ExtResource("10_for1j")
 
 [node name="Madotsuki" parent="y_order" instance=ExtResource("6_d44x6")]
 position = Vector2(208, 160)
+values = SubResource("Resource_u3y08")
+
+[node name="pl_loop" parent="y_order/Madotsuki" index="11" node_paths=PackedStringArray("children")]
+children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
 
 [node name="igloo_1" type="Node2D" parent="y_order"]
 
 [node name="igloo_2" type="Node2D" parent="y_order"]
 
 [node name="door_interactable" parent="." instance=ExtResource("10_45x4p")]
+process_mode = 3
 position = Vector2(272, 192)
 
 [node name="renderer" parent="door_interactable" index="2"]
@@ -118,10 +128,14 @@ frame_h_count = 1
 shape = SubResource("RectangleShape2D_pwa1m")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
-[node name="on_initial" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("13_8naql")
+order = [NodePath("Event")]
+front = NodePath("Event")
+back = NodePath("Event")
 
 [node name="Event" type="Node" parent="on_initial"]
+process_mode = 4
 script = ExtResource("9_45x4p")
 stream = ExtResource("3_u3y08")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"

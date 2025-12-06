@@ -10,7 +10,6 @@
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="7_gva83"]
 [ext_resource type="Shader" uid="uid://dosa7qbgxuqjd" path="res://src/shaders/screen_overlay/vignette_rgb_abberation.gdshader" id="8_42ven"]
 [ext_resource type="Texture2D" uid="uid://b5kega2e65tcq" path="res://src/images/panorama/eyes.png" id="8_b8t17"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="8_e17uc"]
 [ext_resource type="Shader" uid="uid://dv1dx75w12wav" path="res://src/shaders/screen_overlay/vignette_dark.gdshader" id="8_ro470"]
 [ext_resource type="Shader" uid="uid://brem0ley6fcra" path="res://src/shaders/panorama/depth_additive.gdshader" id="10_khrf1"]
 [ext_resource type="TileSet" uid="uid://dxtgmficcsio2" path="res://src/levels/_dream/rose_field/rosetree_tileset.tres" id="16_h0shn"]

@@ -1,21 +1,44 @@
 class_name SequencerManager
-extends Game.GameSubClass
+extends GameDependency
 
+const PRINT_ID := "SEQUENCE MANAGER:: "
 static var curr: Sequence
 
-static func invoke(_seq: Sequence) -> void:
-	if _seq == null: return
+static func invoke(_seq: Sequence, _force_continue: bool = false) -> void:
+	if _seq == null or !(_seq is Sequence): return
 	
-	await cancel(curr)
-	_seq.finished.connect(func(): curr = null, CONNECT_ONE_SHOT)
-	_seq.execute()
+	if 	_seq.async:
+		_seq.execute()
+		return
 		
+	if curr != null:
+		await cancel()
+		if curr == _seq:
+			curr = null
+			if !_force_continue: return
+	
 	curr 		= _seq 
+	curr.finished.connect(func(): 
+		curr = null, CONNECT_ONE_SHOT)
+		
+	curr.execute()
+static func cancel() -> void: 
+	if curr == null or !(curr is Sequence): return
+	curr.cancel()
+	await curr.cancelled
 	
-static func cancel(_seq: Sequence) -> void: 
-	if _seq == null: return
-	if _seq == curr: curr = null
+#static func _update(_delta: float) -> void:
+	#if curr != null:
+	#pass
+	#
 	
-	_seq.cancel()
-	await _seq.canceled
+static func create_sequence(_name: String, _skip_invalid: bool = true, _wait_finish: bool = true) -> Sequence: 
+	var seq = Sequence.new()
+	seq.name 					= _name 
+	seq.skip_invalid_events 	= _skip_invalid
+	seq.wait_til_finished 		= _wait_finish
 	
+	Game.add_child(seq)
+	Utils.connect_to_signal(seq.queue_free, seq.finished, ConnectFlags.CONNECT_ONE_SHOT)
+	
+	return seq 

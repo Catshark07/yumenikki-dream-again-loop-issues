@@ -1,6 +1,9 @@
+class_name DreamManager
 extends Component
 
 enum state {DREAM, NEUTRAL}
+
+static var global_dream_state: state
 
 @export var curr_reality_mode: 	State
 @export var dream_mode: 		State
@@ -40,6 +43,8 @@ func determine_world_state_by_path() -> void:
 func enforce_reality_state(_state: state) -> void:
 	if curr_reality_mode != null:
 		curr_reality_mode.state_exit()
+	
+	global_dream_state = _state
 	
 	match _state:
 		state.DREAM:

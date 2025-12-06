@@ -30,6 +30,7 @@ script/source = "extends State
 @export var mado: Sprite2D
 @export var effects: Sprite2D
 @export var container: Control
+@export var items_container: Control
 
 @export var spr_petal_wheel: Sprite2D
 
@@ -39,6 +40,10 @@ var tween: Tween
 
 
 func _state_enter() -> void: 
+	if 	items_container.get_children().size()  > 0:
+		items_container.get_children()[0].grab_focus()
+	
+	section.modulate.a = 0
 	section.visible = true
 	
 	mado.position.x -= 10
@@ -110,8 +115,10 @@ func _ready() -> void:
 func _state_enter() -> void: 
 	container.update_stats_display()
 	
+	section.modulate.a = 0
 	section.visible = true
-	mado.position.x += 10
+	
+	mado.position.x += 20
 	stats.position.x += 20
 	container.position.x += 35
 	
@@ -124,9 +131,7 @@ func _state_enter() -> void:
 	tween.tween_property(stats, \"position:x\", 42, 0.5)
 	tween.tween_property(container, \"position:x\", 32, 0.5)
 	
-	tween.tween_property(mado, \"modulate:a\", 1, 0.5)
-	tween.tween_property(stats, \"modulate:a\", 1, 0.5)
-	tween.tween_property(container, \"modulate:a\", 1, 0.5)
+	tween.tween_property(section, \"modulate:a\", 1, 0.5)
 	
 	tween.tween_property(overlay_modulate, \"modulate\", Color(\"fae4ee\"), 0.5)
 	
@@ -143,9 +148,7 @@ func _state_exit() -> void:
 	tween.tween_property(stats, \"position:x\", 42 + 15, 0.5)
 	tween.tween_property(container, \"position:x\", 48 + 35, 0.5)
 	
-	tween.tween_property(mado, \"modulate:a\", 0, 0.5)
-	tween.tween_property(stats, \"modulate:a\", 0, 0.5)
-	tween.tween_property(container, \"modulate:a\", 0, 0.5)
+	tween.tween_property(section, \"modulate:a\", 0, 0.5)
 	handle_animation_exit()
 	await tween.finished
 	
@@ -209,12 +212,13 @@ effect_indicator = NodePath("../display/pink_petal_effects/deequip/texture_rende
 initial_state = NodePath("PINK_PETAL")
 metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 
-[node name="PINK_PETAL" type="Node" parent="inventory_fsm" node_paths=PackedStringArray("section", "mado", "effects", "container", "spr_petal_wheel", "overlay_modulate", "transitions")]
+[node name="PINK_PETAL" type="Node" parent="inventory_fsm" node_paths=PackedStringArray("section", "mado", "effects", "container", "items_container", "spr_petal_wheel", "overlay_modulate", "transitions")]
 script = SubResource("GDScript_8vhxa")
 section = NodePath("../../display/pink_petal_effects")
 mado = NodePath("../../display/pink_petal_effects/mado")
 effects = NodePath("../../display/pink_petal_effects/effects")
 container = NodePath("../../display/pink_petal_effects/inv_container")
+items_container = NodePath("../../display/pink_petal_effects/inv_container/margin/items")
 spr_petal_wheel = NodePath("../../display/spr_petal_wheel")
 overlay_modulate = NodePath("../../display/multiply_modulate")
 transitions = [NodePath("../WHITE_PETAL")]
@@ -353,8 +357,6 @@ progress = 1
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 36.0
-offset_bottom = 48.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")
@@ -458,11 +460,11 @@ offset_right = -168.0
 offset_bottom = -14.0
 
 [node name="mado" type="Sprite2D" parent="display/white_petal_stats"]
-position = Vector2(394, 150)
+position = Vector2(384, 144)
 texture = ExtResource("12_tlelv")
 
 [node name="eye_l" type="Sprite2D" parent="display/white_petal_stats/mado"]
-position = Vector2(-29, -15)
+position = Vector2(-28, -6)
 texture = ExtResource("20_ub6k2")
 hframes = 3
 script = ExtResource("21_cgott")
@@ -474,7 +476,7 @@ frame_h_count = 3
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="eye_r" type="Sprite2D" parent="display/white_petal_stats/mado"]
-position = Vector2(29, -15)
+position = Vector2(28, -6)
 texture = ExtResource("20_ub6k2")
 flip_h = true
 hframes = 3
@@ -511,7 +513,7 @@ offset_top = 34.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 5
-text = "press ALT or SPACE to close inventory."
+text = "press ALT to close inventory."
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -551,8 +553,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 27.0
-offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -665,8 +665,6 @@ frame_v_count = 3
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 27.0
-offset_bottom = 14.0
 mouse_filter = 1
 script = ExtResource("15_kisvh")
 button = NodePath("button")

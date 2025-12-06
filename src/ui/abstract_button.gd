@@ -50,7 +50,7 @@ func _setup() -> void:
 	button = Utils.get_child_node_or_null(self, "button")
 	if button == null: 
 	
-		button = await Utils.add_child_node(self, BaseButton.new(), "button")
+		button = Utils.add_child_node(self, BaseButton.new(), "button")
 		button.size = self.size
 
 # - helper

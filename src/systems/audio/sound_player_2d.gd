@@ -7,18 +7,17 @@ var pre_mute_vol: float = 0
 var pre_mute_pit: float = 1
 var was_playing: bool = false
 
-var distance_from_audio_listener: float
-var pitch_distance_multiplier = 1
-
 const ZERO_VOLUME = -50
 
 @export var muted: bool = false
 @export var affected_by_timescale: bool = false:
 	set(_is_affected):
 		affected_by_timescale = _is_affected
+		if Engine.is_editor_hint(): return
+	
 		match _is_affected:
-			true: Game.true_time_scale_changed.connect(set_timescale_factor)
-			false: Game.true_time_scale_changed.disconnect(set_timescale_factor)
+			true: 	Utils.connect_to_signal(set_timescale_factor, Game.true_time_scale_changed)
+			false: 	Utils.disconnect_from_signal(set_timescale_factor, Game.true_time_scale_changed)
 var timescale_factor: float = 0
 
 func _ready() -> void:
@@ -48,10 +47,10 @@ func unmute() -> void:
 	if was_playing: play()
 	volume_db = pre_mute_vol
 	pitch_scale = pre_mute_pit
-
-func _draw() -> void:
-	if Engine.is_editor_hint():
-		draw_circle(Vector2.ZERO, max_distance, Color(Color.RED, 0.05))
+#
+#func _draw() -> void:
+	#if Engine.is_editor_hint():
+		##draw_circle(Vector2.ZERO, max_distance, Color(Color.RED, 0.05))
 
 # ---- setters ----
 func set_timescale_factor(_fac: float) -> void: self.timescale_factor = _fac
@@ -66,11 +65,3 @@ func get_pitch() -> float: return self.pitch_scale
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()
-	
-	if get_viewport().get_audio_listener_2d() == null: return
-	distance_from_audio_listener = (
-		get_viewport().get_audio_listener_2d().global_position - 
-		self.global_position).length()
-	
-	pitch_distance_multiplier = clampf(Application.get_viewport_dimens().length() / distance_from_audio_listener, 0.1, 1)
-	pitch_scale = clamp(pitch_scale * pitch_distance_multiplier, 0.1, 3)

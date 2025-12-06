@@ -1,0 +1,14 @@
+shader_type canvas_item;
+render_mode blend_mix;
+#include "res://src/shaders/_include/linear_base.gdshaderinc"
+#include "res://src/shaders/_include/general_base.gdshaderinc"
+
+void vertex()
+{
+	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
+}
+
+void fragment()
+{
+	COLOR.rgba = _linear_fragment(UV, TEXTURE).rgba * (1. - transparency);
+}

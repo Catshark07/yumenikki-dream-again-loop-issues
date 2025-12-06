@@ -1,6 +1,7 @@
 shader_type canvas_item;
 render_mode blend_add;
 #include "res://src/shaders/_include/linear_base.gdshaderinc"
+#include "res://src/shaders/_include/general_base.gdshaderinc"
 
 void vertex()
 {
@@ -9,5 +10,5 @@ void vertex()
 
 void fragment()
 {
-	COLOR = _linear_fragment(UV, TEXTURE);
+	COLOR.rgba = _linear_fragment(UV, TEXTURE).rgba * (1. - transparency);
 }

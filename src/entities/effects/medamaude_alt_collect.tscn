@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://cpe6q6ba5agcg"]
 
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_tcrsc"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="1_tcrsc"]
 [ext_resource type="Texture2D" uid="uid://cfciqqbav65d7" path="res://src/entities/sentients/red_jellyfish/idle.png" id="2_2wara"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="3_vf5kd"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="4_5we47"]

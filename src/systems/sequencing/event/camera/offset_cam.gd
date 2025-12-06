@@ -1,13 +1,23 @@
-class_name OffsetCamera 
+class_name EVN_OffsetCam 
 extends Event
 
 @export var offset: Vector2
 @export var ease: Tween.EaseType = Tween.EASE_OUT
 @export var trans: Tween.TransitionType = Tween.TRANS_EXPO
-@export var duration: int = 1
+@export var duration: float = 1
+
+func _init(
+	_offset := Vector2.ZERO, 
+	_ease := Tween.EASE_OUT, 
+	_trans := Tween.TRANS_LINEAR,
+	_duration: float = 1) -> void:
+		offset 		= _offset
+		ease 		= _ease
+		trans 		= _trans
+		duration 	= _duration
 
 func _execute() -> void:
-	if CameraHolder.instance: 
-		CameraHolder.instance.lerp_offset(offset, ease, trans, duration)
-		finished.emit()
+	await CameraHolder.instance.lerp_offset(offset, ease, trans, duration)
 	
+func _validate() -> bool: 
+	return CameraHolder.instance != null

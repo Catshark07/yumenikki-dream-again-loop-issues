@@ -27,5 +27,5 @@ func _sneak		(_pl: Player, _delta: float) -> void:
 func _climb		(_pl: Player, _delta: float) -> void: pass
 
 # ---- miscallenous ----
-func _interact	(_pl: Player) -> void: 
-	_pl.components.get_component_by_name("interaction_manager").handle_interaction()
+func _interact	(_pl: Player, _choice: int) -> void: 
+	_pl.components.get_component_by_name(Player_YN.Components.INTERACT).handle_interaction(_choice)

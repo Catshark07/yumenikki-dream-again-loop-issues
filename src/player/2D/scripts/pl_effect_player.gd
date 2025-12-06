@@ -7,7 +7,10 @@ var flash_tween: Tween
 func _ready() -> void:
 	on_player_effect = EventListener.new(self, "PLAYER_EQUIP", "PLAYER_DEEQUIP", "PLAYER_EFFECT_FOUND")
 	
-	on_player_effect.do_on_notify(flash_player_sprite, "PLAYER_EFFECT_FOUND")
+	on_player_effect.do_on_notify(
+		func():
+			if EventManager.get_event_param("PLAYER_EFFECT_FOUND")[1]:
+				flash_player_sprite(), "PLAYER_EFFECT_FOUND")
 	on_player_effect.do_on_notify( # - Equip
 		func():
 			if (EventManager.get_event_param("PLAYER_EQUIP_SKIP_ANIM")[0] == true): return
@@ -25,6 +28,7 @@ func _ready() -> void:
 			
 
 func flash_player_sprite() -> void:
+	if Player.Instance.get_pl() != null:
 		(Player.Instance.get_pl().sprite_renderer.get_node("shader") as ColorRect).color.a = 1
 		if flash_tween != null: flash_tween.kill()
 		flash_tween = self.create_tween()

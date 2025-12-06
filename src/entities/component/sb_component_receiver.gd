@@ -18,18 +18,18 @@ func _setup(_sb: SentientBase = null) -> void:
 	components = self.get_children()
 	
 	for component in components: 
-		if component and component is SBComponent: 
+		if component and component is SBComponent and component.active: 
 			component.sentient = _sb
 			component._setup(_sb)
 
 # ---
-func _process(delta: float) -> void: pass
-func _physics_process(delta: float) -> void: pass
+func _process(_delta: float) -> void: pass
+func _physics_process(_delta: float) -> void: pass
 # --- 
 func _update(_delta: float) -> void:
 	if !bypass:
 		for component in components: 
-			if component: component.update(_delta)
+			if component != null and component.active: component.update(_delta)
 func _physics_update(_delta: float) -> void: 
 	if !bypass:
 		for component in components: 

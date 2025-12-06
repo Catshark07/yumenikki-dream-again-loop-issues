@@ -1,39 +1,37 @@
 class_name EventManager
 
+const SUBSCRIBES_STR 	:= "subscribers"
+const PARAMS_STR 		:= "params"
+
+static func _setup() -> void:
+	for i in event_ids: create_event(i)
+
 static func add_listener(_listener: EventListener, _id: String) -> void:
 	create_event(_id)
-	event_ids[_id]["subscribers"].append(_listener)
+	event_ids[_id][SUBSCRIBES_STR].append(_listener)
 static func remove_listener(_listener: EventListener, _id: String) -> void:
-	create_event(_id)
-	if  event_ids[_id]["subscribers"].find(_listener) != -1:
-		event_ids[_id]["subscribers"].remove_at(
-			event_ids[_id]["subscribers"].find(_listener)
+	if  event_ids[_id][SUBSCRIBES_STR].find(_listener) != -1:
+		event_ids[_id][SUBSCRIBES_STR].remove_at(
+			event_ids[_id][SUBSCRIBES_STR].find(_listener)
 			)
 static func create_event(_id: String) -> void:
-	if !event_ids.has(_id):
-		event_ids[_id] = {"subscribers" : [], "params" : []}
-		return	
-	
-	if !event_ids[_id].has("subscribers"):
-		event_ids[_id]["subscribers"] = []
-	
-	if !event_ids[_id].has("params"):
-		event_ids[_id]["params"] = []
+	if !event_ids.has(_id):					event_ids[_id] = {}
+	if !event_ids[_id].has(SUBSCRIBES_STR): event_ids[_id][SUBSCRIBES_STR] = []
+	if !event_ids[_id].has(PARAMS_STR): 	event_ids[_id][PARAMS_STR] = []
 		
 static func invoke_event(_id: String, ..._params: Array) -> void: 
 	_id = _id.to_upper()
 	create_event(_id)
-	event_ids[_id]["params"] = _params
-
-	for i in range((event_ids[_id]["subscribers"] as Array[EventListener]).size()):
-		if event_ids[_id]["subscribers"][i].is_valid_listener: 
-			event_ids[_id]["subscribers"][i].on_notify(_id)
+	event_ids[_id][PARAMS_STR] = _params
+	
+	for i in range((event_ids[_id][SUBSCRIBES_STR] as Array[EventListener]).size()):
+		if 	event_ids[_id][SUBSCRIBES_STR][i].is_valid_listener: 
+			event_ids[_id][SUBSCRIBES_STR][i].on_notify(_id)
 		else: 
-			remove_listener(event_ids[_id]["subscribers"][i], _id)
+			remove_listener(event_ids[_id][SUBSCRIBES_STR][i], _id)
 static func get_event_param(_id: String) -> Array:
-	create_event(_id)
-	if (event_ids[_id]["params"] as Array).is_empty(): return [null]
-	return event_ids[_id]["params"]
+	if 		(event_ids[_id][PARAMS_STR] as Array).is_empty(): return [null]
+	return 	 event_ids[_id][PARAMS_STR]
 
 static var event_ids := {
 		# ---- game events -----
@@ -43,6 +41,9 @@ static var event_ids := {
 		
 		"GAME_FILE_SAVE" : {},
 		"GAME_CONFIG_SAVE" : {},
+		
+		"GAME_PRELOADING_CONTENT_FINISH" : {},
+		"GAME_PRELOADING_CONTENT_START" : {},
 		
 		# ---- reality states -----
 		"REALITY_DREAM" : {},
@@ -85,7 +86,6 @@ static var event_ids := {
 		"CHASE_FINISH" : {},
 
 		# ---- scene change invokes -----
-		"SCENE_INITIALIZED" : {},
 		"SCENE_LOADED" : {},
 		"SCENE_UNLOADED" : {},
 		"SCENE_CHANGE_REQUEST" : {},

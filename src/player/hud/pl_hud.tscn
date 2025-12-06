@@ -1,10 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://q5moiijg0b7a"]
+[gd_scene load_steps=8 format=3 uid="uid://q5moiijg0b7a"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jajjr"]
 [ext_resource type="Script" uid="uid://d3yuvhq7nx0we" path="res://src/player/hud/pl_hud_manager.gd" id="1_o4eow"]
 [ext_resource type="Script" uid="uid://cfcnsb8jk2ag5" path="res://src/player/hud/pl_hud_indicators.gd" id="2_ir6k4"]
-[ext_resource type="PackedScene" uid="uid://bl24ldxfxb508" path="res://src/player/inventory/inventory.tscn" id="2_ufr4o"]
-[ext_resource type="Texture2D" uid="uid://cgctf7npty6c7" path="res://src/player/hud/stamina_fill.png" id="4_hogqo"]
 [ext_resource type="Texture2D" uid="uid://bvnkp5b7jvick" path="res://src/player/hud/stamina_indicator.png" id="6_2qcr0"]
 [ext_resource type="Texture2D" uid="uid://h7wmglg415a4" path="res://src/player/inventory/effects_indicator.png" id="9_a8b7g"]
 [ext_resource type="Script" uid="uid://bb10lmchjgadl" path="res://src/player/hud/on_game_events.gd" id="9_ufr4o"]
@@ -43,37 +41,30 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_ir6k4")
 effect_ind = NodePath("effect_indicator")
-stamina_bar = NodePath("stamina/stamina_fill/value")
+stamina_bar = NodePath("stamina/value")
 
 [node name="stamina" type="TextureRect" parent="indicators/icons"]
+clip_children = 2
 y_sort_enabled = true
+use_parent_material = true
 layout_mode = 0
-offset_left = 40.0
-offset_top = 240.0
-offset_right = 88.0
-offset_bottom = 256.0
+offset_left = 35.0
+offset_top = 239.0
+offset_right = 83.0
+offset_bottom = 255.0
 mouse_filter = 2
 texture = ExtResource("6_2qcr0")
 
-[node name="stamina_fill" type="TextureRect" parent="indicators/icons/stamina"]
-show_behind_parent = true
-clip_children = 2
+[node name="value" type="ColorRect" parent="indicators/icons/stamina"]
 layout_mode = 0
-offset_right = 48.0
-offset_bottom = 16.0
-mouse_filter = 2
-texture = ExtResource("4_hogqo")
-
-[node name="value" type="ColorRect" parent="indicators/icons/stamina/stamina_fill"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 7.0
-offset_right = 41.0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 42.0
 offset_bottom = 12.0
-color = Color(0.99998015, 0.124565475, 0.4053996, 1)
 
 [node name="effect_indicator" type="Sprite2D" parent="indicators/icons"]
-position = Vector2(24, 240)
+use_parent_material = true
+position = Vector2(28, 240)
 texture = ExtResource("9_a8b7g")
 centered = false
 hframes = 2
@@ -85,25 +76,14 @@ metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
 [node name="icon" type="TextureRect" parent="indicators"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 424.0
-offset_top = 8.0
-offset_right = 472.0
-offset_bottom = 56.0
+offset_left = 432.0
+offset_top = 4.0
+offset_right = 480.0
+offset_bottom = 52.0
 
 [node name="timer" type="Timer" parent="indicators/icon"]
 one_shot = true
 ignore_time_scale = true
-
-[node name="inventory" parent="." instance=ExtResource("2_ufr4o")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 480.0
-offset_bottom = 270.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="on_game_events" type="Node" parent="." node_paths=PackedStringArray("hud", "icon", "icon_timer")]
 script = ExtResource("9_ufr4o")

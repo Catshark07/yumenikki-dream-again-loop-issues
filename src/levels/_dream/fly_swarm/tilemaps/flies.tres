@@ -11,6 +11,7 @@ texture = ExtResource("1_yxx64")
 texture_region_size = Vector2i(35, 32)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 12)
+0:0/0/y_sort_origin = -12
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.3333, 4.5, 8, 4.5, 8, 13.5, -13.3333, 13.5)
 0:1/animation_columns = 4
 0:1/animation_speed = 15.0
@@ -21,6 +22,7 @@ texture_region_size = Vector2i(35, 32)
 0:1/animation_frame_3/duration = 1.0
 0:1/0 = 0
 0:1/0/texture_origin = Vector2i(0, 12)
+0:1/0/y_sort_origin = -12
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.3333, 4.5, 8, 4.5, 8, 13.5, -13.3333, 13.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fi0va"]
@@ -48,7 +50,8 @@ texture_region_size = Vector2i(38, 25)
 0:0/animation_frame_2/duration = 1.0
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 12)
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.3333, 4.5, 8, 4.5, 8, 13.5, -13.3333, 13.5)
+0:0/0/y_sort_origin = -16
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -6.75, 12, -6.75, 12, 0, -12, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_quccf"]
 resource_name = "fly_small"

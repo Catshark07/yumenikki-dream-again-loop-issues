@@ -3,42 +3,48 @@
 class_name CameraHolder
 extends Node2D
 
-static var cam: Camera2D
 static var instance: CameraHolder
 
-var old_pos: Vector2
-var new_pos: Vector2
-var vel: Vector2
+var old_pos:	 Vector2
+var new_pos: 	Vector2
+var vel: 		Vector2
 
 @export var fsm: FSM
 
 # ---- FOLLOW STRATS ----
 @export_group("Miscallenous")
-static var default := STRAT_FOLLOW.new()
-static var follow_player := STRAT_FOLLOW_SENTIENT.new()
-static var follow_lerp := STRAT_FOLLOW_DEFAULT.new()
+@export var follow_speed: float = 2.35
+static var default 			:= STRAT_FOLLOW.new()
+static var follow_player 	:= STRAT_FOLLOW_SENTIENT.new()
+static var follow_lerp 		:= STRAT_FOLLOW_DEFAULT.new()
 
 var prev_follow_strat: STRAT_FOLLOW = default
 var curr_follow_strat: STRAT_FOLLOW = default
 
 # ---- components
-var marker: Marker2D
-var cam_receiver: ComponentReceiver
-var components: ComponentReceiver
+@export var cam: Camera2D
+@export var marker: Marker2D
+@export var cam_receiver: ComponentReceiver
+@export var components: ComponentReceiver
 
 var shake_comp: CamShake
 
 # ---- cam properties
 @export_group("Camera Properties")
-
-var switch_duration: float = .35
 @export var offset: Vector2 = Vector2(0, 0): set = set_offset
 @export_range(0.8, 2) var zoom: float = 1: set = set_zoom
+var switch_duration: float = .35
 
 @export var override: bool = false:
 	set(ov):
 		override = ov 
 		set_override_flag(ov)
+
+@export_subgroup("Rotation TIlt")
+@export var rot_curve: 		Curve = preload("res://src/systems/camera/rotational_wiggle_curve.tres")
+@export var rot_strength: 	float = .9
+@export var rot_speed: 		float = 2.5
+
 static var motion_reduction: bool = false:
 	set(_reduction):
 		motion_reduction = _reduction
@@ -49,7 +55,7 @@ static var motion_reduction: bool = false:
 				CameraHolder.instance.components.bypass = true
 				
 			else: 
-				CameraHolder.instance.set_follow_strategy(CameraHolder.instance.prev_follow_strat)
+				CameraHolder.instance.set_follow_strategy(follow_player)
 				CameraHolder.instance.cam_receiver.bypass = false
 				CameraHolder.instance.components.bypass = false
 
@@ -58,31 +64,26 @@ var zoom_tween: Tween
 
 # ---- target
 @export_group("Target Properties")
-@export var initial_target: CanvasItem
+@export var initial_target: CanvasItem:
+	set(_target):
+		initial_target = _target
+		if _target != null and Engine.is_editor_hint():
+			Utils.connect_to_signal(func(): 
+				if !initial_target.is_inside_tree(): initial_target = null, initial_target.tree_exiting)
 var curr_target: CanvasItem
 var prev_target: CanvasItem
 
-func _init() -> void: 
-	self.name = "camera_handler"
-	self.top_level = true
 func _ready() -> void:
-	set_follow_strategy(default)
-	
 	instance = self
+	self.top_level = true
 	self.process_mode = Node.PROCESS_MODE_PAUSABLE
-	
-	marker = $marker
-	cam = $marker/camera
-	
-	cam_receiver = $marker/camera/components_receiver
-	components = $components_receiver
 	
 	motion_reduction = motion_reduction
 	
 	if Engine.is_editor_hint(): 
 		if initial_target != null:
 			global_position = initial_target.global_position
-	if !Engine.is_editor_hint():
+	else:
 		fsm._setup(self)
 		set_target(initial_target)
 		
@@ -119,13 +120,12 @@ func set_follow_strategy(strat: STRAT_FOLLOW):
 	prev_follow_strat = curr_follow_strat
 	curr_follow_strat = strat
 	curr_follow_strat._changed()
-	curr_follow_strat._setup(self)
 
 # ---- cam control ----
 func set_zoom(_zoom: float) -> void:
 	zoom = _zoom
 	cam.zoom = Vector2(_zoom, _zoom)
-func set_cam_limit(_up: float, _down: float, _right: float, _left: float) -> void: 
+func set_cam_limit(_up: int, _down: int, _right: int, _left: int) -> void: 
 	cam.limit_top = _up
 	cam.limit_bottom = _down
 	cam.limit_right = _right
@@ -135,17 +135,17 @@ func set_offset(_offset: Vector2) -> void:
 	offset = _offset
 	marker.position = _offset
 func set_target(_target: CanvasItem, _dur: float = .5) -> void:
-	if _target == null: 
-		print("target is null")
-		return
+	if _target == null: return
 	
 	switch_duration = _dur
-	curr_target = _target
+	curr_target 	= _target
 	fsm.change_to_state("changing_target")
 	
 	if (_target as Node) is SentientBase: 
-		set_follow_strategy(follow_player if !motion_reduction else default)
-	else: set_follow_strategy(follow_lerp if !motion_reduction else default)
+			set_follow_strategy(follow_player if !motion_reduction else default)
+	else: 	set_follow_strategy(follow_lerp if !motion_reduction else default)
+	
+	curr_follow_strat._setup(self)
 	
 	if curr_target: prev_target = curr_target
 	curr_target = _target
@@ -164,6 +164,7 @@ func lerp_offset(_offset: Vector2, _ease: Tween.EaseType, _trans: Tween.Transiti
 	offset_tween.set_trans(_trans)
 	
 	offset_tween.tween_method(set_offset, offset, _offset, _dur)
+	await offset_tween.finished
 func lerp_zoom(_zoom: float, _ease: Tween.EaseType, _trans: Tween.TransitionType,  _dur: int) -> void:
 	if zoom_tween: zoom_tween.kill()
 	zoom_tween = marker.create_tween()
@@ -172,6 +173,7 @@ func lerp_zoom(_zoom: float, _ease: Tween.EaseType, _trans: Tween.TransitionType
 	zoom_tween.set_trans(_trans)
 	
 	zoom_tween.tween_method(set_zoom, zoom, _zoom, _dur)
+	await zoom_tween.finished
 
 # ---- shake ----
 func shake(_magnitude: float, _speed: float, _dur: float) -> void: 
@@ -249,7 +251,6 @@ class CamShake:
 class STRAT_FOLLOW:
 	extends Strategy
 
-	var follow_speed := 4.0
 	var final: Vector2
 
 	func _setup(_cam: CameraHolder) -> void: pass
@@ -261,7 +262,7 @@ class STRAT_FOLLOW:
 class STRAT_FOLLOW_DEFAULT:
 	extends STRAT_FOLLOW
 	func _follow(_cam: CameraHolder, _point: Vector2) -> void:
-		final = _cam.global_position.lerp(_point, Game.get_real_delta() * follow_speed)
+		final = _cam.global_position.lerp(_point, Game.get_real_delta() * _cam.follow_speed)
 		_cam.global_position = final
 class STRAT_FOLLOW_SENTIENT:
 	extends STRAT_FOLLOW
@@ -275,10 +276,12 @@ class STRAT_FOLLOW_SENTIENT:
 
 	func _setup(_cam: CameraHolder) -> void:
 		player = Player.Instance.get_pl()
+		
 	func _follow(_cam: CameraHolder, point: Vector2) -> void:
+		if player == null:  return
 		look_ahead = look_ahead.lerp(
 			(player.velocity * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 
-			Game.get_real_delta() * follow_speed)
+			Game.get_real_delta() * _cam.follow_speed)
 		final = point + look_ahead
 
 		_cam.global_position = final

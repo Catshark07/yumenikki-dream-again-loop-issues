@@ -1,7 +1,7 @@
 extends Node
 
-const NODE_SAVE_GROUP_ID := &"save_requests"
-const GLOBAL_DIR := &"global"
+const NODE_SAVE_GROUP_ID 	:= &"save_requests"
+const GLOBAL_DIR 			:= &"global"
 
 var data := {
 	GLOBAL_DIR	: {"data" : {}}
@@ -14,8 +14,6 @@ var scene_data_template := {
 	}
 
 func save_scene_data(_scene: SceneNode) -> void: 
-	print("saving ", _scene.name)
-	
 	var node_saves: = Utils.get_group_arr(NODE_SAVE_GROUP_ID)
 	var scene_path: StringName = _scene.scene_file_path
 		
@@ -35,5 +33,5 @@ func load_scene_data(_scene: SceneNode) -> void:
 	
 	if !data.has(scene_path): return
 	if data[scene_path]:
-		for node in node_saves: 
+		for node: SaveRequest in node_saves: 
 			if node != null: node.load_data(_scene)

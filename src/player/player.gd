@@ -20,14 +20,14 @@ const MAX_STAMINA:	 		float =  5
 const STAMINA_DRAIN: 		float = .78
 const STAMINA_REGEN: 		float = .8
 
+const ERR_SOUNDS := [
+	preload("res://src/audio/se/voice_mado_no-1.WAV"), 
+	preload("res://src/audio/se/voice_mado_no-2.WAV")]
+
 #endregion ---- data variables ----
 
 # ---- signals ----
-signal quered_primary_action
-signal quered_secondary_action
-signal quered_teritiary_action
-
-signal quered_interact
+signal quered_interact(_pl: Player, choice: int)
 
 signal quered_sprint_start
 signal quered_sprint_end
@@ -68,7 +68,7 @@ class Instance:
 	static var door_listener: EventListener
 	static var equipment_auto_apply: EventListener 
 
-	const DEFAULT_EQUIPMENT = preload("res://src/player/2D/madotsuki/effects/_none/_default.tres")
+	const DEFAULT_EQUIPMENT = preload("res://src/player/2D/madotsuki/effects/_none/_no_effect.tres")
 	
 	static var equipment_pending	: PLEffect = null
 	static var equipment_favourite	: PLEffect = null
@@ -83,23 +83,20 @@ class Instance:
 		door_listener.do_on_notify(func(): 
 			
 			for points: SpawnPoint in Utils.get_group_arr("spawn_points"):
-				if (
-					load(points.scene_path) == SceneManager.prev_scene_resource and 
-					door_went_flag and
-					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
-						
-						teleport_player(points.global_position, points.spawn_dir, true)
-						if points.parent_instead_of_self != null:
-							if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
-							else: _pl.reparent(points.parent_instead_of_self)
+				if points == null or points.scene_path.is_empty(): continue
 
-						else:
-							if points.as_sibling: _pl.reparent(points.get_parent())
-							else: _pl.reparent(points)
+				# if we found a spawn point 
+				if  load(points.scene_path) == SceneManager.prev_scene_resource and \
+					door_went_flag and \
+					EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id:
+						
+						teleport_player(points.global_position, points.heading, true)
+					
+						if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
+						else: _pl.reparent(points.parent_instead_of_self)
 						
 						door_went_flag = false
-						break, 
-					
+						break,
 			"SCENE_CHANGE_SUCCESS")
 
 		equipment_auto_apply = EventListener.new(null, "SCENE_CHANGE_SUCCESS")
@@ -109,10 +106,10 @@ class Instance:
 				if get_pl(): (get_pl() as Player_YN).equip(equipment_pending), "SCENE_CHANGE_SUCCESS"
 		)
 
-	static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:
+	static func teleport_player(_pos: Vector2, _heading: SentientBase.compass_headings, w_camera: bool = false) -> void:
 		if get_pl():
 			get_pl().global_position = _pos
-			get_pl().direction = (_dir)
+			get_pl().heading = _heading
 			if w_camera and CameraHolder.instance.initial_target == get_pl(): 
 				CameraHolder.instance.global_position = get_pl().global_position
 
@@ -120,13 +117,14 @@ class Instance:
 	static func pl_exists() -> bool: return (get_pl() != null)
 	static func get_pl() -> Player: return _pl
 	
-	static func get_pos() -> Vector2:
-		if pl_exists(): return _pl.global_position
+	static func get_pos(_global: bool = true) -> Vector2:
+		if pl_exists(): 
+			if _global	: return _pl.global_position
+			else		: return _pl.position
 		return Vector2.ZERO
 	static func is_moving() -> bool:
 		if pl_exists(): return _pl.is_moving
 		return pl_exists()
-
 # --- 
 func set_values(_val: SBVariables) -> void: 
 	if _val == null: 

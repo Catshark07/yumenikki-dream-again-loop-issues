@@ -9,5 +9,6 @@
 [resource]
 script = ExtResource("5_u3cya")
 footstep_anim = ExtResource("4_rtgle")
+transparent_tile = true
 arr = [ExtResource("1_auly3"), ExtResource("2_rtgle"), ExtResource("3_u3cya")]
 metadata/_custom_type_script = "uid://c7ut813ov3pxi"

@@ -66,7 +66,6 @@ func proceed_current_message_display() -> void:
 	
 	if active.can_progress:
 		if current_index < texts.size() - 1: # - if there's more text.
-			print("continue to next line")
 			
 			current_index += 1
 			active.display_text(

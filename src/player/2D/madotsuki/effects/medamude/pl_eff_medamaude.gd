@@ -8,14 +8,7 @@ var chance_value: 			float = 0:
 var rolled: 				bool = false
 
 func _primary_action	(_pl: Player) -> void: 
-	if  _pl.components.get_component_by_name(Player_YN.COMP_ANIMATION) != null:
+	if  _pl.components.get_component_by_name(Player_YN.Components.ANIMATION) != null:
 		_pl.force_change_state("action")
-		_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).play_animation(str(ACTION_PATH, "medamaude_teleport"))
+		_pl.components.get_component_by_name(Player_YN.Components.ANIMATION).play_animation(str(ACTION_PATH, "medamaude_teleport"))
 		
-func _secondary_action	(_pl: Player) -> void: 
-	chance_value = randf_range(0, 1)
-	if  _pl.components.get_component_by_name(Player_YN.COMP_ANIMATION) != null:
-		_pl.force_change_state("action")
-		_pl.components.get_component_by_name(Player_YN.COMP_ANIMATION).play_animation(str(ACTION_PATH, "medamaude_teleport"))
-		
-	

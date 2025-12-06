@@ -10,12 +10,16 @@ uniform sampler2D noise : repeat_enable;
 uniform float scroll_speed : hint_range(-0.085, 0.085, 0.01 ) = 0.05;
 
 uniform sampler2D gradient;
+uniform float rot_radians = 0;
 
 uniform float ray_strength = 1.225;
 
 void vertex()
 {
 	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
+	UV = mat2( 
+		vec2(cos(rot_radians), sin(rot_radians)), 
+		vec2(-sin(rot_radians), cos(rot_radians)) ) * (UV / 2.);
 }
 
 void fragment()

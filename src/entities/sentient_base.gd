@@ -6,6 +6,7 @@ extends Entity
 @export var values: SBVariables = SBVariables.new():
 	get = get_values,
 	set = set_values
+
 # - input
 signal input_vector(_input: Vector2)
 var desired_vel: Vector2
@@ -45,7 +46,7 @@ enum compass_headings {
 	HORIZ = 2,
 	SOUTH_HORIZ = 3,
 	SOUTH = 4}
-var heading: compass_headings
+@export var heading: compass_headings = compass_headings.SOUTH
 
 var direction: Vector2 = Vector2(0, 1):
 	set(dir): 

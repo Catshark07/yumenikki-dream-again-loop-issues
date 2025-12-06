@@ -9,13 +9,13 @@ func _exit_tree() -> void:
 	remove_custom_types()
 
 func add_custom_types() -> void:
-	add_custom_type("GameScene2D", 
-		"Node2D", 
+	add_custom_type("GameScene", 
+		"Node", 
 		preload("res://src/systems/scenes/game/game_scene.gd"), 
 		preload("res://addons/miscallenous/editor/game_scene.png")
 		)
 	add_custom_type("AdditiveGameScene", 
-		"Node2D", 
+		"Node", 
 		preload("res://src/systems/scenes/game/game_additive_scene.gd"), 
 		preload("res://addons/miscallenous/editor/game_scene_additive.png")
 		)
@@ -40,14 +40,14 @@ func add_custom_types() -> void:
 		preload("res://addons/miscallenous/editor/spawn_point.png")
 		)
 	add_custom_type("Interactable", 
-	"AreaRegion", 
-	preload("res://src/systems/interaction/base_interactable.gd"), 
-	preload("res://addons/miscallenous/editor/interactable.png"), 
-	)
+		"AreaRegion", 
+		preload("res://src/systems/interaction/interactable.gd"), 
+		preload("res://addons/miscallenous/editor/interactable.png"), 
+		)
 
 func remove_custom_types() -> void:
-	remove_custom_type("GameScene2D")
-	remove_custom_type("AdditiveGameScene2D")
+	remove_custom_type("GameScene")
+	remove_custom_type("AdditiveGameScene")
 	remove_custom_type("SentientBase")
 	remove_custom_type("Event")
 	remove_custom_type("Sequence")

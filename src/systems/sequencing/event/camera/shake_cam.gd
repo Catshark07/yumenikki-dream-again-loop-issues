@@ -7,10 +7,6 @@ extends Event
 
 func _execute() -> void:
 	CameraHolder.instance.shake(magnitude, speed, dur)
-	super()
 
 func _validate() -> bool: 
-	if CameraHolder.instance == null:
-		printerr() 
-		return false
-	return true
+	return CameraHolder.instance != null

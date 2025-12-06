@@ -1,6 +1,13 @@
 class_name GameManager 
 extends Node
 
+const STATE_PRELOAD_CONTENT 	:= "preload_content"
+const STATE_PREGAME 			:= "pregame"
+const STATE_ACTIVE 				:= "active"
+const STATE_PAUSE 				:= "pause"
+const STATE_SWITCHING_SCENES 	:= "changing_scenes"
+
+# -- 
 static var bloom: bool = false
 
 static var global_screen_effect: WorldEnvironment
@@ -62,10 +69,9 @@ func _setup() -> void:
 	cinematic_bars.size.y = 360
 	
 	global_screen_effect.environment.glow_enabled = bloom
-	game_fsm._setup(self)
 	
-	screen_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
-	secondary_transition.request_transition(ScreenTransition.fade_type.FADE_OUT)
+	screen_transition.		fade(ScreenTransition.DEFAULT_GRADIENT, 1, 0)
+	secondary_transition.	fade(ScreenTransition.DEFAULT_GRADIENT, 1, 0)
 	
 func update(_delta: float) -> void: 
 	game_fsm._update(_delta)
@@ -107,5 +113,10 @@ static func set_cinematic_bars(_active: bool) -> void:
 static func change_to_state(new_state: String) -> void:
 	game_fsm.change_to_state(new_state)
 static func is_in_state(state: String) -> bool: return game_fsm._is_in_state(state)
+
+static func append_to_ui(_control: Control) -> void:
+	if _control == null: return
+	ui_parent.add_child(_control)
+	
 
 # - 

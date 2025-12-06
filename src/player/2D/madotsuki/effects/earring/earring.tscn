@@ -22,13 +22,14 @@ glow = NodePath("glow")
 arrow = NodePath("glow/arrow")
 
 [node name="field" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 2
 
 [node name="circle" type="CollisionShape2D" parent="field"]
 shape = SubResource("CircleShape2D_5lfuw")
 
 [node name="glow" type="Sprite2D" parent="."]
+z_index = 1
 material = SubResource("ShaderMaterial_6qiwq")
 texture = ExtResource("3_mc1cf")
 

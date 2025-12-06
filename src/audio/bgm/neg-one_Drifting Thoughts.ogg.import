@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://blvfuo72u6lrh"
+path="res://.godot/imported/neg-one_Drifting Thoughts.ogg-a85ce586e67ed88999a546b7307a5d07.oggvorbisstr"
+
+[deps]
+
+source_file="res://src/audio/bgm/neg-one_Drifting Thoughts.ogg"
+dest_files=["res://.godot/imported/neg-one_Drifting Thoughts.ogg-a85ce586e67ed88999a546b7307a5d07.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

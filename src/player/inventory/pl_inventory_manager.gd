@@ -10,7 +10,6 @@ func _setup() -> void:
 	effect_acquired_listener = EventListener.new(self, "PLAYER_EFFECT_FOUND")
 	effect_acquired_listener.do_on_notify( 
 		func(): 
-			print("HAHAHAHA")
 			add_item(EventManager.get_event_param("PLAYER_EFFECT_FOUND")[0]),
 		"PLAYER_EFFECT_FOUND")
 
@@ -19,7 +18,9 @@ func update_inventory_array(_effects: Array[PLEffect]) -> void:
 		add_item(i)
 
 func add_item(_effect: PLEffect) -> void:
-	if _effect == null or _effect in effects: return
+	if _effect == null or _effect in effects: 
+		print(_effect.resource_path, " DUPLICATE EFFECT")
+		return
 	
 	inventory.add_item(_effect)
 	effects.append(_effect)

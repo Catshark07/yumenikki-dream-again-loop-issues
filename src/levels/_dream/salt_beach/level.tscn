@@ -1,84 +1,41 @@
-[gd_scene load_steps=52 format=4 uid="uid://r8c35smh2ep3"]
+[gd_scene load_steps=44 format=4 uid="uid://r8c35smh2ep3"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_fvyim"]
-[ext_resource type="Texture2D" uid="uid://bc81mh8r5tjjh" path="res://src/levels/dream/sane/salt_beach/sprites/salt_tiles.png" id="2_mr1w7"]
-[ext_resource type="AudioStream" uid="uid://ckl1slpv1loih" path="res://src/audio/bgm/nolan_salt.ogg" id="3_04ykb"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/sally/sally.tscn" id="3_q7tjn"]
+[ext_resource type="Texture2D" uid="uid://bc81mh8r5tjjh" path="res://src/levels/_dream/salt_beach/sprites/salt_tiles.png" id="2_mr1w7"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="3_q7tjn"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_tfumf"]
-[ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="5_hh8yl"]
-[ext_resource type="Texture2D" uid="uid://cp6cq0j0i7quu" path="res://src/levels/dream/sane/salt_beach/sprites/bg/clouds_fg.png" id="6_elfu2"]
+[ext_resource type="Texture2D" uid="uid://cp6cq0j0i7quu" path="res://src/levels/_dream/salt_beach/sprites/bg/clouds_fg.png" id="6_elfu2"]
 [ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="7_3l5xf"]
-[ext_resource type="Texture2D" uid="uid://b2vf7gdphonx2" path="res://src/levels/dream/sane/salt_beach/sprites/bg/clouds_bg.png" id="7_m05a5"]
-[ext_resource type="PackedScene" uid="uid://bf8qqx3n7u2bk" path="res://src/levels/dream/sane/salt_beach/salt.tscn" id="8_4rkrd"]
+[ext_resource type="Texture2D" uid="uid://b2vf7gdphonx2" path="res://src/levels/_dream/salt_beach/sprites/bg/clouds_bg.png" id="7_m05a5"]
+[ext_resource type="PackedScene" uid="uid://bf8qqx3n7u2bk" path="res://src/levels/_dream/salt_beach/salt.tscn" id="8_4rkrd"]
 [ext_resource type="Shader" uid="uid://b0qym6r6rs7ns" path="res://src/shaders/panorama/linear_additive.gdshader" id="8_gc6x7"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="9_wid2q"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="10_7ll13"]
-[ext_resource type="Texture2D" uid="uid://bq7e1o1a508n7" path="res://src/levels/dream/sane/salt_beach/sprites/manta_ray.png" id="10_nn5dw"]
-[ext_resource type="Texture2D" uid="uid://djkhmwjiqiesh" path="res://src/levels/dream/sane/salt_beach/sprites/manta_ray_small.png" id="11_e6iva"]
-[ext_resource type="Texture2D" uid="uid://b4sxhuxcsduj8" path="res://src/levels/dream/sane/salt_beach/sprites/bg/sun.png" id="11_v58u1"]
-[ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="12_iv8am"]
+[ext_resource type="Texture2D" uid="uid://bq7e1o1a508n7" path="res://src/levels/_dream/salt_beach/sprites/manta_ray.png" id="10_nn5dw"]
+[ext_resource type="Texture2D" uid="uid://djkhmwjiqiesh" path="res://src/levels/_dream/salt_beach/sprites/manta_ray_small.png" id="11_e6iva"]
+[ext_resource type="Texture2D" uid="uid://b4sxhuxcsduj8" path="res://src/levels/_dream/salt_beach/sprites/bg/sun.png" id="11_v58u1"]
 [ext_resource type="Shader" uid="uid://cclrs1syfvcos" path="res://src/shaders/panorama/radial_additive.gdshader" id="12_ycmxg"]
-[ext_resource type="Texture2D" uid="uid://c0e6o1hyj0oov" path="res://src/levels/dream/sane/salt_beach/sprites/bg/pyramids.png" id="13_04ykb"]
-[ext_resource type="Texture2D" uid="uid://dm50e1wlc7mcp" path="res://src/levels/dream/sane/salt_beach/sprites/bg/sun_stripes.png" id="13_slnnq"]
+[ext_resource type="Texture2D" uid="uid://c0e6o1hyj0oov" path="res://src/levels/_dream/salt_beach/sprites/bg/pyramids.png" id="13_04ykb"]
+[ext_resource type="Texture2D" uid="uid://dm50e1wlc7mcp" path="res://src/levels/_dream/salt_beach/sprites/bg/sun_stripes.png" id="13_slnnq"]
 [ext_resource type="Shader" uid="uid://bau7jex01lc6n" path="res://src/shaders/masks/flat_water_reflec.gdshader" id="17_feanc"]
-[ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="17_hnovm"]
-[ext_resource type="PackedScene" uid="uid://bq3w86txlrkqd" path="res://src/levels/door.tscn" id="23_nn5dw"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="18_3r82k"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="19_042hh"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="20_jf20d"]
+[ext_resource type="AudioStream" uid="uid://ciw7kxwqet8f6" path="res://src/audio/bgm/nolan_salt.ogg" id="21_mjijy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t6gdh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uwbgl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3em30"]
 texture = ExtResource("2_mr1w7")
-separation = Vector2i(1, 1)
-texture_region_size = Vector2i(48, 48)
+texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
-1:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_xno07"]
-tile_size = Vector2i(48, 48)
+tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_3em30")
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0yvec"]
-polygon = PackedVector2Array(14, 1, 14, -3, 3, -3, 3, 1)
-
-[sub_resource type="Gradient" id="Gradient_feanc"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_04ykb"]
-gradient = SubResource("Gradient_feanc")
-fill_from = Vector2(1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_744oq"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_oostm"]
-noise = SubResource("FastNoiseLite_744oq")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2l16"]
-shader = ExtResource("5_hh8yl")
-shader_parameter/opacity = 1.0
-shader_parameter/noise = SubResource("NoiseTexture2D_oostm")
-shader_parameter/scroll_speed = 0.025
-shader_parameter/offset_strength = -0.035
-shader_parameter/uv_offset = Vector2(0, 0)
-shader_parameter/gradient = SubResource("GradientTexture2D_04ykb")
-shader_parameter/ray_strength = 1.225
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_y1g55"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dq20v"]
-width = 480
-height = 270
-seamless = true
-noise = SubResource("FastNoiseLite_y1g55")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ynoa"]
-shader = ExtResource("12_iv8am")
-shader_parameter/transparency = 0.0
-shader_parameter/dirX = 0.4
-shader_parameter/dirY = 1.0
-shader_parameter/scroll_speed = 0.285
-shader_parameter/noise_strength = 0.075
-shader_parameter/noise_fwd = SubResource("NoiseTexture2D_dq20v")
-shader_parameter/uv_offset = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
 
 [sub_resource type="Gradient" id="Gradient_jh16p"]
 offsets = PackedFloat32Array(0, 0.272997, 1)
@@ -101,12 +58,16 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eutiq"]
 shader = ExtResource("8_gc6x7")
-shader_parameter/transparency = 0.5
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.01
-shader_parameter/uv_offset = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.005
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.175
+shader_parameter/optional_gradient = false
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7ll13"]
 particles_animation = true
@@ -120,12 +81,16 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pw43t"]
 shader = ExtResource("8_gc6x7")
-shader_parameter/transparency = 0.4
 shader_parameter/dirX = -1.0
 shader_parameter/dirY = 1.49012e-08
 shader_parameter/scroll_speed = 0.01
-shader_parameter/uv_offset = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.005
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.17
+shader_parameter/optional_gradient = false
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_feanc"]
 
@@ -139,6 +104,10 @@ noise = SubResource("FastNoiseLite_nn5dw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_feanc"]
 shader = ExtResource("17_feanc")
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/snapped_val = 0.0016
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/offSet = 0.0
 shader_parameter/YDistortion = 1.0
 shader_parameter/waterNoise = SubResource("NoiseTexture2D_e6iva")
@@ -157,8 +126,8 @@ shader_parameter/backGroundDirY = 0.01
 
 [sub_resource type="Gradient" id="Gradient_hnovm"]
 interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.170088, 0.357771, 0.619835, 1)
-colors = PackedColorArray(0.0902333, 3.46541e-06, 0.441622, 1, 0.174799, 0.212475, 0.494198, 1, 0.149077, 0.436014, 0.65365, 1, 0.315873, 0.942141, 0.938786, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.3322785, 0.5822785, 1)
+colors = PackedColorArray(0.0902333, 3.46541e-06, 0.441622, 1, 0.5516103, 0.99836576, 0.9798079, 1, 0.97376174, 0.96608657, 0.81371343, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0yvec"]
 gradient = SubResource("Gradient_hnovm")
@@ -177,12 +146,17 @@ shader_parameter/uv_offset = Vector2(0, 0)
 shader_parameter/offset_strength = 1.0
 shader_parameter/transparency = 0.5
 
-[node name="SCENE" type="Node"]
-script = ExtResource("1_fvyim")
+[sub_resource type="Resource" id="Resource_k1b75"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("18_3r82k")
+metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("9_wid2q")
-stream = ExtResource("3_04ykb")
+[node name="salt_beach" type="Node" node_paths=PackedStringArray("seq_initial")]
+script = ExtResource("1_fvyim")
+seq_initial = NodePath("on_initial")
+load_transition = SubResource("ShaderMaterial_t6gdh")
+unload_transition = SubResource("ShaderMaterial_uwbgl")
 
 [node name="sun_light" type="DirectionalLight2D" parent="."]
 color = Color(0.89059, 0.89059, 0.89059, 1)
@@ -190,29 +164,11 @@ energy = 0.28
 shadow_enabled = true
 
 [node name="sand_tile" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAKAAUAAAABAAAAAAAJAAUAAAAAAAEAAAAIAAUAAAAAAAEAAAAHAAUAAAABAAAAAAAGAAUAAAABAAEAAAAFAAUAAAAAAAEAAAAEAAUAAAAAAAEAAAADAAUAAAABAAEAAAACAAUAAAAAAAEAAAACAAQAAAABAAEAAAADAAQAAAAAAAAAAAAEAAQAAAAAAAEAAAAFAAQAAAABAAEAAAAGAAQAAAABAAEAAAAHAAQAAAABAAEAAAAIAAQAAAABAAEAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAEAAAABAAUAAAABAAAAAAAGAAYAAAAAAAEAAAAJAAQAAAAAAAAAAAABAAQAAAAAAAAAAAAIAAYAAAABAAAAAAAHAAYAAAAAAAAAAAAKAAYAAAABAAAAAAALAAYAAAABAAEAAAAKAAQAAAAAAAEAAAAIAAcAAAAAAAEAAAAJAAcAAAABAAEAAAAJAAYAAAAAAAAAAAAAAAoAAAAAAAEAAAAAAAsAAAAAAAEAAAAAAAwAAAAAAAAAAAABAAsAAAAAAAEAAAABAAwAAAABAAAAAAACAAkAAAABAAEAAAACAAsAAAABAAAAAAACAAwAAAAAAAAAAAADAAsAAAABAAAAAAADAAwAAAABAAAAAAAEAAgAAAABAAAAAAAEAAsAAAABAAEAAAAEAAwAAAAAAAEAAAAFAAgAAAAAAAAAAAAFAAwAAAAAAAEAAAAGAAgAAAAAAAAAAAAGAAkAAAAAAAEAAAAGAAsAAAAAAAEAAAAHAAgAAAABAAEAAAAHAAkAAAAAAAEAAAAHAAsAAAABAAEAAAAIAAkAAAABAAAAAAAIAAsAAAABAAEAAAAJAAkAAAABAAAAAAAJAAsAAAAAAAEAAAAKAAcAAAAAAAEAAAAKAAsAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAALAAcAAAAAAAAAAAALAAgAAAAAAAEAAAALAAoAAAABAAEAAAALAAsAAAABAAEAAAAMAAQAAAAAAAEAAAAMAAUAAAAAAAAAAAAMAAYAAAABAAEAAAAMAAcAAAABAAAAAAAMAAgAAAABAAAAAAAMAAoAAAAAAAEAAAAMAAsAAAABAAEAAAAFAAkAAAAAAAAAAAAFAAoAAAAAAAEAAAAEAAoAAAABAAEAAAADAAoAAAAAAAAAAAACAAoAAAABAAEAAAABAAoAAAABAAEAAAABAAkAAAABAAEAAAAAAAkAAAAAAAEAAAAAAAcAAAAAAAEAAAABAAcAAAAAAAEAAAACAAcAAAAAAAEAAAADAAcAAAAAAAAAAAAEAAcAAAABAAEAAAAFAAcAAAAAAAEAAAAGAAcAAAABAAAAAAAHAAcAAAABAAAAAAAIAAgAAAABAAEAAAAJAAgAAAABAAEAAAAKAAgAAAAAAAEAAAALAAkAAAAAAAEAAAAMAAkAAAABAAAAAAAMAAwAAAAAAAAAAAALAAwAAAABAAEAAAAKAAwAAAABAAEAAAAJAAwAAAAAAAAAAAAIAAwAAAABAAEAAAAHAAwAAAAAAAAAAAAGAAwAAAABAAEAAAAFAAsAAAABAAEAAAAAAAgAAAABAAAAAAAAAAYAAAAAAAEAAAABAAYAAAABAAAAAAACAAYAAAAAAAAAAAADAAYAAAABAAAAAAAEAAYAAAABAAAAAAAFAAYAAAAAAAEAAAAKAAkAAAABAAEAAAAKAAoAAAABAAAAAAAJAAoAAAAAAAAAAAAIAAoAAAABAAAAAAAHAAoAAAAAAAEAAAAGAAoAAAAAAAEAAAAEAAkAAAABAAAAAAADAAkAAAAAAAAAAAACAAgAAAAAAAEAAAABAAgAAAAAAAAAAAADAAgAAAAAAAEAAAD3/wQAAAAAAAAAAAD3/wUAAAABAAAAAAD3/wYAAAABAAEAAAD3/wcAAAAAAAEAAAD3/wgAAAAAAAEAAAD3/wkAAAABAAEAAAD3/woAAAABAAAAAAD3/wsAAAABAAEAAAD3/wwAAAAAAAEAAAD4/wQAAAAAAAEAAAD4/wUAAAABAAEAAAD4/wYAAAABAAAAAAD4/wcAAAABAAEAAAD4/wgAAAABAAAAAAD4/wkAAAAAAAAAAAD4/woAAAABAAEAAAD4/wsAAAAAAAEAAAD4/wwAAAABAAEAAAD5/wQAAAAAAAEAAAD5/wUAAAAAAAEAAAD5/wYAAAAAAAEAAAD5/wcAAAABAAAAAAD5/wgAAAAAAAAAAAD5/wkAAAAAAAEAAAD5/woAAAABAAAAAAD5/wsAAAAAAAAAAAD5/wwAAAAAAAEAAAD6/wQAAAABAAAAAAD6/wUAAAAAAAEAAAD6/wYAAAAAAAAAAAD6/wcAAAABAAAAAAD6/wgAAAAAAAEAAAD6/wkAAAABAAAAAAD6/woAAAAAAAAAAAD6/wsAAAABAAEAAAD6/wwAAAAAAAEAAAD7/wQAAAABAAAAAAD7/wUAAAABAAEAAAD7/wYAAAABAAAAAAD7/wcAAAABAAEAAAD7/wgAAAABAAEAAAD7/wkAAAAAAAEAAAD7/woAAAABAAAAAAD7/wsAAAABAAAAAAD7/wwAAAABAAAAAAD1/wQAAAAAAAEAAAD1/wUAAAAAAAAAAAD1/wYAAAABAAAAAAD1/wcAAAAAAAAAAAD1/wgAAAAAAAEAAAD1/wkAAAAAAAEAAAD1/woAAAAAAAAAAAD1/wsAAAAAAAAAAAD1/wwAAAAAAAAAAAD2/wQAAAABAAAAAAD2/wUAAAAAAAEAAAD2/wYAAAABAAAAAAD2/wcAAAAAAAEAAAD2/wgAAAAAAAAAAAD2/wkAAAAAAAAAAAD2/woAAAABAAAAAAD2/wsAAAABAAEAAAD2/wwAAAAAAAEAAAASAAQAAAAAAAEAAAASAAUAAAAAAAAAAAASAAYAAAABAAAAAAASAAcAAAAAAAAAAAASAAgAAAAAAAEAAAASAAkAAAAAAAEAAAASAAoAAAAAAAAAAAASAAsAAAAAAAAAAAASAAwAAAAAAAAAAAATAAQAAAABAAAAAAATAAUAAAAAAAEAAAATAAYAAAABAAAAAAATAAcAAAAAAAEAAAATAAgAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAABAAAAAAATAAsAAAABAAEAAAATAAwAAAAAAAEAAAAUAAQAAAAAAAAAAAAUAAUAAAABAAAAAAAUAAYAAAABAAEAAAAUAAcAAAAAAAEAAAAUAAgAAAAAAAEAAAAUAAkAAAABAAEAAAAUAAoAAAABAAAAAAAUAAsAAAABAAEAAAAUAAwAAAAAAAEAAAAVAAQAAAAAAAEAAAAVAAUAAAABAAEAAAAVAAYAAAABAAAAAAAVAAcAAAABAAEAAAAVAAgAAAABAAAAAAAVAAkAAAAAAAAAAAAVAAoAAAABAAEAAAAVAAsAAAAAAAEAAAAVAAwAAAABAAEAAAAWAAQAAAAAAAEAAAAWAAUAAAAAAAEAAAAWAAYAAAAAAAEAAAAWAAcAAAABAAAAAAAWAAgAAAAAAAAAAAAWAAkAAAAAAAEAAAAWAAoAAAABAAAAAAAWAAsAAAAAAAAAAAAWAAwAAAAAAAEAAAAXAAQAAAABAAAAAAAXAAUAAAAAAAEAAAAXAAYAAAAAAAAAAAAXAAcAAAABAAAAAAAXAAgAAAAAAAEAAAAXAAkAAAABAAAAAAAXAAoAAAAAAAAAAAAXAAsAAAABAAEAAAAXAAwAAAAAAAEAAAAYAAQAAAABAAAAAAAYAAUAAAABAAEAAAAYAAYAAAABAAAAAAAYAAcAAAABAAEAAAAYAAgAAAABAAEAAAAYAAkAAAAAAAEAAAAYAAoAAAABAAAAAAAYAAsAAAABAAAAAAAYAAwAAAABAAAAAAAZAAQAAAABAAAAAAAZAAUAAAABAAEAAAAZAAYAAAABAAAAAAAZAAcAAAAAAAEAAAAZAAgAAAABAAAAAAAZAAkAAAABAAEAAAAZAAoAAAABAAEAAAAZAAsAAAAAAAAAAAAZAAwAAAAAAAEAAADw/wQAAAABAAEAAADw/wUAAAAAAAEAAADw/wYAAAABAAEAAADw/wcAAAAAAAEAAADw/wgAAAAAAAEAAADw/wkAAAAAAAEAAADw/woAAAAAAAEAAADw/wsAAAABAAEAAADw/wwAAAABAAAAAADx/wQAAAAAAAEAAADx/wUAAAABAAEAAADx/wYAAAABAAEAAADx/wcAAAABAAAAAADx/wgAAAABAAEAAADx/wkAAAABAAEAAADx/woAAAAAAAAAAADx/wsAAAABAAEAAADx/wwAAAABAAEAAADy/wQAAAAAAAAAAADy/wUAAAABAAEAAADy/wYAAAAAAAEAAADy/wcAAAAAAAEAAADy/wgAAAAAAAAAAADy/wkAAAAAAAEAAADy/woAAAABAAEAAADy/wsAAAABAAAAAADy/wwAAAABAAEAAADz/wQAAAABAAEAAADz/wUAAAABAAAAAADz/wYAAAABAAAAAADz/wcAAAABAAEAAADz/wgAAAAAAAEAAADz/wkAAAABAAAAAADz/woAAAAAAAAAAADz/wsAAAABAAEAAADz/wwAAAAAAAEAAAD0/wQAAAABAAAAAAD0/wUAAAAAAAEAAAD0/wYAAAABAAEAAAD0/wcAAAAAAAEAAAD0/wgAAAAAAAEAAAD0/wkAAAABAAEAAAD0/woAAAABAAEAAAD0/wsAAAAAAAAAAAD0/wwAAAABAAEAAAANAAQAAAABAAEAAAANAAUAAAAAAAEAAAANAAYAAAABAAEAAAANAAcAAAAAAAEAAAANAAgAAAAAAAEAAAANAAkAAAAAAAEAAAANAAoAAAAAAAEAAAANAAsAAAABAAEAAAANAAwAAAABAAAAAAAOAAQAAAAAAAEAAAAOAAUAAAABAAEAAAAOAAYAAAABAAEAAAAOAAcAAAABAAAAAAAOAAgAAAABAAEAAAAOAAkAAAABAAEAAAAOAAoAAAAAAAAAAAAOAAsAAAABAAEAAAAOAAwAAAABAAEAAAAPAAQAAAAAAAAAAAAPAAUAAAABAAEAAAAPAAYAAAAAAAEAAAAPAAcAAAAAAAEAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAEAAAAPAAoAAAABAAEAAAAPAAsAAAABAAAAAAAPAAwAAAABAAEAAAAQAAQAAAABAAEAAAAQAAUAAAABAAAAAAAQAAYAAAABAAAAAAAQAAcAAAABAAEAAAAQAAgAAAAAAAEAAAAQAAkAAAABAAAAAAAQAAoAAAAAAAAAAAAQAAsAAAABAAEAAAAQAAwAAAAAAAEAAAARAAQAAAABAAAAAAARAAUAAAAAAAEAAAARAAYAAAABAAEAAAARAAcAAAAAAAEAAAARAAgAAAAAAAEAAAARAAkAAAABAAEAAAARAAoAAAABAAEAAAARAAsAAAAAAAAAAAARAAwAAAABAAEAAAD8/wQAAAABAAAAAAD8/wUAAAABAAEAAAD8/wYAAAABAAAAAAD8/wcAAAAAAAEAAAD8/wgAAAABAAAAAAD8/wkAAAABAAEAAAD8/woAAAABAAEAAAD8/wsAAAAAAAAAAAD8/wwAAAAAAAEAAAD9/wQAAAABAAEAAAD9/wUAAAABAAEAAAD9/wYAAAAAAAEAAAD9/wcAAAABAAEAAAD9/wgAAAAAAAEAAAD9/wkAAAAAAAEAAAD9/woAAAABAAEAAAD9/wsAAAAAAAAAAAD9/wwAAAABAAEAAAD+/wQAAAAAAAAAAAD+/wUAAAAAAAAAAAD+/wYAAAABAAAAAAD+/wcAAAABAAAAAAD+/wgAAAABAAEAAAD+/wkAAAAAAAAAAAD+/woAAAAAAAEAAAD+/wsAAAABAAAAAAD+/wwAAAAAAAEAAAD//wQAAAABAAEAAAD//wUAAAAAAAEAAAD//wYAAAAAAAAAAAD//wcAAAABAAEAAAD//wgAAAAAAAAAAAD//wkAAAAAAAEAAAD//woAAAAAAAEAAAD//wsAAAAAAAEAAAD//wwAAAAAAAAAAAAaAAQAAAABAAEAAAAaAAUAAAABAAEAAAAaAAYAAAAAAAEAAAAaAAcAAAABAAEAAAAaAAgAAAAAAAEAAAAaAAkAAAAAAAEAAAAaAAoAAAABAAEAAAAaAAsAAAAAAAAAAAAaAAwAAAABAAEAAAAbAAQAAAAAAAAAAAAbAAUAAAAAAAAAAAAbAAYAAAABAAAAAAAbAAcAAAABAAAAAAAbAAgAAAABAAEAAAAbAAkAAAAAAAAAAAAbAAoAAAAAAAEAAAAbAAsAAAABAAAAAAAbAAwAAAAAAAEAAAAcAAQAAAABAAEAAAAcAAUAAAAAAAEAAAAcAAYAAAAAAAAAAAAcAAcAAAABAAEAAAAcAAgAAAAAAAAAAAAcAAkAAAAAAAEAAAAcAAoAAAAAAAEAAAAcAAsAAAAAAAEAAAAcAAwAAAAAAAAAAADv/wQAAAAAAAEAAADv/wUAAAAAAAAAAADv/wYAAAABAAEAAADv/wcAAAABAAAAAADv/wgAAAABAAAAAADv/wkAAAABAAAAAADv/woAAAAAAAEAAADv/wsAAAABAAEAAADv/wwAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAKAAUAAAABAAAAAAAJAAUAAAAAAAAAAAAIAAUAAAAAAAAAAAAHAAUAAAAAAAAAAAAGAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAAAAAUAAAAAAAAAAAABAAUAAAAAAAAAAAAGAAYAAAAAAAAAAAAIAAYAAAABAAAAAAAHAAYAAAAAAAEAAAAKAAYAAAAAAAAAAAALAAYAAAAAAAAAAAAIAAcAAAAAAAEAAAAJAAcAAAAAAAAAAAAJAAYAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAEAAAAAAAwAAAAAAAAAAAABAAsAAAAAAAEAAAABAAwAAAABAAAAAAACAAkAAAAAAAAAAAACAAsAAAAAAAEAAAACAAwAAAAAAAAAAAADAAsAAAAAAAEAAAADAAwAAAABAAAAAAAEAAgAAAAAAAEAAAAEAAsAAAAAAAAAAAAEAAwAAAAAAAEAAAAFAAgAAAAAAAEAAAAFAAwAAAAAAAEAAAAGAAgAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAsAAAAAAAAAAAAHAAgAAAAAAAEAAAAHAAkAAAAAAAAAAAAHAAsAAAAAAAAAAAAIAAkAAAAAAAAAAAAIAAsAAAAAAAAAAAAJAAkAAAAAAAAAAAAJAAsAAAAAAAEAAAAKAAcAAAAAAAEAAAAKAAsAAAAAAAAAAAALAAUAAAAAAAAAAAALAAcAAAAAAAAAAAALAAgAAAABAAAAAAALAAoAAAAAAAAAAAALAAsAAAAAAAAAAAAMAAUAAAAAAAAAAAAMAAYAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAoAAAAAAAAAAAAMAAsAAAABAAAAAAAFAAkAAAAAAAEAAAAFAAoAAAAAAAEAAAAEAAoAAAAAAAAAAAADAAoAAAAAAAAAAAACAAoAAAAAAAAAAAABAAoAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAcAAAAAAAEAAAABAAcAAAAAAAAAAAACAAcAAAAAAAEAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAEAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAEAAAAHAAcAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAkAAAABAAAAAAAMAAkAAAAAAAAAAAAMAAwAAAAAAAAAAAALAAwAAAAAAAAAAAAKAAwAAAAAAAAAAAAJAAwAAAAAAAAAAAAIAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAAGAAwAAAAAAAAAAAAFAAsAAAAAAAEAAAAAAAgAAAAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAAAAAAEAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAABAAAAAAAFAAYAAAAAAAAAAAAKAAkAAAAAAAAAAAAKAAoAAAAAAAAAAAAJAAoAAAABAAAAAAAIAAoAAAAAAAEAAAAHAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAEAAkAAAAAAAEAAAADAAkAAAAAAAAAAAACAAgAAAAAAAEAAAABAAgAAAAAAAAAAAADAAgAAAAAAAEAAAD3/wUAAAABAAAAAAD3/wYAAAAAAAAAAAD3/wcAAAAAAAEAAAD3/wgAAAAAAAEAAAD3/wkAAAAAAAAAAAD3/woAAAABAAAAAAD3/wsAAAAAAAAAAAD3/wwAAAAAAAEAAAD4/wUAAAAAAAEAAAD4/wYAAAAAAAAAAAD4/wcAAAAAAAAAAAD4/wgAAAABAAAAAAD4/wkAAAAAAAAAAAD4/woAAAAAAAAAAAD4/wsAAAAAAAEAAAD4/wwAAAAAAAAAAAD5/wUAAAAAAAEAAAD5/wYAAAAAAAAAAAD5/wcAAAABAAAAAAD5/wgAAAAAAAAAAAD5/wkAAAAAAAEAAAD5/woAAAABAAAAAAD5/wsAAAAAAAAAAAD5/wwAAAAAAAEAAAD6/wUAAAAAAAAAAAD6/wYAAAAAAAAAAAD6/wcAAAAAAAAAAAD6/wgAAAAAAAEAAAD6/wkAAAABAAAAAAD6/woAAAAAAAAAAAD6/wsAAAAAAAAAAAD6/wwAAAAAAAEAAAD7/wUAAAAAAAAAAAD7/wYAAAAAAAAAAAD7/wcAAAAAAAAAAAD7/wgAAAAAAAAAAAD7/wkAAAAAAAEAAAD7/woAAAABAAAAAAD7/wsAAAABAAAAAAD7/wwAAAABAAAAAAD1/wUAAAAAAAAAAAD1/wYAAAABAAAAAAD1/wcAAAAAAAAAAAD1/wgAAAAAAAEAAAD1/wkAAAAAAAEAAAD1/woAAAAAAAAAAAD1/wsAAAAAAAAAAAD1/wwAAAAAAAAAAAD2/wUAAAAAAAEAAAD2/wYAAAABAAAAAAD2/wcAAAAAAAEAAAD2/wgAAAAAAAAAAAD2/wkAAAAAAAAAAAD2/woAAAABAAAAAAD2/wsAAAAAAAAAAAD2/wwAAAAAAAEAAAASAAUAAAAAAAAAAAASAAYAAAABAAAAAAASAAcAAAAAAAAAAAASAAgAAAAAAAEAAAASAAkAAAAAAAEAAAASAAoAAAAAAAAAAAASAAsAAAAAAAAAAAASAAwAAAAAAAAAAAATAAUAAAAAAAEAAAATAAYAAAAAAAAAAAATAAcAAAAAAAAAAAATAAgAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAABAAAAAAATAAsAAAAAAAAAAAATAAwAAAAAAAEAAAAUAAUAAAABAAAAAAAUAAYAAAAAAAAAAAAUAAcAAAAAAAAAAAAUAAgAAAAAAAAAAAAUAAkAAAAAAAAAAAAUAAoAAAABAAAAAAAUAAsAAAAAAAAAAAAUAAwAAAAAAAEAAAAVAAUAAAAAAAAAAAAVAAYAAAAAAAAAAAAVAAcAAAAAAAAAAAAVAAgAAAAAAAAAAAAVAAkAAAAAAAAAAAAVAAoAAAAAAAAAAAAVAAsAAAAAAAEAAAAVAAwAAAAAAAAAAAAWAAUAAAAAAAEAAAAWAAYAAAAAAAAAAAAWAAcAAAABAAAAAAAWAAgAAAAAAAAAAAAWAAkAAAAAAAAAAAAWAAoAAAAAAAAAAAAWAAsAAAAAAAAAAAAWAAwAAAAAAAAAAAAXAAUAAAAAAAEAAAAXAAYAAAAAAAAAAAAXAAcAAAABAAAAAAAXAAgAAAAAAAAAAAAXAAkAAAAAAAAAAAAXAAoAAAAAAAAAAAAXAAsAAAAAAAAAAAAXAAwAAAAAAAAAAAAYAAUAAAAAAAAAAAAYAAYAAAAAAAAAAAAYAAcAAAAAAAAAAAAYAAgAAAAAAAAAAAAYAAkAAAAAAAEAAAAYAAoAAAABAAAAAAAYAAsAAAABAAAAAAAYAAwAAAABAAAAAAAZAAUAAAAAAAAAAAAZAAYAAAAAAAAAAAAZAAcAAAAAAAAAAAAZAAgAAAAAAAAAAAAZAAkAAAAAAAAAAAAZAAoAAAAAAAAAAAAZAAsAAAAAAAAAAAAZAAwAAAAAAAEAAADw/wUAAAAAAAEAAADw/wYAAAAAAAAAAADw/wcAAAAAAAEAAADw/wgAAAAAAAEAAADw/wkAAAAAAAEAAADw/woAAAAAAAEAAADw/wsAAAAAAAAAAADw/wwAAAABAAAAAADx/wUAAAAAAAAAAADx/wYAAAAAAAAAAADx/wcAAAABAAAAAADx/wgAAAAAAAAAAADx/wkAAAAAAAAAAADx/woAAAAAAAAAAADx/wsAAAAAAAAAAADx/wwAAAAAAAAAAADy/wUAAAAAAAAAAADy/wYAAAAAAAEAAADy/wcAAAAAAAEAAADy/wgAAAAAAAAAAADy/wkAAAAAAAEAAADy/woAAAAAAAAAAADy/wsAAAABAAAAAADy/wwAAAAAAAAAAADz/wUAAAABAAAAAADz/wYAAAABAAAAAADz/wcAAAAAAAAAAADz/wgAAAAAAAEAAADz/wkAAAABAAAAAADz/woAAAAAAAAAAADz/wsAAAAAAAAAAADz/wwAAAAAAAEAAAD0/wUAAAAAAAEAAAD0/wYAAAAAAAAAAAD0/wcAAAAAAAEAAAD0/wgAAAAAAAEAAAD0/wkAAAAAAAAAAAD0/woAAAAAAAAAAAD0/wsAAAAAAAAAAAD0/wwAAAAAAAAAAAANAAUAAAAAAAEAAAANAAYAAAAAAAAAAAANAAcAAAAAAAEAAAANAAgAAAAAAAAAAAANAAkAAAAAAAEAAAANAAoAAAAAAAAAAAANAAsAAAAAAAAAAAANAAwAAAABAAAAAAAOAAUAAAAAAAAAAAAOAAYAAAAAAAAAAAAOAAcAAAABAAAAAAAOAAgAAAAAAAAAAAAOAAkAAAAAAAAAAAAOAAoAAAAAAAAAAAAOAAsAAAAAAAAAAAAOAAwAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAEAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAPAAsAAAABAAAAAAAPAAwAAAAAAAAAAAAQAAUAAAABAAAAAAAQAAYAAAAAAAAAAAAQAAcAAAAAAAAAAAAQAAgAAAAAAAAAAAAQAAkAAAABAAAAAAAQAAoAAAAAAAAAAAAQAAsAAAAAAAAAAAAQAAwAAAAAAAEAAAARAAUAAAAAAAAAAAARAAYAAAAAAAAAAAARAAcAAAAAAAAAAAARAAgAAAAAAAEAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAARAAsAAAAAAAAAAAARAAwAAAAAAAAAAAD8/wUAAAAAAAAAAAD8/wYAAAAAAAAAAAD8/wcAAAAAAAEAAAD8/wgAAAAAAAAAAAD8/wkAAAAAAAAAAAD8/woAAAAAAAAAAAD8/wsAAAAAAAAAAAD8/wwAAAAAAAEAAAD9/wUAAAAAAAEAAAD9/wYAAAAAAAEAAAD9/wcAAAAAAAAAAAD9/wgAAAAAAAAAAAD9/wkAAAAAAAAAAAD9/woAAAAAAAAAAAD9/wsAAAAAAAAAAAD9/wwAAAAAAAAAAAD+/wUAAAAAAAAAAAD+/wYAAAAAAAEAAAD+/wcAAAAAAAEAAAD+/wgAAAAAAAAAAAD+/wkAAAAAAAAAAAD+/woAAAAAAAAAAAD+/wsAAAAAAAEAAAD+/wwAAAAAAAEAAAD//wUAAAAAAAEAAAD//wYAAAAAAAAAAAD//wcAAAAAAAAAAAD//wgAAAAAAAAAAAD//wkAAAAAAAAAAAD//woAAAAAAAAAAAD//wsAAAAAAAEAAAD//wwAAAAAAAAAAAAaAAUAAAAAAAAAAAAaAAYAAAAAAAAAAAAaAAcAAAAAAAAAAAAaAAgAAAAAAAAAAAAaAAkAAAAAAAAAAAAaAAoAAAAAAAAAAAAaAAsAAAAAAAAAAAAaAAwAAAAAAAAAAAAbAAUAAAAAAAAAAAAbAAYAAAABAAAAAAAbAAcAAAABAAAAAAAbAAgAAAAAAAAAAAAbAAkAAAAAAAAAAAAbAAoAAAAAAAEAAAAbAAsAAAABAAAAAAAbAAwAAAAAAAEAAAAcAAUAAAAAAAEAAAAcAAYAAAAAAAAAAAAcAAcAAAAAAAAAAAAcAAgAAAAAAAAAAAAcAAkAAAAAAAEAAAAcAAoAAAAAAAEAAAAcAAsAAAAAAAEAAAAcAAwAAAAAAAAAAADv/wUAAAAAAAAAAADv/wYAAAAAAAAAAADv/wcAAAABAAAAAADv/wgAAAABAAAAAADv/wkAAAABAAAAAADv/woAAAAAAAEAAADv/wsAAAAAAAAAAADv/wwAAAAAAAAAAADv/wQAAAAAAAEAAADw/wQAAAAAAAAAAADx/wQAAAAAAAEAAADy/wQAAAAAAAAAAADz/wQAAAAAAAAAAAD0/wQAAAABAAAAAAD1/wQAAAAAAAEAAAD2/wQAAAABAAAAAAD3/wQAAAAAAAAAAAD4/wQAAAAAAAEAAAD5/wQAAAAAAAEAAAD6/wQAAAABAAAAAAD7/wQAAAABAAAAAAD8/wQAAAABAAAAAAD9/wQAAAAAAAAAAAD+/wQAAAAAAAAAAAD//wQAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAEAAQAAAAAAAEAAAAFAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAAHAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAJAAQAAAAAAAAAAAAKAAQAAAAAAAEAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAEAAAANAAQAAAAAAAAAAAAOAAQAAAAAAAEAAAAPAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAARAAQAAAABAAAAAAASAAQAAAAAAAAAAAATAAQAAAABAAAAAAAUAAQAAAAAAAAAAAAVAAQAAAAAAAEAAAAWAAQAAAAAAAEAAAAXAAQAAAABAAAAAAAYAAQAAAABAAAAAAAZAAQAAAABAAAAAAAaAAQAAAAAAAAAAAAbAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_xno07")
 
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
-
-[node name="Sally" parent="y_order" instance=ExtResource("3_q7tjn")]
-position = Vector2(208, 240)
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="y_order/Sally"]
-show_behind_parent = true
-position = Vector2(-8, 14)
-occluder = SubResource("OccluderPolygon2D_0yvec")
-
-[node name="door" parent="y_order" instance=ExtResource("23_nn5dw")]
-position = Vector2(492, 452)
-connection_id = "beach"
-scene_path = "uid://icc5gnmbl7ja"
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="y_order/door"]
-show_behind_parent = true
-position = Vector2(-8, 14)
-occluder = SubResource("OccluderPolygon2D_0yvec")
 
 [node name="Salt" parent="y_order" instance=ExtResource("8_4rkrd")]
 position = Vector2(150, 244)
@@ -223,59 +179,31 @@ position = Vector2(432, 192)
 [node name="Salt3" parent="y_order" instance=ExtResource("8_4rkrd")]
 position = Vector2(720, 336)
 
-[node name="Salt4" parent="y_order" instance=ExtResource("8_4rkrd")]
-position = Vector2(-672, 336)
-
 [node name="Salt5" parent="y_order" instance=ExtResource("8_4rkrd")]
 position = Vector2(-432, 192)
-
-[node name="Salt6" parent="y_order" instance=ExtResource("8_4rkrd")]
-position = Vector2(960, 192)
 
 [node name="Salt7" parent="y_order" instance=ExtResource("8_4rkrd")]
 position = Vector2(-144, 384)
 
-[node name="Salt8" parent="y_order" instance=ExtResource("8_4rkrd")]
-position = Vector2(1248, 384)
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("4_tfumf")]
+position = Vector2(160, 160)
+offset = Vector2(0, -50)
+initial_target = NodePath("../madotsuki")
 
-[node name="seamless_detector" parent="." instance=ExtResource("17_hnovm")]
-position = Vector2(-432, 192)
-tile_size = Vector2i(48, 48)
-expansion = Vector2i(20, 0)
-boundary_size = Vector2i(1440, 240)
-min_bound_size_multiplier = Vector2i(10, 5)
-min_boundary_size = Vector2i(480, 240)
-up_disabled = true
-down_disabled = true
-
-[node name="camera" parent="." instance=ExtResource("4_tfumf")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-offset = Vector2(0, -40)
-target = NodePath("../../y_order/Sally")
-
-[node name="marker" parent="camera/camera_handler" index="0"]
+[node name="marker" parent="camera" index="2"]
 position = Vector2(0, -50)
 
-[node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
+[node name="wiggle" type="Node" parent="camera/marker/camera/components_receiver" index="0"]
 script = ExtResource("10_7ll13")
 wig_x_strn = 2.0
 wig_y_strn = 0.85
 ignore_rotation = false
 metadata/_custom_type_script = "uid://bptlrkdn0tpua"
 
-[node name="overlay_1" parent="camera/camera_handler/camera_overlay" index="0"]
-material = SubResource("ShaderMaterial_c2l16")
+[node name="parallax" type="ParallaxBackground" parent="."]
+layer = -10
 
-[node name="overlay_2" parent="camera/camera_handler/camera_overlay" index="1"]
-material = SubResource("ShaderMaterial_2ynoa")
-
-[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
-layer = -30
-
-[node name="parallax" type="ParallaxBackground" parent="panorama (bottom_layer)"]
-
-[node name="sky" type="TextureRect" parent="panorama (bottom_layer)/parallax"]
+[node name="sky" type="TextureRect" parent="parallax"]
 clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -284,7 +212,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_f06fp")
 
-[node name="manta_ray_small" type="CPUParticles2D" parent="panorama (bottom_layer)/parallax/sky"]
+[node name="manta_ray_small" type="CPUParticles2D" parent="parallax/sky"]
 material = SubResource("CanvasItemMaterial_iv8am")
 position = Vector2(502, 120)
 amount = 16
@@ -305,15 +233,15 @@ color_ramp = SubResource("Gradient_nn5dw")
 anim_speed_min = 8.0
 anim_speed_max = 10.0
 
-[node name="Pyramids" type="Sprite2D" parent="panorama (bottom_layer)/parallax"]
+[node name="Pyramids" type="Sprite2D" parent="parallax"]
 position = Vector2(240, 101)
 texture = ExtResource("13_04ykb")
 
-[node name="clouds_down" type="ParallaxLayer" parent="panorama (bottom_layer)/parallax"]
+[node name="clouds_down" type="ParallaxLayer" parent="parallax"]
 material = SubResource("ShaderMaterial_eutiq")
 motion_scale = Vector2(0, 0.05)
 
-[node name="Sprite2D3" type="Sprite2D" parent="panorama (bottom_layer)/parallax/clouds_down"]
+[node name="Sprite2D3" type="Sprite2D" parent="parallax/clouds_down"]
 texture_repeat = 3
 use_parent_material = true
 position = Vector2(0, -20)
@@ -321,7 +249,7 @@ texture = ExtResource("7_m05a5")
 centered = false
 flip_v = true
 
-[node name="manta_ray_big" type="CPUParticles2D" parent="panorama (bottom_layer)/parallax"]
+[node name="manta_ray_big" type="CPUParticles2D" parent="parallax"]
 material = SubResource("CanvasItemMaterial_7ll13")
 position = Vector2(502, 120)
 amount = 4
@@ -341,32 +269,47 @@ color_ramp = SubResource("Gradient_e6iva")
 anim_speed_min = 12.0
 anim_speed_max = 16.0
 
-[node name="clouds" type="Sprite2D" parent="panorama (bottom_layer)/parallax"]
+[node name="clouds" type="Sprite2D" parent="parallax"]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_pw43t")
 texture = ExtResource("6_elfu2")
 centered = false
 
-[node name="ocean" type="ParallaxLayer" parent="panorama (bottom_layer)/parallax"]
+[node name="ocean" type="ParallaxLayer" parent="parallax"]
 position = Vector2(0, 154)
 motion_scale = Vector2(0, 0.2)
 
-[node name="water" type="TextureRect" parent="panorama (bottom_layer)/parallax/ocean"]
+[node name="water" type="TextureRect" parent="parallax/ocean"]
 material = SubResource("ShaderMaterial_feanc")
 offset_top = -8.0
 offset_right = 480.0
 offset_bottom = 56.0
 texture = SubResource("GradientTexture2D_0yvec")
+metadata/_edit_use_anchors_ = true
 
-[node name="Sun" type="Sprite2D" parent="panorama (bottom_layer)/parallax"]
+[node name="Sun" type="Sprite2D" parent="parallax"]
 material = SubResource("ShaderMaterial_t5cnu")
 position = Vector2(240, 0)
 texture = ExtResource("11_v58u1")
 
-[node name="Sun2" type="Sprite2D" parent="panorama (bottom_layer)/parallax/Sun"]
+[node name="Sun2" type="Sprite2D" parent="parallax/Sun"]
 material = SubResource("ShaderMaterial_pvbao")
 texture = ExtResource("13_slnnq")
 
-[editable path="y_order/Sally"]
-[editable path="y_order/Sally/effect_equip_anim"]
+[node name="madotsuki" parent="." instance=ExtResource("3_q7tjn")]
+position = Vector2(160, 160)
+values = SubResource("Resource_k1b75")
+
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("19_042hh")
+order = [NodePath("bgm")]
+front = NodePath("bgm")
+back = NodePath("bgm")
+
+[node name="bgm" type="Node" parent="on_initial"]
+process_mode = 4
+script = ExtResource("20_jf20d")
+stream = ExtResource("21_mjijy")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
 [editable path="camera"]

@@ -1,5 +1,5 @@
 class_name Optimization
-extends Game.GameSubClass
+extends GameDependency
 
 static func _setup() -> void: 
 	setup_overridden_project_settings()

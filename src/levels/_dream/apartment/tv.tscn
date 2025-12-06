@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://cnbg0ato50rwn"]
 
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_q7565"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="1_q7565"]
 [ext_resource type="Texture2D" uid="uid://b5c33hi62qlav" path="res://src/levels/_dream/apartment/tv.png" id="2_fk1p2"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="3_528yx"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="4_1ypmp"]
@@ -57,55 +57,68 @@ _data = {
 }
 
 [node name="tv_interactable" type="Area2D" node_paths=PackedStringArray("rect")]
-collision_layer = 2147483648
+process_mode = 3
+collision_layer = 2147483650
 collision_mask = 2147483648
 script = ExtResource("1_q7565")
 rect = NodePath("rect")
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="tv" type="Sprite2D" parent="."]
+position = Vector2(0, 12)
 texture = ExtResource("2_fk1p2")
-offset = Vector2(0, 8)
 hframes = 3
 script = ExtResource("3_528yx")
 frame_dimensions = Vector2i(32, 32)
 frame_h_count = 3
 
 [node name="rect" type="CollisionShape2D" parent="."]
-position = Vector2(0, 8)
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_a47do")
 debug_color = Color(0.2, 0, 0.7, 0.2)
 
 [node name="coll" type="StaticBody2D" parent="."]
-position = Vector2(0, 8)
+position = Vector2(0, 12)
 
 [node name="shape" type="CollisionPolygon2D" parent="coll"]
 polygon = PackedVector2Array(-8, 8, 4, 4, 8, 8, -4, 12)
 
-[node name="on_interact" type="Node" parent="."]
+[node name="on_interact" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("4_1ypmp")
+order = [NodePath("if_tv_off")]
+front = NodePath("if_tv_off")
+back = NodePath("if_tv_off")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="if_tv_off" type="Node" parent="on_interact" node_paths=PackedStringArray("input_objects", "else_conditional")]
+[node name="if_tv_off" type="Node" parent="on_interact" node_paths=PackedStringArray("input_objects", "if_true", "if_false")]
+process_mode = 4
 script = ExtResource("5_qvd66")
 expression = "!tv.properties[\"tv_on\"]"
 input_objects = {
 "tv": NodePath("../../properties")
 }
-else_conditional = NodePath("../else")
+if_true = NodePath("if_true")
+if_false = NodePath("if_false")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="play_on" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("next")]
+[node name="if_true" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("8_22b6d")
+order = [NodePath("play_on"), NodePath("mark_as_on"), NodePath("show_eye"), NodePath("wait_half_sec"), NodePath("play_animation")]
+front = NodePath("play_on")
+back = NodePath("play_animation")
+custom_linked_pointers = true
+
+[node name="play_on" type="Node" parent="on_interact/if_tv_off/if_true" node_paths=PackedStringArray("next")]
+process_mode = 4
 script = ExtResource("5_mta7w")
 sound = ExtResource("7_qvd66")
 wait_til_finished = false
 next = NodePath("../mark_as_on")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="mark_as_on" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node", "next", "prev")]
-process_mode = 4
+[node name="mark_as_on" type="Node" parent="on_interact/if_tv_off/if_true" node_paths=PackedStringArray("node", "prev", "next")]
 script = ExtResource("8_imcer")
-node = NodePath("../../../properties")
+node = NodePath("../../../../properties")
 property_name = "properties"
 property_info = {
 "class_name": &"",
@@ -121,14 +134,13 @@ property_value = Dictionary[String, Variant]({
 new_value = Dictionary[String, Variant]({
 "tv_on": true
 })
-next = NodePath("../show_eye")
 prev = NodePath("../play_on")
+next = NodePath("../show_eye")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="show_eye" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node", "next", "prev")]
-process_mode = 4
+[node name="show_eye" type="Node" parent="on_interact/if_tv_off/if_true" node_paths=PackedStringArray("node", "prev", "next")]
 script = ExtResource("8_imcer")
-node = NodePath("../../../tv")
+node = NodePath("../../../../tv")
 property_name = "progress"
 property_info = {
 "class_name": &"",
@@ -140,20 +152,20 @@ property_info = {
 }
 property_value = 0
 new_value = 1
-next = NodePath("../wait_half_sec")
 prev = NodePath("../mark_as_on")
+next = NodePath("../wait_half_sec")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="wait_half_sec" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("next", "prev")]
+[node name="wait_half_sec" type="Node" parent="on_interact/if_tv_off/if_true" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("9_imcer")
 seconds = 0.5
-next = NodePath("../play_animation")
 prev = NodePath("../show_eye")
+next = NodePath("../play_animation")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_animation" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("node")]
+[node name="play_animation" type="Node" parent="on_interact/if_tv_off/if_true" node_paths=PackedStringArray("node", "prev")]
 script = ExtResource("10_qvd66")
-node = NodePath("../../../looped_animation")
+node = NodePath("../../../../looped_animation")
 method_name = "play"
 method_info = {
 "args": Array[Dictionary]([{
@@ -201,16 +213,19 @@ method_info = {
 internal_args = Dictionary[String, Variant]({
 "name": &"static"
 })
+prev = NodePath("../wait_half_sec")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="else" type="Node" parent="on_interact"]
+[node name="if_false" type="Node" parent="on_interact/if_tv_off" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("8_22b6d")
-skip = true
-metadata/_custom_type_script = "uid://br7tiv3hm32fy"
+order = [NodePath("stop"), NodePath("hide_eye"), NodePath("play_off"), NodePath("mark_as_off")]
+front = NodePath("stop")
+back = NodePath("mark_as_off")
+custom_linked_pointers = true
 
-[node name="stop" type="Node" parent="on_interact/else" node_paths=PackedStringArray("node")]
+[node name="stop" type="Node" parent="on_interact/if_tv_off/if_false" node_paths=PackedStringArray("node", "next")]
 script = ExtResource("10_qvd66")
-node = NodePath("../../../looped_animation")
+node = NodePath("../../../../looped_animation")
 method_name = "stop"
 method_info = {
 "args": Array[Dictionary]([{
@@ -235,12 +250,12 @@ method_info = {
 }
 }
 internal_args = Dictionary[String, Variant]({})
+next = NodePath("../hide_eye")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="hide_eye" type="Node" parent="on_interact/else" node_paths=PackedStringArray("node", "next", "prev")]
-process_mode = 4
+[node name="hide_eye" type="Node" parent="on_interact/if_tv_off/if_false" node_paths=PackedStringArray("node", "prev", "next")]
 script = ExtResource("8_imcer")
-node = NodePath("../../../tv")
+node = NodePath("../../../../tv")
 property_name = "progress"
 property_info = {
 "class_name": &"",
@@ -252,22 +267,22 @@ property_info = {
 }
 property_value = 0
 new_value = 0
-next = NodePath("../play_off")
 prev = NodePath("../stop")
+next = NodePath("../play_off")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_off" type="Node" parent="on_interact/else" node_paths=PackedStringArray("next", "prev")]
+[node name="play_off" type="Node" parent="on_interact/if_tv_off/if_false" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("5_mta7w")
 sound = ExtResource("12_xlbse")
 wait_til_finished = false
-next = NodePath("../mark_as_off")
 prev = NodePath("../hide_eye")
+next = NodePath("../mark_as_off")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="mark_as_off" type="Node" parent="on_interact/else" node_paths=PackedStringArray("node", "prev")]
-process_mode = 4
+[node name="mark_as_off" type="Node" parent="on_interact/if_tv_off/if_false" node_paths=PackedStringArray("node", "prev")]
 script = ExtResource("8_imcer")
-node = NodePath("../../../properties")
+node = NodePath("../../../../properties")
 property_name = "properties"
 property_info = {
 "class_name": &"",
@@ -278,7 +293,7 @@ property_info = {
 "usage": 4102
 }
 property_value = Dictionary[String, Variant]({
-"tv_on": false
+"tv_on": true
 })
 new_value = Dictionary[String, Variant]({
 "tv_on": false

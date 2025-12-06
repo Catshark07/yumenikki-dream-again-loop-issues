@@ -3,10 +3,20 @@ extends SBComponent
 
 var can_play: bool = true
 
+signal finished
+
 # --- components ---
 var animation_player: AnimationPlayer
 var sprite_renderer: Sprite2D
-
+var loop_type: Animation.LoopMode:
+	get:
+		if !animation_player.current_animation.is_empty() and \
+			animation_player.get_animation(animation_player.current_animation) != null:
+			
+			return animation_player.get_animation(animation_player.current_animation).loop_mode
+		
+		return Animation.LoopMode.LOOP_NONE
+		
 # --- gimmicks ---
 const DEFAULT_DYNAMIC_ROT_MULTI = 1
 
@@ -17,6 +27,8 @@ var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
 func _setup(_sentient: SentientBase = null) -> void:
 	super(_sentient)
 	animation_player = get_node("animation_player")
+	animation_player.animation_finished.connect(finished.emit)
+				
 func _update(_delta: float) -> void:
 
 	if sentient.is_moving: 
@@ -29,13 +41,10 @@ func play_animation(_path: String, _speed: float = 1, _backwards: bool = false) 
 	if can_play and has_animation(_path): 
 		animation_player.play(_path, -1 ,_speed, _backwards)
 		await animation_player.animation_finished
-func play_animation_priority(_path: String, _speed: float = 1, _backwards: bool = false) -> void:
-	play_animation(_path, _speed, _backwards)
-	can_play = false
-	await animation_player.animation_finished
-	can_play = true
+func get_animation(_path: String) -> Animation:
+	return animation_player.get_animation(_path)
+func seek(_seconds: float, _update: bool = false, _update_only: bool = false) -> void:
+	animation_player.seek(_seconds, _update, _update_only)
+	
 func has_animation(_path: String) -> bool:
 	return animation_player.has_animation(_path)
-
-func _on_bypass_enabled() -> void: animation_player.pause()
-func _on_bypass_lifted() -> void: animation_player.play(&"")

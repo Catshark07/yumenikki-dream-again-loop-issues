@@ -6,7 +6,7 @@ extends Node
 
 const PROPERTIES_SAVER_ID := "save_properties"
 
-@export var properties: Dictionary[String, Variant] = {}
+@export var properties: Dictionary = {}
 @export var properties_saver: NodePropertiesSaver
 
 @export_group("Flags")
@@ -15,13 +15,12 @@ const PROPERTIES_SAVER_ID := "save_properties"
 @export var global_data: bool = false
 
 func _ready() -> void:
-	set_process(false)
-	set_process_input(false)
-	set_physics_process(false)	
+	set_process			(false)
+	set_physics_process	(false)
+	set_process_input	(false)
 
 	if Engine.is_editor_hint():
 		__set_skip_save(skip_save)
-		
 func _validate_property(property: Dictionary) -> void:
 	if 	property.name == "properties_saver":
 		property.usage = PROPERTY_USAGE_NO_EDITOR 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://cijogi38yfo57"]
 
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_84h6v"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="1_84h6v"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="2_dcrlv"]
 [ext_resource type="Script" uid="uid://dspsbq33tl0wa" path="res://src/systems/sequencing/event/game/invoke_game_event.gd" id="3_onajm"]
 [ext_resource type="Script" uid="uid://d4mfbplpq5p5d" path="res://src/systems/sequencing/event/game/screen_transition.gd" id="4_dcrlv"]
@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="6_d4kb7"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="7_sdwye"]
 [ext_resource type="AudioStream" uid="uid://by7k6jmjwi11m" path="res://src/audio/se/door_nexus_enter.ogg" id="8_fmbam"]
-[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="8_hdc4p"]
 [ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="9_6byum"]
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="10_dnuke"]
 [ext_resource type="Script" uid="uid://73k0qjnjemhd" path="res://src/systems/sequencing/event/sprite/play_sprite_animation.gd" id="11_fmbam"]
@@ -19,9 +18,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fmbam"]
 shader = ExtResource("5_onajm")
 shader_parameter/progress = 0.0
-shader_parameter/colour = Color(0, 0, 0, 1)
 shader_parameter/screen_width = 14.0
 shader_parameter/screen_height = 8.0
+
+[sub_resource type="Gradient" id="Gradient_onajm"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_45h0u"]
 blend_mode = 2
@@ -33,62 +34,72 @@ size = Vector2(16, 8)
 size = Vector2(16, 16)
 
 [node name="door_interactable" type="Area2D" node_paths=PackedStringArray("rect")]
-process_mode = 3
-collision_layer = 1073741824
+collision_layer = 1073741826
 collision_mask = 1073741824
 script = ExtResource("1_84h6v")
 rect = NodePath("rect")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="on_interact" type="Node" parent="."]
+[node name="on_interact" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("2_dcrlv")
+order = [NodePath("request_cutscene_start"), NodePath("play_sound"), NodePath("play_animation"), NodePath("screen_fade_in"), NodePath("play_nexus_enter"), NodePath("travel_to_scene")]
+front = NodePath("request_cutscene_start")
+back = NodePath("travel_to_scene")
 
-[node name="request_cutscene_start" type="Node" parent="on_interact"]
+[node name="request_cutscene_start" type="Node" parent="on_interact" node_paths=PackedStringArray("next")]
 script = ExtResource("3_onajm")
 event_id = "CUTSCENE_START_REQUEST"
+next = NodePath("../play_sound")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
-[node name="play_sound" type="Node" parent="on_interact"]
+[node name="play_sound" type="Node" parent="on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("5_wsq5t")
 sound = ExtResource("6_d4kb7")
 pitch = 0.8
 wait_til_finished = false
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../play_animation")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_animation" type="Node" parent="on_interact" node_paths=PackedStringArray("animator")]
+[node name="play_animation" type="Node" parent="on_interact" node_paths=PackedStringArray("animator", "prev", "next")]
 script = ExtResource("11_fmbam")
 animator = NodePath("../../renderer")
 animation_sheet = ExtResource("10_dnuke")
 animation_speed = 12.0
-skip_warning = true
+prev = NodePath("../play_sound")
+next = NodePath("../screen_fade_in")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="screen_fade_in" type="Node" parent="on_interact"]
+[node name="screen_fade_in" type="Node" parent="on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("4_dcrlv")
 fade_shader = SubResource("ShaderMaterial_fmbam")
-fade_speed = 1.1
 b = 0.8
+gradient = SubResource("Gradient_onajm")
 transition = 1
 ease = 2
 wait_til_finished = false
+prev = NodePath("../play_animation")
+next = NodePath("../play_nexus_enter")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="play_nexus_enter" type="Node" parent="on_interact"]
+[node name="play_nexus_enter" type="Node" parent="on_interact" node_paths=PackedStringArray("prev", "next")]
+process_mode = 4
 script = ExtResource("5_wsq5t")
 sound = ExtResource("8_fmbam")
+prev = NodePath("../screen_fade_in")
+next = NodePath("../travel_to_scene")
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("scene_traversal")]
+[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("spawn_point", "prev")]
+process_mode = 4
 script = ExtResource("7_sdwye")
-scene_traversal = NodePath("scene_traversal")
+spawn_point = NodePath("../../spawn_point")
+prev = NodePath("../play_nexus_enter")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="scene_traversal" type="Node" parent="on_interact/travel_to_scene" node_paths=PackedStringArray("spawn_point")]
-script = ExtResource("8_hdc4p")
-spawn_point = NodePath("../../../spawn_point")
-metadata/_custom_type_script = "uid://dkbhr01xbyr60"
 
 [node name="spawn_point" type="Node2D" parent="." node_paths=PackedStringArray("parent_instead_of_self")]
 position = Vector2(0, 12)

@@ -1,20 +1,22 @@
-[gd_scene load_steps=29 format=3 uid="uid://btg3e240ltjxx"]
+[gd_scene load_steps=38 format=3 uid="uid://btg3e240ltjxx"]
 
-[ext_resource type="AudioStream" uid="uid://2ohbctae5agp" path="res://src/audio/bgm/poubuts_yn_title.mp3" id="2_37vgk"]
+[ext_resource type="Texture2D" uid="uid://je4i3rhyniaw" path="res://src/images/panorama/morning_sun.png" id="2_6sr68"]
+[ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_uj1l6"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="3_5atdl"]
-[ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="3_dwoed"]
+[ext_resource type="Texture2D" uid="uid://bkiyc7axrhgdt" path="res://src/images/panorama/deep.png" id="3_8cjbf"]
 [ext_resource type="PackedScene" uid="uid://7gkxfsran1js" path="res://src/scenes/credits.tscn" id="3_k4drn"]
-[ext_resource type="Texture2D" uid="uid://cr3septns1m3e" path="res://src/images/panorama/sunset_city.png" id="4_37vgk"]
-[ext_resource type="Texture2D" uid="uid://dgilrv0qps4ve" path="res://src/levels/_neutral/menu/title.png" id="4_egbxm"]
+[ext_resource type="Texture2D" uid="uid://dgilrv0qps4ve" path="res://src/levels/_neutral/menu/title.png" id="3_omn5r"]
+[ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="3_uj1l6"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_bmll1"]
-[ext_resource type="PackedScene" uid="uid://bryqyqyp5scn7" path="res://src/ui/template_button.tscn" id="5_jissf"]
 [ext_resource type="Shader" uid="uid://bhdcejnx8m6be" path="res://src/shaders/ui/button_texture_grad_mask.gdshader" id="7_dwoed"]
-[ext_resource type="Shader" uid="uid://hqppcc6e4xw2" path="res://src/shaders/panorama/lens_flare.gdshader" id="8_bmll1"]
-[ext_resource type="Shader" uid="uid://hsx1wbnb1rif" path="res://src/shaders/screen_overlay/bw_invert_blur.gdshader" id="9_omn5r"]
-[ext_resource type="Texture2D" uid="uid://bu5u38wopg1fk" path="res://src/images/panorama/sun_flare.jpg" id="9_u2r5h"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="16_ppdc2"]
-[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="17_ppdc2"]
-[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="18_37vgk"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_button.gd" id="10_d7jyh"]
+[ext_resource type="LabelSettings" uid="uid://dbxux4dchsxxt" path="res://src/global_label_settings.tres" id="11_vexp4"]
+[ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="12_msekq"]
+[ext_resource type="Script" uid="uid://bvqa07cv77e0q" path="res://src/systems/sequencing/sequence/game/on_button_press.gd" id="12_ppdc2"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="13_37vgk"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="14_d7jyh"]
+[ext_resource type="AudioStream" uid="uid://qlkbvjfnvqll" path="res://src/audio/bgm/may_yta_candlebath.ogg" id="15_d7jyh"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="15_vexp4"]
 
 [sub_resource type="GDScript" id="GDScript_h18ho"]
 resource_name = "menu"
@@ -22,26 +24,20 @@ script/source = "@tool
 
 extends GameScene
 
-@export var button_new_game: GUIPanelButton
 @export var button_credits: GUIPanelButton
 @export var button_quit: GUIPanelButton
 
 @export var credits_go_back: GUIPanelButton
 @export var credits_panel: Control
+@export var version_label: Label
 
-const prologue_level: String = (\"res://src/levels/_neutral/prologue/level.tscn\")
 
 func _initialize() -> void:
-	
 	super()
-	GameManager.change_to_state(\"pregame\")
+	version_label.text = str(\"VERSION: \", ProjectSettings.get_setting(\"application/config/version\"))
 	
-	button_new_game.pressed.connect(func(): 
-		Game.scene_manager.change_scene_to(preload(prologue_level)))
-		
-	button_credits.pressed.connect(func(): credits_panel.visible = true)
-	button_quit.pressed.connect(func(): Application.quit())
-	
+	button_credits.pressed.	connect(func(): credits_panel.visible = true)
+	button_quit.pressed.	connect(func(): Application.quit())
 	credits_go_back.pressed.connect(func(): credits_panel.visible = false)
 	
 "
@@ -50,72 +46,57 @@ func _initialize() -> void:
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u2r5h"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppdc2"]
-shader = ExtResource("8_bmll1")
-shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
-shader_parameter/transparency = 0.0
-shader_parameter/optional_gradient = false
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vexp4"]
+shader = ExtResource("2_uj1l6")
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.01999999955296
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
-shader_parameter/uv_rotation_speed = 5.0
-shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
-shader_parameter/rotation = false
-shader_parameter/max_opacity = 1.0
-shader_parameter/min_opacity = 0.635
-shader_parameter/flicker_speed = 2.315
-
-[sub_resource type="Gradient" id="Gradient_6sr68"]
-offsets = PackedFloat32Array(0.332168, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_uj1l6"]
-gradient = SubResource("Gradient_6sr68")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8cjbf"]
-shader = ExtResource("3_dwoed")
 shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_gradient = false
-shader_parameter/gradient = SubResource("GradientTexture1D_uj1l6")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7jyh"]
-shader = ExtResource("7_dwoed")
-shader_parameter/first_color = Color(0, 0, 0, 1)
-shader_parameter/second_color = Color(0, 0, 0, 0)
-shader_parameter/position = 0.0
-shader_parameter/size = 1.0
-shader_parameter/angle = 0.0
+[sub_resource type="Gradient" id="Gradient_d7jyh"]
+offsets = PackedFloat32Array(0, 0.32534248, 0.739726, 1)
+colors = PackedColorArray(1, 0.55845606, 0.7409539, 1, 0.30225146, 0.1478208, 0.50191313, 1, 0.29511154, 0.16334203, 0.4665798, 1, 0, 0, 0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vexp4"]
-shader = ExtResource("7_dwoed")
-shader_parameter/first_color = Color(0, 0, 0, 1)
-shader_parameter/second_color = Color(0, 0, 0, 0)
-shader_parameter/position = 0.0
-shader_parameter/size = 1.0
-shader_parameter/angle = 0.0
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vexp4"]
+gradient = SubResource("Gradient_d7jyh")
+fill_from = Vector2(0.025641026, 1)
+fill_to = Vector2(0, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_msekq"]
-shader = ExtResource("7_dwoed")
-shader_parameter/first_color = Color(0, 0, 0, 1)
-shader_parameter/second_color = Color(0, 0, 0, 0)
-shader_parameter/position = 0.0
-shader_parameter/size = 1.0
-shader_parameter/angle = 0.0
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_msekq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ppdc2"]
+noise = SubResource("FastNoiseLite_msekq")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_37vgk"]
-shader = ExtResource("7_dwoed")
-shader_parameter/first_color = Color(0, 0, 0, 1)
-shader_parameter/second_color = Color(0, 0, 0, 0)
-shader_parameter/position = 0.0
-shader_parameter/size = 1.0
-shader_parameter/angle = 0.0
+shader = ExtResource("3_uj1l6")
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/opacity = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_ppdc2")
+shader_parameter/scroll_speed = 0.01499999687072999
+shader_parameter/gradient = SubResource("GradientTexture2D_vexp4")
+shader_parameter/rot_radians = 0.0
+shader_parameter/ray_strength = 1.225
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jissf"]
-shader = ExtResource("9_omn5r")
-shader_parameter/blur_amount = 1.5
-shader_parameter/pixel_size = 400.0
-shader_parameter/contrast = 1.14
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jissf"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_dwoed"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6sr68"]
+gradient = SubResource("Gradient_dwoed")
+width = 128
+height = 128
+fill_from = Vector2(0.4, 0.4)
+fill_to = Vector2(1, 0.7)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ppdc2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wx1ft"]
 shader = ExtResource("7_dwoed")
@@ -125,66 +106,137 @@ shader_parameter/position = 0.0
 shader_parameter/size = 1.0
 shader_parameter/angle = 0.0
 
-[node name="menu" type="Node2D" node_paths=PackedStringArray("button_new_game", "button_credits", "button_quit", "credits_go_back", "credits_panel", "seq_initial", "seq_free", "scene_objects")]
+[sub_resource type="CanvasTexture" id="CanvasTexture_d7jyh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7o6ls"]
+shader = ExtResource("7_dwoed")
+shader_parameter/first_color = Color(0, 0, 0, 1)
+shader_parameter/second_color = Color(0, 0, 0, 0)
+shader_parameter/position = 0.0
+shader_parameter/size = 1.0
+shader_parameter/angle = 0.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_vexp4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_46psg"]
+shader = ExtResource("7_dwoed")
+shader_parameter/first_color = Color(0, 0, 0, 1)
+shader_parameter/second_color = Color(0, 0, 0, 0)
+shader_parameter/position = 0.0
+shader_parameter/size = 1.0
+shader_parameter/angle = 0.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_msekq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_riren"]
+shader = ExtResource("7_dwoed")
+shader_parameter/first_color = Color(0, 0, 0, 1)
+shader_parameter/second_color = Color(0, 0, 0, 0)
+shader_parameter/position = 0.0
+shader_parameter/size = 1.0
+shader_parameter/angle = 0.0
+
+[node name="menu" type="Node2D" node_paths=PackedStringArray("button_credits", "button_quit", "credits_go_back", "credits_panel", "version_label", "seq_initial")]
 script = SubResource("GDScript_h18ho")
-button_new_game = NodePath("ui/menu/new_game")
-button_credits = NodePath("ui/menu/credits")
-button_quit = NodePath("ui/menu/quit_to_desktop")
-credits_go_back = NodePath("ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton")
-credits_panel = NodePath("ui/credtis_panel")
+button_credits = NodePath("ui/theme_applier/menu/credits")
+button_quit = NodePath("ui/theme_applier/menu/quit_to_desktop")
+credits_go_back = NodePath("ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back")
+credits_panel = NodePath("ui/theme_applier/credtis_panel")
+version_label = NodePath("ui/theme_applier/menu/game_ver")
 seq_initial = NodePath("on_initial")
-seq_free = NodePath("on_free")
-scene_objects = [NodePath("on_initial"), NodePath("on_free")]
 load_transition = SubResource("ShaderMaterial_bmll1")
 unload_transition = SubResource("ShaderMaterial_u2r5h")
 
 [node name="camera" parent="." instance=ExtResource("5_bmll1")]
-position = Vector2(240, 136)
+position = Vector2(240, 135)
 
-[node name="display" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
+[node name="bg" type="CanvasLayer" parent="."]
 
-[node name="overlay_modulate" type="CanvasModulate" parent="display"]
-position = Vector2(0, 32)
-color = Color(0.524543, 0.418031, 0.402895, 1)
+[node name="Control" type="Control" parent="bg"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="flare" type="TextureRect" parent="display"]
-z_index = 1
-material = SubResource("ShaderMaterial_ppdc2")
-offset_left = 16.0
-offset_top = -16.0
-offset_right = 628.0
-offset_bottom = 392.0
-texture = ExtResource("9_u2r5h")
-flip_h = true
+[node name="bg" type="TextureRect" parent="bg/Control"]
+z_index = -1
+material = SubResource("ShaderMaterial_vexp4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -168.0
+offset_right = 163.0
+offset_bottom = 87.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_8cjbf")
+
+[node name="godrays" type="TextureRect" parent="bg/Control"]
+material = SubResource("ShaderMaterial_37vgk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -32.0
+offset_right = 77.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_6sr68")
+
+[node name="ColorRect" type="TextureRect" parent="bg/Control"]
+material = SubResource("CanvasItemMaterial_jissf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_6sr68")
+metadata/_edit_use_anchors_ = true
 
 [node name="ui" type="CanvasLayer" parent="."]
-layer = 20
 
-[node name="ColorRect" type="ColorRect" parent="ui"]
-material = SubResource("ShaderMaterial_8cjbf")
-offset_right = 208.0
-offset_bottom = 272.0
-
-[node name="menu" type="VBoxContainer" parent="ui"]
-offset_left = 40.0
-offset_top = 48.0
-offset_right = 156.0
-offset_bottom = 255.0
-mouse_filter = 2
+[node name="theme_applier" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("3_5atdl")
 
-[node name="title" type="TextureRect" parent="ui/menu"]
+[node name="menu" type="VBoxContainer" parent="ui/theme_applier"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 68.0
+offset_right = 176.0
+offset_bottom = 203.0
+mouse_filter = 2
+theme = ExtResource("3_5atdl")
+theme_override_constants/separation = 4
+
+[node name="TextureRect" type="TextureRect" parent="ui/theme_applier/menu"]
 layout_mode = 2
-texture = ExtResource("4_egbxm")
+texture = ExtResource("3_omn5r")
 stretch_mode = 3
 
-[node name="seprator_1" type="HSeparator" parent="ui/menu"]
-layout_mode = 2
-
-[node name="new_game" parent="ui/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display") instance=ExtResource("5_jissf")]
+[node name="new_game" type="Control" parent="ui/theme_applier/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display")]
 custom_minimum_size = Vector2(60, 18)
 layout_mode = 2
+focus_mode = 2
+mouse_filter = 1
+theme = ExtResource("3_5atdl")
+script = ExtResource("10_d7jyh")
+button_display_texture = SubResource("CanvasTexture_ppdc2")
 abstract_button = NodePath("main_container/abstract_button")
 display_bg = NodePath("main_container/display_bg")
 main_container = NodePath("main_container")
@@ -194,180 +246,628 @@ margin_container = NodePath("main_container/margin_container")
 icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
 icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
 text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
 
-[node name="display_bg" parent="ui/menu/new_game/main_container" index="0"]
-material = SubResource("ShaderMaterial_d7jyh")
+[node name="main_container" type="PanelContainer" parent="ui/theme_applier/menu/new_game"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
 
-[node name="text_display" parent="ui/menu/new_game/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
-text = "New Game"
-
-[node name="abstract_button" parent="ui/menu/new_game/main_container" index="2" node_paths=PackedStringArray("button")]
-button = NodePath("button")
-
-[node name="button" parent="ui/menu/new_game/main_container/abstract_button" index="0"]
-focus_mode = 1
-focus_behavior_recursive = 0
-mouse_behavior_recursive = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-
-[node name="load_game" parent="ui/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display") instance=ExtResource("5_jissf")]
-custom_minimum_size = Vector2(60, 18)
-layout_mode = 2
-abstract_button = NodePath("main_container/abstract_button")
-display_bg = NodePath("main_container/display_bg")
-main_container = NodePath("main_container")
-inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
-icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
-margin_container = NodePath("main_container/margin_container")
-icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
-icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
-text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
-
-[node name="display_bg" parent="ui/menu/load_game/main_container" index="0"]
-material = SubResource("ShaderMaterial_vexp4")
-
-[node name="text_display" parent="ui/menu/load_game/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
-text = "Load Game"
-
-[node name="abstract_button" parent="ui/menu/load_game/main_container" index="2" node_paths=PackedStringArray("button")]
-button = NodePath("button")
-
-[node name="button" parent="ui/menu/load_game/main_container/abstract_button" index="0"]
-focus_mode = 1
-focus_behavior_recursive = 0
-mouse_behavior_recursive = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-
-[node name="credits" parent="ui/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display") instance=ExtResource("5_jissf")]
-custom_minimum_size = Vector2(60, 18)
-layout_mode = 2
-abstract_button = NodePath("main_container/abstract_button")
-display_bg = NodePath("main_container/display_bg")
-main_container = NodePath("main_container")
-inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
-icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
-margin_container = NodePath("main_container/margin_container")
-icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
-icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
-text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
-
-[node name="display_bg" parent="ui/menu/credits/main_container" index="0"]
-material = SubResource("ShaderMaterial_msekq")
-
-[node name="text_display" parent="ui/menu/credits/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
-text = "Credits"
-
-[node name="abstract_button" parent="ui/menu/credits/main_container" index="2" node_paths=PackedStringArray("button")]
-button = NodePath("button")
-
-[node name="button" parent="ui/menu/credits/main_container/abstract_button" index="0"]
-focus_mode = 1
-focus_behavior_recursive = 0
-mouse_behavior_recursive = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-
-[node name="quit_to_desktop" parent="ui/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display") instance=ExtResource("5_jissf")]
-custom_minimum_size = Vector2(60, 18)
-layout_mode = 2
-abstract_button = NodePath("main_container/abstract_button")
-display_bg = NodePath("main_container/display_bg")
-main_container = NodePath("main_container")
-inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
-icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
-margin_container = NodePath("main_container/margin_container")
-icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
-icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
-text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
-
-[node name="display_bg" parent="ui/menu/quit_to_desktop/main_container" index="0"]
-material = SubResource("ShaderMaterial_37vgk")
-
-[node name="text_display" parent="ui/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator/inner_main_container" index="0"]
-text = "Quit to Desktop"
-
-[node name="abstract_button" parent="ui/menu/quit_to_desktop/main_container" index="2" node_paths=PackedStringArray("button")]
-button = NodePath("button")
-
-[node name="button" parent="ui/menu/quit_to_desktop/main_container/abstract_button" index="0"]
-focus_mode = 1
-focus_behavior_recursive = 0
-mouse_behavior_recursive = 0
-accessibility_name = ""
-accessibility_description = ""
-accessibility_live = 0
-accessibility_controls_nodes = Array[NodePath]([])
-accessibility_described_by_nodes = Array[NodePath]([])
-accessibility_labeled_by_nodes = Array[NodePath]([])
-accessibility_flow_to_nodes = Array[NodePath]([])
-
-[node name="seprator_2" type="HSeparator" parent="ui/menu"]
-layout_mode = 2
-
-[node name="game_ver" type="Label" parent="ui/menu"]
-layout_mode = 2
-text = "VERSION: pre-alpha"
-
-[node name="credtis_panel" parent="ui" instance=ExtResource("3_k4drn")]
-visible = false
-
-[node name="ColorRect" parent="ui/credtis_panel" index="0"]
-material = SubResource("ShaderMaterial_jissf")
-
-[node name="display_bg" parent="ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/GUIPanelButton/main_container" index="0"]
+[node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/new_game/main_container"]
 material = SubResource("ShaderMaterial_wx1ft")
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="margin_container" type="MarginContainer" parent="ui/theme_applier/menu/new_game/main_container"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="icon_content_seperator" type="HBoxContainer" parent="ui/theme_applier/menu/new_game/main_container/margin_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display_container" type="CenterContainer" parent="ui/theme_applier/menu/new_game/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display" type="TextureRect" parent="ui/theme_applier/menu/new_game/main_container/margin_container/icon_content_seperator/icon_display_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="inner_main_container" type="CenterContainer" parent="ui/theme_applier/menu/new_game/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="text_display" type="Label" parent="ui/theme_applier/menu/new_game/main_container/margin_container/icon_content_seperator/inner_main_container"]
+layout_mode = 2
+text = "New Game"
+label_settings = ExtResource("11_vexp4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="abstract_button" type="Control" parent="ui/theme_applier/menu/new_game/main_container" node_paths=PackedStringArray("button")]
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("12_msekq")
+button = NodePath("button")
+
+[node name="button" type="BaseButton" parent="ui/theme_applier/menu/new_game/main_container/abstract_button"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 1
+focus_behavior_recursive = 0
+mouse_filter = 0
+mouse_behavior_recursive = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 2
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = null
+
+[node name="on_button_press" type="Node" parent="ui/theme_applier/menu/new_game" node_paths=PackedStringArray("order", "front", "back")]
+process_mode = 4
+script = ExtResource("12_ppdc2")
+order = [NodePath("go_to_prologue")]
+front = NodePath("go_to_prologue")
+back = NodePath("go_to_prologue")
+metadata/_custom_type_script = "uid://bvqa07cv77e0q"
+
+[node name="go_to_prologue" type="Node" parent="ui/theme_applier/menu/new_game/on_button_press"]
+process_mode = 4
+script = ExtResource("13_37vgk")
+scene_path = "uid://bv5x4rpikgrho"
+metadata/_custom_type_script = "uid://c0ymap76lrhgr"
+
+[node name="credits" type="Control" parent="ui/theme_applier/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display")]
+custom_minimum_size = Vector2(60, 18)
+layout_mode = 2
+focus_mode = 2
+mouse_filter = 1
+theme = ExtResource("3_5atdl")
+script = ExtResource("10_d7jyh")
+button_display_texture = SubResource("CanvasTexture_d7jyh")
+abstract_button = NodePath("main_container/abstract_button")
+display_bg = NodePath("main_container/display_bg")
+main_container = NodePath("main_container")
+inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
+icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
+margin_container = NodePath("main_container/margin_container")
+icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
+icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
+text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="main_container" type="PanelContainer" parent="ui/theme_applier/menu/credits"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/credits/main_container"]
+material = SubResource("ShaderMaterial_7o6ls")
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="margin_container" type="MarginContainer" parent="ui/theme_applier/menu/credits/main_container"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="icon_content_seperator" type="HBoxContainer" parent="ui/theme_applier/menu/credits/main_container/margin_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display_container" type="CenterContainer" parent="ui/theme_applier/menu/credits/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display" type="TextureRect" parent="ui/theme_applier/menu/credits/main_container/margin_container/icon_content_seperator/icon_display_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="inner_main_container" type="CenterContainer" parent="ui/theme_applier/menu/credits/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="text_display" type="Label" parent="ui/theme_applier/menu/credits/main_container/margin_container/icon_content_seperator/inner_main_container"]
+layout_mode = 2
+text = "Credits"
+label_settings = ExtResource("11_vexp4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="abstract_button" type="Control" parent="ui/theme_applier/menu/credits/main_container" node_paths=PackedStringArray("button")]
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("12_msekq")
+button = NodePath("button")
+
+[node name="button" type="BaseButton" parent="ui/theme_applier/menu/credits/main_container/abstract_button"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 1
+focus_behavior_recursive = 0
+mouse_filter = 0
+mouse_behavior_recursive = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 2
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = null
+
+[node name="quit_to_desktop" type="Control" parent="ui/theme_applier/menu" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display")]
+custom_minimum_size = Vector2(60, 18)
+layout_mode = 2
+focus_mode = 2
+mouse_filter = 1
+theme = ExtResource("3_5atdl")
+script = ExtResource("10_d7jyh")
+button_display_texture = SubResource("CanvasTexture_vexp4")
+abstract_button = NodePath("main_container/abstract_button")
+display_bg = NodePath("main_container/display_bg")
+main_container = NodePath("main_container")
+inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
+icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
+margin_container = NodePath("main_container/margin_container")
+icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
+icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
+text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="main_container" type="PanelContainer" parent="ui/theme_applier/menu/quit_to_desktop"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="display_bg" type="ColorRect" parent="ui/theme_applier/menu/quit_to_desktop/main_container"]
+material = SubResource("ShaderMaterial_46psg")
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="margin_container" type="MarginContainer" parent="ui/theme_applier/menu/quit_to_desktop/main_container"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="icon_content_seperator" type="HBoxContainer" parent="ui/theme_applier/menu/quit_to_desktop/main_container/margin_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display_container" type="CenterContainer" parent="ui/theme_applier/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display" type="TextureRect" parent="ui/theme_applier/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator/icon_display_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="inner_main_container" type="CenterContainer" parent="ui/theme_applier/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="text_display" type="Label" parent="ui/theme_applier/menu/quit_to_desktop/main_container/margin_container/icon_content_seperator/inner_main_container"]
+layout_mode = 2
+text = "Quit to Desktop"
+label_settings = ExtResource("11_vexp4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="abstract_button" type="Control" parent="ui/theme_applier/menu/quit_to_desktop/main_container" node_paths=PackedStringArray("button")]
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("12_msekq")
+button = NodePath("button")
+
+[node name="button" type="BaseButton" parent="ui/theme_applier/menu/quit_to_desktop/main_container/abstract_button"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 1
+focus_behavior_recursive = 0
+mouse_filter = 0
+mouse_behavior_recursive = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 2
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = null
+
+[node name="separator" type="HSeparator" parent="ui/theme_applier/menu"]
+layout_mode = 2
+
+[node name="game_ver" type="Label" parent="ui/theme_applier/menu"]
+layout_mode = 2
+text = "VERSION: pre-alpha 02"
+
+[node name="credtis_panel" parent="ui/theme_applier" instance=ExtResource("3_k4drn")]
+visible = false
+layout_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="go_back" type="Control" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" index="4" node_paths=PackedStringArray("abstract_button", "display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display")]
+custom_minimum_size = Vector2(60, 18)
+layout_mode = 2
+focus_mode = 2
+mouse_filter = 1
+theme = ExtResource("3_5atdl")
+script = ExtResource("10_d7jyh")
+button_display_texture = SubResource("CanvasTexture_msekq")
+abstract_button = NodePath("main_container/abstract_button")
+display_bg = NodePath("main_container/display_bg")
+main_container = NodePath("main_container")
+inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
+icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
+margin_container = NodePath("main_container/margin_container")
+icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
+icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
+text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="main_container" type="PanelContainer" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -60.0
+offset_bottom = -18.0
+mouse_filter = 2
+
+[node name="display_bg" type="ColorRect" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container"]
+material = SubResource("ShaderMaterial_riren")
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="margin_container" type="MarginContainer" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="icon_content_seperator" type="HBoxContainer" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container/margin_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display_container" type="CenterContainer" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display" type="TextureRect" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container/margin_container/icon_content_seperator/icon_display_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="inner_main_container" type="CenterContainer" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="text_display" type="Label" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container/margin_container/icon_content_seperator/inner_main_container"]
+layout_mode = 2
+text = "Go Back."
+label_settings = ExtResource("11_vexp4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="abstract_button" type="Control" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container" node_paths=PackedStringArray("button")]
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("12_msekq")
+button = NodePath("button")
+
+[node name="button" type="BaseButton" parent="ui/theme_applier/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/go_back/main_container/abstract_button"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 1
+focus_behavior_recursive = 0
+mouse_filter = 0
+mouse_behavior_recursive = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 2
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = null
 
 [node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
-script = ExtResource("16_ppdc2")
-order = [NodePath("panorama"), NodePath("bgm")]
-front = NodePath("panorama")
-back = NodePath("bgm")
+script = ExtResource("14_d7jyh")
+order = [NodePath("play_music")]
+front = NodePath("play_music")
+back = NodePath("play_music")
 
-[node name="panorama" type="SubViewport" parent="on_initial" node_paths=PackedStringArray("next")]
-own_world_3d = true
-transparent_bg = true
-canvas_item_default_texture_filter = 0
-canvas_item_default_texture_repeat = 2
-size = Vector2i(480, 270)
-size_2d_override = Vector2i(480, 270)
-script = ExtResource("18_37vgk")
-next = NodePath("../bgm")
-
-[node name="bg" type="TextureRect" parent="on_initial/panorama"]
-custom_minimum_size = Vector2(480, 270)
-offset_right = 565.0
-offset_bottom = 375.0
-texture = ExtResource("4_37vgk")
-
-[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
-script = ExtResource("17_ppdc2")
-stream = ExtResource("2_37vgk")
-prev = NodePath("../panorama")
+[node name="play_music" type="Node" parent="on_initial"]
+process_mode = 4
+script = ExtResource("15_vexp4")
+stream = ExtResource("15_d7jyh")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="on_free" type="Node" parent="."]
-script = ExtResource("16_ppdc2")
-
 [editable path="camera"]
-[editable path="ui/menu/new_game"]
-[editable path="ui/menu/load_game"]
-[editable path="ui/menu/credits"]
-[editable path="ui/menu/quit_to_desktop"]
-[editable path="ui/credtis_panel"]
+[editable path="ui/theme_applier/credtis_panel"]

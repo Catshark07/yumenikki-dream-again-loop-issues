@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://c8bnpo28a373g"]
+[gd_scene load_steps=13 format=3 uid="uid://c8bnpo28a373g"]
 
 [ext_resource type="Script" uid="uid://dpjo72gyccf67" path="res://src/systems/camera/camera_handler.gd" id="1_0c5nr"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="2_rya0b"]
 [ext_resource type="Shader" uid="uid://cmxwqr6xgpduc" path="res://src/shaders/unshaded.gdshader" id="3_mqlxo"]
 [ext_resource type="Script" uid="uid://co667il3vd04t" path="res://src/systems/camera/components/curve_rotation.gd" id="3_qjqrg"]
-[ext_resource type="Curve" uid="uid://b5jcdrm07di2w" path="res://src/systems/camera/rotational_wiggle_curve.tres" id="4_wxyky"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/tools/FSM/fsm.gd" id="5_wxyky"]
 [ext_resource type="Script" uid="uid://dhlkhuum3gyh1" path="res://src/systems/camera/components/deadzone_component.gd" id="5_yhg0v"]
 [ext_resource type="Script" uid="uid://qxqnp1ku22in" path="res://src/systems/camera/states/static.gd" id="6_tyaiw"]
@@ -20,13 +19,17 @@ shader = ExtResource("3_mqlxo")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wxyky"]
 shader = ExtResource("3_mqlxo")
 
-[node name="camera_handler" type="Node2D" node_paths=PackedStringArray("fsm")]
+[node name="camera_handler" type="Node2D" node_paths=PackedStringArray("fsm", "cam", "marker", "cam_receiver", "components")]
 process_mode = 1
 top_level = true
 z_index = 5
 y_sort_enabled = true
 script = ExtResource("1_0c5nr")
 fsm = NodePath("cam_fsm")
+cam = NodePath("marker/camera")
+marker = NodePath("marker")
+cam_receiver = NodePath("marker/camera/components_receiver")
+components = NodePath("components_receiver")
 
 [node name="components_receiver" type="Node" parent="." node_paths=PackedStringArray("affector")]
 script = ExtResource("2_rya0b")
@@ -34,9 +37,9 @@ affector = NodePath("..")
 independent = true
 metadata/_custom_type_script = "uid://ctbtfitoggtku"
 
-[node name="curve_rotation" type="Node" parent="components_receiver" node_paths=PackedStringArray("receiver")]
+[node name="curve_rotation" type="Node" parent="components_receiver" node_paths=PackedStringArray("camera", "receiver")]
 script = ExtResource("3_qjqrg")
-rot_curve = ExtResource("4_wxyky")
+camera = NodePath("../..")
 receiver = NodePath("..")
 metadata/_custom_type_script = "uid://df3nc1vhukhur"
 

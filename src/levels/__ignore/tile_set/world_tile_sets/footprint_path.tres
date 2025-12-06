@@ -23,6 +23,8 @@ texture = ExtResource("1_niv2e")
 7:10/0 = 0
 14:10/size_in_atlas = Vector2i(7, 9)
 14:10/0 = 0
+1:0/0 = 0
+1:0/0/z_index = -1
 
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_r1qkv")
