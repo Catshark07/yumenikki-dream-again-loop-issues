@@ -28,7 +28,7 @@
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="26_feke8"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="27_1rd4d"]
 [ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="27_scjaa"]
-[ext_resource type="AudioStream" uid="uid://blvfuo72u6lrh" path="res://src/audio/bgm/-1 - Drifting Thoughts.ogg" id="28_jxym7"]
+[ext_resource type="AudioStream" uid="uid://blvfuo72u6lrh" path="res://src/audio/bgm/neg-one_Drifting Thoughts.ogg" id="28_jxym7"]
 [ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="29_jxym7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1rd4d"]
@@ -37,6 +37,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qtvl2"]
 shader = ExtResource("2_6vasg")
+shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 shader_parameter/uv_rotation_speed = 5.0
 shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
 shader_parameter/uv_offset = Vector2(0, 0)
@@ -44,6 +47,9 @@ shader_parameter/offset_strength = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5gu3d"]
 shader = ExtResource("2_6vasg")
+shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 shader_parameter/uv_rotation_speed = -2.0
 shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
 shader_parameter/uv_offset = Vector2(0, 0)
@@ -51,6 +57,9 @@ shader_parameter/offset_strength = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ehf7"]
 shader = ExtResource("2_6vasg")
+shader_parameter/overlay_modulate = Color(1, 1, 1, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 shader_parameter/uv_rotation_speed = 3.0
 shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
 shader_parameter/uv_offset = Vector2(0, 0)

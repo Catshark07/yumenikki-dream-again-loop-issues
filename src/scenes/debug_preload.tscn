@@ -83,7 +83,6 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="preload" type="Control" parent="canvas"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,14 +122,14 @@ vertical_alignment = 1
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
-frame = 1
 script = ExtResource("3_d62i2")
 autoplay = true
 loop = true
 fps = 5.0
 frame_dimensions = Vector2i(16, 16)
 frame_h_count = 4
-progress = 1
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="caution_timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true

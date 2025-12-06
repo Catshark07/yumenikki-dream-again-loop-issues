@@ -14,10 +14,7 @@ extends SceneNode
 const LOADING_INTERVAL := 0.02
 
 const SHADERS_PATH := "res://src/shaders/"
-const SCENES_PATH := "res://src/levels/"
-
-const CACHED_SHADER_FILE_PATH := "cache/cached_shader.txt"
-const CACHED_SCENES_FILE_PATH := "cache/cached_scenes.config"
+const CACHED_SHADER_PATH := "user://shader_cache.txt"
 
 const MAX_SCENES_TO_LOAD := 3
 
@@ -47,14 +44,13 @@ func _on_push() -> void:
 	shader_garbage_placeholder.material = ShaderMaterial.new()
 	shader_garbage_placeholder.texture 	= preload("res://game_icon.png")
 	
-	print("CREATING SHADER CACHE FILE")
-	var shader_file = FileAccess.open("res://" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
-	shader_file.store_string("")
-	shader_file.close()
+	#print("CREATING SHADER CACHE FILE")
+	#var shader_file = FileAccess.open("res://" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
+	#shader_file.store_string("")
+	#shader_file.close()
+	#
 	
-	if OS.is_debug_build():
-		await gather_all_shaders()
-	
+	await gather_all_shaders()
 	await handle_shader_precompile()
 	AudioService.play_sound(load("res://src/audio/ui/ui_instructions.WAV"), 0.8)
 	EventManager.invoke_event("GAME_PRELOADING_CONTENT_FINISH")
@@ -74,8 +70,7 @@ func compile_shader_material(_shader: Shader) -> void:
 	shader_garbage_placeholder.material.shader = _shader
 
 func gather_all_shaders() -> void:
-	res_cached_shader_file = FileAccess.open("res://" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
-	
+	res_cached_shader_file = FileAccess.open(CACHED_SHADER_PATH, FileAccess.WRITE)
 	for i in DirAccess.get_directories_at(SHADERS_PATH):
 		if (i.ends_with(".gdshader")): 
 			shaders.append(SHADERS_PATH + i)
@@ -91,21 +86,9 @@ func gather_all_shaders() -> void:
 	
 	res_cached_shader_file.close()
 	
-func gather_all_scenes() -> void:
-	res_cached_scenes_file = FileAccess.open("res://" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
-	for i in DirAccess.get_directories_at(SCENES_PATH):
-		if i != "__ignore":
-			for j in DirAccess.get_directories_at(SCENES_PATH + i): 
-				for s in DirAccess.get_files_at(SCENES_PATH + i + "/" + j):
-					var scene_path = SCENES_PATH + i + "/" + j + "/" + s
-					if "level.tscn" in s:
-						scenes.append(scene_path)
-						res_cached_scenes_file.store_line(JSON.stringify(scene_path))
-
-	res_cached_scenes_file.close()
 
 func handle_shader_precompile() -> void:
-	res_cached_shader_file = FileAccess.open("res://" + CACHED_SHADER_FILE_PATH, FileAccess.READ)
+	res_cached_shader_file = FileAccess.open(CACHED_SHADER_PATH, FileAccess.READ)
 	var curr_shader_line: String = res_cached_shader_file.get_line()
 	
 	while !(curr_shader_line.is_empty()):

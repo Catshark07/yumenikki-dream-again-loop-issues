@@ -77,20 +77,5 @@ tile_set = ExtResource("2_oi6n0")
 y_sort_enabled = true
 tile_set = ExtResource("2_oi6n0")
 
-[node name="seamless_detector" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-position = Vector2(-80, -96)
-expansion = Vector2i(90, 80)
-boundary_size = Vector2i(1920, 1536)
-script = null
-
 [editable path="camera"]
 [editable path="y_order/door_interactable"]

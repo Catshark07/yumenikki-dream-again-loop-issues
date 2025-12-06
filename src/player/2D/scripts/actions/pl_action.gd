@@ -1,6 +1,8 @@
 class_name PLAction
 extends Resource
 
+signal finished
+
 # -- virtuals.
 func _perform		(_pl: Player) -> void: pass
 func _cancel		(_pl: Player) -> void: pass

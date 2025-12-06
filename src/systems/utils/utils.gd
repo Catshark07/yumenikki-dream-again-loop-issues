@@ -3,7 +3,6 @@ extends Node
 
 var ignore_warnings: bool = true
 
-
 func is_within_exclusive(_num: float, _min: float, _max: float) -> bool:
 	return ((_num < _min) and (_num > _max))
 func is_within_inclusive(_num: float, _min: float, _max: float) -> bool:
@@ -19,20 +18,19 @@ func add_sibling_node(
 		else:									node_as_sibling = _target_node.get_parent()
 		
 		return add_child_node(node_as_sibling, _sibling_node, _sibling_node_name)
-		
 func add_child_node(
 	_parent_node: 	Node,
 	_child_node: 	Node,
 	_child_node_name: String) -> Node:
 		# - bail if parent or child node are non-existent.
 		var _owner
-		if Engine.is_editor_hint(): _owner = EditorInterface.get_edited_scene_root()
-		else:						_owner = _parent_node.owner
+		if Engine.is_editor_hint(): _owner = Engine.get_singleton("EditorInterface").get_edited_scene_root()
+		else: 						_owner = _parent_node.owner
 		
 		if _child_node == null or _parent_node == null:
 			push("Child node or Parent node do not exist!")
 			return
-			
+
 		
 		if !_parent_node.has_node(_child_node_name):
 			_parent_node.add_child(_child_node, true)
@@ -44,7 +42,6 @@ func add_child_node(
 			push("Parent %s already has child %s - Freeing queued %s." % [_parent_node, _child_node_name, _child_node])
 			_child_node.queue_free()
 			return _parent_node.get_node(_child_node_name)
-			
 func get_child_node_or_null(
 	_parent_node: Node,
 	_child_node_name: String) -> Node:
@@ -94,7 +91,6 @@ func get_group_arr(_name: String) -> Array[Node]:
 	if get_tree().has_group(_name):
 		return get_tree().get_nodes_in_group(_name)
 	return [null]
-	
 
 # refinements.
 func u_load(_res_path: String) -> Resource:

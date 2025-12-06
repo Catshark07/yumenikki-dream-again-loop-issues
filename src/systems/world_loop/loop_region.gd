@@ -31,8 +31,12 @@ const SAFE_ZONE = Vector2(550, 350)
 @export var loop_objects: Array[Node]:
 	set(_objs): 
 		loop_objects = _objs
-		if _objs.is_empty(): 	self.process_mode = Node.PROCESS_MODE_DISABLED
-		else:					self.process_mode = Node.PROCESS_MODE_INHERIT
+		if _objs.is_empty(): 	
+				self.set_process		(false)
+				self.set_physics_process(false)
+		else:
+				self.set_process		(true)
+				self.set_physics_process(true)
 @export var world_size: Vector2 = Vector2(100, 100):
 	set = set_world_size
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://j0sat4n1ufx1"]
+[gd_scene load_steps=29 format=4 uid="uid://j0sat4n1ufx1"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_c40ge"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_7tkwx"]
@@ -26,10 +26,6 @@
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="17_jlvt6"]
 [ext_resource type="Texture2D" uid="uid://3i5qno0o7ib8" path="res://src/levels/__ignore/doors/door_forest.png" id="17_omyer"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_28cgd"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0xf08"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8pgd"]
 size = Vector2(48, 16)
 
@@ -54,8 +50,6 @@ shader_parameter/optional_gradient = false
 script = ExtResource("1_c40ge")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-load_transition = SubResource("ShaderMaterial_28cgd")
-unload_transition = SubResource("ShaderMaterial_0xf08")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="LoopRegion" type="Node2D" parent="." node_paths=PackedStringArray("loop_objects")]
@@ -65,7 +59,7 @@ world_size = Vector2(4096, 4112)
 metadata/_custom_type_script = "uid://desxt7tbq37sf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("5_y1apy")]
-position = Vector2(24, -24)
+position = Vector2(1424, -952)
 initial_target = NodePath("../y_order/madotsuki")
 
 [node name="y_order" type="Node2D" parent="."]
@@ -110,36 +104,39 @@ metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="on_enter" type="Node" parent="y_order/to_carpet_plaza" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("11_wf5vx")
-order = [NodePath("if_pl_moving_north"), NodePath("else_if_pl_moving_north")]
+order = [NodePath("if_pl_moving_north")]
 front = NodePath("if_pl_moving_north")
-back = NodePath("else_if_pl_moving_north")
+back = NodePath("if_pl_moving_north")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="if_pl_moving_north" type="Node" parent="y_order/to_carpet_plaza/on_enter" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
+[node name="if_pl_moving_north" type="Node" parent="y_order/to_carpet_plaza/on_enter" node_paths=PackedStringArray("input_objects", "if_true", "if_false")]
+process_mode = 4
 script = ExtResource("9_1upwg")
 expression = "pl.velocity.y < 0"
 input_objects = {
 "pl": NodePath("../../../madotsuki")
 }
-else_conditional = NodePath("../else_if_pl_moving_north")
+if_true = NodePath("if_true")
+if_false = NodePath("if_false")
+metadata/_custom_type_script = "uid://br7tiv3hm32fy"
+
+[node name="if_true" type="Node" parent="y_order/to_carpet_plaza/on_enter/if_pl_moving_north" node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("11_5by3o")
 order = [NodePath("travel_to")]
 front = NodePath("travel_to")
 back = NodePath("travel_to")
 custom_linked_pointers = true
-next = NodePath("../else_if_pl_moving_north")
-metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="travel_to" type="Node" parent="y_order/to_carpet_plaza/on_enter/if_pl_moving_north" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to" type="Node" parent="y_order/to_carpet_plaza/on_enter/if_pl_moving_north/if_true" node_paths=PackedStringArray("spawn_point")]
 process_mode = 4
 script = ExtResource("9_qfuug")
 scene_path = "uid://b6i5pb6sb3k7u"
-spawn_point = NodePath("../../../spawn_point")
+spawn_point = NodePath("../../../../spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="else_if_pl_moving_north" type="Node" parent="y_order/to_carpet_plaza/on_enter" node_paths=PackedStringArray("prev")]
+[node name="if_false" type="Node" parent="y_order/to_carpet_plaza/on_enter/if_pl_moving_north"]
 script = ExtResource("11_5by3o")
-skip = true
-prev = NodePath("../if_pl_moving_north")
+custom_linked_pointers = true
 
 [node name="to_nexus" parent="y_order" instance=ExtResource("15_wf5vx")]
 process_mode = 3

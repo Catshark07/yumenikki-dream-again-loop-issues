@@ -10,8 +10,6 @@ extends SceneNode
 @export var seq_free	: Sequence
 
 @export_group("Transitions.")
-@export var load_transition: ShaderMaterial = ShaderMaterial.new()
-@export var unload_transition: ShaderMaterial = ShaderMaterial.new()
 
 var save_invoker: EventListener
 	
@@ -20,13 +18,6 @@ func _initialize() -> void:
 	
 	process_mode = Node.PROCESS_MODE_DISABLED
 	save_invoker = EventListener.new(self, "SCENE_CHANGE_REQUEST")
-	
-	if load_transition == null: 
-		load_transition = ShaderMaterial.new()
-		load_transition.material = preload("res://src/shaders/transition/tr_fade.gdshader")
-	if unload_transition == null:
-		unload_transition = ShaderMaterial.new()
-		unload_transition.material = preload("res://src/shaders/transition/tr_fade.gdshader")
 
 # - scene exclusive objects.
 # sequences

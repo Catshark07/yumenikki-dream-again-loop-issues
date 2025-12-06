@@ -1,5 +1,5 @@
 class_name SequencerManager
-extends Game.GameSubClass
+extends GameDependency
 
 const PRINT_ID := "SEQUENCE MANAGER:: "
 static var curr: Sequence

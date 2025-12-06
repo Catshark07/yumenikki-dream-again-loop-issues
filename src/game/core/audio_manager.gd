@@ -1,5 +1,5 @@
 class_name Audio
-extends Game.GameSubClass
+extends GameDependency
 
 const BUS_DISTORTED := &"DISTORTED"
 const BUS_BGM 		:= &"BGM<"

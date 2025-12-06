@@ -3,12 +3,10 @@
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_wjh5h"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_6hpsn"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_i7lt2"]
-[ext_resource type="Script" path="res://src/systems/audio/bgm.gd" id="2_kafk5"]
 [ext_resource type="AudioStream" uid="uid://16b7dcgbyc2n" path="res://src/audio/bgm/world_dense-woods-b.WAV" id="3_dwx8a"]
 [ext_resource type="AudioStream" uid="uid://dlfw10qwka7su" path="res://src/audio/amb/amb_rain.ogg" id="3_e4mse"]
 [ext_resource type="TileSet" uid="uid://fd37qogr0ale" path="res://src/levels/__ignore/tile_set/world_tile_sets/dense_woods.tres" id="3_y3ks0"]
 [ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/__ignore/rain.tscn" id="5_dwx8a"]
-[ext_resource type="PackedScene" path="res://src/systems/seamless_detector.tscn" id="5_k7yxg"]
 [ext_resource type="Shader" uid="uid://5k0375eqfw0q" path="res://src/shaders/masks/sub.gdshader" id="8_5st6v"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/interactable.gd" id="8_iii1a"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequencing/sequence/game/on_interact.gd" id="9_xynxk"]
@@ -75,13 +73,6 @@ target = NodePath("../../dense_woods_b/Madotsuki")
 
 [node name="rain" parent="camera/camera_handler/camera_overlay" index="0" instance=ExtResource("5_dwx8a")]
 amount = 28
-
-[node name="seamless_detector" parent="." instance=ExtResource("5_k7yxg")]
-position = Vector2(-80, -208)
-expansion = Vector2i(145, 50)
-boundary_size = Vector2i(2800, 1056)
-up_disabled = true
-down_disabled = true
 
 [node name="dense_woods_b" type="Node2D" parent="."]
 y_sort_enabled = true

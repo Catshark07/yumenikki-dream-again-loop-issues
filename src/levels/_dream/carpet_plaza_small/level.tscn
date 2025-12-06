@@ -134,36 +134,39 @@ metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="on_enter" type="Node" parent="y_order/to_forest" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("15_5j508")
-order = [NodePath("if_pl_moving_south"), NodePath("else_if_pl_moving_south")]
+order = [NodePath("if_pl_moving_south")]
 front = NodePath("if_pl_moving_south")
-back = NodePath("else_if_pl_moving_south")
+back = NodePath("if_pl_moving_south")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="if_pl_moving_south" type="Node" parent="y_order/to_forest/on_enter" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
+[node name="if_pl_moving_south" type="Node" parent="y_order/to_forest/on_enter" node_paths=PackedStringArray("input_objects", "if_true", "if_false")]
+process_mode = 4
 script = ExtResource("16_td5s7")
 expression = "pl.velocity.y > 0"
 input_objects = {
 "pl": NodePath("../../../madotsuki")
 }
-else_conditional = NodePath("../else_if_pl_moving_south")
+if_true = NodePath("if_true")
+if_false = NodePath("if_false")
+metadata/_custom_type_script = "uid://br7tiv3hm32fy"
+
+[node name="if_true" type="Node" parent="y_order/to_forest/on_enter/if_pl_moving_south" node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("11_5j508")
 order = [NodePath("travel_to")]
 front = NodePath("travel_to")
 back = NodePath("travel_to")
 custom_linked_pointers = true
-next = NodePath("../else_if_pl_moving_south")
-metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="travel_to" type="Node" parent="y_order/to_forest/on_enter/if_pl_moving_south" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to" type="Node" parent="y_order/to_forest/on_enter/if_pl_moving_south/if_true" node_paths=PackedStringArray("spawn_point")]
 process_mode = 4
 script = ExtResource("17_fbe1s")
 scene_path = "uid://j0sat4n1ufx1"
-spawn_point = NodePath("../../../spawn")
+spawn_point = NodePath("../../../../spawn")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="else_if_pl_moving_south" type="Node" parent="y_order/to_forest/on_enter" node_paths=PackedStringArray("prev")]
+[node name="if_false" type="Node" parent="y_order/to_forest/on_enter/if_pl_moving_south"]
 script = ExtResource("11_5j508")
-skip = true
-prev = NodePath("../if_pl_moving_south")
+custom_linked_pointers = true
 
 [node name="deadzone" type="Area2D" parent="y_order" node_paths=PackedStringArray("rect")]
 process_mode = 3

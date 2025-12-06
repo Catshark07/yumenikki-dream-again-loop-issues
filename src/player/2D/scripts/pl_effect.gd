@@ -1,6 +1,13 @@
 class_name PLEffect
 extends Resource
 
+# this is a resource.
+# it's an effect script that serves as a container for player data
+
+# ill show you what it has mostly.
+# idk tbh 
+
+
 @export_group("Action Overrides")
 
 @export var override_primary_action: PLAction
@@ -9,6 +16,8 @@ extends Resource
 const EMOTE_PATH := &"emote/"
 const ACTION_PATH := &"action/"
 
+# the name and icon of the effect.
+# desc might be removed idk
 @export_group("Information")
 @export var name: String = ""
 @export var desc: String = ""
@@ -19,6 +28,14 @@ const ACTION_PATH := &"action/"
 
 var use_times: int = 0
 
+# has variables here which are also resources.
+# i have a lot of nested resources but u can definitely 
+# just shove it all into one.
+
+# lets see the bike for example.
+# btw like 70% of these are extremely redundant
+
+
 @export_group("Attributes")
 @export var variables: PLVariables 	= preload("res://src/player/2D/madotsuki/effects/_none/_stats.tres")
 @export var behaviour: PLBehaviour	= preload("res://src/player/2D/madotsuki/effects/_none/_behaviour.tres")
@@ -26,6 +43,7 @@ var use_times: int = 0
 @export_file("*.tscn") var player_component_prefab: String
 var player_component: PLEffectComponent
 
+# and here's this function that gives the player values.
 func _apply(_pl: Player) -> void:
 	
 	if 	( 

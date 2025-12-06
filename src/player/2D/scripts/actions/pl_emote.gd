@@ -20,6 +20,8 @@ func _action_update(_pl: Player, _delta: float) -> void:
 		_pl.stamina += _delta * (_pl.values.stamina_regen * 1.2)
 
 func _perform(_pl: Player) -> void: 
+	if enter_anim.is_empty(): return
+	
 	can_exit = false
 	_pl.vel_input = Vector2.ZERO
 	_pl.dir_input = Vector2.ZERO

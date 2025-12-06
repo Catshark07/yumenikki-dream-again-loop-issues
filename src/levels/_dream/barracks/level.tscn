@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://cwrdtbix8nr0o"]
+[gd_scene load_steps=53 format=4 uid="uid://cwrdtbix8nr0o"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_r5evf"]
 [ext_resource type="Script" uid="uid://desxt7tbq37sf" path="res://src/systems/world_loop/loop_region.gd" id="3_pfnef"]
@@ -38,10 +38,6 @@
 [ext_resource type="Script" uid="uid://ceoifexmpm3o5" path="res://src/systems/sequencing/event/node/call_function.gd" id="29_4u388"]
 [ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="29_vf8ek"]
 [ext_resource type="AudioStream" uid="uid://dtcqqpb7rpjrj" path="res://src/audio/bgm/world_barracks.WAV" id="30_e5l1k"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6t0p7"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a71sk"]
 
 [sub_resource type="Gradient" id="Gradient_avdre"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
@@ -105,8 +101,6 @@ script = ExtResource("22_atktf")
 script = ExtResource("1_r5evf")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-load_transition = SubResource("ShaderMaterial_6t0p7")
-unload_transition = SubResource("ShaderMaterial_a71sk")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="house_traverse" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
@@ -315,7 +309,7 @@ metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 process_mode = 3
 position = Vector2(-368, -272)
 collision_layer = 2
-collision_mask = 3221225472
+collision_mask = 2147483648
 script = ExtResource("16_43eek")
 secret = true
 area_trgger = true
@@ -775,14 +769,6 @@ rect = Rect2(-980, -1000, 1960, 2000)
 y_sort_enabled = true
 position = Vector2(2992, -416)
 
-[node name="dark_bg" type="ColorRect" parent="y_order/sea_horse"]
-z_index = -20
-offset_left = -32.0
-offset_top = -40.0
-offset_right = 800.0
-offset_bottom = 312.0
-color = Color(0, 0, 0, 1)
-
 [node name="deadzone" type="Area2D" parent="y_order/sea_horse" node_paths=PackedStringArray("rect")]
 process_mode = 3
 position = Vector2(240, 136)
@@ -871,9 +857,10 @@ position = Vector2(2960, 48)
 
 [node name="dark_bg" type="ColorRect" parent="y_order/mural_path"]
 z_index = -20
-offset_top = -8.0
+offset_left = -376.0
+offset_top = -568.0
 offset_right = 1200.0
-offset_bottom = 360.0
+offset_bottom = 440.0
 color = Color(0, 0, 0, 1)
 
 [node name="deadzone" type="Area2D" parent="y_order/mural_path" node_paths=PackedStringArray("rect")]
@@ -998,10 +985,9 @@ metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 position = Vector2(-36, 0)
 values = SubResource("Resource_po4xe")
 
-[node name="pl_loop" parent="y_order/madotsuki" index="11" node_paths=PackedStringArray("region", "children")]
+[node name="pl_loop" parent="y_order/madotsuki" index="11" node_paths=PackedStringArray("region")]
 region = NodePath("../../region")
 idx = 1
-children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
 world_size = Vector2(1568, 1600)
 
 [node name="teleport_maze_pirori" parent="y_order" instance=ExtResource("21_jqnyc")]

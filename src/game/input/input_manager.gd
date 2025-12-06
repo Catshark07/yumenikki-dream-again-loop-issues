@@ -1,5 +1,5 @@
 class_name InputManager
-extends Game.GameSubClass
+extends GameDependency
 
 # - WASD and Arrow Keys are going to be represented ina VECTOR 4.
 # Vector4(S | DOWN_ARROW, D | RIGHT_ARROW, W | UP_ARROW, A | LEFT_ARROW )
@@ -7,13 +7,11 @@ static var sb_input_controller	: SBInputController
 static var def_input_controller	: UIInputController
 static var curr_controller		: InputController
 
-static var keybind: Keybind
 
 static var dir_input				: Vector2i
 static var direction_vector_4		: Vector4i
 
 static func _setup() -> void:
-	keybind = Keybind.new()
 	sb_input_controller 	= SBInputController.new()
 	def_input_controller 	= UIInputController.new()
 	
@@ -71,57 +69,24 @@ static func _unhandled_input_pass(_event: InputEvent) -> void:
 
 
 
-class Keybind:
-	extends RefCounted
-	var bind: Dictionary = {
-		# -- miscallenous
-		"ui_esc_menu" 		: [ KEY_ESCAPE ],
-		"ui_hud_toggle" 	: [ KEY_TAB ],
-		"ui_favourite_effect" : [ KEY_F , MOUSE_BUTTON_RIGHT],
-		
-		# -- UI
-		"ui_up" 			: [ KEY_UP, KEY_W ],
-		"ui_down" 			: [ KEY_DOWN, KEY_S ],
-		"ui_right" 			: [ KEY_RIGHT, KEY_D ],
-		"ui_left" 			: [ KEY_LEFT, KEY_A ],
-		
-		"ui_accept" 		: [ KEY_Z, KEY_ENTER ],
-		"ui_cancel" 		: [ KEY_X, KEY_BACKSPACE, KEY_ESCAPE ],
-		
-		# -- player
-		"pl_move_up" 		: [ KEY_UP, KEY_W ],
-		"pl_move_down" 		: [ KEY_DOWN, KEY_S ],
-		"pl_move_right" 	: [ KEY_RIGHT, KEY_D ],
-		"pl_move_left" 		: [ KEY_LEFT, KEY_A ],
-		
-		"pl_sprint" 		: [ KEY_SHIFT ],
-		"pl_sneak" 			: [ KEY_CTRL ],
-
-		"pl_pinch" 			: [ KEY_Q ],
-		"pl_interact" 		: [ KEY_E ],
-		"pl_emote" 			: [ KEY_C ],
-		
-		"pl_primary_action"		: [ KEY_Z ],
-		"pl_secondary_action" 	: [ KEY_X ],
-		
-		"pl_inventory" 		: [ KEY_ALT ],
-		}
-	
-	func _init() -> void:
-		for action in bind:
-			
-			if !InputMap.has_action(action):  	
-				InputMap.add_action(action)
-				
-			for key in bind[action]:
-				var event_key := InputEventKey.new()
-				event_key.keycode = key
-				InputMap.action_add_event(action, event_key)
-	
-	func has_action(_action: String) -> bool: 
-		return _action in bind
-		
-	func get_action_keys(_action: String) -> Array:
-		if has_action(_action): return bind[_action]
-		return []
-		
+#class Keybind:
+	#extends RefCounted
+		#
+	#func _setup() -> void:
+		#for action in bind:
+			#
+			#if !InputMap.has_action(action):  	
+				#InputMap.add_action(action)
+				#
+			#for key in bind[action]:
+				#var event_key := InputEventKey.new()
+				#event_key.keycode = key
+				#InputMap.action_add_event(action, event_key)
+	#
+	#func has_action(_action: String) -> bool: 
+		#return _action in bind
+		#
+	#func get_action_keys(_action: String) -> Array:
+		#if has_action(_action): return bind[_action]
+		#return []
+		#

@@ -1,4 +1,4 @@
-extends ConditionalSequence
+extends ConditionalEvent
 @export var current_effect_is: PLEffect
 
 func _predicate() -> bool:

@@ -1,5 +1,5 @@
 class_name ConfigManager
-extends Game.GameSubClass
+extends GameDependency
 
 static func _setup() -> void:
 	instantiate_config()
@@ -23,7 +23,7 @@ static func save_settings_data() -> void:
 	config_data.set_value("graphics", "motion_reduce", 	CameraHolder.motion_reduction)
 	config_data.set_value("graphics", "bloom", 			GameManager.bloom)
 	
-	config_data.set_value("controls", "bind", InputManager.keybind)
+	#config_data.set_value("controls", "bind", InputManager.keybind)
 	
 	config_data.save("user://settings.cfg")
 static func load_settings_data() -> void: 

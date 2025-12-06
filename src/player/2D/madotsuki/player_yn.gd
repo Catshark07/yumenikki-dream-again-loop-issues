@@ -118,4 +118,3 @@ class Components:
 	const MENTAL 		:= &"mental_status"
 	const FOOTSTEP 		:= &"footstep_manager"
 	const INPUT 		:= &"input"
-class Effects: pass

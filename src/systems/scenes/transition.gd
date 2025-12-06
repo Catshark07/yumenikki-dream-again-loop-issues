@@ -25,10 +25,6 @@ func _ready() -> void:
 	
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
-	texture = GradientTexture1D.new()
-	texture.gradient = Gradient.new()
-	texture.gradient.colors = PackedColorArray([Color.WHITE])
-	
 	self.z_index = 99
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	

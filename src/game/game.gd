@@ -142,14 +142,3 @@ func initialize() -> void:
 			SceneManager.change_scene_to(load(PRELOAD_SHADERS_SCENE), false, false)
 		_:	
 			is_editor = true
-
-
-class GameSubClass:
-	extends RefCounted
-
-	static func _setup() -> void: 							pass
-	
-	static func _update(_delta: float) -> void: 			pass
-	static func _physics_update(_delta: float) -> void:	 	pass
-
-	static func _input_pass(_event: InputEvent) -> void: 	pass

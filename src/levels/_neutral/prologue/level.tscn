@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://bv5x4rpikgrho"]
+[gd_scene load_steps=81 format=4 uid="uid://bv5x4rpikgrho"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_4ckat"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="1_28p51"]
@@ -40,24 +40,18 @@
 [ext_resource type="Script" uid="uid://d1ojbn5jneejv" path="res://src/systems/sequencing/event/node/set_property.gd" id="33_7rtwp"]
 [ext_resource type="AudioStream" uid="uid://ctikfoswhp602" path="res://src/audio/se/se_talk_soft.ogg" id="33_oaq00"]
 [ext_resource type="Script" uid="uid://b6ilkvabn22lp" path="res://src/systems/sequencing/sequence/conditional/if_expression.gd" id="35_hyc6s"]
-[ext_resource type="AudioStream" uid="uid://ytifrfoc2kky" path="res://src/audio/se/key_insert.wav" id="36_1mpi4"]
 [ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/2D/madotsuki/effects/earring/glow.png" id="37_7agr2"]
-[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/sequencing/event_interface.gd" id="38_7agr2"]
-[ext_resource type="Script" uid="uid://bknmv5i3gcx3x" path="res://src/systems/sequencing/event/audio/stop_bgm.gd" id="39_j8aq2"]
+[ext_resource type="Script" uid="uid://bknmv5i3gcx3x" path="res://src/systems/sequencing/event/audio/stop_bgm.gd" id="38_hem4l"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="39_j8aq2"]
 [ext_resource type="Texture2D" uid="uid://07pkc7gto8dk" path="res://src/levels/_neutral/prologue/sally/face.png" id="39_rjo7c"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="40_ix0g1"]
 [ext_resource type="Shader" uid="uid://dhykg54peq185" path="res://src/shaders/panorama/radial.gdshader" id="40_j8aq2"]
-[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="40_kuj4c"]
 [ext_resource type="Script" uid="uid://cx4t46m5wt82v" path="res://src/systems/components/overrides/look_at.gd" id="41_w6vfa"]
 [ext_resource type="Texture2D" uid="uid://x0woqnmnwkw5" path="res://src/levels/_neutral/prologue/sally/eye.png" id="42_hyc6s"]
 [ext_resource type="Texture2D" uid="uid://cdtts72fs84me" path="res://src/levels/_neutral/prologue/sally/hair.png" id="43_1mpi4"]
 [ext_resource type="AudioStream" uid="uid://du5x1lok1mk78" path="res://src/audio/se/se_cloth_foley_3.wav" id="43_j8aq2"]
 [ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/sequencing/event/player/append_effect.gd" id="45_m6hwy"]
 [ext_resource type="Resource" uid="uid://bp8km5r1xqw8a" path="res://src/player/2D/madotsuki/effects/running_shoes/running_shoes.tres" id="46_pqmqx"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2mqtp"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqfg4"]
 
 [sub_resource type="Animation" id="Animation_oaq00"]
 resource_name = "intro"
@@ -154,9 +148,6 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_37x7p"]
 size = Vector2(16, 16)
 
-[sub_resource type="Gradient" id="Gradient_kuj4c"]
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7agr2"]
 size = Vector2(16, 16)
 
@@ -170,12 +161,12 @@ shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
 shader_parameter/uv_offset = Vector2(0, 0)
 shader_parameter/offset_strength = 1.0
 
-[sub_resource type="Resource" id="Resource_j8aq2"]
+[sub_resource type="Resource" id="Resource_4owk6"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("18_ix0g1")
 can_sprint = false
-metadata/_custom_type_script = "uid://bxe7uci7t77tx"
+metadata/_custom_type_script = "uid://jf85vmwx4pj"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ix0g1"]
 size = Vector2(128, 144)
@@ -184,8 +175,6 @@ size = Vector2(128, 144)
 script = ExtResource("1_4ckat")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-load_transition = SubResource("ShaderMaterial_2mqtp")
-unload_transition = SubResource("ShaderMaterial_bqfg4")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="intro_cutscene" type="AnimationPlayer" parent="."]
@@ -204,7 +193,6 @@ call_limit = 1
 metadata/_custom_type_script = "uid://br3wayftgqqpo"
 
 [node name="replenish_player_stam" type="Node" parent="on_player_exhaustion" node_paths=PackedStringArray("node", "next")]
-process_mode = 4
 script = ExtResource("33_7rtwp")
 node = NodePath("../../y_order/madotsuki")
 property_name = "stamina"
@@ -214,7 +202,7 @@ property_info = {
 "hint_string": "",
 "name": "stamina",
 "type": 3,
-"usage": 2
+"usage": 4098
 }
 property_value = 5.0
 new_value = 5.0
@@ -405,9 +393,9 @@ material = SubResource("ShaderMaterial_qmak8")
 
 [node name="has_key_flag" type="Node" parent="y_order"]
 script = ExtResource("17_hyc6s")
-properties = Dictionary[String, Variant]({
+properties = {
 "has_key": false
-})
+}
 skip_save = true
 metadata/_custom_type_script = "uid://0li2ud4tbkf5"
 
@@ -471,7 +459,6 @@ next = NodePath("../allow_player_sprint")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="allow_player_sprint" type="Node" parent="y_order/dialogue_1/on_enter" node_paths=PackedStringArray("node", "prev", "next")]
-process_mode = 4
 script = ExtResource("33_7rtwp")
 node = NodePath("../../../madotsuki")
 property_name = "values"
@@ -800,7 +787,7 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 [node name="on_interact" type="Node" parent="y_order/locked_door" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("14_qu046")
-order = [NodePath("request_cutscene"), NodePath("play_sound"), NodePath("open_dialogue"), NodePath("if_has_key"), NodePath("else_if_has_key"), NodePath("request_cutscene_end")]
+order = [NodePath("request_cutscene"), NodePath("play_sound"), NodePath("open_dialogue"), NodePath("if_has_key"), NodePath("request_cutscene_end")]
 front = NodePath("request_cutscene")
 back = NodePath("request_cutscene_end")
 
@@ -828,24 +815,30 @@ prev = NodePath("../play_sound")
 next = NodePath("../if_has_key")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="if_has_key" type="Node" parent="y_order/locked_door/on_interact" node_paths=PackedStringArray("input_objects", "else_conditional", "order", "front", "back", "next")]
+[node name="if_has_key" type="Node" parent="y_order/locked_door/on_interact" node_paths=PackedStringArray("input_objects", "if_true", "if_false", "prev", "next")]
+process_mode = 4
 script = ExtResource("35_hyc6s")
 expression = "key.properties[\"has_key\"]"
 input_objects = {
 "key": NodePath("../../../has_key_flag")
 }
-else_conditional = NodePath("../else_if_has_key")
-order = [NodePath("prompt")]
-front = NodePath("prompt")
-back = NodePath("prompt")
-custom_linked_pointers = true
-next = NodePath("../else_if_has_key")
+if_true = NodePath("if_true")
+if_false = NodePath("if_false")
+prev = NodePath("../open_dialogue")
+next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://br7tiv3hm32fy"
 
-[node name="prompt" type="Node" parent="y_order/locked_door/on_interact/if_has_key" node_paths=PackedStringArray("prompt_options")]
+[node name="if_true" type="Node" parent="y_order/locked_door/on_interact/if_has_key" node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("4_w4wdm")
+order = [NodePath("prompt_key_use")]
+front = NodePath("prompt_key_use")
+back = NodePath("prompt_key_use")
+custom_linked_pointers = true
+
+[node name="prompt_key_use" type="Node" parent="y_order/locked_door/on_interact/if_has_key/if_true" node_paths=PackedStringArray("prompt_options")]
 script = ExtResource("27_neteg")
 message_type = 2
-texts = PackedStringArray("(use the key?)")
+texts = PackedStringArray("(use key?)")
 font_colour_override = Color(0, 0, 0, 1)
 panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prompt_options = {
@@ -855,78 +848,47 @@ prompt_options = {
 normal_colour = Color(0, 0, 0, 1)
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="yes" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt" node_paths=PackedStringArray("order", "front", "back")]
+[node name="yes" type="Node" parent="y_order/locked_door/on_interact/if_has_key/if_true/prompt_key_use" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("4_w4wdm")
-order = [NodePath("stop_bgm"), NodePath("play_sound"), NodePath("play_sound2"), NodePath("open_dialogue"), NodePath("fade_in"), NodePath("go_to_real_balcony")]
+order = [NodePath("stop_bgm"), NodePath("open_message"), NodePath("go_to_balcony")]
 front = NodePath("stop_bgm")
-back = NodePath("go_to_real_balcony")
+back = NodePath("go_to_balcony")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="stop_bgm" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt/yes" node_paths=PackedStringArray("next")]
-script = ExtResource("39_j8aq2")
-next = NodePath("../play_sound")
+[node name="stop_bgm" type="Node" parent="y_order/locked_door/on_interact/if_has_key/if_true/prompt_key_use/yes" node_paths=PackedStringArray("next")]
+script = ExtResource("38_hem4l")
+next = NodePath("../open_message")
 metadata/_custom_type_script = "uid://bknmv5i3gcx3x"
 
-[node name="play_sound" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt/yes" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("16_neteg")
-sound = ExtResource("36_1mpi4")
-pitch = 0.8
-prev = NodePath("../stop_bgm")
-next = NodePath("../play_sound2")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="play_sound2" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt/yes" node_paths=PackedStringArray("prev", "next")]
-process_mode = 4
-script = ExtResource("16_neteg")
-sound = ExtResource("17_uwvvk")
-pitch = 0.8
-prev = NodePath("../play_sound")
-next = NodePath("../open_dialogue")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="open_dialogue" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt/yes" node_paths=PackedStringArray("prev", "next")]
+[node name="open_message" type="Node" parent="y_order/locked_door/on_interact/if_has_key/if_true/prompt_key_use/yes" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("27_neteg")
-message_type = 1
-texts = PackedStringArray("(if you want to regain stamina faster at any point, press the C key.)", "(you can access the inventory during the dream state by pressing ALT, and favourite effects by pressing F).", "(you can also pause whenever you want by pressing ESC.)")
+texts = PackedStringArray("(press C to rest at any time.)", "(to access your effects, press ALT. to favourite them, press F while hovering over an effect.)", "(you can also toggle hud visibility by pressing TAB),")
 font_colour_override = Color(0, 0, 0, 1)
 panel_style_override = SubResource("StyleBoxTexture_hyc6s")
-normal_colour = Color(0, 0, 0, 1)
-prev = NodePath("../play_sound2")
-next = NodePath("../fade_in")
+prev = NodePath("../stop_bgm")
+next = NodePath("../go_to_balcony")
 metadata/_custom_type_script = "uid://bueabxwtsde8h"
 
-[node name="fade_in" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt/yes" node_paths=PackedStringArray("prev", "next")]
+[node name="go_to_balcony" type="Node" parent="y_order/locked_door/on_interact/if_has_key/if_true/prompt_key_use/yes" node_paths=PackedStringArray("prev")]
 process_mode = 4
-script = ExtResource("6_37x7p")
-gradient = SubResource("Gradient_kuj4c")
-prev = NodePath("../open_dialogue")
-next = NodePath("../go_to_real_balcony")
-metadata/_custom_type_script = "uid://d4mfbplpq5p5d"
-
-[node name="go_to_real_balcony" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt/yes" node_paths=PackedStringArray("prev")]
-process_mode = 4
-script = ExtResource("40_kuj4c")
+script = ExtResource("39_j8aq2")
 scene_path = "uid://dwst4o7pf4ye7"
-prev = NodePath("../fade_in")
+prev = NodePath("../open_message")
 metadata/_custom_type_script = "uid://c0ymap76lrhgr"
 
-[node name="no" type="Node" parent="y_order/locked_door/on_interact/if_has_key/prompt" node_paths=PackedStringArray("next")]
+[node name="no" type="Node" parent="y_order/locked_door/on_interact/if_has_key/if_true/prompt_key_use"]
 script = ExtResource("4_w4wdm")
-custom_linked_pointers = true
-next = NodePath("../../../request_cutscene_end")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="else_if_has_key" type="Node" parent="y_order/locked_door/on_interact" node_paths=PackedStringArray("prev", "next")]
+[node name="if_false" type="Node" parent="y_order/locked_door/on_interact/if_has_key" node_paths=PackedStringArray("next")]
 script = ExtResource("4_w4wdm")
-skip = true
-prev = NodePath("../if_has_key")
-next = NodePath("../request_cutscene_end")
+custom_linked_pointers = true
+next = NodePath("../../request_cutscene_end")
 
 [node name="request_cutscene_end" type="Node" parent="y_order/locked_door/on_interact" node_paths=PackedStringArray("prev")]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_END_REQUEST"
-prev = NodePath("../else_if_has_key")
+prev = NodePath("../if_has_key")
 metadata/_custom_type_script = "uid://dspsbq33tl0wa"
 
 [node name="renderer" type="Sprite2D" parent="y_order/locked_door"]
@@ -971,21 +933,41 @@ debug_color = Color(0.2, 0, 0.7, 0.2)
 material = SubResource("ShaderMaterial_njn8l")
 texture = ExtResource("37_7agr2")
 
-[node name="OnInteract" type="Node" parent="y_order/key_and_effect" node_paths=PackedStringArray("order", "front", "back")]
+[node name="on_interact" type="Node" parent="y_order/key_and_effect" node_paths=PackedStringArray("order", "front", "back")]
 process_mode = 4
 script = ExtResource("14_qu046")
-order = [NodePath("request_cutscene_start"), NodePath("prompt"), NodePath("request_cutscene_end")]
+order = [NodePath("request_cutscene_start"), NodePath("if_doesnt_have_key"), NodePath("request_cutscene_end")]
 front = NodePath("request_cutscene_start")
 back = NodePath("request_cutscene_end")
 metadata/_custom_type_script = "uid://bkadpjx8csm75"
 
-[node name="request_cutscene_start" type="Node" parent="y_order/key_and_effect/OnInteract" node_paths=PackedStringArray("next")]
+[node name="request_cutscene_start" type="Node" parent="y_order/key_and_effect/on_interact" node_paths=PackedStringArray("next")]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_START_REQUEST"
-next = NodePath("../prompt")
+next = NodePath("../if_doesnt_have_key")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="prompt" type="Node" parent="y_order/key_and_effect/OnInteract" node_paths=PackedStringArray("prompt_options", "prev", "next")]
+[node name="if_doesnt_have_key" type="Node" parent="y_order/key_and_effect/on_interact" node_paths=PackedStringArray("input_objects", "if_true", "if_false", "prev", "next")]
+process_mode = 4
+script = ExtResource("35_hyc6s")
+expression = "key.properties[\"has_key\"] == false"
+input_objects = {
+"key": NodePath("../../../has_key_flag")
+}
+if_true = NodePath("if_true")
+if_false = NodePath("if_false")
+prev = NodePath("../request_cutscene_start")
+next = NodePath("../request_cutscene_end")
+metadata/_custom_type_script = "uid://br7tiv3hm32fy"
+
+[node name="if_true" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key" node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("4_w4wdm")
+order = [NodePath("prompt")]
+front = NodePath("prompt")
+back = NodePath("prompt")
+custom_linked_pointers = true
+
+[node name="prompt" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true" node_paths=PackedStringArray("prompt_options")]
 script = ExtResource("27_neteg")
 message_type = 2
 texts = PackedStringArray("(there\'s something shiny here.)", "(investigate further?)")
@@ -996,25 +978,45 @@ prompt_options = {
 &"yes": NodePath("yes")
 }
 normal_colour = Color(0, 0, 0, 1)
-prev = NodePath("../request_cutscene_start")
-next = NodePath("../request_cutscene_end")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="yes" type="Node" parent="y_order/key_and_effect/OnInteract/prompt" node_paths=PackedStringArray("order", "front", "back")]
+[node name="yes" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true/prompt" node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("4_w4wdm")
-order = [NodePath("play_foley_1"), NodePath("append_effect"), NodePath("pick_up_message"), NodePath("effect_notification"), NodePath("raise_flag"), NodePath("disable_interactable")]
-front = NodePath("play_foley_1")
+order = [NodePath("raise_flag"), NodePath("play_foley_1"), NodePath("append_effect"), NodePath("pick_up_message"), NodePath("disable_interactable")]
+front = NodePath("raise_flag")
 back = NodePath("disable_interactable")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="play_foley_1" type="Node" parent="y_order/key_and_effect/OnInteract/prompt/yes" node_paths=PackedStringArray("next")]
+[node name="raise_flag" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true/prompt/yes" node_paths=PackedStringArray("node", "next")]
+script = ExtResource("33_7rtwp")
+node = NodePath("../../../../../../../has_key_flag")
+property_name = "properties"
+property_info = {
+"class_name": &"",
+"hint": 0,
+"hint_string": "",
+"name": "properties",
+"type": 27,
+"usage": 4102
+}
+property_value = {
+"has_key": false
+}
+new_value = Dictionary[String, Variant]({
+"has_key": true
+})
+next = NodePath("../play_foley_1")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="play_foley_1" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true/prompt/yes" node_paths=PackedStringArray("prev", "next")]
 process_mode = 4
 script = ExtResource("16_neteg")
 sound = ExtResource("43_j8aq2")
+prev = NodePath("../raise_flag")
 next = NodePath("../append_effect")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="append_effect" type="Node" parent="y_order/key_and_effect/OnInteract/prompt/yes" node_paths=PackedStringArray("prev", "next")]
+[node name="append_effect" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true/prompt/yes" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("45_m6hwy")
 effect = ExtResource("46_pqmqx")
 flash = false
@@ -1022,51 +1024,18 @@ prev = NodePath("../play_foley_1")
 next = NodePath("../pick_up_message")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="pick_up_message" type="Node" parent="y_order/key_and_effect/OnInteract/prompt/yes" node_paths=PackedStringArray("prev", "next")]
+[node name="pick_up_message" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true/prompt/yes" node_paths=PackedStringArray("prev", "next")]
 script = ExtResource("27_neteg")
-texts = PackedStringArray("(picked up key!)")
+texts = PackedStringArray("(picked up key!)", "(you also found an effect!)")
 font_colour_override = Color(0, 0, 0, 1)
 panel_style_override = SubResource("StyleBoxTexture_hyc6s")
 prev = NodePath("../append_effect")
-next = NodePath("../effect_notification")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="effect_notification" type="Node" parent="y_order/key_and_effect/OnInteract/prompt/yes" node_paths=PackedStringArray("prev", "next")]
-script = ExtResource("27_neteg")
-texts = PackedStringArray("(you also found an effect!)")
-font_colour_override = Color(0, 0, 0, 1)
-panel_style_override = SubResource("StyleBoxTexture_hyc6s")
-prev = NodePath("../pick_up_message")
-next = NodePath("../raise_flag")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="raise_flag" type="Node" parent="y_order/key_and_effect/OnInteract/prompt/yes" node_paths=PackedStringArray("node", "prev", "next")]
-process_mode = 4
-script = ExtResource("33_7rtwp")
-node = NodePath("../../../../../has_key_flag")
-property_name = "properties"
-property_info = {
-"class_name": &"",
-"hint": 23,
-"hint_string": "4:;0:",
-"name": "properties",
-"type": 27,
-"usage": 4102
-}
-property_value = Dictionary[String, Variant]({
-"has_key": false
-})
-new_value = Dictionary[String, Variant]({
-"has_key": true
-})
-prev = NodePath("../effect_notification")
 next = NodePath("../disable_interactable")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="disable_interactable" type="Node" parent="y_order/key_and_effect/OnInteract/prompt/yes" node_paths=PackedStringArray("node", "next")]
-process_mode = 4
+[node name="disable_interactable" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true/prompt/yes" node_paths=PackedStringArray("node", "prev")]
 script = ExtResource("33_7rtwp")
-node = NodePath("../../../..")
+node = NodePath("../../../../../..")
 property_name = "can_interact"
 property_info = {
 "class_name": &"",
@@ -1078,36 +1047,29 @@ property_info = {
 }
 property_value = true
 new_value = false
-custom_linked_pointers = true
-next = NodePath("../../../request_cutscene_end")
+prev = NodePath("../pick_up_message")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="no" type="Node" parent="y_order/key_and_effect/OnInteract/prompt" node_paths=PackedStringArray("order", "front", "back", "next")]
+[node name="no" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key/if_true/prompt" node_paths=PackedStringArray("next")]
 script = ExtResource("4_w4wdm")
-order = [NodePath("empty")]
-front = NodePath("empty")
-back = NodePath("empty")
-next = NodePath("../../request_cutscene_end")
+next = NodePath("../../../../request_cutscene_end")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="empty" type="Node" parent="y_order/key_and_effect/OnInteract/prompt/no" node_paths=PackedStringArray("next")]
-process_mode = 4
-script = ExtResource("38_7agr2")
+[node name="if_false" type="Node" parent="y_order/key_and_effect/on_interact/if_doesnt_have_key"]
+script = ExtResource("4_w4wdm")
 custom_linked_pointers = true
-next = NodePath("../../../request_cutscene_end")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="request_cutscene_end" type="Node" parent="y_order/key_and_effect/OnInteract" node_paths=PackedStringArray("prev")]
+[node name="request_cutscene_end" type="Node" parent="y_order/key_and_effect/on_interact" node_paths=PackedStringArray("prev")]
 script = ExtResource("15_2pbgt")
 event_id = "CUTSCENE_END_REQUEST"
-prev = NodePath("../prompt")
+prev = NodePath("../if_doesnt_have_key")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="madotsuki" parent="y_order" instance=ExtResource("1_28p51")]
 use_parent_material = true
 position = Vector2(-280, 104)
 can_pinch = false
-values = SubResource("Resource_j8aq2")
+values = SubResource("Resource_4owk6")
 
 [node name="IDLE" parent="y_order/madotsuki/stance_fsm" index="0" node_paths=PackedStringArray("transitions")]
 transitions = [NodePath("../MOVE"), NodePath("../ACTION"), null]
@@ -1118,36 +1080,29 @@ current = false
 [node name="shader" parent="y_order/madotsuki/sprite_container/sprite_renderer" index="0"]
 color = Color(0, 0, 0, 1)
 
-[node name="pl_loop" parent="y_order/madotsuki" index="11" node_paths=PackedStringArray("children")]
-children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
-
 [node name="jellyfish_1" type="Sprite2D" parent="y_order"]
 use_parent_material = true
 position = Vector2(-360, 208)
 texture = ExtResource("29_uwvvk")
 hframes = 7
-frame = 3
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 10.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
-progress = 3
 
 [node name="jellyfish_2" type="Sprite2D" parent="y_order"]
 use_parent_material = true
 position = Vector2(-224, 16)
 texture = ExtResource("29_uwvvk")
 hframes = 7
-frame = 1
 script = ExtResource("30_b1kpc")
 autoplay = true
 loop = true
 fps = 7.0
 frame_dimensions = Vector2i(42, 42)
 frame_h_count = 7
-progress = 1
 
 [node name="sally" type="Node2D" parent="y_order"]
 position = Vector2(976, 712)

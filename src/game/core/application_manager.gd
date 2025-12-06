@@ -1,5 +1,5 @@
 class_name Application
-extends Game.GameSubClass
+extends GameDependency
 	
 static func _setup() -> void:
 	main_window 	= Game.main_tree.root.get_window()
